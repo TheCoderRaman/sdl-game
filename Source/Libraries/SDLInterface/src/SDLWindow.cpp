@@ -30,7 +30,7 @@ eError SDLWindow::Create()
     	SDL_WINDOWPOS_UNDEFINED, 
     	500, 
     	300, 
-    	SDL_WINDOW_OPENGL );
+    	SDL_WINDOW_SHOWN );
 
     if( m_SDL_Window == NULL )
     {
