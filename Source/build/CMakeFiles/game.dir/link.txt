@@ -1,1 +1,0 @@
-/usr/bin/c++    -std=c++11    CMakeFiles/game.dir/src/main.cpp.o  -o game -rdynamic libengine.so libsdlinterface.so libutil.so -lSDL2 -lpthread -Wl,-rpath,/home/mdiluzio/Projects/SDLGame/Source/build 
