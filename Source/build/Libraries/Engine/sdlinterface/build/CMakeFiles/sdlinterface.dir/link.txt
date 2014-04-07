@@ -1,0 +1,1 @@
+/usr/bin/c++  -fPIC  -std=c++11 -std=c++11   -shared -Wl,-soname,libsdlinterface.so -o ../../../../libsdlinterface.so CMakeFiles/sdlinterface.dir/src/SDLMain.cpp.o CMakeFiles/sdlinterface.dir/src/SDLWindow.cpp.o CMakeFiles/sdlinterface.dir/src/SDLEventLoop.cpp.o -lSDL2 -lpthread 

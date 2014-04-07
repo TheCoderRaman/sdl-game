@@ -1,0 +1,4 @@
+/home/mdiluzio/Projects/SDLGame/Source/build/Libraries/Engine/CMakeFiles/engine.dir
+/home/mdiluzio/Projects/SDLGame/Source/build/CMakeFiles/game.dir
+/home/mdiluzio/Projects/SDLGame/Source/build/Libraries/Engine/sdlinterface/build/CMakeFiles/sdlinterface.dir
+/home/mdiluzio/Projects/SDLGame/Source/build/Libraries/Engine/sdlinterface/build/util/build/CMakeFiles/util.dir
