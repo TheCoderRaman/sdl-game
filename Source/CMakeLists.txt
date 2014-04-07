@@ -43,6 +43,7 @@ add_executable(
 
 	# main
 	src/main.cpp
+	src/GameOne.cpp
 
 )
 
