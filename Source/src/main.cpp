@@ -36,7 +36,7 @@ int main( int argc, char* args[] )
     if( err != eError_noErr )
         DEBUG_LOG("Program finished with ERROR %i\n",err);
 
-    DEBUG_LOG("Program Finished...\n");
+    DEBUG_LOG("Program Exiting Safely...\n");
     return err;    
 }
 
@@ -63,6 +63,8 @@ eError load()
 	//Loading err flag
     eError err = eError_noErr;
 
+    // Do some sort of loading here
+
     return err;
 }
 
@@ -74,8 +76,9 @@ eError loop()
 
 	//While application is running
     bool exit_request = false;
-
-    while( eError_noErr == err && !exit_request)
+    
+    while(  eError_noErr == err 
+        &&  false == exit_request )
     {
         err = SDLEventLoop::DoLoop(exit_request);
 
