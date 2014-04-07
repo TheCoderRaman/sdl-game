@@ -1,5 +1,7 @@
 #pragma once
 
+#include "stdio.h"
+
 // Defines
 #define DEBUG_LOGGING 1
 

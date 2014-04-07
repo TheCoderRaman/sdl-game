@@ -9,6 +9,7 @@ set (PROJECT_INCLUDE_DIR
 	${PROJECT_SOURCE_DIR}/include
 	${PROJECT_SOURCE_DIR}/Libraries/Util/include
 	${PROJECT_SOURCE_DIR}/Libraries/SDLInterface/include
+	${PROJECT_SOURCE_DIR}/Libraries/Engine/include
 
 )
 
