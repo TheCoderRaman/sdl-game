@@ -24,13 +24,13 @@ int main( int argc, char* args[] )
 
     err = init();
 
-    if( err == eError_noErr )
+    if( eError_noErr == err )
     	err = load();
 
-    if( err == eError_noErr )
+    if( eError_noErr == err )
     	err = loop();
 
-    if( err == eError_noErr )
+    if( eError_noErr == err )
     	err = close();
     
     if( err != eError_noErr )
@@ -50,7 +50,7 @@ eError init()
 
     err = SDLMain::Init();
 
-    if ( err == eError_noErr )
+    if ( eError_noErr == err )
     	gMainWindow.Create();
 
     return err;
@@ -75,11 +75,11 @@ eError loop()
 	//While application is running
     bool exit_request = false;
 
-    while( err == eError_noErr && !exit_request)
+    while( eError_noErr == err && !exit_request)
     {
         err = SDLEventLoop::DoLoop(exit_request);
 
-        if ( err == eError_noErr )
+        if ( eError_noErr == err )
         	err = gMainWindow.Update();
     }
 
