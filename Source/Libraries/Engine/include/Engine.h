@@ -4,6 +4,7 @@
 #include "types.h"
 #include "SDLWindow.h"
 
+// Engine delegate class
 class Engine
 {
 public:
@@ -12,19 +13,28 @@ public:
 	Engine();
 	~Engine();
 
+	// Init the engine
 	eError init();
 
+	// run ( will not return until finished running )
 	eError run();
 
+	// quit the engine
 	eError quit();	
 
 private:
 
-	eError load();	
+	// Loads assets
+	eError load();
+
+	// calls the event loop	
 	eError loop();
+
+	// unloads the assets
 	eError unload();
 
-	SDLWindow myMainWindow = SDLWindow();
+	// Member variables
+	SDLWindow myMainWindow;
 
 };
 

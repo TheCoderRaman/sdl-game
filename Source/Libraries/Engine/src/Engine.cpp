@@ -2,6 +2,7 @@
 
 #include "SDLMain.h"
 #include "SDLEventLoop.h"
+#include "GameBase.h"
 
 //===============================================================
 // Engine::
@@ -82,7 +83,10 @@ eError Engine::load()
 	//Loading err flag
     eError err = eError_noErr;
 
-    // Do some sort of loading here
+    err = GameBase::GetGame()->Create();
+
+    if( eError_noErr == err )
+        err = GameBase::GetGame()->Initialise();
 
     return err;
 }
@@ -105,6 +109,9 @@ eError Engine::loop()
         err = SDLEventLoop::DoLoop(exit_request);
 
         if ( eError_noErr == err )
+            err = GameBase::GetGame()->Update();
+
+        if ( eError_noErr == err )
         	err = myMainWindow.Update();
     }
 
@@ -118,7 +125,7 @@ eError Engine::unload()
 {
 	eError err = eError_noErr;
 
-	// Some unloading of some sort
+    err = GameBase::GetGame()->Destroy();
 
 	return err;
 }
