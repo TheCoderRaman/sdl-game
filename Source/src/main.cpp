@@ -50,7 +50,7 @@ eError init()
 
     err = SDLMain::Init();
 
-    if ( err = eError_noErr )
+    if ( err == eError_noErr )
     	gMainWindow.Create();
 
     return err;
