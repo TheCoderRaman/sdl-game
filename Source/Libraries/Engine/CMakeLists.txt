@@ -15,6 +15,7 @@ set (PROJECT_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 set(PROJECT_SRCS 
 	${PROJECT_SOURCE_DIR}/Engine.cpp
+	${PROJECT_SOURCE_DIR}/GameBase.cpp
 )
 
 # Set the compiler flags (specifically the c++11 one)
