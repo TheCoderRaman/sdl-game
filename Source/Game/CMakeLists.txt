@@ -2,19 +2,20 @@
 cmake_minimum_required( VERSION 2.6 )
 
 # Project name
-project( engine )
+project( game )
 
  
 set (PROJECT_INCLUDE_DIR 
 	${PROJECT_SOURCE_DIR}/include
 
 	${PROJECT_SOURCE_DIR}/../Util/include
+	${PROJECT_SOURCE_DIR}/../Engine/include
+	${PROJECT_SOURCE_DIR}/../SDLInterface/include
 )	
 
 set (PROJECT_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 set(PROJECT_SRCS 
-	${PROJECT_SOURCE_DIR}/Engine.cpp
 )
 
 # Set the compiler flags (specifically the c++11 one)
@@ -24,10 +25,13 @@ include_directories("${PROJECT_BINARY_DIR}")
 include_directories("${PROJECT_INCLUDE_DIR}")
 
 if (NOT TARGET sdlinterface)
-	add_subdirectory(../SDLInterface "${CMAKE_CURRENT_BINARY_DIR}/sdlinterface/build")
+	add_subdirectory(../Libraries/Engine "${CMAKE_CURRENT_BINARY_DIR}/Engine/build")
+endif() 
+if (NOT TARGET sdlinterface)
+	add_subdirectory(../Libraries/SDLInterface "${CMAKE_CURRENT_BINARY_DIR}/sdlinterface/build")
 endif() 
 if (NOT TARGET util)
-	add_subdirectory(../Util "${CMAKE_CURRENT_BINARY_DIR}/util/build")
+	add_subdirectory(../Libraries/Util "${CMAKE_CURRENT_BINARY_DIR}/util/build")
 endif() 
 
 add_library(${PROJECT_NAME} SHARED ${PROJECT_SRCS})
@@ -35,4 +39,4 @@ set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 
 
 # Link project with SDL
-target_link_libraries(${PROJECT_NAME} sdlinterface util)
+target_link_libraries(${PROJECT_NAME} engine sdlinterface util)

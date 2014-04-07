@@ -2,7 +2,7 @@
 cmake_minimum_required( VERSION 2.6 )
 
 # Project name
-project( game )
+project( SDLGame )
 
 set (PROJECT_INCLUDE_DIR 
 
@@ -25,6 +25,9 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 
 # Sub projects
+if (NOT TARGET game)
+	add_subdirectory(Game) 
+endif() 
 if (NOT TARGET engine)
 	add_subdirectory(Libraries/Engine) 
 endif() 
@@ -39,7 +42,7 @@ endif()
 add_executable(
 
 	# name of excecutable
-	game
+	${PROJECT_NAME}
 
 	# main
 	src/main.cpp
@@ -50,6 +53,7 @@ add_executable(
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 target_link_libraries( 
+	${PROJECT_NAME}
 	game
 	engine
 	sdlinterface
