@@ -1,5 +1,5 @@
 # Minimum cmake version (required)
-cmake_minimum_required( VERSION 2.6 )
+cmake_minimum_required( VERSION 2.8.4 )
 
 # Project name
 project( sdlinterface )
