@@ -9,7 +9,7 @@ set (PROJECT_INCLUDE_DIR
 	${PROJECT_SOURCE_DIR}/include
 	${PROJECT_SOURCE_DIR}/Libraries/Util/include
 	${PROJECT_SOURCE_DIR}/Libraries/SDLInterface/include
-	${PROJECT_SOURCE_DIR}/Libraries/Engine/include
+	${PROJECT_SOURCE_DIR}/Libraries/LEngine/include
 
 )
 
@@ -25,8 +25,8 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 
 # Sub projects
-if (NOT TARGET engine)
-	add_subdirectory(Libraries/Engine) 
+if (NOT TARGET lengine)
+	add_subdirectory(Libraries/LEngine) 
 endif() 
 if (NOT TARGET sdlinterface)
 	add_subdirectory(Libraries/SDLInterface)
@@ -52,7 +52,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 target_link_libraries( 
 	${PROJECT_NAME}
-	engine
+	lengine
 	sdlinterface
 	util
 )

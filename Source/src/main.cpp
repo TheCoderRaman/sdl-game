@@ -2,7 +2,7 @@
 #include "stdio.h"
 
 #include "types.h"
-#include "Engine.h"
+#include "LEngine.h"
 
 // Main
 int main( int argc, char* args[] )
@@ -10,7 +10,7 @@ int main( int argc, char* args[] )
     DEBUG_LOG("Program Starting...\n");
 
     // Create the engine
-    Engine myEngine = Engine();
+    LEngine myEngine = LEngine();
 
     eError err;
 

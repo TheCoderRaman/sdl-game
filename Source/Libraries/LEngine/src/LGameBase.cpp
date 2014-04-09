@@ -1,61 +1,61 @@
-#include "GameBase.h"
+#include "LGameBase.h"
 
 //===============================================================
-// GameBase::
+// LGameBase::
 //===============================================================
-GameBase::GameBase()
+LGameBase::LGameBase()
 {
 
 }
 
 //===============================================================
-// GameBase::
+// LGameBase::
 //===============================================================
-GameBase::~GameBase()
+LGameBase::~LGameBase()
 {
 
 }
 
 //===============================================================
-// GameBase::
+// LGameBase::
 //===============================================================
-eError GameBase::Create()
-{
-	eError err = eError_noErr;
-	return err;
-}
-
-//===============================================================
-// GameBase::
-//===============================================================
-eError GameBase::Initialise()
+eError LGameBase::Create()
 {
 	eError err = eError_noErr;
 	return err;
 }
 
 //===============================================================
-// GameBase::
+// LGameBase::
 //===============================================================
-eError GameBase::Update()
+eError LGameBase::Initialise()
 {
 	eError err = eError_noErr;
 	return err;
 }
 
 //===============================================================
-// GameBase::
+// LGameBase::
 //===============================================================
-eError GameBase::Reset()
+eError LGameBase::Update()
 {
 	eError err = eError_noErr;
 	return err;
 }
 
 //===============================================================
-// GameBase::
+// LGameBase::
 //===============================================================
-eError GameBase::Destroy()
+eError LGameBase::Reset()
+{
+	eError err = eError_noErr;
+	return err;
+}
+
+//===============================================================
+// LGameBase::
+//===============================================================
+eError LGameBase::Destroy()
 {
 	eError err = eError_noErr;
 	return err;

@@ -1,17 +1,17 @@
-#ifndef _ENGINE_H_
-#define _ENGINE_H_
+#ifndef _LENGINE_H_
+#define _LENGINE_H_
 
 #include "types.h"
 #include "SDLWindow.h"
 
-// Engine delegate class
-class Engine
+// LEngine delegate class
+class LEngine
 {
 public:
 
 	// Constructor and destructor
-	Engine();
-	~Engine();
+	LEngine();
+	~LEngine();
 
 	// Init the engine
 	eError init();
@@ -38,4 +38,4 @@ private:
 
 };
 
-#endif //_ENGINE_H_
+#endif //_LENGINE_H_

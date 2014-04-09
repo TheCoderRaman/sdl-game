@@ -2,7 +2,7 @@
 cmake_minimum_required( VERSION 2.6 )
 
 # Project name
-project( engine )
+project( lengine )
 
  
 set (PROJECT_INCLUDE_DIR 
@@ -14,8 +14,8 @@ set (PROJECT_INCLUDE_DIR
 set (PROJECT_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
 
 set(PROJECT_SRCS 
-	${PROJECT_SOURCE_DIR}/Engine.cpp
-	${PROJECT_SOURCE_DIR}/GameBase.cpp
+	${PROJECT_SOURCE_DIR}/LEngine.cpp
+	${PROJECT_SOURCE_DIR}/LGameBase.cpp
 )
 
 # Set the compiler flags (specifically the c++11 one)

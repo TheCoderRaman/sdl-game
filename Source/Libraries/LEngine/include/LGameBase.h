@@ -1,20 +1,20 @@
-#ifndef _GAMEBASE_H_
-#define _GAMEBASE_H_
+#ifndef _LGAMEBASE_H_
+#define _LGAMEBASE_H_
 
 #include "types.h"
-#include "Object.h"
+#include "LObject.h"
 
 // Base class for the Game, to be overloaded by the game specific class
-class GameBase
-: public Object
+class LGameBase
+: public LObject
 {
 public:
 
 	// Constructor and destructor
-	GameBase();
-	~GameBase();
+	LGameBase();
+	~LGameBase();
 
-	// Inherited methods as defined in Object.h
+	// Inherited methods as defined in LObject.h
 	virtual eError Create();
 	virtual eError Initialise();
 	virtual eError Update();
@@ -22,7 +22,7 @@ public:
 	virtual eError Destroy();
 
 	// static method to be declared in base class
-	static GameBase* GetGame();
+	static LGameBase* GetGame();
 
 protected:
 
@@ -31,4 +31,4 @@ private:
 
 };
 
-#endif //_GAMEBASE_H_
+#endif //_LGAMEBASE_H_

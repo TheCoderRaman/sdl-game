@@ -1,9 +1,9 @@
 #include "GameOne.h"
 
 //========================================================
-// GameBase::GetGame
+// LGameBase::GetGame
 //========================================================
-GameBase* GameBase::GetGame()
+LGameBase* LGameBase::GetGame()
 {
 	static GameOne game;
 	return &game;

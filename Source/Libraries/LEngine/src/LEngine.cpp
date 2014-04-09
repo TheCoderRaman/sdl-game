@@ -1,29 +1,29 @@
-#include "Engine.h"
+#include "LEngine.h"
 
 #include "SDLMain.h"
 #include "SDLEventLoop.h"
-#include "GameBase.h"
+#include "LGameBase.h"
 
 //===============================================================
-// Engine::
+// LEngine::
 //===============================================================
-Engine::Engine()
+LEngine::LEngine()
 {
 
 }
 
 //===============================================================
-// Engine::
+// LEngine::
 //===============================================================
-Engine::~Engine()
+LEngine::~LEngine()
 {
 
 }
 
 //===============================================================
-// Engine::
+// LEngine::
 //===============================================================
-eError Engine::init()
+eError LEngine::init()
 {
 	DEBUG_LOG("Initialising...\n")
 
@@ -39,9 +39,9 @@ eError Engine::init()
 }
 
 //===============================================================
-// Engine::
+// LEngine::
 //===============================================================
-eError Engine::run()
+eError LEngine::run()
 {
 	eError err = eError_noErr;
 
@@ -57,9 +57,9 @@ eError Engine::run()
 }
 
 //===============================================================
-// Engine::
+// LEngine::
 //===============================================================
-eError Engine::quit()
+eError LEngine::quit()
 {
 	DEBUG_LOG("Quiting...\n")
 
@@ -74,27 +74,27 @@ eError Engine::quit()
 }
 
 //===============================================================
-// Engine::
+// LEngine::
 //===============================================================
-eError Engine::load()
+eError LEngine::load()
 {
 	DEBUG_LOG("Loading...\n")
     
 	//Loading err flag
     eError err = eError_noErr;
 
-    err = GameBase::GetGame()->Create();
+    err = LGameBase::GetGame()->Create();
 
     if( eError_noErr == err )
-        err = GameBase::GetGame()->Initialise();
+        err = LGameBase::GetGame()->Initialise();
 
     return err;
 }
 
 //===============================================================
-// Engine::
+// LEngine::
 //===============================================================
-eError Engine::loop()
+eError LEngine::loop()
 {
 	DEBUG_LOG("Looping...\n")
 
@@ -109,7 +109,7 @@ eError Engine::loop()
         err = SDLEventLoop::DoLoop(exit_request);
 
         if ( eError_noErr == err )
-            err = GameBase::GetGame()->Update();
+            err = LGameBase::GetGame()->Update();
 
         if ( eError_noErr == err )
         	err = myMainWindow.Update();
@@ -119,13 +119,13 @@ eError Engine::loop()
 }
 
 //===============================================================
-// Engine::
+// LEngine::
 //===============================================================
-eError Engine::unload()
+eError LEngine::unload()
 {
 	eError err = eError_noErr;
 
-    err = GameBase::GetGame()->Destroy();
+    err = LGameBase::GetGame()->Destroy();
 
 	return err;
 }

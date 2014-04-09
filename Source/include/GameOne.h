@@ -1,17 +1,17 @@
 #ifndef _GAMEONE_H_
 #define _GAMEONE_H_
 
-#include "GameBase.h"
+#include "LGameBase.h"
 
 class GameOne
-: public GameBase
+: public LGameBase
 {
 public:
 
 	GameOne();
 	~GameOne();
 
-	// Inherited methods as defined in Object.h
+	// Inherited methods as defined in LObject.h
 	virtual eError Create();
 	virtual eError Initialise();
 	virtual eError Update();

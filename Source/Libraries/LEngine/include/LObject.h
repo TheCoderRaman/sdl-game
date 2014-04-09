@@ -1,29 +1,29 @@
-#ifndef _OBJECT_H_
-#define _OBJECT_H_
+#ifndef _LOBJECT_H_
+#define _LOBJECT_H_
 
-// Base Object interface type
-// Designed as a base type for all Engine parts
+// Base LObject interface type
+// Designed as a base type for all LEngine parts
 // Allows similarity of interface
-class Object 
+class LObject 
 {
 public:
 
-	// Create the Object
+	// Create the LObject
 	// Memory should be allocated here 
 	// Contructor simply for POD
 	virtual eError Create() = 0;
 
-	// Initialise the Object
+	// Initialise the LObject
 	// Set object into it's initial state
 	virtual eError Initialise() = 0;
 
-	// Update the Object's state
+	// Update the LObject's state
 	// To be used to update the object
 	// Not nessasarily once per frame or on a timestamp
 	virtual eError Update() = 0;
 
 	// Reset the object
-	// Should the Object back in it's original state
+	// Should the LObject back in it's original state
 	virtual eError Reset() = 0;
 
 	// Destroy the object 
@@ -32,4 +32,4 @@ public:
 	virtual eError Destroy() = 0;
 };
 
-#endif //_OBJECT_H_
+#endif //_LOBJECT_H_
