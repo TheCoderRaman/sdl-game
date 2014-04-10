@@ -8,6 +8,8 @@ project( sdlinterface )
 include( FindPkgConfig )
 pkg_search_module( SDL2 REQUIRED sdl2 )
 
+add_library(SDL2 STATIC IMPORTED)
+set_property(TARGET SDL2 PROPERTY IMPORTED_LOCATION ${SDL2_LIBRARIES})
  
 set (PROJECT_INCLUDE_DIR 
 	${SDL2_INCLUDE_DIRS}	# SDL headers
@@ -40,6 +42,6 @@ set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 
 # Link project with SDL
 target_link_libraries(${PROJECT_NAME} 
-	${SDL2_LIBRARIES}
+	SDL2
 #	Util # Temporary disable while it has no source to build
 )
