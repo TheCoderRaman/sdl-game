@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _TYPES_H_
+#define _TYPES_H_
 
 #include "stdio.h"
 
@@ -19,3 +20,5 @@ enum eError {
 #else
 	#define DEBUG_LOG(...) 
 #endif
+
+#endif //_TYPES_H_

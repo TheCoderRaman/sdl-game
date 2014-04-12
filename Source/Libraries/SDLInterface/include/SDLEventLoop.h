@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _SDLEVENTLOOP_H_
+#define _SDLEVENTLOOP_H_
 
 #include "types.h"
 
@@ -16,3 +17,5 @@ namespace SDLEventLoop
 	eError HandleControllerEvent( SDL_Event *event );
 	
 }
+
+#endif //_SDLEVENTLOOP_H_

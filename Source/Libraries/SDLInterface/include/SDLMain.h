@@ -1,4 +1,5 @@
-#pragma once
+#ifndef _SDLMAIN_H_
+#define _SDLMAIN_H_
 
 #include "types.h"
 
@@ -10,3 +11,5 @@ namespace SDLMain
 	// Quit SDL
 	eError Quit();
 }
+
+#endif //_SDLMAIN_H_
