@@ -20,3 +20,4 @@ Development
 
 	dev branch is used for general development
 	master branch for major releases
+	use feature branches all the time. It really helps

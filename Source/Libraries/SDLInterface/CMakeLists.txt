@@ -13,9 +13,11 @@ if ( NOT MSVC )
 	pkg_search_module( SDL2 REQUIRED sdl2 )
 endif ( NOT MSVC )
 
-add_library(SDL2 STATIC IMPORTED)
-set_property(TARGET SDL2 PROPERTY IMPORTED_LOCATION ${SDL2_LIBRARIES})
- 
+if ( MSVC )
+	add_library(SDL2 STATIC IMPORTED)
+	set_property(TARGET SDL2 PROPERTY IMPORTED_LOCATION ${SDL2_LIBRARIES})
+endif ( MSVC )
+
 set (PROJECT_INCLUDE_DIR 
 	${CMAKE_CURRENT_SOURCE_DIR}/include
 	${CMAKE_CURRENT_SOURCE_DIR}/../Util/include
@@ -66,6 +68,6 @@ set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 
 # Link project with SDL
 target_link_libraries(${PROJECT_NAME} 
-	SDL2
+	${SDL2_LIBRARIES}
 #	Util # Temporary disable while it has no source to build
 )
