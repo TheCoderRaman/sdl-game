@@ -70,7 +70,7 @@ target_link_libraries(
 #-----------------------------------------------------------------
 # POST BUILD
 if ( MSVC )
-	file(TO_NATIVE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/Libraries/SDLInterface/SDL2/lib/x86/SDL2.dll" SDL_DLL)
+	file(TO_NATIVE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../SDL2/lib/x86/SDL2.dll" SDL_DLL)
 
 	add_custom_command(TARGET SDLGame POST_BUILD
 		COMMAND copy ${SDL_DLL} $<CONFIGURATION>
