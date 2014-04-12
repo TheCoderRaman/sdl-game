@@ -1,9 +1,9 @@
-//! \file SDLEventLoop.h
+//! \file SDLMain.h
 //!
 //! \author  Marc Di luzio
 //! \date    April 2014
 //!
-//! Header for SDLEventLoop.cpp
+//! Header for SDLMain.cpp
 //!
 #pragma once
 

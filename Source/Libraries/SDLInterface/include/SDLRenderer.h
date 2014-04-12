@@ -1,9 +1,9 @@
-//! \file SDLMain.h
+//! \file SDLRenderer.h
 //!
 //! \author  Marc Di luzio
 //! \date    April 2014
 //!
-//! Header for SDLMain.cpp
+//! Header for SDLRenderer.cpp
 //!
 #pragma once
 

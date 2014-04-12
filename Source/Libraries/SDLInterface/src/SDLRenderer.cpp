@@ -1,4 +1,4 @@
-//! \file SDLWindow.cpp
+//! \file SDLRenderer.cpp
 //!
 //! \author  Marc Di luzio
 //! \date    April 2014
