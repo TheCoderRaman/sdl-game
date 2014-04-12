@@ -1,3 +1,10 @@
+//! \file SDLWindow.h
+//!
+//! \author  Marc Di luzio
+//! \date    April 2014
+//!
+//! Header for SDLWindow.cpp
+//!
 #pragma once
 
 // Includes

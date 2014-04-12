@@ -1,3 +1,10 @@
+//! \file Types.h
+//!
+//! \author  Marc Di luzio
+//! \date    April 2014
+//!
+//! Contains defines for simple global types
+//!	Possibly needs refactoring at some point
 #pragma once
 
 #include "stdio.h"

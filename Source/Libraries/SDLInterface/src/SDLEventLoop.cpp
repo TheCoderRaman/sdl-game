@@ -1,3 +1,10 @@
+//! \file SDLEventLoop.cpp
+//!
+//! \author  Marc Di luzio
+//! \date    April 2014
+//!
+//! Description
+//! 
 #include "SDLEventLoop.h"
 
 #include "SDL.h"

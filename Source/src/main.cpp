@@ -1,3 +1,11 @@
+//! \file main.cpp
+//!
+//! \author  Marc Di luzio
+//! \date    April 2014
+//!
+//! Description
+//! 
+
 //includes
 #include "stdio.h"
 

@@ -1,3 +1,10 @@
+//! \file LGameBase.h
+//!
+//! \author  Marc Di luzio
+//! \date    April 2014
+//!
+//! Header for LGameBase.cpp
+//!
 #ifndef _LGAMEBASE_H_
 #define _LGAMEBASE_H_
 

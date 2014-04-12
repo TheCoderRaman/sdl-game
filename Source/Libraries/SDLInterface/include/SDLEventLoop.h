@@ -1,3 +1,10 @@
+//! \file LObject.h
+//!
+//! \author  Marc Di luzio
+//! \date    April 2014
+//!
+//! Header for LObject.cpp
+//!
 #pragma once
 
 #include "types.h"

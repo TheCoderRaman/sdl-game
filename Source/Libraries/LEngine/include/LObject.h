@@ -1,3 +1,10 @@
+//! \file LObject.h
+//!
+//! \author  Marc Di luzio
+//! \date    April 2014
+//!
+//! Header for LObject.cpp
+//!
 #ifndef _LOBJECT_H_
 #define _LOBJECT_H_
 

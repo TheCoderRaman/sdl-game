@@ -1,3 +1,10 @@
+//! \file LGameBase.cpp
+//!
+//! \author  Marc Di luzio
+//! \date    April 2014
+//!
+//! Description
+//! 
 #include "LGameBase.h"
 
 //===============================================================

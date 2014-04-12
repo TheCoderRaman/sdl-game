@@ -1,3 +1,10 @@
+//! \file SDLMain.h
+//!
+//! \author  Marc Di luzio
+//! \date    April 2014
+//!
+//! Header for SDLMain.cpp
+//!
 #pragma once
 
 // Includes

@@ -30,7 +30,6 @@ public:
 	//! \warning [any warning if necessary]
 	int Funtion( int theInputParam )
 	{
-		int i; //!< [specific line comment]
+		int i; //! [specific line comment]
 	}
-
 }
