@@ -73,7 +73,7 @@ eError SDLEventLoop::DoLoop( bool &exit_request )
     }
 
     if ( err != eError_noErr )
-    	DEBUG_LOG("DoLoop Failed with ERROR %i\n",err);
+    	DEBUG_LOG("DoLoop Dropped out with ERROR %i\n",err);
 
     return err;
 }
