@@ -21,7 +21,7 @@ namespace SDLEventLoop
 	//! Handles all SDL_Event types and calls down to deligate methods
 	//!
 	//! \return Any error produced
-	//! \warning Calling this method will not allow an exit until SDL_Quit sent
+	//! \warning this method will not return until SDL_Quit is sent
 	eError DoLoop( bool &exit );
 
 	//! \brief Handle any keyboard related event

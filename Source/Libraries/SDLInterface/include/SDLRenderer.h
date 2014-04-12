@@ -21,7 +21,10 @@ class SDLRenderer
 {
 public:
 
+	//! \brief Constructor
 	SDLRenderer();
+
+	//! \brief Destructor
 	~SDLRenderer();
 
 	// Create
