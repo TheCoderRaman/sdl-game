@@ -20,5 +20,9 @@ eError SDLMain::Init()
 // Quit SDL
 eError SDLMain::Quit()
 {
+	eError err = eError_noErr;
+
     SDL_Quit();
+
+	return err;
 }

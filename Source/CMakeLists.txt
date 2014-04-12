@@ -25,14 +25,11 @@ set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 
 # Sub projects
-if (NOT TARGET lengine)
+if (NOT TARGET LEngine)
 	add_subdirectory(Libraries/LEngine) 
 endif() 
-if (NOT TARGET sdlinterface)
+if (NOT TARGET SDLInterface)
 	add_subdirectory(Libraries/SDLInterface)
-endif() 
-if (NOT TARGET util)
-	add_subdirectory(Libraries/Util)
 endif() 
 
 # Stuff to compile
@@ -52,7 +49,10 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 
 target_link_libraries( 
 	${PROJECT_NAME}
-	lengine
-	sdlinterface
-	util
+	LEngine
+	SDLInterface
+)
+
+add_custom_command(TARGET SDLGame POST_BUILD
+    COMMAND copy "C:\\VSDev\\SDL2\\lib\\x86\\SDL2.dll" $<CONFIGURATION>
 )
