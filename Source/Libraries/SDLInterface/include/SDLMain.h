@@ -1,7 +1,7 @@
 #ifndef _SDLMAIN_H_
 #define _SDLMAIN_H_
 
-#include "types.h"
+#include "error.h"
 
 namespace SDLMain
 {

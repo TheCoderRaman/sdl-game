@@ -55,6 +55,10 @@ if	( MSVC )
 	set_property(TARGET SDL2 PROPERTY IMPORTED_LOCATION ${SDL2_LIBRARIES})
 endif ( MSVC )
 
+if (NOT TARGET Util)
+	add_subdirectory(../Util "Util")
+endif() 
+
 #-----------------------------------------------------------------
 # INCLUDES AND COMPILE
 include_directories(${PROJECT_INCLUDE_DIR})

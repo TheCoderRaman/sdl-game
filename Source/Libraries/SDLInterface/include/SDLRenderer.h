@@ -2,7 +2,7 @@
 #define _SDLRENDERER_H_
 
 // Includes
-#include "types.h"
+#include "error.h"
 
 // Forward declares
 class SDL_Renderer;

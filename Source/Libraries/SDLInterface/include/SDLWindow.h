@@ -2,7 +2,7 @@
 #define _SDL_WINDOW_H
 
 // Includes
-#include "types.h"
+#include "error.h"
 
 // Forward declares
 struct SDL_Window;

@@ -2,6 +2,8 @@
 
 #include "SDL.h"
 
+#include "debug.h"
+
 // Do the event loop
 eError SDLEventLoop::DoLoop( bool &exit_request )
 {

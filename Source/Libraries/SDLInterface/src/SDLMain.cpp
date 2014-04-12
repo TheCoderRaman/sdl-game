@@ -1,6 +1,7 @@
 #include "SDLMain.h"
 
 #include "SDL.h"
+#include "debug.h"
 
 // Initialise SDL
 eError SDLMain::Init()

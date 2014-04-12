@@ -1,8 +1,11 @@
 //includes
 #include "stdio.h"
 
-#include "types.h"
+#include "debug.h"
+#include "error.h"
+
 #include "LEngine.h"
+
 
 // Main
 int main( int argc, char* args[] )

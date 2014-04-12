@@ -1,7 +1,7 @@
 #ifndef _SDLEVENTLOOP_H_
 #define _SDLEVENTLOOP_H_
 
-#include "types.h"
+#include "error.h"
 
 union SDL_Event;
 

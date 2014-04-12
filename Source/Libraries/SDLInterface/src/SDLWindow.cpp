@@ -3,6 +3,8 @@
 // extra includes
 #include "SDL.h"
 
+#include "debug.h"
+
 // Default constructor
 SDLWindow::SDLWindow()
 : m_SDL_Window ( NULL )

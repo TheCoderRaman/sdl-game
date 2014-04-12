@@ -3,6 +3,8 @@
 
 #include "LGameBase.h"
 
+#include "error.h"
+
 class GameOne
 : public LGameBase
 {
