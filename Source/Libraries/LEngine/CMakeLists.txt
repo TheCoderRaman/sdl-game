@@ -1,39 +1,59 @@
-# Minimum cmake version (required)
+#-----------------------------------------------------------------
+# CMAKE SETTINGS
 cmake_minimum_required( VERSION 2.8.4 )
 
-# Project name
-project( lengine )
+#-----------------------------------------------------------------
+# PROJECT NAME
+project( LEngine )
 
- 
-set (PROJECT_INCLUDE_DIR 
-	${PROJECT_SOURCE_DIR}/include
-
-	${PROJECT_SOURCE_DIR}/../Util/include
+#-----------------------------------------------------------------
+#DIRECTORIES
+set (PROJECT_INCLUDE_DIR
+	${CMAKE_CURRENT_SOURCE_DIR}/include
+	${CMAKE_CURRENT_SOURCE_DIR}/../Util/include
+	${CMAKE_CURRENT_SOURCE_DIR}/../SDLInterface/include
 )	
 
-set (PROJECT_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
-
-set(PROJECT_SRCS 
-	${PROJECT_SOURCE_DIR}/LEngine.cpp
-	${PROJECT_SOURCE_DIR}/LGameBase.cpp
+set (PROJECT_SOURCE_DIR
+	${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
-# Set the compiler flags (specifically the c++11 one)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
- 
-include_directories("${PROJECT_BINARY_DIR}")
-include_directories("${PROJECT_INCLUDE_DIR}")
+#-----------------------------------------------------------------
+# HEADER AND SOURCE FILES
+SET(PROJECT_HEADERS
+	${CMAKE_CURRENT_SOURCE_DIR}/include/LEngine.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/LGameBase.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/LObject.h
+)
 
-if (NOT TARGET sdlinterface)
-	add_subdirectory(../SDLInterface "${CMAKE_CURRENT_BINARY_DIR}/sdlinterface/build")
-endif() 
-if (NOT TARGET util)
-	add_subdirectory(../Util "${CMAKE_CURRENT_BINARY_DIR}/util/build")
-endif() 
+SET(PROJECT_SRCS
+	${CMAKE_CURRENT_SOURCE_DIR}/src/LEngine.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/LGameBase.cpp
+)
 
-add_library(${PROJECT_NAME} SHARED ${PROJECT_SRCS})
+#-----------------------------------------------------------------
+# COMPILER FLAGS 
+if ( NOT MSVC ) # Not needed with vc++
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+endif( NOT MSVC )
+
+#-----------------------------------------------------------------
+# PULL IN DEPENDENCIES
+if (NOT TARGET SDLInterface)
+	add_subdirectory(../SDLInterface "SDLInterface")
+endif()
+
+#-----------------------------------------------------------------
+# INCLUDES AND COMPILE
+include_directories( ${PROJECT_INCLUDE_DIR} )
+
+# ADD THE LIBRARY 
+add_library( ${PROJECT_NAME} ${PROJECT_SRCS} ${PROJECT_HEADERS} )
+
+#-----------------------------------------------------------------
+# SET THE PROPERTIES
 set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 
-
-# Link project with SDL
-target_link_libraries(${PROJECT_NAME} sdlinterface util)
+#-----------------------------------------------------------------
+# LINKING
+target_link_libraries( ${PROJECT_NAME} SDLInterface )

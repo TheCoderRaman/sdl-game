@@ -1,58 +1,78 @@
-# Minimum cmake version (required)
+#-----------------------------------------------------------------
+# CMAKE SETTINGS
 cmake_minimum_required( VERSION 2.8.4 )
 
-# Project name
+#-----------------------------------------------------------------
+# PROJECT NAME
 project( SDLGame )
 
+#-----------------------------------------------------------------
+# DIRECTORIES
 set (PROJECT_INCLUDE_DIR 
 
-	${PROJECT_SOURCE_DIR}/include
-	${PROJECT_SOURCE_DIR}/Libraries/Util/include
-	${PROJECT_SOURCE_DIR}/Libraries/SDLInterface/include
-	${PROJECT_SOURCE_DIR}/Libraries/LEngine/include
+	${CMAKE_CURRENT_SOURCE_DIR}/include
+	${CMAKE_CURRENT_SOURCE_DIR}/Libraries/Util/include
+	${CMAKE_CURRENT_SOURCE_DIR}/Libraries/SDLInterface/include
+	${CMAKE_CURRENT_SOURCE_DIR}/Libraries/LEngine/include
 
 )
 
-set (PROJECT_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
+set (PROJECT_SOURCE_DIR 
+	${CMAKE_CURRENT_SOURCE_DIR}/src
+)
 
-# Include directories 
-# Act as header search paths
-include_directories( "${PROJECT_INCLUDE_DIR}" )
-include_directories( "${PROJECT_SOURCE_DIR}" )
+#-----------------------------------------------------------------
+# HEADER AND SOURCE FILES
+SET(PROJECT_HEADERS
+	${CMAKE_CURRENT_SOURCE_DIR}/include/GameOne.h
+)
 
+set(PROJECT_SRCS 
+	${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/GameOne.cpp
+)
+
+#-----------------------------------------------------------------
+# PULL IN DEPENDENCIES
+
+if (NOT TARGET LEngine)
+	add_subdirectory(Libraries/LEngine) 
+endif() 
+if (NOT TARGET SDLInterface)
+	add_subdirectory(Libraries/SDLInterface)
+endif() 
+
+#-----------------------------------------------------------------
+# COMPILER FLAGS 
+if ( NOT MSVC ) # Not needed with vc++
+	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+endif( NOT MSVC )
+
+#-----------------------------------------------------------------
 set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/build)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 
-# Sub projects
-if (NOT TARGET lengine)
-	add_subdirectory(Libraries/LEngine) 
-endif() 
-if (NOT TARGET sdlinterface)
-	add_subdirectory(Libraries/SDLInterface)
-endif() 
-if (NOT TARGET util)
-	add_subdirectory(Libraries/Util)
-endif() 
+#-----------------------------------------------------------------
+# INCLUDES AND COMPILE
+include_directories( ${PROJECT_INCLUDE_DIR} )
 
-# Stuff to compile
-add_executable(
+add_executable( ${PROJECT_NAME} ${PROJECT_SRCS} ${PROJECT_HEADERS} )
 
-	# name of excecutable
-	${PROJECT_NAME}
-
-	# main
-	src/main.cpp
-	src/GameOne.cpp
-
-)
-
-# Set the compiler flags (specifically the c++11 one)
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-
+#-----------------------------------------------------------------
+# LINKING
 target_link_libraries( 
 	${PROJECT_NAME}
-	lengine
-	sdlinterface
-	util
+	LEngine
+	SDLInterface
 )
+
+#-----------------------------------------------------------------
+# POST BUILD
+if ( MSVC )
+	file(TO_NATIVE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/Libraries/SDLInterface/SDL2/lib/x86/SDL2.dll" SDL_DLL)
+
+	add_custom_command(TARGET SDLGame POST_BUILD
+		COMMAND copy ${SDL_DLL} $<CONFIGURATION>
+	)
+endif ( MSVC )

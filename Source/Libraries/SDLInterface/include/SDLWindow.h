@@ -4,8 +4,8 @@
 #include "types.h"
 
 // Forward declares
-class SDL_Window;
-class SDL_Surface;
+struct SDL_Window;
+struct SDL_Surface;
 
 class SDLWindow
 {
