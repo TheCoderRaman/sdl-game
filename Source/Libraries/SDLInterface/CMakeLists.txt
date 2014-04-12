@@ -21,7 +21,7 @@ endif ( MSVC )
 set (PROJECT_INCLUDE_DIR 
 	${CMAKE_CURRENT_SOURCE_DIR}/include
 	${CMAKE_CURRENT_SOURCE_DIR}/../Util/include
-	${CMAKE_CURRENT_SOURCE_DIR}../../../SDL2/include	# SDL headers
+	${CMAKE_CURRENT_SOURCE_DIR}/../../../SDL2/include	# SDL headers
 )	
 
 set (PROJECT_SOURCE_DIR 
@@ -57,7 +57,7 @@ endif ( MSVC )
 
 #-----------------------------------------------------------------
 # INCLUDES AND COMPILE
-include_directories("${PROJECT_INCLUDE_DIR}")
+include_directories(${PROJECT_INCLUDE_DIR})
 
 add_library(${PROJECT_NAME} ${PROJECT_SRCS} ${PROJECT_HEADERS})
 
