@@ -16,16 +16,26 @@ enum t_Error
 // 	Error name					  Error bit value for flags
 	eError_noErr 				= 0x00000000,
 
-// Error types
-	eError_Type_Fatal			= 0x10000000, 	// Fatal flag
+// 	Error flags                   First two bytes for erro types
+	eErrorType_Fatal			= 0x10000000, 	// Fatal flag
+    eErrorType_Warning			= 0x20000000, 	// Warning flag
 
-	eError_quitRequested		= 0x00000001,
+//  Error catagories              3rd and 4th bits for error catagoreis
+    eErrorCat_SDL				= 0x00100000, 	// SDL flag
 
-	eError_SDL_Fatal			= 0x10000002	// Contains Fatal error
+// 	Specific Errors               Last 4 bits for specific errors
+	eError_quitRequest			= 0x00000001,
+
+//  Composite Errors
+    eError_SDL_Fatal			= 0x10100000	// Contains Fatal error AND SDL catagory
 
 };
 
 //! \brief Actual error type, used as a bit flag
 typedef int eError;
+
+//! \brief Check if error is fatal
+#define ERROR_IS_FATAL( err ) 	( err & eErrorType_Fatal 	)
+#define ERROR_IS_SDL( err ) 	( err & eErrorType_SDL   	)
 
 #endif //_ERROR_H_
