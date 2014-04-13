@@ -23,7 +23,7 @@ void _debug_log(const char* file, int line, const char* format , ... )
 	char finalStr[FINAL_STR_MAX];	
 
 	//! print in the formatted prefix into the output
-	snprintf( finalStr, FINAL_STR_MAX, "%s:%i -> ", FILE_NAME(file) , line );
+	sprintf( finalStr, "%s:%i -> ", FILE_NAME(file) , line );
 
 	//! concatonate the format string from the debug message into the output
 	strncat( finalStr, format , FINAL_STR_MAX);

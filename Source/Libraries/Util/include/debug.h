@@ -16,8 +16,8 @@
 	#define DEBUG_LOG(...) \
 			do {} while(0);		// To squish warnings	
 #else 
-	#define DEBUG_LOG(multiple_args...) \
-		_debug_log(__FILE__,__LINE__,multiple_args);
+	#define DEBUG_LOG(...) \
+		_debug_log(__FILE__,__LINE__,__VA_ARGS__);
 #endif //DEBUG_LOGGING
 
 
