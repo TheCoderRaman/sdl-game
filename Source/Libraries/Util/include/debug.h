@@ -1,3 +1,10 @@
+//! \file debug.h
+//!
+//! \author  Marc Di luzio
+//! \date    April 2014
+//!
+//! Contains various types helpful debug methods
+//!
 #ifndef _DEBUG_H_
 #define _DEBUG_H_
 

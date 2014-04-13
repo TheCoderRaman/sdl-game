@@ -1,4 +1,4 @@
-//! \file Types.h
+//! \file types.h
 //!
 //! \author  Marc Di luzio
 //! \date    April 2014

@@ -1,3 +1,9 @@
+//! \file error.h
+//!
+//! \author  Marc Di luzio
+//! \date    April 2014
+//!
+//! Contains error handling types and methods
 #ifndef _ERROR_H_
 #define _ERROR_H_
 
