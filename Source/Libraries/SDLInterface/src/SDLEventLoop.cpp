@@ -20,7 +20,8 @@ eError SDLEventLoop::DoLoop( bool &exit_request )
     SDL_Event event;
 
 	//Handle events on queue
-    while( SDL_PollEvent( &event ) != 0 )
+    while( SDL_PollEvent( &event ) != 0 
+			&& !ERRORTYPE_IS_FATAL(err) )
     {
     	switch( event.type )
     	{
@@ -29,16 +30,19 @@ eError SDLEventLoop::DoLoop( bool &exit_request )
 				DEBUG_LOG("Quit requested\n");
     			break;
 
+			// Keyboard events
     		case SDL_KEYUP:
     		case SDL_KEYDOWN:
     			err = HandleKeyboardEvent(&event);
     			break;
 
+			// Text input events
     		case SDL_TEXTEDITING:
     		case SDL_TEXTINPUT:
 				DEBUG_LOG("Unhandled SDL Event: SDL_TEXT\n");
     			break;
 
+			// Mouse events
     		case SDL_MOUSEMOTION:
     		case SDL_MOUSEBUTTONUP:
     		case SDL_MOUSEBUTTONDOWN:
@@ -46,6 +50,7 @@ eError SDLEventLoop::DoLoop( bool &exit_request )
     			err = HandleMouseEvent(&event);
     			break;
 
+			// Joystick events
 			case SDL_JOYAXISMOTION:
 			case SDL_JOYBALLMOTION:
 			case SDL_JOYHATMOTION:
@@ -56,6 +61,7 @@ eError SDLEventLoop::DoLoop( bool &exit_request )
     			err = HandleJoystickEvent(&event);
 				break;
 
+			// Controller events
 			case SDL_CONTROLLERAXISMOTION:
 			case SDL_CONTROLLERBUTTONDOWN:
 			case SDL_CONTROLLERBUTTONUP:
@@ -65,10 +71,12 @@ eError SDLEventLoop::DoLoop( bool &exit_request )
     			err = HandleControllerEvent(&event);
 				break;
 
+			// Window events
 			case SDL_WINDOWEVENT:
 				DEBUG_LOG("Unhandled SDL Event: SDL_WINDOWEVENT\n");
 				break;
 
+			// SysWM events?
 			case SDL_SYSWMEVENT:
 				DEBUG_LOG("Unhandled SDL Event: SDL_SYSWMEVENT\n");
 				break;

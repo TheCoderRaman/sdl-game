@@ -19,7 +19,7 @@ SDLRenderer::SDLRenderer()
 
 SDLRenderer::~SDLRenderer()
 {
-
+	DEBUG_ASSERT(NULL == m_SDL_Renderer);
 }
 
 // Create

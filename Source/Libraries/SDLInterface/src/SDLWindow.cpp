@@ -24,8 +24,8 @@ SDLWindow::SDLWindow()
 SDLWindow::~SDLWindow()
 {
     // Sanity check here
-	if ( m_SDL_Window || m_SDL_Surface )
-        DEBUG_LOG("SDLWindow::~SDLWindow() called before Destroy");
+	DEBUG_ASSERT( NULL == m_SDL_Window );
+	DEBUG_ASSERT( NULL == m_SDL_Surface );
 }
 
 // Create the window
