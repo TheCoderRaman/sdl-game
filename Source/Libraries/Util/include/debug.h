@@ -9,19 +9,41 @@
 #define _DEBUG_H_
 
 // Defines
-#define DEBUG_LOGGING 1
+#define RUNTIME_LOGGING 1
 
-// Macros
-#if !DEBUG_LOGGING
-	#define DEBUG_LOG(...) \
-			do {} while(0);		// To squish warnings	
+// DEBUG LOGGING
+#ifdef _DEBUG
+#define DEBUG_LOG(...) \
+	_log(__FILE__, __LINE__, __VA_ARGS__);
 #else 
-	#define DEBUG_LOG(...) \
-		_debug_log(__FILE__,__LINE__,__VA_ARGS__);
+#define DEBUG_LOG(...) \
+	do {} while(0);		// To squish warnings	
 #endif //DEBUG_LOGGING
 
+// GENERAL LOGGING
 
-void _debug_log(const char* file, int line, const char* format , ... );
+#if RUNTIME_LOGGING
+#define RUNTIME_LOG(...) \
+	_log(__FILE__, __LINE__, __VA_ARGS__);
+#endif //DEBUG_LOGGING
+
+// DEBUG ASSERTIONS
+#ifdef _DEBUG
+#include <assert.h>
+#define DEBUG_ASSERT ( condition )											\
+	if (!(condition))														\
+	{																		\
+		_log(__FILE__, __LINE__, "ASSERT FAILED: %s", ##condition);	\
+		assert(0);															\
+	}		
+
+#else
+#define DEBUG_ASSERT( condition ) \
+			do {} while (0);		// To squish warnings
+#endif
+
+
+void _log(const char* file, int line, const char* format , ... );
 
 
 #endif //_DEBUG_H_

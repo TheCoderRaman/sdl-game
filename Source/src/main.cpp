@@ -18,7 +18,7 @@
 // Main
 int main( int argc, char* args[] )
 {
-    DEBUG_LOG("Program Starting...\n");
+	RUNTIME_LOG("Program Starting...\n");
 
     // Create the engine
     LEngine myEngine = LEngine();
@@ -33,7 +33,7 @@ int main( int argc, char* args[] )
     if( eError_noErr == err )
     	err = myEngine.quit();
     
-    DEBUG_LOG("Program Exiting with error %i \n",err);
+	RUNTIME_LOG("Program Exiting with error %i \n", err);
 
     return err;    
 }

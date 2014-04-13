@@ -34,7 +34,7 @@ LEngine::~LEngine()
 //===============================================================
 eError LEngine::init()
 {
-	DEBUG_LOG("Initialising...\n")
+	RUNTIME_LOG("Initialising...\n")
 
     //Initialization flag
     eError err = eError_noErr;
@@ -70,7 +70,7 @@ eError LEngine::run()
 //===============================================================
 eError LEngine::quit()
 {
-	DEBUG_LOG("Quiting...\n")
+	RUNTIME_LOG("Quiting...\n")
 
 	eError err = eError_noErr;
 
@@ -87,7 +87,7 @@ eError LEngine::quit()
 //===============================================================
 eError LEngine::load()
 {
-	DEBUG_LOG("Loading...\n")
+	RUNTIME_LOG("Loading...\n")
     
 	//Loading err flag
     eError err = eError_noErr;
@@ -105,7 +105,7 @@ eError LEngine::load()
 //===============================================================
 eError LEngine::loop()
 {
-	DEBUG_LOG("Looping...\n")
+	RUNTIME_LOG("Looping...\n")
 
 	eError err = eError_noErr;
 

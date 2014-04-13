@@ -17,7 +17,8 @@
 //! The max buffer size for the final string. if we run into errors then we can up this
 #define FINAL_STR_MAX 	256
 
-void _debug_log(const char* file, int line, const char* format , ... )
+//! Actual debug log method, used to produce the log output
+void _log(const char* file, int line, const char* format, ...)
 { 
 	//! The final output string
 	char finalStr[FINAL_STR_MAX];	
