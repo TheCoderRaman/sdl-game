@@ -11,12 +11,16 @@
 // Includes
 #include "error.h"
 
+// for friending
+#include "SDLHelper.h"
+
 // Forward declares
 struct SDL_Window;
 struct SDL_Surface;
 
 class SDLWindow
 {
+	friend class SDLHelper;
 public:
 
 	SDLWindow();

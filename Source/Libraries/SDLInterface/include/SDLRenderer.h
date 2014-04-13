@@ -11,8 +11,11 @@
 // Includes
 #include "error.h"
 
+// for friending
+#include "SDLHelper.h"
+
 // Forward declares
-class SDL_Renderer;
+struct SDL_Renderer;
 class SDLWindow;
 
 // References for how to use SDL_Renderer can be found
@@ -20,6 +23,7 @@ class SDLWindow;
 
 class SDLRenderer 
 {
+	friend class SDLHelper;
 public:
 
 	//! \brief Constructor
@@ -40,7 +44,7 @@ public:
 private:
 
 	// The actual SDL Renderer
-	SDL_Renderer* myRenderer;
+	SDL_Renderer* m_SDL_Renderer;
 };
 
 #endif //_SDLRENDERER_H_

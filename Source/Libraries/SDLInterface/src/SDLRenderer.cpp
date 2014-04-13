@@ -7,8 +7,12 @@
 //! 
 #include "SDLRenderer.h"
 
+#include "SDL.h"
+
+#include "debug.h"
+
 SDLRenderer::SDLRenderer()
-: myRenderer ( NULL )
+: m_SDL_Renderer(NULL)
 {
 
 }
@@ -23,9 +27,16 @@ eError SDLRenderer::Create( SDLWindow* window )
 {
 	eError err = eError_noErr;
 
-	myRenderer = SDL_CreateRenderer( window, 
+	// Create the renderer
+	m_SDL_Renderer = SDL_CreateRenderer( SDLHelper::GetSDL_Window(window),
 			-1,  	// Uses whichever default device is available
 			0);		// Uses the default SDL_RENDERER_ACCELERATED
+
+	if (NULL == m_SDL_Renderer)
+	{
+		DEBUG_LOG("Renderer failed to be created");
+		err = eError_SDL_Fatal;
+	}
 
 	return err;
 }
@@ -42,7 +53,7 @@ eError SDLRenderer::Destroy()
 {
 	eError err = eError_noErr;
 
-	SDL_DestroyRenderer(myRenderer);
+	SDL_DestroyRenderer(m_SDL_Renderer);
 
 	return err;
 }

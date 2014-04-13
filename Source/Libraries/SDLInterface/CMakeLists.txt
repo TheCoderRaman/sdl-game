@@ -29,12 +29,16 @@ SET(PROJECT_HEADERS
 	${CMAKE_CURRENT_SOURCE_DIR}/include/SDLMain.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/SDLWindow.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/SDLEventLoop.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/SDLRenderer.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/SDLHelper.h
 )
 
 set(PROJECT_SRCS 
 	${CMAKE_CURRENT_SOURCE_DIR}/src/SDLMain.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/SDLWindow.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/SDLEventLoop.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/SDLRenderer.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/SDLHelper.cpp
 )
 
 #-----------------------------------------------------------------
