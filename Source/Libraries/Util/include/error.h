@@ -35,7 +35,10 @@ enum t_Error
 typedef int eError;
 
 //! \brief Check if error is fatal
-#define ERROR_IS_FATAL( err ) 	( err & eErrorType_Fatal 	)
-#define ERROR_IS_SDL( err ) 	( err & eErrorType_SDL   	)
+#define ERRORTYPE_IS_FATAL( err ) 		( err & eErrorType_Fatal 		)
+#define ERRORTYPE_IS_WARNING( err ) 	( err & eErrorType_Warning   	)
+
+#define ERRORCAT_IS_SDL( err )			( err & eErrorCat_SDL   	)
+
 
 #endif //_ERROR_H_
