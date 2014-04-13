@@ -20,6 +20,7 @@
 #define FINAL_STR_MAX 	256
 
 //! Actual debug log method, used to produce the log output
+//! \warning never call directly, always call one of the various LOG macros
 void _log(const char* file, int line, const char* format, ...)
 { 
 	//! The final output string
@@ -43,9 +44,16 @@ void _log(const char* file, int line, const char* format, ...)
 
 }
 
+//! \brief Assert method. Does not check a condition, but logs and causes a break
+//! \warning never call directly, always call DEBUG_ASSERT
+//! I do wonder if it'd be better to stick the assert in the macro
+//! But time will tell that
 void _assert(const char* file, int line, const char* format)
 {
-	_log(file, line, "ASSERT FAILED: %s", format);	\
+	// log the current situation
+	_log(file, line, "ASSERT FAILED: %s", format);	
+
+	// Then assert
 	assert(0);
 }
 
