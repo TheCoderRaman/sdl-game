@@ -10,6 +10,9 @@
 //! Great explanation on how this can work is here 
 //! http://forum.codecall.net/topic/56591-bit-fields-flags-tutorial-with-example/
 
+//! \brief Actual error type, used as a bit flag
+typedef int eError;
+
 //! \brief generic Error enum for error handling
 enum t_Error
 {
@@ -26,18 +29,18 @@ enum t_Error
 // 	Specific Errors               Last 4 bits for specific errors
 	eError_quitRequest			= 0x00000001,
 
-//  Composite Errors
+//  Composite Errors (Errors produced as a composite of type, catagory and/or specifics)
     eError_SDL_Fatal			= 0x10100000	// Contains Fatal error AND SDL catagory
 
 };
 
-//! \brief Actual error type, used as a bit flag
-typedef int eError;
-
 //! \brief Check if error is fatal
 #define ERRORTYPE_IS_FATAL( err ) 		( err & eErrorType_Fatal 		)
+
+//! \brief Check if error is warning
 #define ERRORTYPE_IS_WARNING( err ) 	( err & eErrorType_Warning   	)
 
+//! \brief Check if error is an SDL error
 #define ERRORCAT_IS_SDL( err )			( err & eErrorCat_SDL   	)
 
 
