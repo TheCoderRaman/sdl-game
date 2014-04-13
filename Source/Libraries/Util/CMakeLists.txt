@@ -19,11 +19,13 @@ set (PROJECT_SOURCE_DIR
 #-----------------------------------------------------------------
 # HEADER AND SOURCE FILES
 SET(PROJECT_HEADERS
+	${CMAKE_CURRENT_SOURCE_DIR}/include/debug.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/error.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/types.h
 )
 
 SET(PROJECT_SRCS
+	${CMAKE_CURRENT_SOURCE_DIR}/src/debug.cpp
 )
 
 #-----------------------------------------------------------------

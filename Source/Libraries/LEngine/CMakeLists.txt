@@ -59,4 +59,6 @@ set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 
 #-----------------------------------------------------------------
 # LINKING
-target_link_libraries( ${PROJECT_NAME} SDLInterface )
+target_link_libraries( ${PROJECT_NAME} 
+	SDLInterface
+	Util )

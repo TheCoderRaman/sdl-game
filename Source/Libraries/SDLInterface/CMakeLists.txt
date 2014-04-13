@@ -73,5 +73,5 @@ set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 # Link project with SDL
 target_link_libraries(${PROJECT_NAME} 
 	${SDL2_LIBRARIES}
-#	Util # Temporary disable while it has no source to build
+	Util 
 )
