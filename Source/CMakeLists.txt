@@ -41,6 +41,9 @@ endif()
 if (NOT TARGET SDLInterface)
 	add_subdirectory(Libraries/SDLInterface)
 endif() 
+if (NOT TARGET Util)
+	add_subdirectory(Libraries/Util)
+endif() 
 
 #-----------------------------------------------------------------
 # COMPILER FLAGS 
@@ -65,6 +68,7 @@ target_link_libraries(
 	${PROJECT_NAME}
 	LEngine
 	SDLInterface
+	Util
 )
 
 #-----------------------------------------------------------------

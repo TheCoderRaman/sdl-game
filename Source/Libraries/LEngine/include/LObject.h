@@ -8,6 +8,8 @@
 #ifndef _LOBJECT_H_
 #define _LOBJECT_H_
 
+#include "error.h"
+
 // Base LObject interface type
 // Designed as a base type for all LEngine parts
 // Allows similarity of interface

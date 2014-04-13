@@ -4,14 +4,12 @@ cmake_minimum_required( VERSION 2.8.4 )
 
 #-----------------------------------------------------------------
 # PROJECT NAME
-project( LEngine )
+project( Util )
 
 #-----------------------------------------------------------------
 #DIRECTORIES
 set (PROJECT_INCLUDE_DIR
 	${CMAKE_CURRENT_SOURCE_DIR}/include
-	${CMAKE_CURRENT_SOURCE_DIR}/../Util/include
-	${CMAKE_CURRENT_SOURCE_DIR}/../SDLInterface/include
 )	
 
 set (PROJECT_SOURCE_DIR
@@ -21,14 +19,13 @@ set (PROJECT_SOURCE_DIR
 #-----------------------------------------------------------------
 # HEADER AND SOURCE FILES
 SET(PROJECT_HEADERS
-	${CMAKE_CURRENT_SOURCE_DIR}/include/LEngine.h
-	${CMAKE_CURRENT_SOURCE_DIR}/include/LGameBase.h
-	${CMAKE_CURRENT_SOURCE_DIR}/include/LObject.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/debug.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/error.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/types.h
 )
 
 SET(PROJECT_SRCS
-	${CMAKE_CURRENT_SOURCE_DIR}/src/LEngine.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/src/LGameBase.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/debug.cpp
 )
 
 #-----------------------------------------------------------------
@@ -36,15 +33,6 @@ SET(PROJECT_SRCS
 if ( NOT MSVC ) # Not needed with vc++
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
 endif( NOT MSVC )
-
-#-----------------------------------------------------------------
-# PULL IN DEPENDENCIES
-if (NOT TARGET SDLInterface)
-	add_subdirectory(../SDLInterface "SDLInterface")
-endif()
-if (NOT TARGET Util)
-	add_subdirectory(../Util)
-endif() 
 
 #-----------------------------------------------------------------
 # INCLUDES AND COMPILE
@@ -56,9 +44,3 @@ add_library( ${PROJECT_NAME} ${PROJECT_SRCS} ${PROJECT_HEADERS} )
 #-----------------------------------------------------------------
 # SET THE PROPERTIES
 set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
-
-#-----------------------------------------------------------------
-# LINKING
-target_link_libraries( ${PROJECT_NAME} 
-	SDLInterface
-	Util )

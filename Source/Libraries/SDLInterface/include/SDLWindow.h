@@ -5,10 +5,11 @@
 //!
 //! Header for SDLWindow.cpp
 //!
-#pragma once
+#ifndef _SDL_WINDOW_H
+#define _SDL_WINDOW_H
 
 // Includes
-#include "types.h"
+#include "error.h"
 
 // Forward declares
 struct SDL_Window;
@@ -33,3 +34,5 @@ private:
 	SDL_Surface* 		m_SDL_Surface;
 
 };
+
+#endif //_SDL_WINDOW_H

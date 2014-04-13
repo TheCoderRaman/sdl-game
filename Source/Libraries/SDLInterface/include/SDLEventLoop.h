@@ -5,9 +5,10 @@
 //!
 //! Header for SDLEventLoop.cpp
 //!
-#pragma once
+#ifndef _SDLEVENTLOOP_H_
+#define _SDLEVENTLOOP_H_
 
-#include "types.h"
+#include "error.h"
 
 union SDL_Event;
 
@@ -36,10 +37,9 @@ namespace SDLEventLoop
 	//! \return Any error produced
 	//! \sa HandleControllerEvent as these two are pretty related
 	eError HandleJoystickEvent( SDL_Event *event );
-
-	//! \brief Handle any Controller related event
-	//! \return Any error produced
-	//! \sa HandleJoystickEvent as these two are pretty related
+	eError HandleMouseEvent( SDL_Event *event );
 	eError HandleControllerEvent( SDL_Event *event );
 	
 }
+
+#endif //_SDLEVENTLOOP_H_

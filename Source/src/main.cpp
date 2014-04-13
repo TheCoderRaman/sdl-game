@@ -9,8 +9,11 @@
 //includes
 #include "stdio.h"
 
-#include "types.h"
+#include "debug.h"
+#include "error.h"
+
 #include "LEngine.h"
+
 
 // Main
 int main( int argc, char* args[] )
@@ -20,7 +23,7 @@ int main( int argc, char* args[] )
     // Create the engine
     LEngine myEngine = LEngine();
 
-    eError err;
+    eError err =  eError_noErr;
 
     err = myEngine.init();
     
@@ -30,9 +33,7 @@ int main( int argc, char* args[] )
     if( eError_noErr == err )
     	err = myEngine.quit();
     
-    if( err != eError_noErr )
-        DEBUG_LOG("Program finished with ERROR %i\n",err);
+    DEBUG_LOG("Program Exiting with error %i \n",err);
 
-    DEBUG_LOG("Program Exiting Safely...\n");
     return err;    
 }

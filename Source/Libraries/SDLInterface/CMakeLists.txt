@@ -21,7 +21,7 @@ endif ( MSVC )
 set (PROJECT_INCLUDE_DIR 
 	${CMAKE_CURRENT_SOURCE_DIR}/include
 	${CMAKE_CURRENT_SOURCE_DIR}/../Util/include
-	${CMAKE_CURRENT_SOURCE_DIR}../../../SDL2/include	# SDL headers
+	${CMAKE_CURRENT_SOURCE_DIR}/../../../SDL2/include	# SDL headers
 )	
 
 set (PROJECT_SOURCE_DIR 
@@ -55,9 +55,13 @@ if	( MSVC )
 	set_property(TARGET SDL2 PROPERTY IMPORTED_LOCATION ${SDL2_LIBRARIES})
 endif ( MSVC )
 
+if (NOT TARGET Util)
+	add_subdirectory(../Util "Util")
+endif() 
+
 #-----------------------------------------------------------------
 # INCLUDES AND COMPILE
-include_directories("${PROJECT_INCLUDE_DIR}")
+include_directories(${PROJECT_INCLUDE_DIR})
 
 add_library(${PROJECT_NAME} ${PROJECT_SRCS} ${PROJECT_HEADERS})
 
@@ -69,5 +73,5 @@ set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 # Link project with SDL
 target_link_libraries(${PROJECT_NAME} 
 	${SDL2_LIBRARIES}
-#	Util # Temporary disable while it has no source to build
+	Util 
 )

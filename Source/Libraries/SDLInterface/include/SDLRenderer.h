@@ -5,10 +5,11 @@
 //!
 //! Header for SDLRenderer.cpp
 //!
-#pragma once
+#ifndef _SDLRENDERER_H_
+#define _SDLRENDERER_H_
 
 // Includes
-#include "types.h"
+#include "error.h"
 
 // Forward declares
 class SDL_Renderer;
@@ -40,4 +41,6 @@ private:
 
 	// The actual SDL Renderer
 	SDL_Renderer* myRenderer;
-}
+};
+
+#endif //_SDLRENDERER_H_
