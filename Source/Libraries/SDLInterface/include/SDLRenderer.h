@@ -1,3 +1,10 @@
+//! \file SDLRenderer.h
+//!
+//! \author  Marc Di luzio
+//! \date    April 2014
+//!
+//! Header for SDLRenderer.cpp
+//!
 #ifndef _SDLRENDERER_H_
 #define _SDLRENDERER_H_
 
@@ -15,7 +22,10 @@ class SDLRenderer
 {
 public:
 
+	//! \brief Constructor
 	SDLRenderer();
+
+	//! \brief Destructor
 	~SDLRenderer();
 
 	// Create

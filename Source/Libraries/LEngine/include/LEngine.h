@@ -1,3 +1,10 @@
+//! \file LEngine.h
+//!
+//! \author  Marc Di luzio
+//! \date    April 2014
+//!
+//! Header for LEngine.cpp
+//!
 #ifndef _LENGINE_H_
 #define _LENGINE_H_
 

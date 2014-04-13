@@ -1,3 +1,10 @@
+//! \file SDLEventLoop.h
+//!
+//! \author  Marc Di luzio
+//! \date    April 2014
+//!
+//! Header for SDLEventLoop.cpp
+//!
 #ifndef _SDLEVENTLOOP_H_
 #define _SDLEVENTLOOP_H_
 
@@ -5,13 +12,30 @@
 
 union SDL_Event;
 
+//! \brief Namespace for all SDL_Event related methods
+//! 
+//! Handles the SDL_Event loop and fires off the events to appropriate deligates
 namespace SDLEventLoop
 {
-	// Do the event loop (horrible function name, feel free to rename)
+	//! \brief Do the event loop
+	//!
+	//! Handles all SDL_Event types and calls down to deligate methods
+	//!
+	//! \return Any error produced
+	//! \warning this method will not return until SDL_Quit is sent
 	eError DoLoop( bool &exit );
 
-	// Event handling
+	//! \brief Handle any keyboard related event
+	//! \return Any error produced
 	eError HandleKeyboardEvent( SDL_Event *event );
+
+	//! \brief Handle any Mouse related event
+	//! \return Any error produced
+	eError HandleMouseEvent( SDL_Event *event );
+
+	//! \brief Handle any Joystick related event
+	//! \return Any error produced
+	//! \sa HandleControllerEvent as these two are pretty related
 	eError HandleJoystickEvent( SDL_Event *event );
 	eError HandleMouseEvent( SDL_Event *event );
 	eError HandleControllerEvent( SDL_Event *event );

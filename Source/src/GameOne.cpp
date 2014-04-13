@@ -1,3 +1,10 @@
+//! \file GameOne.cpp
+//!
+//! \author  Marc Di luzio
+//! \date    April 2014
+//!
+//! Main game class, responsible for managing all game specific stuff
+//!
 #include "GameOne.h"
 
 //========================================================

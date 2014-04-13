@@ -1,3 +1,10 @@
+//! \file SDLRenderer.cpp
+//!
+//! \author  Marc Di luzio
+//! \date    April 2014
+//!
+//! Description
+//! 
 #include "SDLMain.h"
 
 #include "SDL.h"

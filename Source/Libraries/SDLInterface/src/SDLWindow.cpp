@@ -1,3 +1,10 @@
+//! \file SDLWindow.cpp
+//!
+//! \author  Marc Di luzio
+//! \date    April 2014
+//!
+//! Description
+//! 
 #include "SDLWindow.h"
 
 // extra includes
