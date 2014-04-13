@@ -13,11 +13,6 @@ if ( NOT MSVC )
 	pkg_search_module( SDL2 REQUIRED sdl2 )
 endif ( NOT MSVC )
 
-if ( MSVC )
-	add_library(SDL2 STATIC IMPORTED)
-	set_property(TARGET SDL2 PROPERTY IMPORTED_LOCATION ${SDL2_LIBRARIES})
-endif ( MSVC )
-
 set (PROJECT_INCLUDE_DIR 
 	${CMAKE_CURRENT_SOURCE_DIR}/include
 	${CMAKE_CURRENT_SOURCE_DIR}/../Util/include
@@ -50,7 +45,7 @@ endif( NOT MSVC )
  
 #-----------------------------------------------------------------
 # PULL IN DEPENDENCIES
-if	( MSVC )
+if ( MSVC )
 	add_library(SDL2 SHARED IMPORTED)
 	set_property(TARGET SDL2 PROPERTY IMPORTED_LOCATION ${SDL2_LIBRARIES})
 endif ( MSVC )
