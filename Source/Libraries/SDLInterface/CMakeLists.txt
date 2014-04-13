@@ -46,6 +46,7 @@ endif( NOT MSVC )
 #-----------------------------------------------------------------
 # PULL IN DEPENDENCIES
 if ( MSVC )
+	set(SDL2_LIBRARIES ${CMAKE_CURRENT_SOURCE_DIR}/../../../SDL2/lib/x86/SDL2.lib)
 	add_library(SDL2 SHARED IMPORTED)
 	set_property(TARGET SDL2 PROPERTY IMPORTED_LOCATION ${SDL2_LIBRARIES})
 endif ( MSVC )
