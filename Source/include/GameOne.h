@@ -10,7 +10,7 @@
 
 #include "LGameBase.h"
 
-#include "Error.h"
+#include "eError.h"
 
 class GameOne
 : public LGameBase

@@ -8,7 +8,7 @@
 #ifndef _LENGINE_H_
 #define _LENGINE_H_
 
-#include "Error.h"
+#include "eError.h"
 #include "SDLWindow.h"
 
 // LEngine delegate class

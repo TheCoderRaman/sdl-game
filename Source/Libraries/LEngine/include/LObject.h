@@ -8,7 +8,7 @@
 #ifndef _LOBJECT_H_
 #define _LOBJECT_H_
 
-#include "Error.h"
+#include "eError.h"
 
 // Base LObject interface type
 // Designed as a base type for all LEngine parts

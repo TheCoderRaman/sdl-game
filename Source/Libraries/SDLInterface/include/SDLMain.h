@@ -8,7 +8,7 @@
 #ifndef _SDLMAIN_H_
 #define _SDLMAIN_H_
 
-#include "Error.h"
+#include "eError.h"
 
 //! \brief Namespace that contains any of the main SDL functions
 //!

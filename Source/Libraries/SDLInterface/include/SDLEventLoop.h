@@ -8,7 +8,7 @@
 #ifndef _SDLEVENTLOOP_H_
 #define _SDLEVENTLOOP_H_
 
-#include "Error.h"
+#include "eError.h"
 
 union SDL_Event;
 

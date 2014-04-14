@@ -1,4 +1,4 @@
-//! \file eError.h
+//! \file eeError.h
 //!
 //! \author  Marc Di luzio
 //! \date    April 2014
@@ -11,8 +11,7 @@
 //! http://forum.codecall.net/topic/56591-bit-fields-flags-tutorial-with-example/
 
 //! \brief generic eError enum for eError handling
-enum class eError
-: long
+enum class eError : long
 {
 // 	eError name		  eError bit value for flags
 	noErr			= 0x00000000,
