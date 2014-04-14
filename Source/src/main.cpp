@@ -10,7 +10,7 @@
 #include "stdio.h"
 
 #include "debug.h"
-#include "error.h"
+#include "Error.h"
 
 #include "LEngine.h"
 
@@ -23,17 +23,17 @@ int main( int argc, char* args[] )
     // Create the engine
     LEngine myEngine = LEngine();
 
-    eError err =  eError_noErr;
+    eError err =  eError::noErr;
 
     err = myEngine.init();
     
-    if( eError_noErr == err )
+    if( eError::noErr == err )
     	err = myEngine.run();
 
-    if( eError_noErr == err )
+    if( eError::noErr == err )
     	err = myEngine.quit();
     
-	RUNTIME_LOG("Program Exiting with error %i \n", err);
+	RUNTIME_LOG("Program Exiting with eError %i \n", err);
 
-    return err;    
+    return (int)err;    
 }
