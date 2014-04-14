@@ -23,7 +23,7 @@ class SDLWindow;
 
 class SDLRenderer 
 {
-	friend class SDLHelper;
+	friend class SDLHelper; // Allow SDLHelper to access my members
 public:
 
 	//! \brief Constructor
@@ -32,18 +32,18 @@ public:
 	//! \brief Destructor
 	~SDLRenderer();
 
-	// Create
+	//! \brief Create the renderer from a window
 	eError Create( SDLWindow* window );
 
-	// Render
+	//! \brief render using the renderer
 	eError Render();
 
-	// Destroy
+	//! \brief destroy the renderer
 	eError Destroy();
 
 private:
 
-	// The actual SDL Renderer
+	//! \brief The actual SDL Renderer
 	SDL_Renderer* m_SDL_Renderer;
 };
 
