@@ -31,9 +31,15 @@
 
 // DEBUG ASSERTIONS
 #ifdef _DEBUG
+
+	// Uses a very cheeky inline assembly code, which works on windows
+	// I'll have to find something for gdb if this doesn't work there
 	#define DEBUG_ASSERT( condition )											\
 		if ( !(condition) )														\
-			_assert(__FILE__, __LINE__, #condition);							
+		{																		\
+			_log(__FILE__, __LINE__, "ASSERT FAILED: %s", #condition);			\
+			__asm int 3															\
+		}
 
 #else
 	#define DEBUG_ASSERT( condition ) \
@@ -42,6 +48,5 @@
 
 
 void _log(const char* file, int line, const char* format , ... );
-void _assert(const char* file, int line, const char* format );
 
 #endif //_DEBUG_H_

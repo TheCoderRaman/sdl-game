@@ -4,8 +4,6 @@
 #include <string.h> // for strncat
 #include <stdarg.h> // for the va_ arg list
 
-#include <assert.h> // for assert()
-
 //! Path seperators are different on Unix compared to windows
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
 	#define PATH_SEP '\\'
@@ -42,18 +40,5 @@ void _log(const char* file, int line, const char* format, ...)
 	//! close the list
 	va_end (args);
 
-}
-
-//! \brief Assert method. Does not check a condition, but logs and causes a break
-//! \warning never call directly, always call DEBUG_ASSERT
-//! I do wonder if it'd be better to stick the assert in the macro
-//! But time will tell that
-void _assert(const char* file, int line, const char* format)
-{
-	// log the current situation
-	_log(file, line, "ASSERT FAILED: %s", format);	
-
-	// Then assert
-	assert(0);
 }
 
