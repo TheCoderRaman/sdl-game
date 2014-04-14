@@ -9,13 +9,16 @@
 #define _DEBUG_H_
 
 // Defines
-#define RUNTIME_LOGGING 1
+#define RUNTIME_LOGGING 0
 
 // DEBUG LOGGING
 #ifdef _DEBUG
 	#if RUNTIME_LOGGING
 		#define DEBUG_LOG(...) \
 			_log(__FILE__, __LINE__, __VA_ARGS__);
+	#else
+		#define DEBUG_LOG(...) \
+			do {} while(0);		// To squish warnings	
 	#endif
 #else 
 	#define DEBUG_LOG(...) \
@@ -27,6 +30,9 @@
 #if RUNTIME_LOGGING
 	#define RUNTIME_LOG(...) \
 		_log(__FILE__, __LINE__, __VA_ARGS__);
+#else
+	#define RUNTIME_LOG(...) \
+		do {} while (0);		// To squish warnings	
 #endif //DEBUG_LOGGING
 
 // DEBUG ASSERTIONS
