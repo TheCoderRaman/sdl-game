@@ -60,14 +60,17 @@ inline eError& operator &= (eError& lhs, eError rhs)
 	return lhs;
 }
 
+#define ERROR_HAS( err , contains ) \
+	((err & contains) == contains)
+
 //! \brief Check if eError is fatal
-#define ERROR_TYPE_IS_FATAL( err ) 			( (err & eError::Type_Fatal)	== eError::Type_Fatal		) 
+#define ERROR_HAS_TYPE_FATAL( err ) 			( ERROR_HAS( err , eError::Type_Fatal)			) 
 
 //! \brief Check if eError is warning
-#define ERROR_TYPE_IS_WARNING( err ) 		( (err & eError::Type_Warning)	== eError::Type_Warning		)
+#define ERROR_HAS_TYPE_WARNING( err ) 			( ERROR_HAS( err , eError::Type_Warning)		)
 
 //! \brief Check if eError is an SDL eError
-#define ERROR_CATAGORY_IS_SDL( err )		( (err & eError::Catagory_SDL)	== eError::Catagory_SDL		)
+#define ERROR_HAS_CATAGORY_SDL( err )			( ERROR_HAS( err , eError::Catagory_SDL)		)
 
 
 #endif //_ERROR_H_

@@ -21,13 +21,14 @@ eError SDLEventLoop::DoLoop( bool &exit_request )
 
 	//Handle events on queue
     while( SDL_PollEvent( &event ) != 0 
-			&& !ERROR_TYPE_IS_FATAL(err) )
+			&& !ERROR_HAS_TYPE_FATAL(err) )
     {
     	switch( event.type )
     	{
     		case SDL_QUIT:
     			exit_request = true;
 				DEBUG_LOG("Quit requested\n");
+				err |= eError::quitRequest;
     			break;
 
 			// Keyboard events
