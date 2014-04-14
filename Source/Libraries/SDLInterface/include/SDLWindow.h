@@ -9,7 +9,7 @@
 #define _SDL_WINDOW_H
 
 // Includes
-#include "eError.h"
+#include "types.h"
 
 // for friending
 #include "SDLHelper.h"

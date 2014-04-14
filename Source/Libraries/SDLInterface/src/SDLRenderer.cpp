@@ -10,6 +10,7 @@
 #include "SDL.h"
 
 #include "debug.h"
+#include "eError.h"
 
 SDLRenderer::SDLRenderer()
 : m_SDL_Renderer(NULL)

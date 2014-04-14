@@ -9,7 +9,7 @@
 #define _SDLRENDERER_H_
 
 // Includes
-#include "eError.h"
+#include "types.h"
 
 // for friending
 #include "SDLHelper.h"

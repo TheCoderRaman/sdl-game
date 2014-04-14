@@ -8,6 +8,7 @@
 #ifndef _TYPES_H_
 #define _TYPES_H_
 
-
+//! \brief You can forward declare strongly typed enums!
+enum class eError : long;
 
 #endif //_TYPES_H_

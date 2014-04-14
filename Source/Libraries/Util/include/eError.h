@@ -59,6 +59,7 @@ inline eError& operator &= (eError& lhs, eError rhs)
 	return lhs;
 }
 
+//! \brief Check if the error contains
 #define ERROR_HAS( err , contains ) \
 	((err & contains) == contains)
 

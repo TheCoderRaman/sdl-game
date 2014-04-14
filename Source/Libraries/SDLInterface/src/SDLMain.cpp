@@ -9,6 +9,7 @@
 
 #include "SDL.h"
 #include "debug.h"
+#include "eError.h"
 
 // Initialise SDL
 eError SDLMain::Init()

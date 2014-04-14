@@ -12,6 +12,7 @@
 #include "LGameBase.h"
 
 #include "debug.h"
+#include "eError.h"
 
 //===============================================================
 // LEngine::
