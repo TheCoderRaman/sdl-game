@@ -44,7 +44,7 @@ eError SDLWindow::Create()
     if( m_SDL_Window == NULL )
     {
         DEBUG_LOG( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
-        err = eError::SDL_Fatal;
+        err |= eError::SDL_Fatal;
     }
     else
     {
@@ -54,7 +54,7 @@ eError SDLWindow::Create()
         if( m_SDL_Surface == NULL )
         {
             DEBUG_LOG( "Surface could not be fetched! SDL_Error: %s\n", SDL_GetError() );
-            err = eError::SDL_Fatal;   
+            err |= eError::SDL_Fatal;   
         }
     }
 

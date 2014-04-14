@@ -35,7 +35,7 @@ eError SDLRenderer::Create( SDLWindow* window )
 	if (NULL == m_SDL_Renderer)
 	{
 		DEBUG_LOG("Renderer failed to be created");
-		err = eError::SDL_Fatal;
+		err |= eError::SDL_Fatal;
 	}
 
 	return err;

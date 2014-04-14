@@ -19,7 +19,7 @@ eError SDLMain::Init()
     if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
     {
         DEBUG_LOG( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
-        err = eError::SDL_Fatal;
+        err |= eError::SDL_Fatal;
     }
 
     return err;

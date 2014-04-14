@@ -33,7 +33,7 @@ eError SDLEventLoop::DoLoop( bool &exit_request )
 			// Keyboard events
     		case SDL_KEYUP:
     		case SDL_KEYDOWN:
-    			err = HandleKeyboardEvent(&event);
+    			err |= HandleKeyboardEvent(&event);
     			break;
 
 			// Text input events
@@ -47,7 +47,7 @@ eError SDLEventLoop::DoLoop( bool &exit_request )
     		case SDL_MOUSEBUTTONUP:
     		case SDL_MOUSEBUTTONDOWN:
     		case SDL_MOUSEWHEEL:
-    			err = HandleMouseEvent(&event);
+    			err |= HandleMouseEvent(&event);
     			break;
 
 			// Joystick events
@@ -58,7 +58,7 @@ eError SDLEventLoop::DoLoop( bool &exit_request )
 			case SDL_JOYBUTTONUP:
 			case SDL_JOYDEVICEADDED:
 			case SDL_JOYDEVICEREMOVED:
-    			err = HandleJoystickEvent(&event);
+    			err |= HandleJoystickEvent(&event);
 				break;
 
 			// Controller events
@@ -68,7 +68,7 @@ eError SDLEventLoop::DoLoop( bool &exit_request )
 			case SDL_CONTROLLERDEVICEADDED:
 			case SDL_CONTROLLERDEVICEREMOVED:
 			case SDL_CONTROLLERDEVICEREMAPPED:
-    			err = HandleControllerEvent(&event);
+    			err |= HandleControllerEvent(&event);
 				break;
 
 			// Window events

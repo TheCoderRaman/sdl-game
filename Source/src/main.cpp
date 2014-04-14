@@ -25,13 +25,13 @@ int main( int argc, char* args[] )
 
     eError err =  eError::noErr;
 
-    err = myEngine.init();
+    err |= myEngine.init();
     
     if( eError::noErr == err )
-    	err = myEngine.run();
+    	err |= myEngine.run();
 
     if( eError::noErr == err )
-    	err = myEngine.quit();
+    	err |= myEngine.quit();
     
 	RUNTIME_LOG("Program Exiting with eError %i \n", err);
 

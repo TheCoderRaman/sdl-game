@@ -39,7 +39,7 @@ eError LEngine::init()
     //Initialization flag
     eError err = eError::noErr;
 
-    err = SDLMain::Init();
+    err |= SDLMain::Init();
 
     if ( eError::noErr == err )
     	myMainWindow.Create();
@@ -54,13 +54,13 @@ eError LEngine::run()
 {
 	eError err = eError::noErr;
 
-	err = load();
+	err |= load();
 
 	if ( eError::noErr == err )
-		err = loop();
+		err |= loop();
 
 	if ( eError::noErr == err )
-		err = unload();
+		err |= unload();
 
 	return err;
 }
@@ -74,7 +74,7 @@ eError LEngine::quit()
 
 	eError err = eError::noErr;
 
-	err = myMainWindow.Destroy();
+	err |= myMainWindow.Destroy();
 
     //Quit SDL subsystems
     SDLMain::Quit();
@@ -92,10 +92,10 @@ eError LEngine::load()
 	//Loading err flag
     eError err = eError::noErr;
 
-    err = LGameBase::GetGame()->Create();
+    err |= LGameBase::GetGame()->Create();
 
     if( eError::noErr == err )
-        err = LGameBase::GetGame()->Initialise();
+        err |= LGameBase::GetGame()->Initialise();
 
     return err;
 }
@@ -115,13 +115,13 @@ eError LEngine::loop()
     while(  eError::noErr == err 
         &&  false == exit_request )
     {
-        err = SDLEventLoop::DoLoop(exit_request);
+        err |= SDLEventLoop::DoLoop(exit_request);
 
         if ( eError::noErr == err )
-            err = LGameBase::GetGame()->Update();
+            err |= LGameBase::GetGame()->Update();
 
         if ( eError::noErr == err )
-        	err = myMainWindow.Update();
+        	err |= myMainWindow.Update();
     }
 
     return err;
@@ -134,7 +134,7 @@ eError LEngine::unload()
 {
 	eError err = eError::noErr;
 
-    err = LGameBase::GetGame()->Destroy();
+    err |= LGameBase::GetGame()->Destroy();
 
 	return err;
 }
