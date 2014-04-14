@@ -28,7 +28,7 @@ LGameBase::~LGameBase()
 //===============================================================
 eError LGameBase::Create()
 {
-	eError err = eError_noErr;
+	eError err = eError::noErr;
 	return err;
 }
 
@@ -37,7 +37,7 @@ eError LGameBase::Create()
 //===============================================================
 eError LGameBase::Initialise()
 {
-	eError err = eError_noErr;
+	eError err = eError::noErr;
 	return err;
 }
 
@@ -46,7 +46,7 @@ eError LGameBase::Initialise()
 //===============================================================
 eError LGameBase::Update()
 {
-	eError err = eError_noErr;
+	eError err = eError::noErr;
 	return err;
 }
 
@@ -55,7 +55,7 @@ eError LGameBase::Update()
 //===============================================================
 eError LGameBase::Reset()
 {
-	eError err = eError_noErr;
+	eError err = eError::noErr;
 	return err;
 }
 
@@ -64,7 +64,7 @@ eError LGameBase::Reset()
 //===============================================================
 eError LGameBase::Destroy()
 {
-	eError err = eError_noErr;
+	eError err = eError::noErr;
 	return err;
 }
 

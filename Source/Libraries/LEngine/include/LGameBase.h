@@ -8,7 +8,7 @@
 #ifndef _LGAMEBASE_H_
 #define _LGAMEBASE_H_
 
-#include "error.h"
+#include "Error.h"
 #include "LObject.h"
 
 // Base class for the Game, to be overloaded by the game specific class

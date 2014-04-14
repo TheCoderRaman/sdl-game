@@ -8,7 +8,7 @@
 #ifndef _SDLMAIN_H_
 #define _SDLMAIN_H_
 
-#include "error.h"
+#include "Error.h"
 
 //! \brief Namespace that contains any of the main SDL functions
 //!
@@ -20,7 +20,7 @@ namespace SDLMain
 	//!
 	//! Initialises the needed SDL subsystems
 	//!
-	//! \return Any error produced
+	//! \return Any eError produced
 	//! \sa Quit() for the yang to this ying
 	//! \warning Do not call this twice
 	eError Init();
@@ -29,7 +29,7 @@ namespace SDLMain
 	//!
 	//! Quits SDL
 	//!
-	//! \return Any error produced
+	//! \return Any eError produced
 	//! \sa Init() for the ying to this yang
 	//! \warning Do not call this twice
 	eError Quit();

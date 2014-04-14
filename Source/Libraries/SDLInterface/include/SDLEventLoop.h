@@ -8,7 +8,7 @@
 #ifndef _SDLEVENTLOOP_H_
 #define _SDLEVENTLOOP_H_
 
-#include "error.h"
+#include "Error.h"
 
 union SDL_Event;
 
@@ -21,20 +21,20 @@ namespace SDLEventLoop
 	//!
 	//! Handles all SDL_Event types and calls down to deligate methods
 	//!
-	//! \return Any error produced
+	//! \return Any eError produced
 	//! \warning this method will not return until SDL_Quit is sent
 	eError DoLoop( bool &exit );
 
 	//! \brief Handle any keyboard related event
-	//! \return Any error produced
+	//! \return Any eError produced
 	eError HandleKeyboardEvent( SDL_Event *event );
 
 	//! \brief Handle any Mouse related event
-	//! \return Any error produced
+	//! \return Any eError produced
 	eError HandleMouseEvent( SDL_Event *event );
 
 	//! \brief Handle any Joystick related event
-	//! \return Any error produced
+	//! \return Any eError produced
 	//! \sa HandleControllerEvent as these two are pretty related
 	eError HandleJoystickEvent( SDL_Event *event );
 	eError HandleMouseEvent( SDL_Event *event );

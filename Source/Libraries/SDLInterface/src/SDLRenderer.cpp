@@ -25,7 +25,7 @@ SDLRenderer::~SDLRenderer()
 // Create
 eError SDLRenderer::Create( SDLWindow* window )
 {
-	eError err = eError_noErr;
+	eError err = eError::noErr;
 
 	// Create the renderer
 	m_SDL_Renderer = SDL_CreateRenderer( SDLHelper::GetSDL_Window(window),
@@ -35,7 +35,7 @@ eError SDLRenderer::Create( SDLWindow* window )
 	if (NULL == m_SDL_Renderer)
 	{
 		DEBUG_LOG("Renderer failed to be created");
-		err = eError_SDL_Fatal;
+		err = eError::SDL_Fatal;
 	}
 
 	return err;
@@ -44,14 +44,14 @@ eError SDLRenderer::Create( SDLWindow* window )
 // Render
 eError SDLRenderer::Render()
 {
-	eError err = eError_noErr;
+	eError err = eError::noErr;
 	return err;
 }
 
 // Destroy
 eError SDLRenderer::Destroy()
 {
-	eError err = eError_noErr;
+	eError err = eError::noErr;
 
 	SDL_DestroyRenderer(m_SDL_Renderer);
 

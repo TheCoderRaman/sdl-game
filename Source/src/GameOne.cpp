@@ -37,7 +37,7 @@ GameOne::~GameOne()
 //========================================================
 eError GameOne::Create()
 {
- 	eError err = eError_noErr;
+ 	eError err = eError::noErr;
  	return err;
 }
 
@@ -46,7 +46,7 @@ eError GameOne::Create()
 //========================================================
 eError GameOne::Initialise()
 {
- 	eError err = eError_noErr;
+ 	eError err = eError::noErr;
  	return err;
 }
 
@@ -55,7 +55,7 @@ eError GameOne::Initialise()
 //========================================================
 eError GameOne::Update()
 {
- 	eError err = eError_noErr;
+ 	eError err = eError::noErr;
  	return err;
 }
 
@@ -64,7 +64,7 @@ eError GameOne::Update()
 //========================================================
 eError GameOne::Reset()
 {
- 	eError err = eError_noErr;
+ 	eError err = eError::noErr;
  	return err;
 }
 
@@ -73,6 +73,6 @@ eError GameOne::Reset()
 //========================================================
 eError GameOne::Destroy()
 {
- 	eError err = eError_noErr;
+ 	eError err = eError::noErr;
  	return err;
 }

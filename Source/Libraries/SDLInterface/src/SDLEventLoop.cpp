@@ -14,14 +14,14 @@
 // Do the event loop
 eError SDLEventLoop::DoLoop( bool &exit_request )
 {
-	eError err = eError_noErr;
+	eError err = eError::noErr;
 
 	//Event handler
     SDL_Event event;
 
 	//Handle events on queue
     while( SDL_PollEvent( &event ) != 0 
-			&& !ERRORTYPE_IS_FATAL(err) )
+			&& !ERROR_TYPE_IS_FATAL(err) )
     {
     	switch( event.type )
     	{
@@ -87,8 +87,8 @@ eError SDLEventLoop::DoLoop( bool &exit_request )
     	}
     }
 
-    if ( err != eError_noErr )
-    	DEBUG_LOG("DoLoop Dropped out with ERROR %i\n",err);
+    if ( err != eError::noErr )
+    	DEBUG_LOG("DoLoop Dropped out with eError %i\n",err);
 
     return err;
 }
@@ -96,27 +96,27 @@ eError SDLEventLoop::DoLoop( bool &exit_request )
 // Handle all keyboard events
 eError SDLEventLoop::HandleKeyboardEvent( SDL_Event *event )
 {
-	eError err = eError_noErr;
+	eError err = eError::noErr;
 	return err;
 }
 
 // Handles all mouse events
 eError SDLEventLoop::HandleMouseEvent( SDL_Event *event )
 {
-	eError err = eError_noErr;
+	eError err = eError::noErr;
 	return err;
 }
 
 // Handles all Joystick events
 eError SDLEventLoop::HandleJoystickEvent( SDL_Event *event )
 {
-	eError err = eError_noErr;
+	eError err = eError::noErr;
 	return err;
 }
 
 // Handles all Controller events
 eError SDLEventLoop::HandleControllerEvent( SDL_Event *event )
 {
-	eError err = eError_noErr;
+	eError err = eError::noErr;
 	return err;
 }

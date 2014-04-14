@@ -37,11 +37,11 @@ eError LEngine::init()
 	RUNTIME_LOG("Initialising...\n")
 
     //Initialization flag
-    eError err = eError_noErr;
+    eError err = eError::noErr;
 
     err = SDLMain::Init();
 
-    if ( eError_noErr == err )
+    if ( eError::noErr == err )
     	myMainWindow.Create();
 
     return err;
@@ -52,14 +52,14 @@ eError LEngine::init()
 //===============================================================
 eError LEngine::run()
 {
-	eError err = eError_noErr;
+	eError err = eError::noErr;
 
 	err = load();
 
-	if ( eError_noErr == err )
+	if ( eError::noErr == err )
 		err = loop();
 
-	if ( eError_noErr == err )
+	if ( eError::noErr == err )
 		err = unload();
 
 	return err;
@@ -72,7 +72,7 @@ eError LEngine::quit()
 {
 	RUNTIME_LOG("Quiting...\n")
 
-	eError err = eError_noErr;
+	eError err = eError::noErr;
 
 	err = myMainWindow.Destroy();
 
@@ -90,11 +90,11 @@ eError LEngine::load()
 	RUNTIME_LOG("Loading...\n")
     
 	//Loading err flag
-    eError err = eError_noErr;
+    eError err = eError::noErr;
 
     err = LGameBase::GetGame()->Create();
 
-    if( eError_noErr == err )
+    if( eError::noErr == err )
         err = LGameBase::GetGame()->Initialise();
 
     return err;
@@ -107,20 +107,20 @@ eError LEngine::loop()
 {
 	RUNTIME_LOG("Looping...\n")
 
-	eError err = eError_noErr;
+	eError err = eError::noErr;
 
 	//While application is running
     bool exit_request = false;
 
-    while(  eError_noErr == err 
+    while(  eError::noErr == err 
         &&  false == exit_request )
     {
         err = SDLEventLoop::DoLoop(exit_request);
 
-        if ( eError_noErr == err )
+        if ( eError::noErr == err )
             err = LGameBase::GetGame()->Update();
 
-        if ( eError_noErr == err )
+        if ( eError::noErr == err )
         	err = myMainWindow.Update();
     }
 
@@ -132,7 +132,7 @@ eError LEngine::loop()
 //===============================================================
 eError LEngine::unload()
 {
-	eError err = eError_noErr;
+	eError err = eError::noErr;
 
     err = LGameBase::GetGame()->Destroy();
 

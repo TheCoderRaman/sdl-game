@@ -13,13 +13,13 @@
 // Initialise SDL
 eError SDLMain::Init()
 {
-	eError err = eError_noErr;
+	eError err = eError::noErr;
 
 	//Initialize SDL
     if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
     {
         DEBUG_LOG( "SDL could not initialize! SDL_Error: %s\n", SDL_GetError() );
-        err = eError_SDL_Fatal;
+        err = eError::SDL_Fatal;
     }
 
     return err;
@@ -28,7 +28,7 @@ eError SDLMain::Init()
 // Quit SDL
 eError SDLMain::Quit()
 {
-	eError err = eError_noErr;
+	eError err = eError::noErr;
 
     SDL_Quit();
 

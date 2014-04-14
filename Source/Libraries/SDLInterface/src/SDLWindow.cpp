@@ -31,7 +31,7 @@ SDLWindow::~SDLWindow()
 // Create the window
 eError SDLWindow::Create()
 {
-	eError err = eError_noErr;
+	eError err = eError::noErr;
 
     //Create window
     m_SDL_Window = SDL_CreateWindow( "Window", 
@@ -44,7 +44,7 @@ eError SDLWindow::Create()
     if( m_SDL_Window == NULL )
     {
         DEBUG_LOG( "Window could not be created! SDL_Error: %s\n", SDL_GetError() );
-        err = eError_SDL_Fatal;
+        err = eError::SDL_Fatal;
     }
     else
     {
@@ -54,7 +54,7 @@ eError SDLWindow::Create()
         if( m_SDL_Surface == NULL )
         {
             DEBUG_LOG( "Surface could not be fetched! SDL_Error: %s\n", SDL_GetError() );
-            err = eError_SDL_Fatal;   
+            err = eError::SDL_Fatal;   
         }
     }
 
@@ -64,7 +64,7 @@ eError SDLWindow::Create()
 // Update the window
 eError SDLWindow::Update()
 {
-    eError err = eError_noErr;
+    eError err = eError::noErr;
 
     //Update the surface
     SDL_UpdateWindowSurface( m_SDL_Window );
@@ -75,7 +75,7 @@ eError SDLWindow::Update()
 // Destroy the window
 eError SDLWindow::Destroy()
 {
-	eError err = eError_noErr;
+	eError err = eError::noErr;
 
 	//Deallocate surface
     SDL_FreeSurface( m_SDL_Surface );

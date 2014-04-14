@@ -8,7 +8,7 @@
 #ifndef _LOBJECT_H_
 #define _LOBJECT_H_
 
-#include "error.h"
+#include "Error.h"
 
 // Base LObject interface type
 // Designed as a base type for all LEngine parts
@@ -37,7 +37,7 @@ public:
 
 	// Destroy the object 
 	// Should de-allocate all memory
-	// And perform needed error checking
+	// And perform needed eError checking
 	virtual eError Destroy() = 0;
 };
 
