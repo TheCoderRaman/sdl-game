@@ -25,10 +25,10 @@ void _log(const char* file, int line, const char* format, ...)
 	char finalStr[FINAL_STR_MAX];	
 
 	//! print in the formatted prefix into the output
-	sprintf( finalStr, "%s:%i -> ", FILE_NAME(file) , line );
+	sprintf_s( finalStr, "%s:%i -> ", FILE_NAME(file) , line );
 
 	//! concatonate the format string from the debug message into the output
-	strncat( finalStr, format , FINAL_STR_MAX);
+	strncat_s( finalStr, format , FINAL_STR_MAX);
 
 	//! Grab the list
 	va_list args;
