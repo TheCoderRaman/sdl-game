@@ -32,6 +32,9 @@
 // DEBUG ASSERTIONS
 #ifdef _DEBUG
 
+	// Ryan talks about how SDL_Assert is amazing, so I may have to use that here...
+	// Link : https://plus.google.com/+RyanGordon/posts/KzV6sLdALX7
+
 	// Uses a very cheeky inline assembly code, which works on windows
 	// I'll have to find something for gdb if this doesn't work there
 	#define DEBUG_ASSERT( condition )											\
