@@ -31,6 +31,7 @@ SET(PROJECT_HEADERS
 	${CMAKE_CURRENT_SOURCE_DIR}/include/SDLEventLoop.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/SDLRenderer.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/SDLHelper.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/SDLTimer.h
 )
 
 set(PROJECT_SRCS 
@@ -39,6 +40,7 @@ set(PROJECT_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/src/SDLEventLoop.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/SDLRenderer.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/SDLHelper.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/SDLTimer.cpp
 )
 
 #-----------------------------------------------------------------
