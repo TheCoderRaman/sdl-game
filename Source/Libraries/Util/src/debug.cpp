@@ -25,10 +25,18 @@ void _log(const char* file, int line, const char* format, ...)
 	char finalStr[FINAL_STR_MAX];	
 
 	//! print in the formatted prefix into the output
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32)
 	sprintf_s( finalStr, "%s:%i -> ", FILE_NAME(file) , line );
+#else 
+	snprintf( finalStr, FINAL_STR_MAX, "%s:%i -> ", FILE_NAME(file) , line );
+#endif
 
 	//! concatonate the format string from the debug message into the output
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32)
 	strncat_s( finalStr, format , FINAL_STR_MAX);
+#else
+	strncat( finalStr, format , FINAL_STR_MAX );
+#endif
 
 	//! Grab the list
 	va_list args;
