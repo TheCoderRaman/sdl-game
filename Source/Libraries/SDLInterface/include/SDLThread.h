@@ -10,11 +10,11 @@
 
 // Includes
 #include "types.h"
-#include "fnQueue.h"
+#include "SDLFunctionQueue.h"
 
 // Forward declarations for SDL stuff
-class SDL_Thread;
-class SDL_ThreadFunction;
+struct SDL_Thread;
+typedef int (* SDL_ThreadFunction) (void *data);
 
 // Typedef for the function required to launch a thread
 typedef int(*ThreadFunction)(void*);
@@ -25,6 +25,12 @@ namespace SDLThread
 	//! \brief container for all thread data
 	struct Thread
 	{
+		//! \brief tiny constructor to ensure everything is set to default
+		Thread()
+		: m_sdl_thread( nullptr )
+		, name("unnamed")
+		{}
+
 		//! \brief the underlying SDL thread object
 		SDL_Thread* m_sdl_thread;
 
@@ -34,7 +40,7 @@ namespace SDLThread
 
 	//! \brief Spawn a thread with \a name and \a func with \a data
 	//! \warning this Thread will hang around untill Wait or Detach are called on it
-	Thread SpawnThread(const char* name, ThreadFunction func, void* data);
+	eError SpawnThread(Thread& newThread, ThreadFunction func, void* data);
 
 	//! \brief Wait for a thread to finish
 	//! \warning this will not return until the thread returns
@@ -48,7 +54,7 @@ namespace SDLThread
 	eError DetachThread(Thread& thread);
 
 	//! \brief the type for the main thread queue
-	typedef fnQueue< eError(void) > TMainThreadFnQueue;
+	typedef SDLFunctionQueue< eError(void) > TMainThreadFnQueue;
 
 	//! \brief Set the main thread queue object
 	eError SetMainThreadQueue( TMainThreadFnQueue* theQueue);
@@ -61,7 +67,6 @@ namespace SDLThread
 	//! This function will return instantly, with no wait, and give any error code if there was an issue
 	eError RunOnMainThread_ASync(TMainThreadFnQueue::TFunction );
 
-	 
 }
 
 

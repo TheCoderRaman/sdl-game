@@ -14,6 +14,15 @@
 #include "debug.h"
 #include "eError.h"
 
+//! \brief start point for the SDL loop thread
+int SDLLoopThreadStart( void* data );
+
+//! \brief start point for the game thread
+int GameThreadStart( void* data );
+
+//! \brief start point for the render thread
+int RenderThreadStart(void* data);
+
 //===============================================================
 // LEngine::
 //===============================================================
@@ -35,15 +44,23 @@ LEngine::~LEngine()
 //===============================================================
 eError LEngine::init()
 {
-	RUNTIME_LOG("Initialising...\n")
+	RUNTIME_LOG("Initialising...")
 
     //Initialization flag
     eError err = eError::noErr;
 
-    err |= SDLMain::Init();
+    err = SDLMain::Init();
 
-    if ( eError::noErr == err )
-    	myMainWindow.Create();
+	if (!ERROR_HAS_TYPE_FATAL(err))
+	{
+		err = m_MainWindow.Create();
+	}
+
+	if (!ERROR_HAS_TYPE_FATAL(err))
+	{
+		// give the SDLThread system the function queue
+		err = SDLThread::SetMainThreadQueue(&m_mainThreadQueue);
+	}
 
     return err;
 }
@@ -71,11 +88,11 @@ eError LEngine::run()
 //===============================================================
 eError LEngine::quit()
 {
-	RUNTIME_LOG("Quiting...\n")
+	RUNTIME_LOG("Quiting...")
 
 	eError err = eError::noErr;
 
-	err |= myMainWindow.Destroy();
+	err |= m_MainWindow.Destroy();
 
     //Quit SDL subsystems
     SDLMain::Quit();
@@ -88,7 +105,7 @@ eError LEngine::quit()
 //===============================================================
 eError LEngine::load()
 {
-	RUNTIME_LOG("Loading...\n")
+	RUNTIME_LOG("Loading...")
     
 	//Loading err flag
     eError err = eError::noErr;
@@ -106,24 +123,54 @@ eError LEngine::load()
 //===============================================================
 eError LEngine::loop()
 {
-	RUNTIME_LOG("Looping...\n")
+	RUNTIME_LOG("Looping...")
 
 	eError err = eError::noErr;
 
-	//While application is running
-    bool exit_request = false;
+	// Spawn SDLEventloop thread
+	SDLThread::Thread sdlLoopThread;
+	sdlLoopThread.name = "SDLEventLoop";
 
-    while(  eError::noErr == err 
-        &&  false == exit_request )
-    {
+	SDLThread::SpawnThread(sdlLoopThread, SDLLoopThreadStart, NULL);
+
+	// Spawn Game thread
+	SDLThread::Thread gameUpdateThread;
+	sdlLoopThread.name = "LGameUpdate";
+
+	SDLThread::SpawnThread(gameUpdateThread, GameThreadStart, NULL);
+
+	// Spawn the render thread
+	SDLThread::Thread renderThread;
+	sdlLoopThread.name = "Render";
+
+	SDLThread::SpawnThread(renderThread, RenderThreadStart, NULL);
+
+	// Run the main thread queue
+	err = m_mainThreadQueue.Run();
+
+	// Main thread queue has quit out
+	//TODO: Send some kind of message to the other threads that they need to quit
+
+	// Wait for all the threads to close off
+	int returnVal;
+	SDLThread::WaitForThread(renderThread, &returnVal);
+
+	SDLThread::WaitForThread(gameUpdateThread, &returnVal);
+
+	SDLThread::WaitForThread(sdlLoopThread, &returnVal);
+
+
+		// These functions bellow MUST now to be farmed off to other threads
+		// Removing them for now to ensure no funny business
+		/*
         err |= SDLEventLoop::DoLoop(exit_request);
 
         if ( eError::noErr == err )
             err |= LGameBase::GetGame()->Update();
 
         if ( eError::noErr == err )
-        	err |= myMainWindow.Update();
-    }
+        	err |= m_MainWindow.Update();
+		*/
 
     return err;
 }
@@ -138,4 +185,37 @@ eError LEngine::unload()
     err |= LGameBase::GetGame()->Destroy();
 
 	return err;
+}
+
+//===============================================================
+int SDLLoopThreadStart(void* data)
+{
+	DEBUG_LOG("SDLLoopThread Starting");
+
+	SDLEventLoop::DoLoop();
+
+	DEBUG_LOG("SDLLoopThread Ending");
+	return 0;
+}
+
+//===============================================================
+int GameThreadStart(void* data)
+{
+	DEBUG_LOG("GameThread Starting");
+
+	LGameBase::GetGame()->Update();
+
+	DEBUG_LOG("GameThread Ending");
+	return 0;
+}
+
+//===============================================================
+int RenderThreadStart(void* data)
+{
+	DEBUG_LOG("RenderThread Starting");
+
+	//m_MainWindow.Update()
+
+	DEBUG_LOG("RenderThread Ending");
+	return 0;
 }

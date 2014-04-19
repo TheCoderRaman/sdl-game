@@ -34,8 +34,10 @@ void _log(const char* file, int line, const char* format, ...)
 	//! concatonate the format string from the debug message into the output
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32)
 	strncat_s( finalStr, format , FINAL_STR_MAX);
+	strncat_s( finalStr, "\n" , FINAL_STR_MAX);
 #else
 	strncat( finalStr, format , FINAL_STR_MAX );
+	strncat(finalStr, "\n", FINAL_STR_MAX);
 #endif
 
 	//! Grab the list

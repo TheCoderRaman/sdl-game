@@ -13,7 +13,7 @@
 #include "eError.h"
 
 // Do the event loop
-eError SDLEventLoop::DoLoop( bool &exit_request )
+eError SDLEventLoop::DoLoop()
 {
 	eError err = eError::noErr;
 
@@ -21,14 +21,14 @@ eError SDLEventLoop::DoLoop( bool &exit_request )
     SDL_Event event;
 
 	//Handle events on queue
-    while( SDL_PollEvent( &event ) != 0 
-			&& !ERROR_HAS_TYPE_FATAL(err) )
+	while (SDL_WaitEvent(&event) != 0
+			&& !ERROR_HAS_TYPE_FATAL(err)				// Fatal errors
+			&& !ERROR_HAS(err,eError::quitRequest) )	// Quit requests
     {
     	switch( event.type )
     	{
     		case SDL_QUIT:
-    			exit_request = true;
-				DEBUG_LOG("Quit requested\n");
+				DEBUG_LOG("Quit requested");
 				err |= eError::quitRequest;
     			break;
 
@@ -41,7 +41,7 @@ eError SDLEventLoop::DoLoop( bool &exit_request )
 			// Text input events
     		case SDL_TEXTEDITING:
     		case SDL_TEXTINPUT:
-				DEBUG_LOG("Unhandled SDL Event: SDL_TEXT\n");
+				DEBUG_LOG("Unhandled SDL Event: SDL_TEXT");
     			break;
 
 			// Mouse events
@@ -75,22 +75,22 @@ eError SDLEventLoop::DoLoop( bool &exit_request )
 
 			// Window events
 			case SDL_WINDOWEVENT:
-				DEBUG_LOG("Unhandled SDL Event: SDL_WINDOWEVENT\n");
+				DEBUG_LOG("Unhandled SDL Event: SDL_WINDOWEVENT");
 				break;
 
 			// SysWM events?
 			case SDL_SYSWMEVENT:
-				DEBUG_LOG("Unhandled SDL Event: SDL_SYSWMEVENT\n");
+				DEBUG_LOG("Unhandled SDL Event: SDL_SYSWMEVENT");
 				break;
 
     		default:
-    			DEBUG_LOG("Unhandled SDL Event: type %i\n",event.type);
+    			DEBUG_LOG("Unhandled SDL Event: type %i",event.type);
     			break;
     	}
     }
 
     if ( err != eError::noErr )
-    	DEBUG_LOG("DoLoop Dropped out with eError %i\n",err);
+    	DEBUG_LOG("DoLoop Dropped out with eError %i",err);
 
     return err;
 }

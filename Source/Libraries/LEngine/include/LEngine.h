@@ -10,6 +10,7 @@
 
 #include "types.h"
 #include "SDLWindow.h"
+#include "SDLThread.h"
 
 // LEngine delegate class
 class LEngine
@@ -41,7 +42,10 @@ private:
 	eError unload();
 
 	// Member variables
-	SDLWindow myMainWindow;
+	SDLWindow m_MainWindow;
+
+	//! \brief the main thread function queue
+	SDLFunctionQueue<eError(void)> m_mainThreadQueue;
 
 };
 

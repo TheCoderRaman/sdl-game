@@ -18,13 +18,14 @@ class fnQueue
 {
 public:
 
+	// ctor and dtor
 	fnQueue();
 	~fnQueue();
 
 	typedef std::function<TFunctionType> TFunction;
 
 	//! \brief Run a function on the main thread Syncronously with return value
-	//! This function will not return untill the function on the main thread is complete
+	//! This function will not return until the function on the main thread is complete
 	eError AddToQueue_Sync(TFunction, eError& returnVal);
 
 	//! \brief Run a function on the main thread ASyncronously
@@ -45,5 +46,23 @@ private:
 	//! \brief The queue of functions
 	std::vector< TFunction > m_functionQueue;
 };
+
+//========================================================
+// fnQueue::fnQueue
+//========================================================
+template< class TFunctionType >
+fnQueue<TFunctionType>::fnQueue()
+{
+
+}
+
+//========================================================
+// fnQueue::~fnQueue
+//========================================================
+template< class TFunctionType >
+fnQueue<TFunctionType>::~fnQueue()
+{
+
+}
 
 #endif //_FNQUEUE_H_

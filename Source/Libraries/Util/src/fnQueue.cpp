@@ -5,3 +5,4 @@
 //!
 //! Helps to define and run a queue of function
 //!
+#include "fnQueue.h"
