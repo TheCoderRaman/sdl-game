@@ -9,7 +9,7 @@
 #define _DEBUG_H_
 
 // Defines
-#define RUNTIME_LOGGING 0
+#define RUNTIME_LOGGING 1
 
 // DEBUG LOGGING
 #ifdef _DEBUG
@@ -55,7 +55,7 @@
 				do {} while (0);		// To squish warnings
 #endif
 
-
+//! \brief method to log information to stdout
 void _log(const char* file, int line, const char* format , ... );
 
 #endif //_DEBUG_H_

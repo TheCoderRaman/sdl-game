@@ -22,10 +22,12 @@ SET(PROJECT_HEADERS
 	${CMAKE_CURRENT_SOURCE_DIR}/include/debug.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/eError.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/types.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/fnQueue.h
 )
 
 SET(PROJECT_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/src/debug.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/fnQueue.cpp
 )
 
 #-----------------------------------------------------------------
