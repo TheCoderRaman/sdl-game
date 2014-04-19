@@ -33,10 +33,19 @@ namespace SDLThread
 	};
 
 	//! \brief Spawn a thread with \a name and \a func with \a data
+	//! \warning this Thread will hang around untill Wait or Detach are called on it
 	Thread SpawnThread(const char* name, ThreadFunction func, void* data);
 
 	//! \brief Wait for a thread to finish
+	//! \warning this will not return until the thread returns
 	eError WaitForThread(Thread& thread, int* returnVal);
+
+	//! \brief Detach a thread
+	//! This detaches the thread, telling it that it does not need to hang around
+	//! until Wait is called.
+	//! \warning This thread is now completely detached so no return code can be recieved
+	//! \warning This Thread object is now invalid and cannot have Wait or Detach called on it
+	eError DetachThread(Thread& thread);
 
 	//! \brief the type for the main thread queue
 	typedef fnQueue< eError(void) > TMainThreadFnQueue;
