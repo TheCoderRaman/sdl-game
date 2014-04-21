@@ -13,6 +13,9 @@
 #include <vector> // for std::vector
 
 #include "SDLMutex.h"
+#include "SDLTimer.h"
+
+#include "eError.h"
 
 //! \brief a class to manage a function queue
 template< class TFunctionType >
@@ -51,6 +54,12 @@ private:
 	//! \brief the mutex for the function queue
 	//! \note in the future, the queue itself could be atomic
 	SDLMutex m_myMutex;
+
+	//! \brief integer representing stop priority
+	//! 1 for stop (stop when it can, 2 for stop ASAP)
+	//! both stops are safe
+	//! should probs be an enum...
+	int m_bStopRequestPriority;
 };
 
 //========================================================
@@ -58,8 +67,9 @@ private:
 //========================================================
 template< class TFunctionType >
 SDLFunctionQueue<TFunctionType>::SDLFunctionQueue()
+: m_bStopRequestPriority(0)
 {
-
+	m_myMutex.Create();
 }
 
 //========================================================
@@ -68,19 +78,118 @@ SDLFunctionQueue<TFunctionType>::SDLFunctionQueue()
 template< class TFunctionType >
 SDLFunctionQueue<TFunctionType>::~SDLFunctionQueue()
 {
+	// TODO: check the current list of functions
 
+	m_myMutex.Destroy();
 }
 
 
 //========================================================
-// fnQueue::fnQueue
+// fnQueue::Run
 //========================================================
 template< class TFunctionType >
 eError SDLFunctionQueue<TFunctionType>::Run()
 {
 	eError err = eError::noErr;
 
+	// Local variables
+	int bStop = 0;
+	TFunction funcToPerform = nullptr;
+
+	// Loop untill error is fatal or a quit was requested
+	while (!ERROR_HAS_TYPE_FATAL(err)
+		&& !ERROR_HAS(err, eError::quitRequest)
+		&& ( bStop == 0 ) )
+	{
+		// TODO: Better solution to this while waiting for functions to be given
+		SDLTimer::GlobalDelay(10);
+
+		// Lock the mutex while grabbing members
+		m_myMutex.Lock();
+
+		// grab if we need to stop
+		bStop = m_bStopRequestPriority;
+
+		int NumInQueue = m_functionQueue.size();
+
+		// Lock the mutex while grabbing members
+		m_myMutex.Unlock();
+
+		// if we have a function to do
+		while ( ( NumInQueue != 0 ) && !(bStop <= 1))
+		{
+			// Lock the mutex while grabbing members
+			m_myMutex.Lock();
+
+			// grab if we need to stop again
+			bStop = m_bStopRequestPriority;
+
+			// Grab the action to perform
+			funcToPerform = m_functionQueue.back();
+			m_functionQueue.pop_back();
+
+			m_myMutex.Unlock();
+
+			// We can now call the function outside of the mutex
+			if (funcToPerform != nullptr)
+			{
+				// Perform the function
+				err |= funcToPerform();
+				funcToPerform = nullptr;
+			}
+
+			// Lock the mutex while grabbing members
+			m_myMutex.Lock();
+			NumInQueue = m_functionQueue.size();
+			m_myMutex.Unlock();
+		}
+	}
+
+	bStop = 0;
+
 	return err;
 }
 
+//========================================================
+// fnQueue::AddToQueue_Sync
+//========================================================
+template< class TFunctionType >
+eError SDLFunctionQueue<TFunctionType>::AddToQueue_Sync(TFunction func, eError& returnVal)
+{
+	// For now, without a clever way of doing this, we can just do the async one
+	AddToQueue_ASync(func);
+
+	returnVal |= eError::noErr;
+	return eError::noErr;
+}
+
+//========================================================
+// fnQueue::AddToQueue_ASync
+//========================================================
+template< class TFunctionType >
+eError SDLFunctionQueue<TFunctionType>::AddToQueue_ASync(TFunction func)
+{
+	SDLAutoMutex(&m_myMutex);
+
+	m_functionQueue.push_front(func);
+
+	return eError::noErr;
+}
+
+//========================================================
+// fnQueue::Stop
+//========================================================
+template< class TFunctionType >
+eError SDLFunctionQueue<TFunctionType>::Stop(bool force = false)
+{
+	m_myMutex.Lock();
+
+	m_bStopRequestPriority = 1;
+	if (force)
+	{
+		m_bStopRequestPriority = 2;
+	}
+
+	m_myMutex.Unlock();
+}
 #endif //_SDLFUNCTIONQUEUE_H_

@@ -12,7 +12,7 @@
 #include "types.h"
 
 // Forward declares
-class SDL_Mutex;
+struct SDL_mutex;
 
 //! \brief a Mutex class
 //! A mutex is used to allow a function to stop progress until some other concurrent progress is finished
@@ -44,7 +44,7 @@ public:
 private:
 	
 	//! \brief the sdl mutex
-	SDL_Mutex* my_sdl_mutex;
+	SDL_mutex* my_sdl_mutex;
 };
 
 

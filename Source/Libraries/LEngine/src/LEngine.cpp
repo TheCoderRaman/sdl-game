@@ -14,15 +14,6 @@
 #include "debug.h"
 #include "eError.h"
 
-//! \brief start point for the SDL loop thread
-int SDLLoopThreadStart( void* data );
-
-//! \brief start point for the game thread
-int GameThreadStart( void* data );
-
-//! \brief start point for the render thread
-int RenderThreadStart(void* data);
-
 //===============================================================
 // LEngine::
 //===============================================================
@@ -131,19 +122,19 @@ eError LEngine::loop()
 	SDLThread::Thread sdlLoopThread;
 	sdlLoopThread.name = "SDLEventLoop";
 
-	SDLThread::SpawnThread(sdlLoopThread, SDLLoopThreadStart, NULL);
+	SDLThread::SpawnThread(sdlLoopThread, SDLLoopThreadStart, this);
 
 	// Spawn Game thread
 	SDLThread::Thread gameUpdateThread;
-	sdlLoopThread.name = "LGameUpdate";
+	gameUpdateThread.name = "LGameUpdate";
 
-	SDLThread::SpawnThread(gameUpdateThread, GameThreadStart, NULL);
+	SDLThread::SpawnThread(gameUpdateThread, GameThreadStart, this);
 
 	// Spawn the render thread
 	SDLThread::Thread renderThread;
-	sdlLoopThread.name = "Render";
+	renderThread.name = "Render";
 
-	SDLThread::SpawnThread(renderThread, RenderThreadStart, NULL);
+	SDLThread::SpawnThread(renderThread, RenderThreadStart, this);
 
 	// Run the main thread queue
 	err = m_mainThreadQueue.Run();
@@ -188,6 +179,19 @@ eError LEngine::unload()
 }
 
 //===============================================================
+// LEngine::UpdateWindow
+//===============================================================
+eError LEngine::UpdateWindow()
+{
+	eError err = eError::noErr;
+
+	err |= m_MainWindow.Update();
+
+	return err;
+}
+
+
+//===============================================================
 int SDLLoopThreadStart(void* data)
 {
 	DEBUG_LOG("SDLLoopThread Starting");
@@ -202,8 +206,16 @@ int SDLLoopThreadStart(void* data)
 int GameThreadStart(void* data)
 {
 	DEBUG_LOG("GameThread Starting");
+	eError err = eError::noErr;
+	
+	while (!ERROR_HAS_TYPE_FATAL(err)
+		&& !ERROR_HAS(err, eError::quitRequest))
+	{
+		LGameBase::GetGame()->Update();
 
-	LGameBase::GetGame()->Update();
+		// TODO: Better delay mechanism for update rate and such
+		SDLTimer::GlobalDelay(10);
+	}
 
 	DEBUG_LOG("GameThread Ending");
 	return 0;
@@ -213,8 +225,18 @@ int GameThreadStart(void* data)
 int RenderThreadStart(void* data)
 {
 	DEBUG_LOG("RenderThread Starting");
+	eError err = eError::noErr;
 
-	//m_MainWindow.Update()
+	LEngine* thisEngine = (LEngine*)data;
+
+	while (!ERROR_HAS_TYPE_FATAL(err)
+		&& !ERROR_HAS(err, eError::quitRequest))
+	{
+		err = thisEngine->UpdateWindow();
+
+		// TODO: Better delay mechanism for update rate and such
+		SDLTimer::GlobalDelay(10);
+	}
 
 	DEBUG_LOG("RenderThread Ending");
 	return 0;

@@ -30,6 +30,9 @@ public:
 	// quit the engine
 	eError quit();	
 
+	// Update the window
+	eError UpdateWindow();
+
 private:
 
 	// Loads assets
@@ -48,5 +51,14 @@ private:
 	SDLFunctionQueue<eError(void)> m_mainThreadQueue;
 
 };
+
+//! \brief start point for the SDL loop thread
+int SDLLoopThreadStart(void* data);
+
+//! \brief start point for the game thread
+int GameThreadStart(void* data);
+
+//! \brief start point for the render thread
+int RenderThreadStart(void* data);
 
 #endif //_LENGINE_H_

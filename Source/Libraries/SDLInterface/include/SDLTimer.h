@@ -34,6 +34,9 @@ public:
 	//! \brief Reset the timer
 	void Reset( void );
 
+	//! \brief global time delay
+	static void GlobalDelay(ms time);
+
 private:
 
 	ms m_startTime;

@@ -7,3 +7,11 @@
 //! https://wiki.libsdl.org/CategoryTimer?highlight=%28%5CbCategoryCategory%5Cb%29
 //!
 #include "SDLTimer.h"
+
+#include "SDL.h"
+
+void SDLTimer::GlobalDelay(ms time)
+{
+	// Call the SDL delay function
+	SDL_Delay(time);
+}
