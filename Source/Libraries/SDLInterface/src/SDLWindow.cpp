@@ -13,6 +13,8 @@
 #include "debug.h"
 #include "eError.h"
 
+#include "SDLThread.h"
+
 // Default constructor
 SDLWindow::SDLWindow()
 : m_SDL_Window(nullptr)
@@ -68,7 +70,13 @@ eError SDLWindow::Update()
     eError err = eError::noErr;
 
     //Update the surface
-    SDL_UpdateWindowSurface( m_SDL_Window );
+	SDLThread::RunOnMainThread_ASync(
+	[&]() -> eError
+	{
+		SDL_UpdateWindowSurface(m_SDL_Window);
+
+		return eError::noErr;
+	});
 
     return err;
 }

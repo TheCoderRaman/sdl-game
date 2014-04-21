@@ -80,3 +80,18 @@ eError SDLThread::DetachThread(SDLThread::Thread& thread)
 
 	return err;
 }
+
+
+//! \brief Run a function on the main thread Syncronously with return value
+//! This function will not return untill the function on the main thread is complete
+eError SDLThread::RunOnMainThread_Sync(TMainThreadFnQueue::TFunction func, eError& returnVal)
+{
+	return s_MainThreadQueue->AddToQueue_Sync(func, returnVal);
+}
+
+//! \brief Run a function on the main thread ASyncronously
+//! This function will return instantly, with no wait, and give any error code if there was an issue
+eError SDLThread::RunOnMainThread_ASync(TMainThreadFnQueue::TFunction func)
+{
+	return s_MainThreadQueue->AddToQueue_ASync(func);
+}

@@ -211,7 +211,7 @@ int GameThreadStart(void* data)
 	while (!ERROR_HAS_TYPE_FATAL(err)
 		&& !ERROR_HAS(err, eError::quitRequest))
 	{
-		LGameBase::GetGame()->Update();
+		err |= LGameBase::GetGame()->Update();
 
 		// TODO: Better delay mechanism for update rate and such
 		SDLTimer::GlobalDelay(10);
@@ -232,10 +232,10 @@ int RenderThreadStart(void* data)
 	while (!ERROR_HAS_TYPE_FATAL(err)
 		&& !ERROR_HAS(err, eError::quitRequest))
 	{
-		err = thisEngine->UpdateWindow();
+		err |= thisEngine->UpdateWindow();
 
 		// TODO: Better delay mechanism for update rate and such
-		SDLTimer::GlobalDelay(10);
+		SDLTimer::GlobalDelay(20);
 	}
 
 	DEBUG_LOG("RenderThread Ending");

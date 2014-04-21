@@ -116,7 +116,8 @@ eError SDLFunctionQueue<TFunctionType>::Run()
 		m_myMutex.Unlock();
 
 		// if we have a function to do
-		while ( ( NumInQueue != 0 ) && !(bStop <= 1))
+		while ( ( NumInQueue != 0 ) 
+			&& (bStop <= 1) ) // AND no forced stop is requested
 		{
 			// Lock the mutex while grabbing members
 			m_myMutex.Lock();
@@ -169,9 +170,11 @@ eError SDLFunctionQueue<TFunctionType>::AddToQueue_Sync(TFunction func, eError& 
 template< class TFunctionType >
 eError SDLFunctionQueue<TFunctionType>::AddToQueue_ASync(TFunction func)
 {
-	SDLAutoMutex(&m_myMutex);
+	m_myMutex.Lock();
 
-	m_functionQueue.push_front(func);
+	m_functionQueue.push_back(func);
+
+	m_myMutex.Unlock();
 
 	return eError::noErr;
 }
