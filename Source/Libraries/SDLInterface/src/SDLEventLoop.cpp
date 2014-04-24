@@ -20,11 +20,23 @@ eError SDLEventLoop::DoLoop()
 	//Event handler
     SDL_Event event;
 
+	// Boolean to store the end
+	bool toEnd = false;
+
 	//Handle events on queue
-	while (SDL_WaitEvent(&event) != 0
-			&& !ERROR_HAS_TYPE_FATAL(err)				// Fatal errors
-			&& !ERROR_HAS(err,eError::quitRequest) )	// Quit requests
+	while ( !toEnd )
     {
+		// Peep into the events. SDL_PeepEvents is thread safe, unlike wait or 
+		int sdl_error = SDL_PeepEvents(&event, 1, SDL_GETEVENT, SDL_FIRSTEVENT, SDL_LASTEVENT);
+
+		// If we have an error then break out early
+		if (sdl_error < 0)
+		{
+			DEBUG_LOG(SDL_GetError());
+			err = eError::SDL_Fatal;
+			break;
+		}
+
     	switch( event.type )
     	{
     		case SDL_QUIT:
@@ -75,7 +87,7 @@ eError SDLEventLoop::DoLoop()
 
 			// Window events
 			case SDL_WINDOWEVENT:
-				DEBUG_LOG("Unhandled SDL Event: SDL_WINDOWEVENT");
+				HandleWindowEvent(&event);
 				break;
 
 			// SysWM events?
@@ -87,6 +99,9 @@ eError SDLEventLoop::DoLoop()
     			DEBUG_LOG("Unhandled SDL Event: type %i",event.type);
     			break;
     	}
+
+		toEnd = ( ERROR_HAS_TYPE_FATAL(err)				// Fatal errors
+			|| ERROR_HAS(err, eError::quitRequest));	// Quit requests
     }
 
     if ( err != eError::noErr )
@@ -120,5 +135,22 @@ eError SDLEventLoop::HandleJoystickEvent( SDL_Event *event )
 eError SDLEventLoop::HandleControllerEvent( SDL_Event *event )
 {
 	eError err = eError::noErr;
+	return err;
+}
+
+// Handles all Controller events
+eError SDLEventLoop::HandleWindowEvent(SDL_Event *event)
+{
+	eError err = eError::noErr;
+
+	switch (event->window.event)
+	{
+		case SDL_WINDOWEVENT_SHOWN:
+			DEBUG_LOG("SDL_WINDOWEVENT_SHOWN");
+			break;
+		default:
+			DEBUG_LOG("Unhandled SDL Event: SDL_WINDOWEVENT %i", event->window.event);
+			break;
+	}
 	return err;
 }

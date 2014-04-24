@@ -121,19 +121,16 @@ eError LEngine::loop()
 	// Spawn SDLEventloop thread
 	SDLThread::Thread sdlLoopThread;
 	sdlLoopThread.name = "SDLEventLoop";
-
 	SDLThread::SpawnThread(sdlLoopThread, SDLLoopThreadStart, this);
 
 	// Spawn Game thread
 	SDLThread::Thread gameUpdateThread;
 	gameUpdateThread.name = "LGameUpdate";
-
 	SDLThread::SpawnThread(gameUpdateThread, GameThreadStart, this);
 
 	// Spawn the render thread
 	SDLThread::Thread renderThread;
 	renderThread.name = "Render";
-
 	SDLThread::SpawnThread(renderThread, RenderThreadStart, this);
 
 	// Run the main thread queue
@@ -145,23 +142,8 @@ eError LEngine::loop()
 	// Wait for all the threads to close off
 	int returnVal;
 	SDLThread::WaitForThread(renderThread, &returnVal);
-
 	SDLThread::WaitForThread(gameUpdateThread, &returnVal);
-
 	SDLThread::WaitForThread(sdlLoopThread, &returnVal);
-
-
-		// These functions bellow MUST now to be farmed off to other threads
-		// Removing them for now to ensure no funny business
-		/*
-        err |= SDLEventLoop::DoLoop(exit_request);
-
-        if ( eError::noErr == err )
-            err |= LGameBase::GetGame()->Update();
-
-        if ( eError::noErr == err )
-        	err |= m_MainWindow.Update();
-		*/
 
     return err;
 }

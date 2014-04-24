@@ -11,6 +11,7 @@
 // std library includes
 #include <functional> // for std::function
 #include <vector> // for std::vector
+#include <thread> // for thread_local
 
 #include "SDLMutex.h"
 #include "SDLTimer.h"
@@ -60,7 +61,13 @@ private:
 	//! both stops are safe
 	//! should probs be an enum...
 	int m_bStopRequestPriority;
+
+	//! \brief boolean to check if we're currently event handling
+	static THREAD_LOCAL bool isCurrentlyEventHandling;
 };
+
+template< class TFunctionType >
+THREAD_LOCAL bool SDLFunctionQueue<TFunctionType>::isCurrentlyEventHandling = false;
 
 //========================================================
 // fnQueue::fnQueue
@@ -134,8 +141,15 @@ eError SDLFunctionQueue<TFunctionType>::Run()
 			// We can now call the function outside of the mutex
 			if (funcToPerform != nullptr)
 			{
+				// Set we're currently event handling
+				isCurrentlyEventHandling = true;
+
 				// Perform the function
 				err |= funcToPerform();
+
+				// turn off event handling
+				isCurrentlyEventHandling = false;
+
 				funcToPerform = nullptr;
 			}
 
@@ -157,6 +171,12 @@ eError SDLFunctionQueue<TFunctionType>::Run()
 template< class TFunctionType >
 eError SDLFunctionQueue<TFunctionType>::AddToQueue_Sync(TFunction func, eError& returnVal)
 {
+	// We can safely just call the event here if we're in the middle of event handling on this thread
+	if (isCurrentlyEventHandling)
+	{
+		returnVal = func();
+	}
+
 	// For now, without a clever way of doing this, we can just do the async one
 	AddToQueue_ASync(func);
 

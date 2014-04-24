@@ -5,7 +5,7 @@
 #include <stdarg.h> // for the va_ arg list
 
 //! Path seperators are different on Unix compared to windows
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32) && !defined(__CYGWIN__)
+#if defined(WIN32) || defined(_WIN32)
 	#define PATH_SEP '\\'
 #else
 	#define PATH_SEP '/' 

@@ -33,6 +33,10 @@ namespace SDLEventLoop
 	//! \return Any eError produced
 	eError HandleMouseEvent( SDL_Event *event );
 
+	//! \brief Handle any Window related event
+	//! \return Any eError produced
+	eError HandleWindowEvent(SDL_Event *event);
+
 	//! \brief Handle any Joystick related event
 	//! \return Any eError produced
 	//! \sa HandleControllerEvent as these two are pretty related
