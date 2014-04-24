@@ -13,7 +13,6 @@
 
 union SDL_Event;
 
-
 //! \brief Namespace for all SDL_Event related methods
 //! 
 //! Handles the SDL_Event loop and fires off the events to appropriate deligates

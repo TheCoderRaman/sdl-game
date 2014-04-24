@@ -47,26 +47,34 @@ private:
 	SDL_mutex* my_sdl_mutex;
 };
 
+struct SDL_semaphore;
 
-//! \brief Little helper class to automatically unlock a mutext on destruction
-//! \warning do NOT give this a mutex that may have been destroyed by the end of this objects lifetime
-class SDLAutoMutex
+class SDLSemaphore
 {
 public:
 
-	//! \brief Create the automutex object. Will lock /a theMutex 
-	SDLAutoMutex(SDLMutex* theMutex);
+	// Constructor and destructor
+	SDLSemaphore();
+	~SDLSemaphore();
 
-	//! \brief This will unlock \a m_myMutex
-	~SDLAutoMutex();
+	//! \brief Create the semaphore (must be called)
+	eError Create();
+
+	//! \brief Destroy the semaphore (must be called before destruction)
+	eError Destroy();
+
+	//! \brief Post the semaphore
+	eError Post();
+
+	//! \brief Waits for the semaphore
+	//! \warning will block until Post is called
+	eError Wait();
 
 private:
 
-	// Private - must be constructed with mutex
-	SDLAutoMutex();
+	//! \brief the internal SDL semaphore
+	SDL_semaphore* m_mySem;
 
-	//! \brief the mutex to automatically lock/unlock
-	SDLMutex* m_myMutex;
 };
 
 #endif _SDLMUTEX_H_

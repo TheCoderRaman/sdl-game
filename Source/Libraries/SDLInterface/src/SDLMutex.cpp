@@ -38,6 +38,7 @@ eError SDLMutex::Destroy()
 	DEBUG_ASSERT(my_sdl_mutex != nullptr);
 
 	SDL_DestroyMutex(my_sdl_mutex);
+	my_sdl_mutex = nullptr;
 
 	return eError::noErr;
 }
@@ -60,19 +61,51 @@ eError SDLMutex::Unlock()
 	return eError::noErr;
 }
 
-SDLAutoMutex::SDLAutoMutex(SDLMutex* theMutex)
-: m_myMutex( theMutex )
+SDLSemaphore::SDLSemaphore()
+: m_mySem(nullptr)
 {
-	DEBUG_ASSERT(theMutex != nullptr);
 
-	eError err = m_myMutex->Lock();
-
-	DEBUG_ASSERT(!ERROR_HAS_TYPE_FATAL(err));
 }
 
-SDLAutoMutex::~SDLAutoMutex()
+SDLSemaphore::~SDLSemaphore()
 {
-	eError err = m_myMutex->Unlock();
+	// Sanity check that destroy has been called
+	DEBUG_ASSERT(m_mySem == nullptr);
+}
 
-	DEBUG_ASSERT(!ERROR_HAS_TYPE_FATAL(err));
+eError SDLSemaphore::Create()
+{
+	DEBUG_ASSERT(m_mySem == nullptr);
+
+	m_mySem = SDL_CreateSemaphore(0);
+
+	return eError::noErr;
+}
+
+eError SDLSemaphore::Destroy()
+{
+	DEBUG_ASSERT(m_mySem != nullptr);
+
+	SDL_DestroySemaphore(m_mySem);
+	m_mySem = nullptr;
+
+	return eError::noErr;
+}
+
+eError SDLSemaphore::Post()
+{
+	DEBUG_ASSERT(m_mySem != nullptr);
+
+	SDL_SemPost(m_mySem);
+
+	return eError::noErr;
+}
+
+eError SDLSemaphore::Wait()
+{
+	DEBUG_ASSERT(m_mySem != nullptr);
+
+	SDL_SemWait(m_mySem);
+
+	return eError::noErr;
 }

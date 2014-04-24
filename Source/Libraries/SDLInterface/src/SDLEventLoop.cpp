@@ -12,6 +12,8 @@
 #include "debug.h"
 #include "eError.h"
 
+#include "SDLMutex.h"
+
 //! \brief the custom function event type
 Uint32 s_kCustomFunctionEventType = -1;
 
@@ -219,13 +221,11 @@ eError SDLEventLoop::HandleCustomFunctionEvent(SDL_Event *event)
 {
 	eError err = eError::noErr;
 
-	// Call the function
+	// Grab  the function
 	TMainThreadFunction* function = static_cast<TMainThreadFunction*>(event->user.data1);
 
 	// Call the function
 	function->operator()();
-
-	// trigger the semaphore
 
 	// delete the function ( it was newed in PostCustomFunctionEvent )
 	delete function;
@@ -250,7 +250,7 @@ eError SDLEventLoop::PostCustomFunctionEvent(TMainThreadFunction func)
 	customEvent.type = s_kCustomFunctionEventType;
 	customEvent.user.code = 0; /* dunno */
 	customEvent.user.data1 = tempFunc;
-	customEvent.user.data2 = 0; /* semaphore */
+	customEvent.user.data2 = 0; /* anything else? */
 
 	SDL_PushEvent(&customEvent);
 
@@ -272,9 +272,25 @@ eError SDLEventLoop::RunOnMainThread_Sync(eError& returnVal, TMainThreadFunction
 	}
 	else
 	{
+		SDLSemaphore* tempSem = new SDLSemaphore();
+		tempSem->Create();
+
+		// Create a new temporary function that will post the semaphore and grab the return value
+		TMainThreadFunction newTempFunc = [&]()->eError {
+			returnVal = func();
+			tempSem->Post();
+			
+			return eError::noErr;
+		};
+
 		// run it async for now until semaphore is implemented
-		returnVal = err;
-		err = RunOnMainThread_ASync(func);
+		err = PostCustomFunctionEvent(newTempFunc);
+
+		// Wait for the semaphore to be posted
+		tempSem->Wait();
+
+		tempSem->Destroy();
+		delete tempSem;
 	}
 
 	return err;
