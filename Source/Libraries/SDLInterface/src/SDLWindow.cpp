@@ -69,12 +69,11 @@ eError SDLWindow::Update()
 {
     eError err = eError::noErr;
 
-    //Update the surface
-	SDLEventLoop::RunOnMainThread_ASync(
-	[&]() -> eError
-	{
-		SDL_UpdateWindowSurface(m_SDL_Window);
+    // SDL Window functions must be run on the main thread
+	SDLEventLoop::RunOnMainThread_Sync(err,
+	[&]()->eError {
 
+		SDL_UpdateWindowSurface(m_SDL_Window);
 		return eError::noErr;
 	});
 

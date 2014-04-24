@@ -18,22 +18,30 @@
 // Main
 int main( int argc, char* args[] )
 {
+	// Error tracking
+	eError err = eError::noErr;
+
+	// log the program start
 	RUNTIME_LOG("Program Starting...");
 
     // Create the engine
     LEngine myEngine = LEngine();
 
-    eError err =  eError::noErr;
-
-    err |= myEngine.init();
+	// Initialise the engine
+	if ( !ERROR_HAS_TYPE_FATAL(err) )
+		err |= myEngine.init();
     
-    if( eError::noErr == err )
+	// Run the engine
+	if ( !ERROR_HAS_TYPE_FATAL(err) )
     	err |= myEngine.run();
 
-    if( eError::noErr == err )
+	// Quit the engine
+	if ( !ERROR_HAS_TYPE_FATAL(err) )
     	err |= myEngine.quit();
     
+	// LOG the program exit parameter
 	RUNTIME_LOG("Program Exiting with eError %i", err);
 
+	// Return an int cast of the error
     return (int)err;    
 }

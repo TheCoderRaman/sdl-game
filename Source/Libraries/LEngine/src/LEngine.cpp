@@ -117,9 +117,9 @@ eError LEngine::load()
 //===============================================================
 eError LEngine::loop()
 {
-	RUNTIME_LOG("Looping...")
-
 	eError err = eError::noErr;
+
+	RUNTIME_LOG("Looping...")
 
 	// Spawn Game thread
 	SDLThread::Thread gameUpdateThread;
@@ -131,15 +131,15 @@ eError LEngine::loop()
 	renderThread.name = "Render";
 	SDLThread::SpawnThread(renderThread, RenderThreadStart, this);
 
+	// Do the main SDL event loop
 	err = SDLEventLoop::DoLoop();
-
-	// Main thread queue has quit out
-	//TODO: Send some kind of message to the other threads that they need to quit
 
 	// Wait for all the threads to close off
 	int returnVal;
 	SDLThread::WaitForThread(renderThread, &returnVal);
 	SDLThread::WaitForThread(gameUpdateThread, &returnVal);
+
+	//TODO: Handle these return vals
 
     return err;
 }
@@ -151,6 +151,7 @@ eError LEngine::unload()
 {
 	eError err = eError::noErr;
 
+	// Destroy the game
     err |= LGameBase::GetGame()->Destroy();
 
 	return err;
@@ -163,6 +164,7 @@ eError LEngine::UpdateWindow()
 {
 	eError err = eError::noErr;
 
+	// Update the main window
 	err |= m_MainWindow.Update();
 
 	return err;
@@ -174,13 +176,18 @@ int GameThreadStart(void* data)
 	DEBUG_LOG("GameThread Starting");
 	eError err = eError::noErr;
 	
+	// The main loop
 	while (!ERROR_HAS_TYPE_FATAL(err)
 		&& !ERROR_HAS(err, eError::quitRequest))
 	{
+		// Update the game
 		err |= LGameBase::GetGame()->Update();
 
 		// TODO: Better delay mechanism for update rate and such
 		SDLTimer::GlobalDelay(10);
+
+		// get if the SDLEventLoop has finished
+		err |= SDLEventLoop::GetHasFinished();
 	}
 
 	DEBUG_LOG("GameThread Ending");
@@ -193,15 +200,20 @@ int RenderThreadStart(void* data)
 	DEBUG_LOG("RenderThread Starting");
 	eError err = eError::noErr;
 
+	// Grab the engine from the thread data
 	LEngine* thisEngine = (LEngine*)data;
 
 	while (!ERROR_HAS_TYPE_FATAL(err)
 		&& !ERROR_HAS(err, eError::quitRequest))
 	{
+		// Update the engine window
 		err |= thisEngine->UpdateWindow();
 
 		// TODO: Better delay mechanism for update rate and such
-		SDLTimer::GlobalDelay(20);
+		SDLTimer::GlobalDelay(10);
+
+		// get if the SDLEventLoop has finished
+		err |= SDLEventLoop::GetHasFinished();
 	}
 
 	DEBUG_LOG("RenderThread Ending");

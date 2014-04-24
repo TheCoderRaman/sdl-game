@@ -16,13 +16,31 @@
 Uint32 s_kCustomFunctionEventType = -1;
 
 //! \brief boolean to check if we're currently event handling
-static THREAD_LOCAL bool s_isCurrentlyEventHandling = false;
+THREAD_LOCAL bool s_isCurrentlyEventHandling = false;
+
+//! \brief boolean to store if the SDLEvent loop has finished
+bool s_hasFinished = false;
+
+//! \brief accessor method to check if the SDLEventLoop has finished
+eError SDLEventLoop::GetHasFinished()
+{
+	eError err = eError::noErr;
+
+	if (s_hasFinished)
+		err = eError::quitRequest;
+
+	return err;
+}
 
 // Create the loop
 eError SDLEventLoop::Create()
 {
 	eError err = eError::noErr;
 
+	// Reset to ensure HadFinished is false
+	s_hasFinished = false;
+
+	// Register the custom event
 	if (s_kCustomFunctionEventType == -1)
 	{
 		s_kCustomFunctionEventType = SDL_RegisterEvents(1);
@@ -54,7 +72,7 @@ eError SDLEventLoop::DoLoop()
 		
 		s_isCurrentlyEventHandling = true;
 
-		HandleEvent(&event);
+		err = HandleEvent(&event);
 
 		s_isCurrentlyEventHandling = false;
 
@@ -64,6 +82,9 @@ eError SDLEventLoop::DoLoop()
 
     if ( err != eError::noErr )
     	DEBUG_LOG("DoLoop Dropped out with eError %i",err);
+
+	// Set that the eventloop has finished
+	s_hasFinished = true;
 
     return err;
 }
@@ -133,14 +154,14 @@ eError SDLEventLoop::HandleEvent(SDL_Event *event)
 
 	default:
 	{
-			   if (event->type == s_kCustomFunctionEventType)
-			   {
-				   HandleCustomFunctionEvent(event);
-			   }
-			   else
-			   {
-				   DEBUG_LOG("Unhandled SDL Event: type %i", event->type);
-			   }
+		if (event->type == s_kCustomFunctionEventType)
+		{
+			HandleCustomFunctionEvent(event);
+		}
+		else
+		{
+			DEBUG_LOG("Unhandled SDL Event: type %i", event->type);
+		}
 	}
 		break;
 	}
@@ -221,8 +242,11 @@ eError SDLEventLoop::PostCustomFunctionEvent(TMainThreadFunction func)
 	// This is because whatever function was passed in may be out of scope by the time it gets called
 	TMainThreadFunction* tempFunc = new TMainThreadFunction(func);
 
+	// Create a custom event
 	SDL_Event customEvent;
 	SDL_zero(customEvent);
+
+	// Set the custom event type and data
 	customEvent.type = s_kCustomFunctionEventType;
 	customEvent.user.code = 0; /* dunno */
 	customEvent.user.data1 = tempFunc;
@@ -235,7 +259,7 @@ eError SDLEventLoop::PostCustomFunctionEvent(TMainThreadFunction func)
 
 //! \brief Run a function on the main thread Syncronously with return value
 //! This function will not return untill the function on the main thread is complete
-eError SDLEventLoop::RunOnMainThread_Sync(TMainThreadFunction func, eError& returnVal)
+eError SDLEventLoop::RunOnMainThread_Sync(eError& returnVal, TMainThreadFunction func)
 {
 	eError err = eError::noErr;
 

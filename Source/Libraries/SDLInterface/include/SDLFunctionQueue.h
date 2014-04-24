@@ -31,7 +31,7 @@ public:
 
 	//! \brief Run a function on the main thread Syncronously with return value
 	//! This function will not return until the function on the main thread is complete
-	eError AddToQueue_Sync(TFunction, eError& returnVal);
+	eError AddToQueue_Sync(eError& returnVal, TFunction);
 
 	//! \brief Run a function on the main thread ASyncronously
 	//! This function will return instantly, with no wait, and give any error code if there was an issue
@@ -168,7 +168,7 @@ eError SDLFunctionQueue<TFunctionType>::Run()
 // fnQueue::AddToQueue_Sync
 //========================================================
 template< class TFunctionType >
-eError SDLFunctionQueue<TFunctionType>::AddToQueue_Sync(TFunction func, eError& returnVal)
+eError SDLFunctionQueue<TFunctionType>::AddToQueue_Sync(eError& returnVal, TFunction)
 {
 	// We can safely just call the event here if we're in the middle of event handling on this thread
 	if (isCurrentlyFunctionHandling)

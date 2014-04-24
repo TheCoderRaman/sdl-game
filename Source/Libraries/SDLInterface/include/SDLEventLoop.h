@@ -63,11 +63,14 @@ namespace SDLEventLoop
 
 	//! \brief Run a function on the main thread Syncronously with return value
 	//! This function will not return untill the function on the main thread is complete
-	eError RunOnMainThread_Sync(TMainThreadFunction func, eError& returnVal);
+	eError RunOnMainThread_Sync(eError& returnVal, TMainThreadFunction func);
 
 	//! \brief Run a function on the main thread ASyncronously
 	//! This function will return instantly, with no wait, and give any error code if there was an issue
 	eError RunOnMainThread_ASync(TMainThreadFunction func);
+
+	//! \brief accessor method to check if the SDLEventLoop has finished
+	eError GetHasFinished();
 	
 }
 
