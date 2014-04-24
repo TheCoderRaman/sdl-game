@@ -9,6 +9,9 @@
 
 #include "SDLMain.h"
 #include "SDLEventLoop.h"
+#include "SDLThread.h"
+#include "SDLTimer.h"
+
 #include "LGameBase.h"
 
 #include "debug.h"
@@ -49,8 +52,8 @@ eError LEngine::init()
 
 	if (!ERROR_HAS_TYPE_FATAL(err))
 	{
-		// give the SDLThread system the function queue
-		err = SDLThread::SetMainThreadQueue(&m_mainThreadQueue);
+		// create the sdl event loop
+		err = SDLEventLoop::Create();
 	}
 
     return err;
@@ -118,11 +121,6 @@ eError LEngine::loop()
 
 	eError err = eError::noErr;
 
-	// Spawn SDLEventloop thread
-	SDLThread::Thread sdlLoopThread;
-	sdlLoopThread.name = "SDLEventLoop";
-	SDLThread::SpawnThread(sdlLoopThread, SDLLoopThreadStart, this);
-
 	// Spawn Game thread
 	SDLThread::Thread gameUpdateThread;
 	gameUpdateThread.name = "LGameUpdate";
@@ -133,8 +131,7 @@ eError LEngine::loop()
 	renderThread.name = "Render";
 	SDLThread::SpawnThread(renderThread, RenderThreadStart, this);
 
-	// Run the main thread queue
-	err = m_mainThreadQueue.Run();
+	err = SDLEventLoop::DoLoop();
 
 	// Main thread queue has quit out
 	//TODO: Send some kind of message to the other threads that they need to quit
@@ -143,7 +140,6 @@ eError LEngine::loop()
 	int returnVal;
 	SDLThread::WaitForThread(renderThread, &returnVal);
 	SDLThread::WaitForThread(gameUpdateThread, &returnVal);
-	SDLThread::WaitForThread(sdlLoopThread, &returnVal);
 
     return err;
 }
@@ -170,18 +166,6 @@ eError LEngine::UpdateWindow()
 	err |= m_MainWindow.Update();
 
 	return err;
-}
-
-
-//===============================================================
-int SDLLoopThreadStart(void* data)
-{
-	DEBUG_LOG("SDLLoopThread Starting");
-
-	SDLEventLoop::DoLoop();
-
-	DEBUG_LOG("SDLLoopThread Ending");
-	return 0;
 }
 
 //===============================================================

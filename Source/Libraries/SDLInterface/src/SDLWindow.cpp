@@ -13,7 +13,7 @@
 #include "debug.h"
 #include "eError.h"
 
-#include "SDLThread.h"
+#include "SDLEventLoop.h"
 
 // Default constructor
 SDLWindow::SDLWindow()
@@ -70,7 +70,7 @@ eError SDLWindow::Update()
     eError err = eError::noErr;
 
     //Update the surface
-	SDLThread::RunOnMainThread_ASync(
+	SDLEventLoop::RunOnMainThread_ASync(
 	[&]() -> eError
 	{
 		SDL_UpdateWindowSurface(m_SDL_Window);

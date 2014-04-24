@@ -10,7 +10,6 @@
 
 // Includes
 #include "types.h"
-#include "SDLFunctionQueue.h"
 
 // Forward declarations for SDL stuff
 struct SDL_Thread;
@@ -52,20 +51,6 @@ namespace SDLThread
 	//! \warning This thread is now completely detached so no return code can be recieved
 	//! \warning This Thread object is now invalid and cannot have Wait or Detach called on it
 	eError DetachThread(Thread& thread);
-
-	//! \brief the type for the main thread queue
-	typedef SDLFunctionQueue< eError(void) > TMainThreadFnQueue;
-
-	//! \brief Set the main thread queue object
-	eError SetMainThreadQueue( TMainThreadFnQueue* theQueue);
-
-	//! \brief Run a function on the main thread Syncronously with return value
-	//! This function will not return untill the function on the main thread is complete
-	eError RunOnMainThread_Sync( TMainThreadFnQueue::TFunction, eError& returnVal);
-
-	//! \brief Run a function on the main thread ASyncronously
-	//! This function will return instantly, with no wait, and give any error code if there was an issue
-	eError RunOnMainThread_ASync(TMainThreadFnQueue::TFunction );
 
 }
 

@@ -11,7 +11,6 @@
 // std library includes
 #include <functional> // for std::function
 #include <vector> // for std::vector
-#include <thread> // for thread_local
 
 #include "SDLMutex.h"
 #include "SDLTimer.h"
@@ -63,11 +62,11 @@ private:
 	int m_bStopRequestPriority;
 
 	//! \brief boolean to check if we're currently event handling
-	static THREAD_LOCAL bool isCurrentlyEventHandling;
+	static THREAD_LOCAL bool isCurrentlyFunctionHandling;
 };
 
 template< class TFunctionType >
-THREAD_LOCAL bool SDLFunctionQueue<TFunctionType>::isCurrentlyEventHandling = false;
+THREAD_LOCAL bool SDLFunctionQueue<TFunctionType>::isCurrentlyFunctionHandling = false;
 
 //========================================================
 // fnQueue::fnQueue
@@ -142,13 +141,13 @@ eError SDLFunctionQueue<TFunctionType>::Run()
 			if (funcToPerform != nullptr)
 			{
 				// Set we're currently event handling
-				isCurrentlyEventHandling = true;
+				isCurrentlyFunctionHandling = true;
 
 				// Perform the function
 				err |= funcToPerform();
 
 				// turn off event handling
-				isCurrentlyEventHandling = false;
+				isCurrentlyFunctionHandling = false;
 
 				funcToPerform = nullptr;
 			}
@@ -172,7 +171,7 @@ template< class TFunctionType >
 eError SDLFunctionQueue<TFunctionType>::AddToQueue_Sync(TFunction func, eError& returnVal)
 {
 	// We can safely just call the event here if we're in the middle of event handling on this thread
-	if (isCurrentlyEventHandling)
+	if (isCurrentlyFunctionHandling)
 	{
 		returnVal = func();
 	}

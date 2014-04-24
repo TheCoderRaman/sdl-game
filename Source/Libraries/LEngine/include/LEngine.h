@@ -10,7 +10,6 @@
 
 #include "types.h"
 #include "SDLWindow.h"
-#include "SDLThread.h"
 
 // LEngine delegate class
 class LEngine
@@ -47,13 +46,7 @@ private:
 	// Member variables
 	SDLWindow m_MainWindow;
 
-	//! \brief the main thread function queue
-	SDLFunctionQueue<eError(void)> m_mainThreadQueue;
-
 };
-
-//! \brief start point for the SDL loop thread
-int SDLLoopThreadStart(void* data);
 
 //! \brief start point for the game thread
 int GameThreadStart(void* data);

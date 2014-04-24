@@ -12,26 +12,6 @@
 
 #include "SDL.h"
 
-SDLThread::TMainThreadFnQueue* s_MainThreadQueue = nullptr;
-
-eError SDLThread::SetMainThreadQueue(TMainThreadFnQueue* theQueue)
-{
-	eError err = eError::noErr;
-
-	// Sanity check on the queue already being null
-	if (s_MainThreadQueue == nullptr)
-	{
-		s_MainThreadQueue = theQueue;
-	}
-	else
-	{
-		// Possibly use a more specific error here
-		// Not fatal however
-		err = eError::Catagory_SDL;
-	}
-
-	return err;
-}
 
 //! \brief Spawn a thread with \a name and \a func with \a data
 //! \warning this Thread will hang around untill Wait or Detach are called on it
@@ -79,19 +59,4 @@ eError SDLThread::DetachThread(SDLThread::Thread& thread)
 	thread.m_sdl_thread = nullptr;
 
 	return err;
-}
-
-
-//! \brief Run a function on the main thread Syncronously with return value
-//! This function will not return untill the function on the main thread is complete
-eError SDLThread::RunOnMainThread_Sync(TMainThreadFnQueue::TFunction func, eError& returnVal)
-{
-	return s_MainThreadQueue->AddToQueue_Sync(func, returnVal);
-}
-
-//! \brief Run a function on the main thread ASyncronously
-//! This function will return instantly, with no wait, and give any error code if there was an issue
-eError SDLThread::RunOnMainThread_ASync(TMainThreadFnQueue::TFunction func)
-{
-	return s_MainThreadQueue->AddToQueue_ASync(func);
 }
