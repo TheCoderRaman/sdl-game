@@ -77,4 +77,4 @@ private:
 
 };
 
-#endif _SDLMUTEX_H_
+#endif //_SDLMUTEX_H_
