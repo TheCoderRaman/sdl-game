@@ -18,7 +18,7 @@
 #define FINAL_STR_MAX 	256
 
 //! The alignment of the messages, will need to be expanded for long file names or any other data put in the headr
-#define FINAL_ALIGNMENT 20
+#define FINAL_ALIGNMENT 25
 
 //! Actual debug log method, used to produce the log output
 //! \warning never call directly, always call one of the various LOG macros
@@ -43,15 +43,15 @@ void _log(const char* file, int line, const char* format, ...)
 
 	for( int i = 0; i < alighnment; i++ )
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32)
-	strncat_s( finalStr, "-" , FINAL_STR_MAX);
+	strncat_s( finalStr, " " , FINAL_STR_MAX);
 #else
-	strncat( finalStr, "-" , FINAL_STR_MAX );
+	strncat( finalStr, " " , FINAL_STR_MAX );
 #endif
 
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32)
-	strncat_s( finalStr, "> " , FINAL_STR_MAX);
+	strncat_s( finalStr, "-> " , FINAL_STR_MAX);
 #else
-	strncat( finalStr, "> " , FINAL_STR_MAX );
+	strncat( finalStr, "-> " , FINAL_STR_MAX );
 #endif
 
 
