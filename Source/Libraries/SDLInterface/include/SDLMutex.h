@@ -11,7 +11,8 @@
 // For eError
 #include "types.h"
 
-// Forward declares
+// Forward declare SDL structs
+struct SDL_semaphore;
 struct SDL_mutex;
 
 //! \brief a Mutex class
@@ -47,8 +48,8 @@ private:
 	SDL_mutex* my_sdl_mutex;
 };
 
-struct SDL_semaphore;
 
+//! \brief Semaphore class. Allows one thread to wait on another thread completing a function
 class SDLSemaphore
 {
 public:

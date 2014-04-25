@@ -11,6 +11,7 @@
 #include "types.h"
 #include <functional>
 
+// Forward declare SDL union
 union SDL_Event;
 
 //! \brief Namespace for all SDL_Event related methods

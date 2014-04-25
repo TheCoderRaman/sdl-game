@@ -12,6 +12,7 @@
 class SDLWindow;
 class SDLRenderer;
 
+// Forward declare SDL structs
 struct SDL_Renderer;
 struct SDL_Window;
 struct SDL_Surface;

@@ -15,12 +15,12 @@
 struct SDL_Thread;
 typedef int (* SDL_ThreadFunction) (void *data);
 
-// Typedef for the function required to launch a thread
-typedef int(*ThreadFunction)(void*);
-
 //! brief the SDLThread namespace
 namespace SDLThread
 {
+	//! \brief Typedef for the function required to launch a thread
+	typedef int(*ThreadFunction)(void*);
+
 	//! \brief container for all thread data
 	struct Thread
 	{

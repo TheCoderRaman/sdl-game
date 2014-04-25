@@ -4,7 +4,9 @@
 //! \date    April 2014
 //!
 //! Header for SDLRenderer.cpp
-//!
+//! References for how to use SDL_Renderer can be found
+//! here : https://wiki.libsdl.org/CategoryRender
+
 #ifndef _SDLRENDERER_H_
 #define _SDLRENDERER_H_
 
@@ -14,13 +16,14 @@
 // for friending
 #include "SDLHelper.h"
 
-// Forward declares
+// Forward declare SDL struct 
 struct SDL_Renderer;
+
+// Forward declare the window
 class SDLWindow;
 
-// References for how to use SDL_Renderer can be found
-// here : https://wiki.libsdl.org/CategoryRender
-
+//! \brief the Renderer class
+//! functions as a wrapper for SDL_Renderer
 class SDLRenderer 
 {
 	friend class SDLHelper; // Allow SDLHelper to access my members

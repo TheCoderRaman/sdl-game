@@ -12,11 +12,13 @@
 
 #include "types.h"
 
+//! \brief an Example game, called "One"
 class GameOne
 : public LGameBase
 {
 public:
 
+	// Default ctor and dtor
 	GameOne();
 	~GameOne();
 

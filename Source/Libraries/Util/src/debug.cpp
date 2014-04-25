@@ -4,11 +4,19 @@
 #include <string.h> // for strncat
 #include <stdarg.h> // for the va_ arg list
 
+#include "Windows.h"
+
 //! Path seperators are different on Unix compared to windows
 #if defined(WIN32) || defined(_WIN32)
-	#define PATH_SEP '\\'
+
+#define PATH_SEP '\\'
+#define STRNCAT	strncat_s
+
 #else
-	#define PATH_SEP '/' 
+
+#define PATH_SEP '/' 
+#define STRNCAT	strncat
+
 #endif
 
 //! Grab only the file name not the full path
@@ -29,41 +37,28 @@ void _log(const char* file, int line, const char* format, ...)
 
 	// THE HEADER
 	//! print in the formatted prefix into the output
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32)
+#if defined(WIN32) || defined(_WIN32)
 	sprintf_s( finalStr, "%s:%i", FILE_NAME(file) , line );
 #else 
 	snprintf( finalStr, FINAL_STR_MAX, "%s:%i", FILE_NAME(file) , line );
 #endif
 
+	// Check the alignment amount
 	const int len = strlen(finalStr);
 	int alighnment = FINAL_ALIGNMENT - len;
 
-	if( alighnment < 0)
-		alighnment = 0;
-
+	// Ammend the alignment
 	for( int i = 0; i < alighnment; i++ )
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32)
-	strncat_s( finalStr, " " , FINAL_STR_MAX);
-#else
-	strncat( finalStr, " " , FINAL_STR_MAX );
-#endif
+		STRNCAT( finalStr, " " , FINAL_STR_MAX );
 
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32)
-	strncat_s( finalStr, "-> " , FINAL_STR_MAX);
-#else
-	strncat( finalStr, "-> " , FINAL_STR_MAX );
-#endif
+	// Ammend a little arrow
+	STRNCAT(finalStr, " -> ", FINAL_STR_MAX);
 
 
 	// THE OUTPUT
 	//! concatonate the format string from the debug message into the output
-#if defined(WIN32) || defined(_WIN32) || defined(__WIN32)
-	strncat_s( finalStr, format , FINAL_STR_MAX);
-	strncat_s( finalStr, "\n" , FINAL_STR_MAX);
-#else
-	strncat( finalStr, format , FINAL_STR_MAX );
-	strncat(finalStr, "\n", FINAL_STR_MAX);
-#endif
+	STRNCAT(finalStr, format, FINAL_STR_MAX);
+	STRNCAT(finalStr, "\n", FINAL_STR_MAX);
 
 	//! Grab the list
 	va_list args;

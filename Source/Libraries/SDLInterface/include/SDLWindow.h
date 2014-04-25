@@ -18,22 +18,29 @@
 struct SDL_Window;
 struct SDL_Surface;
 
+//! \brief SDL_Window wrapper
 class SDLWindow
 {
+	//! Friends with SDLHelper to let it access it's internals
 	friend class SDLHelper;
 public:
 
+	//! default ctor and dtor
 	SDLWindow();
 	~SDLWindow();
 
+	//! \brief create the window
 	eError Create();
 
+	//! \brief update the window
 	eError Update();
 
+	//! \brief destroy the window
 	eError Destroy();
 
 private:
 
+	//! \brief the internal SDL window
 	SDL_Window* 		m_SDL_Window;
 	SDL_Surface* 		m_SDL_Surface;
 
