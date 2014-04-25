@@ -17,6 +17,9 @@
 //! The max buffer size for the final string. if we run into errors then we can up this
 #define FINAL_STR_MAX 	256
 
+//! The alignment of the messages, will need to be expanded for long file names or any other data put in the headr
+#define FINAL_ALIGNMENT 20
+
 //! Actual debug log method, used to produce the log output
 //! \warning never call directly, always call one of the various LOG macros
 void _log(const char* file, int line, const char* format, ...)
@@ -24,13 +27,35 @@ void _log(const char* file, int line, const char* format, ...)
 	//! The final output string
 	char finalStr[FINAL_STR_MAX];	
 
+	// THE HEADER
 	//! print in the formatted prefix into the output
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32)
-	sprintf_s( finalStr, "%s:%i -> ", FILE_NAME(file) , line );
+	sprintf_s( finalStr, "%s:%i", FILE_NAME(file) , line );
 #else 
-	snprintf( finalStr, FINAL_STR_MAX, "%s:%i -> ", FILE_NAME(file) , line );
+	snprintf( finalStr, FINAL_STR_MAX, "%s:%i", FILE_NAME(file) , line );
 #endif
 
+	const int len = strlen(finalStr);
+	int alighnment = FINAL_ALIGNMENT - len;
+
+	if( alighnment < 0)
+		alighnment = 0;
+
+	for( int i = 0; i < alighnment; i++ )
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32)
+	strncat_s( finalStr, "-" , FINAL_STR_MAX);
+#else
+	strncat( finalStr, "-" , FINAL_STR_MAX );
+#endif
+
+#if defined(WIN32) || defined(_WIN32) || defined(__WIN32)
+	strncat_s( finalStr, "> " , FINAL_STR_MAX);
+#else
+	strncat( finalStr, "> " , FINAL_STR_MAX );
+#endif
+
+
+	// THE OUTPUT
 	//! concatonate the format string from the debug message into the output
 #if defined(WIN32) || defined(_WIN32) || defined(__WIN32)
 	strncat_s( finalStr, format , FINAL_STR_MAX);
