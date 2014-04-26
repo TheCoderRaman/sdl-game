@@ -234,7 +234,7 @@ eError SDLInterface::EventLoop::HandleCustomFunctionEvent(SDL_Event *event)
 }
 
 //========================================================
-eError SDLInterface::EventLoop::PostCustomFunctionEvent(TMainThreadFunction func)
+eError SDLInterface::EventLoop::PostCustomFunctionEvent(TMainThreadFunction& func)
 {
 	eError err = eError::NoErr;
 

@@ -69,7 +69,7 @@ namespace SDLInterface
 		static eError HandleCustomFunctionEvent(SDL_Event *event);
 
 		//! \brief sent a custom function event
-		static eError PostCustomFunctionEvent(TMainThreadFunction func);
+		static eError PostCustomFunctionEvent(TMainThreadFunction& func);
 
 		//! \brief Run a function on the main thread Syncronously with return value
 		//! This function will not return untill the function on the main thread is complete
