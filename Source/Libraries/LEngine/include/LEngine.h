@@ -20,28 +20,35 @@ public:
 	LEngine();
 	~LEngine();
 
-	// Init the engine
-	eError init();
-
 	// run ( will not return until finished running )
-	eError run();
+	eError run_full();
 
-	// quit the engine
-	eError quit();	
+	// Other functions
 
 	// Update the window
 	eError UpdateWindow();
 
 private:
 
-	// Loads assets
-	eError load();
+	// main engine run cycle functions (managed by run_full)
 
-	// calls the event loop	
-	eError loop();
+	// Init the engine
+	eError init();
 
-	// unloads the assets
-	eError unload();
+	// run ( will not return until finished running )
+	eError run();
+
+		// Loads assets
+		eError load();
+
+		// calls the event loop	
+		eError loop();
+
+		// unloads the assets
+		eError unload();
+
+	// quit the engine
+	eError quit();
 
 	// Member variables
 	SDLWindow m_MainWindow;

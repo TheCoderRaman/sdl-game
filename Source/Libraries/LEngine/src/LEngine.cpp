@@ -36,6 +36,29 @@ LEngine::~LEngine()
 //===============================================================
 // LEngine::
 //===============================================================
+eError LEngine::run_full()
+{
+	//Initialization flag
+	eError err = eError::noErr;
+
+	// Initialise the engine
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err |= init();
+
+	// Run the engine
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err |= run();
+
+	// Quit the engine
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err |= quit();
+
+	return err;
+}
+
+//===============================================================
+// LEngine::
+//===============================================================
 eError LEngine::init()
 {
 	RUNTIME_LOG("Initialising...")
