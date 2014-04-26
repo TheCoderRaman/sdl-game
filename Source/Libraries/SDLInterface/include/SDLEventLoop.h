@@ -53,6 +53,10 @@ namespace SDLEventLoop
 	//! \return Any eError produced
 	//! \sa HandleControllerEvent as these two are pretty related
 	eError HandleJoystickEvent( SDL_Event *event );
+
+	//! \brief Handle any Controller related event
+	//! \return Any eError produced
+	//! \sa HandleJoystickEvent as these two are pretty related
 	eError HandleControllerEvent( SDL_Event *event );
 
 	//! \brief Handle a custom function event

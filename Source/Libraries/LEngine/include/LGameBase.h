@@ -11,24 +11,25 @@
 #include "types.h"
 #include "LObject.h"
 
-// Base class for the Game, to be overloaded by the game specific class
+//! \brief Base class for the Game, to be overloaded by the game specific class
 class LGameBase
 : public LObject
 {
 public:
 
-	// Constructor and destructor
+	//! \brief Constructor
 	LGameBase();
+	//! \brief destructor
 	~LGameBase();
 
-	// Inherited methods as defined in LObject.h
+	//! \brief Inherited methods as defined in LObject.h
 	virtual eError Create();
 	virtual eError Initialise();
 	virtual eError Update();
 	virtual eError Reset();
 	virtual eError Destroy();
 
-	// static method to be declared in base class
+	//! \brief static method to be declared in base class
 	static LGameBase* GetGame();
 
 protected:

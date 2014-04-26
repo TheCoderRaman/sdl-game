@@ -10,6 +10,7 @@
 
 #include "types.h"
 
+//! \brief convert ms to seconds
 #define msToSec(ms) (ms/1000)
 
 //! \brief class to contain a timer, useful for timekeeping

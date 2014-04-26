@@ -11,15 +11,17 @@
 // Includes
 #include "types.h"
 
-// Forward declarations for SDL stuff
+//! \brief  Forward declarations for SDL stuff
 struct SDL_Thread;
+
+//! \brief type of thread function from SDL
 typedef int (* SDL_ThreadFunction) (void *data);
 
-//! brief the SDLThread namespace
+//! \brief the SDLThread namespace
 namespace SDLThread
 {
 	//! \brief Typedef for the function required to launch a thread
-	typedef int(*ThreadFunction)(void*);
+	typedef SDL_ThreadFunction ThreadFunction;
 
 	//! \brief container for all thread data
 	struct Thread

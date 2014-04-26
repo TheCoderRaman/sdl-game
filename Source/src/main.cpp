@@ -3,18 +3,16 @@
 //! \author  Marc Di luzio
 //! \date    April 2014
 //!
-//! Description
+//! entry point for program
 //! 
 
 //includes
-#include "stdio.h"
+#include "debug.h"		//! for logging
+#include "eError.h"		//! for error handling
 
-#include "debug.h"
-#include "eError.h"
+#include "LEngine.h"	//! for the engine itself
 
-#include "LEngine.h"
-
-// Main
+//! \brief main entry point for the program
 int main( int argc, char* args[] )
 {
 	// log the program start
@@ -28,5 +26,5 @@ int main( int argc, char* args[] )
 	RUNTIME_LOG("Program Exiting with error value %i", err);
 
 	// Return -1 as a failure
-    return ERROR_HAS_TYPE_FATAL(err) ? -1 : 0;    
-}
+    return ERROR_HAS_TYPE_FATAL(err) ? -1 : 0 ;    
+};

@@ -11,46 +11,46 @@
 #include "types.h"
 #include "SDLWindow.h"
 
-// LEngine delegate class
+//! \brief LEngine delegate class
 class LEngine
 {
 public:
 
-	// Constructor and destructor
+	//! \brief Constructor and destructor
 	LEngine();
 	~LEngine();
 
-	// run ( will not return until finished running )
+	//! \brief run ( will not return until finished running )
 	eError run_full();
 
 	// Other functions
 
-	// Update the window
+	//! \brief Update the window
 	eError UpdateWindow();
 
 private:
 
 	// main engine run cycle functions (managed by run_full)
 
-	// Init the engine
+	//! \brief Init the engine
 	eError init();
 
-	// run ( will not return until finished running )
+	//! \brief run ( will not return until finished running )
 	eError run();
 
-		// Loads assets
+		//! \brief Loads assets
 		eError load();
 
-		// calls the event loop	
+		//! \brief calls the event loop	
 		eError loop();
 
-		// unloads the assets
+		//! \brief unloads the assets
 		eError unload();
 
-	// quit the engine
+	//! \brief quit the engine
 	eError quit();
 
-	// Member variables
+	//! \brief Member variables
 	SDLWindow m_MainWindow;
 
 };
