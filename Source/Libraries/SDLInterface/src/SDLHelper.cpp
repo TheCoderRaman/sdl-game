@@ -11,19 +11,19 @@
 #include "SDLWindow.h"
 
 //========================================================
-SDL_Renderer*	SDLHelper::GetSDL_Renderer(SDLRenderer* renderer)
+SDL_Renderer*	SDLInterface::SDLHelper::GetSDL_Renderer(SDLRenderer* renderer)
 {
 	return renderer->m_SDL_Renderer;
 }
 
 //========================================================
-SDL_Window*		SDLHelper::GetSDL_Window(SDLWindow* window)
+SDL_Window*		SDLInterface::SDLHelper::GetSDL_Window(SDLWindow* window)
 {
 	return window->m_SDL_Window;
 }
 
 //========================================================
-SDL_Surface*		SDLHelper::GetSDL_Surface(SDLWindow* window)
+SDL_Surface*	SDLInterface::SDLHelper::GetSDL_Surface(SDLWindow* window)
 {
 	return window->m_SDL_Surface;
 }

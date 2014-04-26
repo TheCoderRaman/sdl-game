@@ -14,70 +14,76 @@
 // Forward declare SDL union
 union SDL_Event;
 
-//! \brief Namespace for all SDL_Event related methods
-//! 
-//! Handles the SDL_Event loop and fires off the events to appropriate deligates
-class SDLEventLoop
+// Start the SDLInterface Namespace
+namespace SDLInterface
 {
-public:
 
-	//! \brief Type for the main thread function loop
-	typedef std::function<eError()> TMainThreadFunction;
+	//! \brief Namespace for all SDL_Event related methods
+	//! 
+	//! Handles the SDL_Event loop and fires off the events to appropriate deligates
+	class SDLEventLoop
+	{
+	public:
 
-	//! \brief create the event loop
-	static eError Create();
+		//! \brief Type for the main thread function loop
+		typedef std::function<eError()> TMainThreadFunction;
 
-	//! \brief Do the event loop
-	//!
-	//! Handles all SDL_Event types and calls down to deligate methods
-	//!
-	//! \return Any eError produced
-	//! \warning this method will not return until SDL_Quit is sent, or a fatal error is encountered
-	static eError DoLoop();
+		//! \brief create the event loop
+		static eError Create();
 
-	//! \brief Handle any event
-	//! \return Any eError produced
-	static eError HandleEvent(SDL_Event *event);
+		//! \brief Do the event loop
+		//!
+		//! Handles all SDL_Event types and calls down to deligate methods
+		//!
+		//! \return Any eError produced
+		//! \warning this method will not return until SDL_Quit is sent, or a fatal error is encountered
+		static eError DoLoop();
 
-	//! \brief Handle any keyboard related event
-	//! \return Any eError produced
-	static eError HandleKeyboardEvent(SDL_Event *event);
+		//! \brief Handle any event
+		//! \return Any eError produced
+		static eError HandleEvent(SDL_Event *event);
 
-	//! \brief Handle any Mouse related event
-	//! \return Any eError produced
-	static eError HandleMouseEvent(SDL_Event *event);
+		//! \brief Handle any keyboard related event
+		//! \return Any eError produced
+		static eError HandleKeyboardEvent(SDL_Event *event);
 
-	//! \brief Handle any Window related event
-	//! \return Any eError produced
-	static eError HandleWindowEvent(SDL_Event *event);
+		//! \brief Handle any Mouse related event
+		//! \return Any eError produced
+		static eError HandleMouseEvent(SDL_Event *event);
 
-	//! \brief Handle any Joystick related event
-	//! \return Any eError produced
-	//! \sa HandleControllerEvent as these two are pretty related
-	static eError HandleJoystickEvent(SDL_Event *event);
+		//! \brief Handle any Window related event
+		//! \return Any eError produced
+		static eError HandleWindowEvent(SDL_Event *event);
 
-	//! \brief Handle any Controller related event
-	//! \return Any eError produced
-	//! \sa HandleJoystickEvent as these two are pretty related
-	static eError HandleControllerEvent(SDL_Event *event);
+		//! \brief Handle any Joystick related event
+		//! \return Any eError produced
+		//! \sa HandleControllerEvent as these two are pretty related
+		static eError HandleJoystickEvent(SDL_Event *event);
 
-	//! \brief Handle a custom function event
-	static eError HandleCustomFunctionEvent(SDL_Event *event);
+		//! \brief Handle any Controller related event
+		//! \return Any eError produced
+		//! \sa HandleJoystickEvent as these two are pretty related
+		static eError HandleControllerEvent(SDL_Event *event);
 
-	//! \brief sent a custom function event
-	static eError PostCustomFunctionEvent(TMainThreadFunction func);
+		//! \brief Handle a custom function event
+		static eError HandleCustomFunctionEvent(SDL_Event *event);
 
-	//! \brief Run a function on the main thread Syncronously with return value
-	//! This function will not return untill the function on the main thread is complete
-	static eError RunOnMainThread_Sync(eError& returnVal, TMainThreadFunction func);
+		//! \brief sent a custom function event
+		static eError PostCustomFunctionEvent(TMainThreadFunction func);
 
-	//! \brief Run a function on the main thread ASyncronously
-	//! This function will return instantly, with no wait, and give any error code if there was an issue
-	static eError RunOnMainThread_ASync(TMainThreadFunction func);
+		//! \brief Run a function on the main thread Syncronously with return value
+		//! This function will not return untill the function on the main thread is complete
+		static eError RunOnMainThread_Sync(eError& returnVal, TMainThreadFunction func);
 
-	//! \brief accessor method to check if the SDLEventLoop has finished
-	static eError GetHasFinished();
-	
-};
+		//! \brief Run a function on the main thread ASyncronously
+		//! This function will return instantly, with no wait, and give any error code if there was an issue
+		static eError RunOnMainThread_ASync(TMainThreadFunction func);
+
+		//! \brief accessor method to check if the SDLEventLoop has finished
+		static eError GetHasFinished();
+
+	};
+
+}
 
 #endif //_SDLEVENTLOOP_H_

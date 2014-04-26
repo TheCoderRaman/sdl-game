@@ -61,11 +61,11 @@ eError LEngine::init()
     eError err = eError::NoErr;
 
 	// initialise SDL
-    err = SDLMain::Init();
+	err = SDLInterface::SDLMain::Init();
 
 	// create the sdl event loop
 	if (!ERROR_HAS_TYPE_FATAL(err))
-		err = SDLEventLoop::Create();
+		err = SDLInterface::SDLEventLoop::Create();
 
 	// Create the window
 	if (!ERROR_HAS_TYPE_FATAL(err))
@@ -105,7 +105,7 @@ eError LEngine::quit()
 
     //Quit SDL subsystems
 	if (!ERROR_HAS_TYPE_FATAL(err))
-		SDLMain::Quit();
+		SDLInterface::SDLMain::Quit();
 
     return err;
 }
@@ -139,7 +139,7 @@ eError LEngine::loop()
 	m_renderThread.Spawn(this);
 
 	// Do the main SDL event loop
-	err = SDLEventLoop::DoLoop();
+	err = SDLInterface::SDLEventLoop::DoLoop();
 
 	// Remove any quit request error
 	REMOVE_ERR(err, eError::QuitRequest);
@@ -187,10 +187,10 @@ eError LEngine::RenderThreadLoop()
 		err |= Render();
 
 		// TODO: Better delay mechanism for update rate and such
-		SDLThread::Delay(10);
+		SDLInterface::SDLThread::Delay(10);
 
 		// get if the SDLEventLoop has finished
-		err |= SDLEventLoop::GetHasFinished();
+		err |= SDLInterface::SDLEventLoop::GetHasFinished();
 	}
 
 	// remove any quit request error
@@ -212,10 +212,10 @@ eError LEngine::GameThreadLoop()
 		err |= LGameBase::GetGame()->Update();
 
 		// TODO: Better delay mechanism for update rate and such
-		SDLThread::Delay(10);
+		SDLInterface::SDLThread::Delay(10);
 
 		// get if the SDLEventLoop has finished
-		err |= SDLEventLoop::GetHasFinished();
+		err |= SDLInterface::SDLEventLoop::GetHasFinished();
 	}
 
 	// remove any quit request error

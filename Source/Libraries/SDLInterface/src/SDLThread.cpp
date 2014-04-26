@@ -13,7 +13,7 @@
 #include "SDL.h"
 
 //========================================================
-SDLThread::SDLThread()
+SDLInterface::SDLThread::SDLThread()
 : m_sdl_thread(nullptr)
 , m_threadFunc(nullptr)
 , m_name("unnamed")
@@ -22,7 +22,7 @@ SDLThread::SDLThread()
 }
 
 //========================================================
-SDLThread::SDLThread(const char* name, ThreadFunction func)
+SDLInterface::SDLThread::SDLThread(const char* name, ThreadFunction func)
 : m_sdl_thread(nullptr)
 , m_threadFunc(func)
 , m_name(name)
@@ -30,14 +30,14 @@ SDLThread::SDLThread(const char* name, ThreadFunction func)
 
 }
 
-SDLThread::~SDLThread()
+SDLInterface::SDLThread::~SDLThread()
 {
 	// Detach or Wait must be called before allowing an SDLThread to destruct
 	DEBUG_ASSERT(m_sdl_thread == nullptr);
 }
 
 //========================================================
-eError SDLThread::Spawn(void* data)
+eError SDLInterface::SDLThread::Spawn(void* data)
 {
 	eError err = eError::NoErr;
 	
@@ -54,7 +54,7 @@ eError SDLThread::Spawn(void* data)
 }
 
 //========================================================
-eError SDLThread::Wait()
+eError SDLInterface::SDLThread::Wait()
 {
 	eError err = eError::NoErr;
 
@@ -76,7 +76,7 @@ eError SDLThread::Wait()
 }
 
 //========================================================
-eError SDLThread::Detach()
+eError SDLInterface::SDLThread::Detach()
 {
 	eError err = eError::NoErr;
 
@@ -95,7 +95,7 @@ eError SDLThread::Detach()
 }
 
 //========================================================
-eError SDLThread::Delay(ms time)
+eError SDLInterface::SDLThread::Delay(ms time)
 {
 	// Call the SDL delay function
 	SDL_Delay(time);

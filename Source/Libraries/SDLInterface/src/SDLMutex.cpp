@@ -13,21 +13,21 @@
 #include "SDL.h"
 
 //========================================================
-SDLMutex::SDLMutex()
+SDLInterface::SDLMutex::SDLMutex()
 : my_sdl_mutex( nullptr )
 {
 
 }
 
 //========================================================
-SDLMutex::~SDLMutex()
+SDLInterface::SDLMutex::~SDLMutex()
 {
 	// Sanity check that destroy has been called
 	DEBUG_ASSERT(my_sdl_mutex == nullptr);
 }
 
 //========================================================
-eError SDLMutex::Create()
+eError SDLInterface::SDLMutex::Create()
 {
 	DEBUG_ASSERT(my_sdl_mutex == nullptr);
 
@@ -37,7 +37,7 @@ eError SDLMutex::Create()
 }
 
 //========================================================
-eError SDLMutex::Destroy()
+eError SDLInterface::SDLMutex::Destroy()
 {
 	DEBUG_ASSERT(my_sdl_mutex != nullptr);
 
@@ -48,7 +48,7 @@ eError SDLMutex::Destroy()
 }
 
 //========================================================
-eError SDLMutex::Lock()
+eError SDLInterface::SDLMutex::Lock()
 {
 	DEBUG_ASSERT(my_sdl_mutex != nullptr);
 
@@ -58,7 +58,7 @@ eError SDLMutex::Lock()
 }
 
 //========================================================
-eError SDLMutex::Unlock()
+eError SDLInterface::SDLMutex::Unlock()
 {
 	DEBUG_ASSERT(my_sdl_mutex != nullptr);
 
@@ -68,21 +68,21 @@ eError SDLMutex::Unlock()
 }
 
 //========================================================
-SDLSemaphore::SDLSemaphore()
+SDLInterface::SDLSemaphore::SDLSemaphore()
 : m_mySem(nullptr)
 {
 
 }
 
 //========================================================
-SDLSemaphore::~SDLSemaphore()
+SDLInterface::SDLSemaphore::~SDLSemaphore()
 {
 	// Sanity check that destroy has been called
 	DEBUG_ASSERT(m_mySem == nullptr);
 }
 
 //========================================================
-eError SDLSemaphore::Create()
+eError SDLInterface::SDLSemaphore::Create()
 {
 	DEBUG_ASSERT(m_mySem == nullptr);
 
@@ -92,7 +92,7 @@ eError SDLSemaphore::Create()
 }
 
 //========================================================
-eError SDLSemaphore::Destroy()
+eError SDLInterface::SDLSemaphore::Destroy()
 {
 	DEBUG_ASSERT(m_mySem != nullptr);
 
@@ -103,7 +103,7 @@ eError SDLSemaphore::Destroy()
 }
 
 //========================================================
-eError SDLSemaphore::Post()
+eError SDLInterface::SDLSemaphore::Post()
 {
 	DEBUG_ASSERT(m_mySem != nullptr);
 
@@ -113,7 +113,7 @@ eError SDLSemaphore::Post()
 }
 
 //========================================================
-eError SDLSemaphore::Wait()
+eError SDLInterface::SDLSemaphore::Wait()
 {
 	DEBUG_ASSERT(m_mySem != nullptr);
 

@@ -58,13 +58,13 @@ private:
 	eError quit();
 
 	//! \brief Member variables
-	SDLWindow m_MainWindow;
+	SDLInterface::SDLWindow m_MainWindow;
 
 	//! \brief the game update thread
-	SDLThread m_gameUpdateThread;
+	SDLInterface::SDLThread m_gameUpdateThread;
 
 	//! \brief the render thread
-	SDLThread m_renderThread;
+	SDLInterface::SDLThread m_renderThread;
 
 };
 

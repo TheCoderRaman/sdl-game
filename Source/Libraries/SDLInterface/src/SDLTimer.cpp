@@ -11,44 +11,44 @@
 #include "SDL.h"
 
 //========================================================
-SDLTimer::SDLTimer()
+SDLInterface::SDLTimer::SDLTimer()
 : m_startTime( 0 )
 {
 
 }
 
 //========================================================
-SDLTimer::~SDLTimer()
+SDLInterface::SDLTimer::~SDLTimer()
 {
 
 }
 
 //========================================================
-ms SDLTimer::GetGlobalLifetime(void)
+ms SDLInterface::SDLTimer::GetGlobalLifetime(void)
 {
 	return SDL_GetTicks();
 }
 
 //========================================================
-ms SDLTimer::GetGlobalTicksSince(ms time)
+ms SDLInterface::SDLTimer::GetGlobalTicksSince(ms time)
 {
 	return GetGlobalLifetime() - time;
 }
 
 //========================================================
-void SDLTimer::Start(void)
+void SDLInterface::SDLTimer::Start(void)
 {
 	m_startTime = GetGlobalLifetime();
 }
 
 //========================================================
-ms SDLTimer::GetTimePassed(void)
+ms SDLInterface::SDLTimer::GetTimePassed(void)
 {
 	return GetGlobalLifetime() - m_startTime;
 }
 
 //========================================================
-void SDLTimer::Reset(void)
+void SDLInterface::SDLTimer::Reset(void)
 {
 	m_startTime = 0;
 }

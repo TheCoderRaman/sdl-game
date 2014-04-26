@@ -16,7 +16,7 @@
 #include "SDLEventLoop.h"
 
 //========================================================
-SDLWindow::SDLWindow()
+SDLInterface::SDLWindow::SDLWindow()
 : m_SDL_Window(nullptr)
 , m_SDL_Surface(nullptr)
 {
@@ -24,7 +24,7 @@ SDLWindow::SDLWindow()
 }
 
 //========================================================
-SDLWindow::~SDLWindow()
+SDLInterface::SDLWindow::~SDLWindow()
 {
     // Sanity check here
 	DEBUG_ASSERT( nullptr == m_SDL_Window );
@@ -32,7 +32,7 @@ SDLWindow::~SDLWindow()
 }
 
 //========================================================
-eError SDLWindow::Create()
+eError SDLInterface::SDLWindow::Create()
 {
 	eError err = eError::NoErr;
 
@@ -65,7 +65,7 @@ eError SDLWindow::Create()
 }
 
 //========================================================
-eError SDLWindow::Update()
+eError SDLInterface::SDLWindow::Update()
 {
     eError err = eError::NoErr;
 
@@ -81,7 +81,7 @@ eError SDLWindow::Update()
 }
 
 //========================================================
-eError SDLWindow::Destroy()
+eError SDLInterface::SDLWindow::Destroy()
 {
 	eError err = eError::NoErr;
 

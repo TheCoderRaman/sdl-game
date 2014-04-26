@@ -13,20 +13,20 @@
 #include "eError.h"
 
 //========================================================
-SDLRenderer::SDLRenderer()
+SDLInterface::SDLRenderer::SDLRenderer()
 : m_SDL_Renderer(NULL)
 {
 
 }
 
 //========================================================
-SDLRenderer::~SDLRenderer()
+SDLInterface::SDLRenderer::~SDLRenderer()
 {
 	DEBUG_ASSERT(NULL == m_SDL_Renderer);
 }
 
 //========================================================
-eError SDLRenderer::Create( SDLWindow* window )
+eError SDLInterface::SDLRenderer::Create(SDLWindow* window)
 {
 	eError err = eError::NoErr;
 
@@ -45,14 +45,14 @@ eError SDLRenderer::Create( SDLWindow* window )
 }
 
 //========================================================
-eError SDLRenderer::Render()
+eError SDLInterface::SDLRenderer::Render()
 {
 	eError err = eError::NoErr;
 	return err;
 }
 
 //========================================================
-eError SDLRenderer::Destroy()
+eError SDLInterface::SDLRenderer::Destroy()
 {
 	eError err = eError::NoErr;
 

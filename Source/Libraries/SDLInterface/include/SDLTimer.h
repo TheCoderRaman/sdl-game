@@ -13,36 +13,41 @@
 //! \brief convert ms to seconds
 #define msToSec(ms) (ms/1000)
 
-//! \brief class to contain a timer, useful for timekeeping
-//! Could be extended with various stopwatch like abilities like laps and pause/play
-class SDLTimer
+// Start the SDLInterface Namespace
+namespace SDLInterface
 {
-public:	
-	
-	//! Default ctor and dtor
-	SDLTimer();
-	~SDLTimer();
 
-	//! \brief Start the timer
-	void Start( void );
+	//! \brief class to contain a timer, useful for timekeeping
+	//! Could be extended with various stopwatch like abilities like laps and pause/play
+	class SDLTimer
+	{
+	public:
 
-	//! \brief Get the time passed since Start
-	ms GetTimePassed( void );
+		//! Default ctor and dtor
+		SDLTimer();
+		~SDLTimer();
 
-	//! \brief Reset the timer
-	void Reset( void );
+		//! \brief Start the timer
+		void Start(void);
 
-	// Static timer methods
+		//! \brief Get the time passed since Start
+		ms GetTimePassed(void);
 
-	//! \brief Get the number of ticks since program initialisation
-	static ms GetGlobalLifetime(void);
+		//! \brief Reset the timer
+		void Reset(void);
 
-	//! \brief Get number of ticks since
-	static ms GetGlobalTicksSince(ms time);
+		// Static timer methods
 
-private:
+		//! \brief Get the number of ticks since program initialisation
+		static ms GetGlobalLifetime(void);
 
-	ms m_startTime;
-};
+		//! \brief Get number of ticks since
+		static ms GetGlobalTicksSince(ms time);
 
+	private:
+
+		ms m_startTime;
+	};
+
+}
 #endif //_SDLTIMER_H_

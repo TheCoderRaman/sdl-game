@@ -19,35 +19,42 @@
 // Forward declare SDL struct 
 struct SDL_Renderer;
 
-// Forward declare the window
-class SDLWindow;
-
-//! \brief the Renderer class
-//! functions as a wrapper for SDL_Renderer
-class SDLRenderer 
+// Start the SDLInterface Namespace
+namespace SDLInterface
 {
-	friend class SDLHelper; // Allow SDLHelper to access my members
-public:
 
-	//! \brief Constructor
-	SDLRenderer();
+	// Forward declare the window
+	class SDLWindow;
 
-	//! \brief Destructor
-	~SDLRenderer();
 
-	//! \brief Create the renderer from a window
-	eError Create( SDLWindow* window );
+	//! \brief the Renderer class
+	//! functions as a wrapper for SDL_Renderer
+	class SDLRenderer
+	{
+		friend class SDLHelper; // Allow SDLHelper to access my members
+	public:
 
-	//! \brief render using the renderer
-	eError Render();
+		//! \brief Constructor
+		SDLRenderer();
 
-	//! \brief destroy the renderer
-	eError Destroy();
+		//! \brief Destructor
+		~SDLRenderer();
 
-private:
+		//! \brief Create the renderer from a window
+		eError Create(SDLWindow* window);
 
-	//! \brief The actual SDL Renderer
-	SDL_Renderer* m_SDL_Renderer;
-};
+		//! \brief render using the renderer
+		eError Render();
+
+		//! \brief destroy the renderer
+		eError Destroy();
+
+	private:
+
+		//! \brief The actual SDL Renderer
+		SDL_Renderer* m_SDL_Renderer;
+	};
+
+}
 
 #endif //_SDLRENDERER_H_
