@@ -15,7 +15,7 @@
 #include "SDLMutex.h"
 
 //! \brief the custom function event type
-Uint32 s_iCustomFunctionEventType = -1;
+Uint32 s_iCustomFunctionEventType = 0;
 
 //! \brief boolean to check if we're currently event handling
 THREAD_LOCAL bool s_isCurrentlyEventHandling = false;
@@ -43,7 +43,7 @@ eError SDLInterface::EventLoop::Create()
 	s_hasFinished = false;
 
 	// Register the custom event
-	if (s_iCustomFunctionEventType < 0)
+	if (s_iCustomFunctionEventType == 0)
 	{
 		s_iCustomFunctionEventType = SDL_RegisterEvents(1);
 	}
@@ -114,9 +114,9 @@ eError SDLInterface::EventLoop::HandleEvent(SDL_Event *event)
 			break;
 
 			// Text input events
+			// Not really handled yet
 		case SDL_TEXTEDITING:
 		case SDL_TEXTINPUT:
-			DEBUG_LOG("Unhandled SDL Event: SDL_TEXT");
 			break;
 
 			// Mouse events
@@ -166,7 +166,7 @@ eError SDLInterface::EventLoop::HandleEvent(SDL_Event *event)
 				}
 				else
 				{
-					DEBUG_LOG("Unhandled SDL Event: type %i", event->type);
+					DEBUG_LOG("Unexpected SDL Event: type %i", event->type);
 				}
 			}
 			break;
@@ -182,6 +182,13 @@ eError SDLInterface::EventLoop::HandleEvent(SDL_Event *event)
 eError SDLInterface::EventLoop::HandleKeyboardEvent(SDL_Event *event)
 {
 	eError err = eError::NoErr;
+	DEBUG_LOG("Unhandled Keyboard Event");
+
+	/*
+		case SDL_KEYUP:
+		case SDL_KEYDOWN:
+	*/
+
 	return err;
 }
 
@@ -189,6 +196,15 @@ eError SDLInterface::EventLoop::HandleKeyboardEvent(SDL_Event *event)
 eError SDLInterface::EventLoop::HandleMouseEvent(SDL_Event *event)
 {
 	eError err = eError::NoErr;
+	DEBUG_LOG("Unhandled Mouse Event");
+
+	/*
+		case SDL_MOUSEMOTION:
+		case SDL_MOUSEBUTTONUP:
+		case SDL_MOUSEBUTTONDOWN:
+		case SDL_MOUSEWHEEL:
+	*/
+
 	return err;
 }
 
@@ -196,6 +212,18 @@ eError SDLInterface::EventLoop::HandleMouseEvent(SDL_Event *event)
 eError SDLInterface::EventLoop::HandleJoystickEvent(SDL_Event *event)
 {
 	eError err = eError::NoErr;
+	DEBUG_LOG("Unhandled Joystick Event");
+
+	/*
+		case SDL_JOYAXISMOTION:
+		case SDL_JOYBALLMOTION:
+		case SDL_JOYHATMOTION:
+		case SDL_JOYBUTTONDOWN:
+		case SDL_JOYBUTTONUP:
+		case SDL_JOYDEVICEADDED:
+		case SDL_JOYDEVICEREMOVED:
+	*/
+
 	return err;
 }
 
@@ -203,6 +231,16 @@ eError SDLInterface::EventLoop::HandleJoystickEvent(SDL_Event *event)
 eError SDLInterface::EventLoop::HandleControllerEvent(SDL_Event *event)
 {
 	eError err = eError::NoErr;
+	DEBUG_LOG("Unhandled Controller Event");
+
+	/*
+		case SDL_CONTROLLERAXISMOTION:
+		case SDL_CONTROLLERBUTTONDOWN:
+		case SDL_CONTROLLERBUTTONUP:
+		case SDL_CONTROLLERDEVICEADDED:
+		case SDL_CONTROLLERDEVICEREMOVED:
+		case SDL_CONTROLLERDEVICEREMAPPED:
+	*/
 	return err;
 }
 
@@ -211,13 +249,26 @@ eError SDLInterface::EventLoop::HandleWindowEvent(SDL_Event *event)
 {
 	eError err = eError::NoErr;
 
+	// Switch between the window events
 	switch (event->window.event)
 	{
 		case SDL_WINDOWEVENT_SHOWN:
+		case SDL_WINDOWEVENT_HIDDEN:
+		case SDL_WINDOWEVENT_EXPOSED:
+		case SDL_WINDOWEVENT_MOVED:
+		case SDL_WINDOWEVENT_RESIZED:
+		case SDL_WINDOWEVENT_MINIMIZED:
+		case SDL_WINDOWEVENT_MAXIMIZED:
+		case SDL_WINDOWEVENT_RESTORED:
+		case SDL_WINDOWEVENT_ENTER:
+		case SDL_WINDOWEVENT_LEAVE:
+		case SDL_WINDOWEVENT_FOCUS_GAINED:
+		case SDL_WINDOWEVENT_FOCUS_LOST:
+		case SDL_WINDOWEVENT_CLOSE:
 			DEBUG_LOG("SDL_WINDOWEVENT_SHOWN");
 			break;
 		default:
-			DEBUG_LOG("Unhandled SDL Event: SDL_WINDOWEVENT %i", event->window.event);
+			DEBUG_LOG("Unexpected SDL Event: SDL_WINDOWEVENT %i", event->window.event);
 			break;
 	}
 	return err;

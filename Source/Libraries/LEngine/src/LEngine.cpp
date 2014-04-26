@@ -135,18 +135,26 @@ eError LEngine::loop()
 	RUNTIME_LOG("Looping...")
 
 	// Spawn both the threads
-	m_gameUpdateThread.Spawn(this);
-	m_renderThread.Spawn(this);
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err | m_gameUpdateThread.Spawn(this);
+
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err | m_renderThread.Spawn(this);
 
 	// Do the main SDL event loop
-	err = SDLInterface::EventLoop::DoLoop();
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err |= SDLInterface::EventLoop::DoLoop();
 
 	// Remove any quit request error
 	REMOVE_ERR(err, eError::QuitRequest);
 
 	// Wait for all the threads to close off
-	err |= m_renderThread.Wait();
-	err |= m_gameUpdateThread.Wait();
+	// Do this regardless of Error state
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err |= m_renderThread.Wait();
+
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err |= m_gameUpdateThread.Wait();
 
     return err;
 }
