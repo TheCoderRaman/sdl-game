@@ -14,7 +14,7 @@
 enum class eError : int
 {
 // 	eError name		  eError bit value for flags
-	noErr			= 0x00000000,
+	NoErr			= 0x00000000,
 
 	// 	eError flags         First two bytes for erro types
 	Type_Fatal		= 0x10000000, 	// Fatal flag
@@ -24,10 +24,13 @@ enum class eError : int
 	Catagory_SDL	= 0x00100000, 	// SDL flag
 
 	// 	Specific Errors     Last 4 bits for specific errors
-	quitRequest		= 0x00000001,
+	QuitRequest		= 0x00000001,
 
 	//  Composite Errors (Errors produced as a composite of type, catagory and/or specifics)
-	SDL_Fatal		= 0x10100000	// Contains Fatal eError AND SDL catagory
+	SDL_Fatal		= 0x10100000,	// Contains Fatal eError AND SDL catagory
+
+	// ALL errors
+	All = 0x11111111,
 
 };
 
@@ -43,6 +46,12 @@ inline eError operator | (eError lhs, eError rhs)
 inline eError operator & (eError lhs, eError rhs)
 {
 	return (eError)((long)lhs & (long)rhs);
+}
+
+//! \brief bitwise ~ operator for const errors
+inline eError operator ~ (const eError& err)
+{
+	return (eError)(~(int)err);
 }
 
 //! \brief bitwise | and assignement operator
@@ -71,6 +80,9 @@ inline eError& operator &= (eError& lhs, eError rhs)
 
 //! \brief Check if eError is an SDL eError
 #define ERROR_HAS_CATAGORY_SDL( err )			( ERROR_HAS( err , eError::Catagory_SDL )		)
+
+//! \brief Check if eError is an SDL eError
+#define REMOVE_ERR( err , toremove )			( err &= ( ~(toremove) ) )
 
 
 #endif //_ERROR_H_

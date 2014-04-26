@@ -28,7 +28,7 @@ SDLRenderer::~SDLRenderer()
 //========================================================
 eError SDLRenderer::Create( SDLWindow* window )
 {
-	eError err = eError::noErr;
+	eError err = eError::NoErr;
 
 	// Create the renderer
 	m_SDL_Renderer = SDL_CreateRenderer( SDLHelper::GetSDL_Window(window),
@@ -47,14 +47,14 @@ eError SDLRenderer::Create( SDLWindow* window )
 //========================================================
 eError SDLRenderer::Render()
 {
-	eError err = eError::noErr;
+	eError err = eError::NoErr;
 	return err;
 }
 
 //========================================================
 eError SDLRenderer::Destroy()
 {
-	eError err = eError::noErr;
+	eError err = eError::NoErr;
 
 	SDL_DestroyRenderer(m_SDL_Renderer);
 

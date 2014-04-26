@@ -24,35 +24,35 @@ LGameBase::~LGameBase()
 //===============================================================
 eError LGameBase::Create()
 {
-	eError err = eError::noErr;
+	eError err = eError::NoErr;
 	return err;
 }
 
 //===============================================================
 eError LGameBase::Initialise()
 {
-	eError err = eError::noErr;
+	eError err = eError::NoErr;
 	return err;
 }
 
 //===============================================================
 eError LGameBase::Update()
 {
-	eError err = eError::noErr;
+	eError err = eError::NoErr;
 	return err;
 }
 
 //===============================================================
 eError LGameBase::Reset()
 {
-	eError err = eError::noErr;
+	eError err = eError::NoErr;
 	return err;
 }
 
 //===============================================================
 eError LGameBase::Destroy()
 {
-	eError err = eError::noErr;
+	eError err = eError::NoErr;
 	return err;
 }
 

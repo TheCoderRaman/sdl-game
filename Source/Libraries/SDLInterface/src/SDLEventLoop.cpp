@@ -26,10 +26,10 @@ bool s_hasFinished = false;
 //========================================================
 eError SDLEventLoop::GetHasFinished()
 {
-	eError err = eError::noErr;
+	eError err = eError::NoErr;
 
 	if (s_hasFinished)
-		err = eError::quitRequest;
+		err = eError::QuitRequest;
 
 	return err;
 }
@@ -37,7 +37,7 @@ eError SDLEventLoop::GetHasFinished()
 //========================================================
 eError SDLEventLoop::Create()
 {
-	eError err = eError::noErr;
+	eError err = eError::NoErr;
 
 	// Reset to ensure HadFinished is false
 	s_hasFinished = false;
@@ -58,7 +58,7 @@ eError SDLEventLoop::Create()
 //========================================================
 eError SDLEventLoop::DoLoop()
 {
-	eError err = eError::noErr;
+	eError err = eError::NoErr;
 
 	//Event handler
     SDL_Event event;
@@ -79,10 +79,10 @@ eError SDLEventLoop::DoLoop()
 		s_isCurrentlyEventHandling = false;
 
 		toEnd = ( ERROR_HAS_TYPE_FATAL(err)				// Fatal errors
-			|| ERROR_HAS(err, eError::quitRequest));	// Quit requests
+			|| ERROR_HAS(err, eError::QuitRequest));	// Quit requests
     }
 
-    if ( err != eError::noErr )
+    if ( err != eError::NoErr )
     	DEBUG_LOG("DoLoop Dropped out with eError %i",err);
 
 	// Set that the eventloop has finished
@@ -94,13 +94,13 @@ eError SDLEventLoop::DoLoop()
 //========================================================
 eError SDLEventLoop::HandleEvent(SDL_Event *event)
 {
-	eError err = eError::noErr;
+	eError err = eError::NoErr;
 
 	switch (event->type)
 	{
 	case SDL_QUIT:
 		DEBUG_LOG("Quit requested");
-		err |= eError::quitRequest;
+		err |= eError::QuitRequest;
 		break;
 
 		// Keyboard events
@@ -174,35 +174,35 @@ eError SDLEventLoop::HandleEvent(SDL_Event *event)
 //========================================================
 eError SDLEventLoop::HandleKeyboardEvent( SDL_Event *event )
 {
-	eError err = eError::noErr;
+	eError err = eError::NoErr;
 	return err;
 }
 
 //========================================================
 eError SDLEventLoop::HandleMouseEvent( SDL_Event *event )
 {
-	eError err = eError::noErr;
+	eError err = eError::NoErr;
 	return err;
 }
 
 //========================================================
 eError SDLEventLoop::HandleJoystickEvent( SDL_Event *event )
 {
-	eError err = eError::noErr;
+	eError err = eError::NoErr;
 	return err;
 }
 
 //========================================================
 eError SDLEventLoop::HandleControllerEvent( SDL_Event *event )
 {
-	eError err = eError::noErr;
+	eError err = eError::NoErr;
 	return err;
 }
 
 //========================================================
 eError SDLEventLoop::HandleWindowEvent(SDL_Event *event)
 {
-	eError err = eError::noErr;
+	eError err = eError::NoErr;
 
 	switch (event->window.event)
 	{
@@ -219,7 +219,7 @@ eError SDLEventLoop::HandleWindowEvent(SDL_Event *event)
 //========================================================
 eError SDLEventLoop::HandleCustomFunctionEvent(SDL_Event *event)
 {
-	eError err = eError::noErr;
+	eError err = eError::NoErr;
 
 	// Grab  the function
 	TMainThreadFunction* function = static_cast<TMainThreadFunction*>(event->user.data1);
@@ -236,7 +236,7 @@ eError SDLEventLoop::HandleCustomFunctionEvent(SDL_Event *event)
 //========================================================
 eError SDLEventLoop::PostCustomFunctionEvent(TMainThreadFunction func)
 {
-	eError err = eError::noErr;
+	eError err = eError::NoErr;
 
 	// NEW the function, to be deleted after the function is called
 	// This is because whatever function was passed in may be out of scope by the time it gets called
@@ -260,7 +260,7 @@ eError SDLEventLoop::PostCustomFunctionEvent(TMainThreadFunction func)
 //========================================================
 eError SDLEventLoop::RunOnMainThread_Sync(eError& returnVal, TMainThreadFunction func)
 {
-	eError err = eError::noErr;
+	eError err = eError::NoErr;
 
 	// s_isCurrentlyEventHandling is thread local
 	// That means if this is true then we're on the main thread AND we're alread handling an event
@@ -279,7 +279,7 @@ eError SDLEventLoop::RunOnMainThread_Sync(eError& returnVal, TMainThreadFunction
 			returnVal = func();
 			tempSem->Post();
 			
-			return eError::noErr;
+			return eError::NoErr;
 		};
 
 		// run it async for now until semaphore is implemented
@@ -298,7 +298,7 @@ eError SDLEventLoop::RunOnMainThread_Sync(eError& returnVal, TMainThreadFunction
 //========================================================
 eError SDLEventLoop::RunOnMainThread_ASync(TMainThreadFunction func)
 {
-	eError err = eError::noErr;
+	eError err = eError::NoErr;
 
 	// Post the custom function event
 	PostCustomFunctionEvent(func);

@@ -33,7 +33,7 @@ LEngine::~LEngine()
 eError LEngine::run_full()
 {
 	//Initialization flag
-	eError err = eError::noErr;
+	eError err = eError::NoErr;
 
 	// Initialise the engine
 	if (!ERROR_HAS_TYPE_FATAL(err))
@@ -56,7 +56,7 @@ eError LEngine::init()
 	RUNTIME_LOG("Initialising...")
 
     //Initialization flag
-    eError err = eError::noErr;
+    eError err = eError::NoErr;
 
 	// initialise SDL
     err = SDLMain::Init();
@@ -75,7 +75,7 @@ eError LEngine::init()
 //===============================================================
 eError LEngine::run()
 {
-	eError err = eError::noErr;
+	eError err = eError::NoErr;
 
 	// Load up
 	err |= load();
@@ -96,7 +96,7 @@ eError LEngine::quit()
 {
 	RUNTIME_LOG("Quiting...")
 
-	eError err = eError::noErr;
+	eError err = eError::NoErr;
 
 	// Destroy the main window
 	err |= m_MainWindow.Destroy();
@@ -114,7 +114,7 @@ eError LEngine::load()
 	RUNTIME_LOG("Loading...")
     
 	//Loading err flag
-    eError err = eError::noErr;
+    eError err = eError::NoErr;
 
 	// Create the game
     err |= LGameBase::GetGame()->Create();
@@ -129,7 +129,7 @@ eError LEngine::load()
 //===============================================================
 eError LEngine::loop()
 {
-	eError err = eError::noErr;
+	eError err = eError::NoErr;
 
 	RUNTIME_LOG("Looping...")
 
@@ -146,12 +146,12 @@ eError LEngine::loop()
 	// Do the main SDL event loop
 	err = SDLEventLoop::DoLoop();
 
-	// Wait for all the threads to close off
-	int returnVal;
-	SDLThread::WaitForThread(renderThread, &returnVal);
-	SDLThread::WaitForThread(gameUpdateThread, &returnVal);
+	// Remove any quit request error
+	REMOVE_ERR(err, eError::QuitRequest);
 
-	//TODO: Handle these return vals
+	// Wait for all the threads to close off
+	err |= SDLThread::WaitForThread(renderThread);
+	err |= SDLThread::WaitForThread(gameUpdateThread);
 
     return err;
 }
@@ -159,7 +159,7 @@ eError LEngine::loop()
 //===============================================================
 eError LEngine::unload()
 {
-	eError err = eError::noErr;
+	eError err = eError::NoErr;
 
 	// Destroy the game
     err |= LGameBase::GetGame()->Destroy();
@@ -170,7 +170,7 @@ eError LEngine::unload()
 //===============================================================
 eError LEngine::Render()
 {
-	eError err = eError::noErr;
+	eError err = eError::NoErr;
 
 	//TODO: render the objects
 
@@ -183,10 +183,10 @@ eError LEngine::Render()
 //===============================================================
 eError LEngine::RenderThreadLoop()
 {
-	eError err = eError::noErr;
+	eError err = eError::NoErr;
 
 	while (!ERROR_HAS_TYPE_FATAL(err)
-		&& !ERROR_HAS(err, eError::quitRequest))
+		&& !ERROR_HAS(err, eError::QuitRequest))
 	{
 		// Update the engine window
 		err |= Render();
@@ -198,17 +198,20 @@ eError LEngine::RenderThreadLoop()
 		err |= SDLEventLoop::GetHasFinished();
 	}
 
+	// remove any quit request error
+	REMOVE_ERR(err, eError::QuitRequest);
+
 	return err;
 }
 
 //===============================================================
 eError LEngine::GameThreadLoop()
 {
-	eError err = eError::noErr;
+	eError err = eError::NoErr;
 
 	// The main loop
 	while (!ERROR_HAS_TYPE_FATAL(err)
-		&& !ERROR_HAS(err, eError::quitRequest))
+		&& !ERROR_HAS(err, eError::QuitRequest))
 	{
 		// Update the game
 		err |= LGameBase::GetGame()->Update();
@@ -220,6 +223,9 @@ eError LEngine::GameThreadLoop()
 		err |= SDLEventLoop::GetHasFinished();
 	}
 
+	// remove any quit request error
+	REMOVE_ERR(err, eError::QuitRequest);
+
 	return err;
 }
 
@@ -227,30 +233,30 @@ eError LEngine::GameThreadLoop()
 int GameThreadStart(void* data)
 {
 	DEBUG_LOG("GameThread Starting");
-	eError err = eError::noErr;
+	eError err = eError::NoErr;
 
 	// Grab the engine from the thread data
 	LEngine* thisEngine = (LEngine*)data;
 
 	// Run the game thread loop
-	thisEngine->GameThreadLoop();
+	err =thisEngine->GameThreadLoop();
 
 	DEBUG_LOG("GameThread Ending");
-	return 0;
+	return (int)err;
 }
 
 //===============================================================
 int RenderThreadStart(void* data)
 {
 	DEBUG_LOG("RenderThread Starting");
-	eError err = eError::noErr;
+	eError err = eError::NoErr;
 
 	// Grab the engine from the thread data
 	LEngine* thisEngine = (LEngine*)data;
 
 	// Run the render thread loop
-	thisEngine->RenderThreadLoop();
+	err = thisEngine->RenderThreadLoop();
 
 	DEBUG_LOG("RenderThread Ending");
-	return 0;
+	return (int)err;
 }

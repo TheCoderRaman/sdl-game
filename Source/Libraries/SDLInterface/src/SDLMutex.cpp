@@ -33,7 +33,7 @@ eError SDLMutex::Create()
 
 	my_sdl_mutex = SDL_CreateMutex();
 
-	return eError::noErr;
+	return eError::NoErr;
 }
 
 //========================================================
@@ -44,7 +44,7 @@ eError SDLMutex::Destroy()
 	SDL_DestroyMutex(my_sdl_mutex);
 	my_sdl_mutex = nullptr;
 
-	return eError::noErr;
+	return eError::NoErr;
 }
 
 //========================================================
@@ -54,7 +54,7 @@ eError SDLMutex::Lock()
 
 	SDL_LockMutex(my_sdl_mutex);
 
-	return eError::noErr;
+	return eError::NoErr;
 }
 
 //========================================================
@@ -64,7 +64,7 @@ eError SDLMutex::Unlock()
 
 	SDL_UnlockMutex(my_sdl_mutex);
 
-	return eError::noErr;
+	return eError::NoErr;
 }
 
 //========================================================
@@ -88,7 +88,7 @@ eError SDLSemaphore::Create()
 
 	m_mySem = SDL_CreateSemaphore(0);
 
-	return eError::noErr;
+	return eError::NoErr;
 }
 
 //========================================================
@@ -99,7 +99,7 @@ eError SDLSemaphore::Destroy()
 	SDL_DestroySemaphore(m_mySem);
 	m_mySem = nullptr;
 
-	return eError::noErr;
+	return eError::NoErr;
 }
 
 //========================================================
@@ -109,7 +109,7 @@ eError SDLSemaphore::Post()
 
 	SDL_SemPost(m_mySem);
 
-	return eError::noErr;
+	return eError::NoErr;
 }
 
 //========================================================
@@ -119,5 +119,5 @@ eError SDLSemaphore::Wait()
 
 	SDL_SemWait(m_mySem);
 
-	return eError::noErr;
+	return eError::NoErr;
 }

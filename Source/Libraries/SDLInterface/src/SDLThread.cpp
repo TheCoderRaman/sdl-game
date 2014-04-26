@@ -16,7 +16,7 @@
 //========================================================
 eError SDLThread::SpawnThread(SDLThread::Thread& newThread, ThreadFunction func, void* data)
 {
-	eError err = eError::noErr;
+	eError err = eError::NoErr;
 	
 	//TODO: Use error right
 
@@ -27,22 +27,23 @@ eError SDLThread::SpawnThread(SDLThread::Thread& newThread, ThreadFunction func,
 }
 
 //========================================================
-eError SDLThread::WaitForThread(SDLThread::Thread& thread, int* returnVal)
+eError SDLThread::WaitForThread(SDLThread::Thread& thread)
 {
-	eError err = eError::noErr;
+	eError err = eError::NoErr;
 
 	//TODO: Use error right
+	int returnVal = 0;
 
 	DEBUG_ASSERT(thread.m_sdl_thread != nullptr);
-	SDL_WaitThread(thread.m_sdl_thread, returnVal);
+	SDL_WaitThread(thread.m_sdl_thread, &returnVal);
 
-	return err;
+	return (eError)returnVal;
 }
 
 //========================================================
 eError SDLThread::DetachThread(SDLThread::Thread& thread)
 {
-	eError err = eError::noErr;
+	eError err = eError::NoErr;
 
 	//TODO: Use error right
 
@@ -61,5 +62,5 @@ eError SDLThread::Delay(ms time)
 	// Call the SDL delay function
 	SDL_Delay(time);
 
-	return eError::noErr;
+	return eError::NoErr;
 }

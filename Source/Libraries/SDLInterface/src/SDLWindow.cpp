@@ -34,7 +34,7 @@ SDLWindow::~SDLWindow()
 //========================================================
 eError SDLWindow::Create()
 {
-	eError err = eError::noErr;
+	eError err = eError::NoErr;
 
     //Create window
     m_SDL_Window = SDL_CreateWindow( "Window", 
@@ -67,14 +67,14 @@ eError SDLWindow::Create()
 //========================================================
 eError SDLWindow::Update()
 {
-    eError err = eError::noErr;
+    eError err = eError::NoErr;
 
     // SDL Window functions must be run on the main thread
 	SDLEventLoop::RunOnMainThread_Sync(err,
 	[&]()->eError {
 
 		SDL_UpdateWindowSurface(m_SDL_Window);
-		return eError::noErr;
+		return eError::NoErr;
 	});
 
     return err;
@@ -83,7 +83,7 @@ eError SDLWindow::Update()
 //========================================================
 eError SDLWindow::Destroy()
 {
-	eError err = eError::noErr;
+	eError err = eError::NoErr;
 
 	//Deallocate surface
     SDL_FreeSurface( m_SDL_Surface );

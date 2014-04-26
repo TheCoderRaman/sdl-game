@@ -14,7 +14,7 @@
 //========================================================
 eError SDLMain::Init()
 {
-	eError err = eError::noErr;
+	eError err = eError::NoErr;
 
 	//Initialize SDL
     if( SDL_Init( SDL_INIT_VIDEO ) < 0 )
@@ -29,7 +29,7 @@ eError SDLMain::Init()
 //========================================================
 eError SDLMain::Quit()
 {
-	eError err = eError::noErr;
+	eError err = eError::NoErr;
 
     SDL_Quit();
 

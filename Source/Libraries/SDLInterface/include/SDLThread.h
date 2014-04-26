@@ -45,7 +45,7 @@ namespace SDLThread
 
 	//! \brief Wait for a thread to finish
 	//! \warning this will not return until the thread returns
-	eError WaitForThread(Thread& thread, int* returnVal);
+	eError WaitForThread(Thread& thread);
 
 	//! \brief Detach a thread
 	//! This detaches the thread, telling it that it does not need to hang around
