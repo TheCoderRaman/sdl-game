@@ -10,6 +10,7 @@
 
 #include "types.h"
 #include "SDLWindow.h"
+#include "SDLThread.h"
 
 //! \brief LEngine delegate class
 class LEngine
@@ -58,6 +59,12 @@ private:
 
 	//! \brief Member variables
 	SDLWindow m_MainWindow;
+
+	//! \brief the game update thread
+	SDLThread::Thread m_gameUpdateThread;
+
+	//! \brief the render thread
+	SDLThread::Thread m_renderThread;
 
 };
 

@@ -14,14 +14,18 @@
 
 
 //========================================================
-eError SDLThread::SpawnThread(SDLThread::Thread& newThread, ThreadFunction func, void* data)
+eError SDLThread::SpawnThread(SDLThread::Thread& newThread, void* data)
 {
 	eError err = eError::NoErr;
 	
 	//TODO: Use error right
 
+	// Sanity asserts
+	DEBUG_ASSERT(newThread.threadFunc != nullptr);
+	DEBUG_ASSERT(newThread.name != nullptr);
 	DEBUG_ASSERT(newThread.m_sdl_thread == nullptr);
-	newThread.m_sdl_thread = SDL_CreateThread( *func, newThread.name, data);	
+
+	newThread.m_sdl_thread = SDL_CreateThread(*newThread.threadFunc, newThread.name, data);
 
 	return err;
 }

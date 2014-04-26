@@ -19,6 +19,8 @@
 
 //===============================================================
 LEngine::LEngine()
+: m_gameUpdateThread("Game",GameThreadStart)
+, m_renderThread("Render",RenderThreadStart)
 {
 
 }
@@ -130,18 +132,11 @@ eError LEngine::load()
 eError LEngine::loop()
 {
 	eError err = eError::NoErr;
-
 	RUNTIME_LOG("Looping...")
 
-	// Spawn Game thread
-	SDLThread::Thread gameUpdateThread;
-	gameUpdateThread.name = "Game";
-	SDLThread::SpawnThread(gameUpdateThread, GameThreadStart, this);
-
-	// Spawn the render thread
-	SDLThread::Thread renderThread;
-	renderThread.name = "Render";
-	SDLThread::SpawnThread(renderThread, RenderThreadStart, this);
+	// Spawn both the threads
+	SDLThread::SpawnThread(m_gameUpdateThread, this);
+	SDLThread::SpawnThread(m_renderThread, this);
 
 	// Do the main SDL event loop
 	err = SDLEventLoop::DoLoop();
@@ -150,8 +145,8 @@ eError LEngine::loop()
 	REMOVE_ERR(err, eError::QuitRequest);
 
 	// Wait for all the threads to close off
-	err |= SDLThread::WaitForThread(renderThread);
-	err |= SDLThread::WaitForThread(gameUpdateThread);
+	err |= SDLThread::WaitForThread(m_renderThread);
+	err |= SDLThread::WaitForThread(m_gameUpdateThread);
 
     return err;
 }

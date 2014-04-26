@@ -29,11 +29,22 @@ namespace SDLThread
 		//! \brief tiny constructor to ensure everything is set to default
 		Thread()
 		: m_sdl_thread( nullptr )
+		, threadFunc( nullptr )
 		, name("unnamed")
+		{}
+
+		//! \brief second constructor with name
+		Thread(const char* name , ThreadFunction func)
+			: m_sdl_thread(nullptr)
+			, threadFunc(func)
+			, name(name)
 		{}
 
 		//! \brief the underlying SDL thread object
 		SDL_Thread* m_sdl_thread;
+
+		//! \brief the thread function to use
+		ThreadFunction threadFunc;
 
 		//! \brief the thread name
 		const char* name;
@@ -41,7 +52,7 @@ namespace SDLThread
 
 	//! \brief Spawn a thread with \a name and \a func with \a data
 	//! \warning this Thread will hang around untill Wait or Detach are called on it
-	eError SpawnThread(Thread& newThread, ThreadFunction func, void* data);
+	eError SpawnThread(Thread& newThread, void* data);
 
 	//! \brief Wait for a thread to finish
 	//! \warning this will not return until the thread returns
