@@ -1,4 +1,4 @@
-//! \file SDLEventLoop.cpp
+//! \file EventLoop.cpp
 //!
 //! \author  Marc Di luzio
 //! \date    April 2014
@@ -24,7 +24,7 @@ THREAD_LOCAL bool s_isCurrentlyEventHandling = false;
 bool s_hasFinished = false;
 
 //========================================================
-eError SDLInterface::SDLEventLoop::GetHasFinished()
+eError SDLInterface::EventLoop::GetHasFinished()
 {
 	eError err = eError::NoErr;
 
@@ -35,7 +35,7 @@ eError SDLInterface::SDLEventLoop::GetHasFinished()
 }
 
 //========================================================
-eError SDLInterface::SDLEventLoop::Create()
+eError SDLInterface::EventLoop::Create()
 {
 	eError err = eError::NoErr;
 
@@ -56,7 +56,7 @@ eError SDLInterface::SDLEventLoop::Create()
 }
 
 //========================================================
-eError SDLInterface::SDLEventLoop::DoLoop()
+eError SDLInterface::EventLoop::DoLoop()
 {
 	eError err = eError::NoErr;
 
@@ -92,7 +92,7 @@ eError SDLInterface::SDLEventLoop::DoLoop()
 }
 
 //========================================================
-eError SDLInterface::SDLEventLoop::HandleEvent(SDL_Event *event)
+eError SDLInterface::EventLoop::HandleEvent(SDL_Event *event)
 {
 	eError err = eError::NoErr;
 
@@ -172,35 +172,35 @@ eError SDLInterface::SDLEventLoop::HandleEvent(SDL_Event *event)
 }
 
 //========================================================
-eError SDLInterface::SDLEventLoop::HandleKeyboardEvent(SDL_Event *event)
+eError SDLInterface::EventLoop::HandleKeyboardEvent(SDL_Event *event)
 {
 	eError err = eError::NoErr;
 	return err;
 }
 
 //========================================================
-eError SDLInterface::SDLEventLoop::HandleMouseEvent(SDL_Event *event)
+eError SDLInterface::EventLoop::HandleMouseEvent(SDL_Event *event)
 {
 	eError err = eError::NoErr;
 	return err;
 }
 
 //========================================================
-eError SDLInterface::SDLEventLoop::HandleJoystickEvent(SDL_Event *event)
+eError SDLInterface::EventLoop::HandleJoystickEvent(SDL_Event *event)
 {
 	eError err = eError::NoErr;
 	return err;
 }
 
 //========================================================
-eError SDLInterface::SDLEventLoop::HandleControllerEvent(SDL_Event *event)
+eError SDLInterface::EventLoop::HandleControllerEvent(SDL_Event *event)
 {
 	eError err = eError::NoErr;
 	return err;
 }
 
 //========================================================
-eError SDLInterface::SDLEventLoop::HandleWindowEvent(SDL_Event *event)
+eError SDLInterface::EventLoop::HandleWindowEvent(SDL_Event *event)
 {
 	eError err = eError::NoErr;
 
@@ -217,7 +217,7 @@ eError SDLInterface::SDLEventLoop::HandleWindowEvent(SDL_Event *event)
 }
 
 //========================================================
-eError SDLInterface::SDLEventLoop::HandleCustomFunctionEvent(SDL_Event *event)
+eError SDLInterface::EventLoop::HandleCustomFunctionEvent(SDL_Event *event)
 {
 	eError err = eError::NoErr;
 
@@ -234,7 +234,7 @@ eError SDLInterface::SDLEventLoop::HandleCustomFunctionEvent(SDL_Event *event)
 }
 
 //========================================================
-eError SDLInterface::SDLEventLoop::PostCustomFunctionEvent(TMainThreadFunction func)
+eError SDLInterface::EventLoop::PostCustomFunctionEvent(TMainThreadFunction func)
 {
 	eError err = eError::NoErr;
 
@@ -258,7 +258,7 @@ eError SDLInterface::SDLEventLoop::PostCustomFunctionEvent(TMainThreadFunction f
 }
 
 //========================================================
-eError SDLInterface::SDLEventLoop::RunOnMainThread_Sync(eError& returnVal, TMainThreadFunction func)
+eError SDLInterface::EventLoop::RunOnMainThread_Sync(eError& returnVal, TMainThreadFunction func)
 {
 	eError err = eError::NoErr;
 
@@ -271,7 +271,7 @@ eError SDLInterface::SDLEventLoop::RunOnMainThread_Sync(eError& returnVal, TMain
 	}
 	else
 	{
-		SDLSemaphore* tempSem = new SDLSemaphore();
+		Semaphore* tempSem = new Semaphore();
 		tempSem->Create();
 
 		// Create a new temporary function that will post the semaphore and grab the return value
@@ -296,7 +296,7 @@ eError SDLInterface::SDLEventLoop::RunOnMainThread_Sync(eError& returnVal, TMain
 }
 
 //========================================================
-eError SDLInterface::SDLEventLoop::RunOnMainThread_ASync(TMainThreadFunction func)
+eError SDLInterface::EventLoop::RunOnMainThread_ASync(TMainThreadFunction func)
 {
 	eError err = eError::NoErr;
 

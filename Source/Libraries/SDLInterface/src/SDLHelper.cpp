@@ -1,4 +1,4 @@
-//! \file SDLHelper.cpp
+//! \file Helper.cpp
 //!
 //! \author  Marc Di luzio
 //! \date    April 2014
@@ -11,19 +11,19 @@
 #include "SDLWindow.h"
 
 //========================================================
-SDL_Renderer*	SDLInterface::SDLHelper::GetSDL_Renderer(SDLRenderer* renderer)
+SDL_Renderer*	SDLInterface::Helper::GetSDL_Renderer(Renderer* renderer)
 {
 	return renderer->m_SDL_Renderer;
 }
 
 //========================================================
-SDL_Window*		SDLInterface::SDLHelper::GetSDL_Window(SDLWindow* window)
+SDL_Window*		SDLInterface::Helper::GetSDL_Window(Window* window)
 {
 	return window->m_SDL_Window;
 }
 
 //========================================================
-SDL_Surface*	SDLInterface::SDLHelper::GetSDL_Surface(SDLWindow* window)
+SDL_Surface*	SDLInterface::Helper::GetSDL_Surface(Window* window)
 {
 	return window->m_SDL_Surface;
 }

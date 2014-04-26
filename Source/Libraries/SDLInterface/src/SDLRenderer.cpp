@@ -1,4 +1,4 @@
-//! \file SDLRenderer.cpp
+//! \file Renderer.cpp
 //!
 //! \author  Marc Di luzio
 //! \date    April 2014
@@ -13,25 +13,25 @@
 #include "eError.h"
 
 //========================================================
-SDLInterface::SDLRenderer::SDLRenderer()
+SDLInterface::Renderer::Renderer()
 : m_SDL_Renderer(NULL)
 {
 
 }
 
 //========================================================
-SDLInterface::SDLRenderer::~SDLRenderer()
+SDLInterface::Renderer::~Renderer()
 {
 	DEBUG_ASSERT(NULL == m_SDL_Renderer);
 }
 
 //========================================================
-eError SDLInterface::SDLRenderer::Create(SDLWindow* window)
+eError SDLInterface::Renderer::Create(Window* window)
 {
 	eError err = eError::NoErr;
 
 	// Create the renderer
-	m_SDL_Renderer = SDL_CreateRenderer( SDLHelper::GetSDL_Window(window),
+	m_SDL_Renderer = SDL_CreateRenderer( Helper::GetSDL_Window(window),
 			-1,  	// Uses whichever default device is available
 			0);		// Uses the default SDL_RENDERER_ACCELERATED
 
@@ -45,14 +45,14 @@ eError SDLInterface::SDLRenderer::Create(SDLWindow* window)
 }
 
 //========================================================
-eError SDLInterface::SDLRenderer::Render()
+eError SDLInterface::Renderer::Render()
 {
 	eError err = eError::NoErr;
 	return err;
 }
 
 //========================================================
-eError SDLInterface::SDLRenderer::Destroy()
+eError SDLInterface::Renderer::Destroy()
 {
 	eError err = eError::NoErr;
 

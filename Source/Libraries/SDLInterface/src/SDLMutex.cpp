@@ -1,4 +1,4 @@
-//! \file SDLMutex.cpp
+//! \file Mutex.cpp
 //!
 //! \author  Marc Di luzio
 //! \date    April 2014
@@ -13,21 +13,21 @@
 #include "SDL.h"
 
 //========================================================
-SDLInterface::SDLMutex::SDLMutex()
+SDLInterface::Mutex::Mutex()
 : my_sdl_mutex( nullptr )
 {
 
 }
 
 //========================================================
-SDLInterface::SDLMutex::~SDLMutex()
+SDLInterface::Mutex::~Mutex()
 {
 	// Sanity check that destroy has been called
 	DEBUG_ASSERT(my_sdl_mutex == nullptr);
 }
 
 //========================================================
-eError SDLInterface::SDLMutex::Create()
+eError SDLInterface::Mutex::Create()
 {
 	DEBUG_ASSERT(my_sdl_mutex == nullptr);
 
@@ -37,7 +37,7 @@ eError SDLInterface::SDLMutex::Create()
 }
 
 //========================================================
-eError SDLInterface::SDLMutex::Destroy()
+eError SDLInterface::Mutex::Destroy()
 {
 	DEBUG_ASSERT(my_sdl_mutex != nullptr);
 
@@ -48,7 +48,7 @@ eError SDLInterface::SDLMutex::Destroy()
 }
 
 //========================================================
-eError SDLInterface::SDLMutex::Lock()
+eError SDLInterface::Mutex::Lock()
 {
 	DEBUG_ASSERT(my_sdl_mutex != nullptr);
 
@@ -58,7 +58,7 @@ eError SDLInterface::SDLMutex::Lock()
 }
 
 //========================================================
-eError SDLInterface::SDLMutex::Unlock()
+eError SDLInterface::Mutex::Unlock()
 {
 	DEBUG_ASSERT(my_sdl_mutex != nullptr);
 
@@ -68,21 +68,21 @@ eError SDLInterface::SDLMutex::Unlock()
 }
 
 //========================================================
-SDLInterface::SDLSemaphore::SDLSemaphore()
+SDLInterface::Semaphore::Semaphore()
 : m_mySem(nullptr)
 {
 
 }
 
 //========================================================
-SDLInterface::SDLSemaphore::~SDLSemaphore()
+SDLInterface::Semaphore::~Semaphore()
 {
 	// Sanity check that destroy has been called
 	DEBUG_ASSERT(m_mySem == nullptr);
 }
 
 //========================================================
-eError SDLInterface::SDLSemaphore::Create()
+eError SDLInterface::Semaphore::Create()
 {
 	DEBUG_ASSERT(m_mySem == nullptr);
 
@@ -92,7 +92,7 @@ eError SDLInterface::SDLSemaphore::Create()
 }
 
 //========================================================
-eError SDLInterface::SDLSemaphore::Destroy()
+eError SDLInterface::Semaphore::Destroy()
 {
 	DEBUG_ASSERT(m_mySem != nullptr);
 
@@ -103,7 +103,7 @@ eError SDLInterface::SDLSemaphore::Destroy()
 }
 
 //========================================================
-eError SDLInterface::SDLSemaphore::Post()
+eError SDLInterface::Semaphore::Post()
 {
 	DEBUG_ASSERT(m_mySem != nullptr);
 
@@ -113,7 +113,7 @@ eError SDLInterface::SDLSemaphore::Post()
 }
 
 //========================================================
-eError SDLInterface::SDLSemaphore::Wait()
+eError SDLInterface::Semaphore::Wait()
 {
 	DEBUG_ASSERT(m_mySem != nullptr);
 

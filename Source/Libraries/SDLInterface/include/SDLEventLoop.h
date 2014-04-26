@@ -1,9 +1,9 @@
-//! \file SDLEventLoop.h
+//! \file EventLoop.h
 //!
 //! \author  Marc Di luzio
 //! \date    April 2014
 //!
-//! Header for SDLEventLoop.cpp
+//! Header for EventLoop.cpp
 //!
 #ifndef _SDLEVENTLOOP_H_
 #define _SDLEVENTLOOP_H_
@@ -21,7 +21,7 @@ namespace SDLInterface
 	//! \brief Namespace for all SDL_Event related methods
 	//! 
 	//! Handles the SDL_Event loop and fires off the events to appropriate deligates
-	class SDLEventLoop
+	class EventLoop
 	{
 	public:
 
@@ -79,7 +79,7 @@ namespace SDLInterface
 		//! This function will return instantly, with no wait, and give any error code if there was an issue
 		static eError RunOnMainThread_ASync(TMainThreadFunction func);
 
-		//! \brief accessor method to check if the SDLEventLoop has finished
+		//! \brief accessor method to check if the EventLoop has finished
 		static eError GetHasFinished();
 
 	};

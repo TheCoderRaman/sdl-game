@@ -1,9 +1,9 @@
-//! \file SDLWindow.h
+//! \file Window.h
 //!
 //! \author  Marc Di luzio
 //! \date    April 2014
 //!
-//! Header for SDLWindow.cpp
+//! Header for Window.cpp
 //!
 #ifndef _SDL_WINDOW_H
 #define _SDL_WINDOW_H
@@ -23,15 +23,15 @@ namespace SDLInterface
 {
 
 	//! \brief SDL_Window wrapper
-	class SDLWindow
+	class Window
 	{
-		//! Friends with SDLHelper to let it access it's internals
-		friend class SDLHelper;
+		//! Friends with Helper to let it access it's internals
+		friend class Helper;
 	public:
 
 		//! default ctor and dtor
-		SDLWindow();
-		~SDLWindow();
+		Window();
+		~Window();
 
 		//! \brief create the window
 		eError Create();

@@ -1,4 +1,4 @@
-//! \file SDLTimer.cpp
+//! \file Timer.cpp
 //!
 //! \author  Marc Di luzio
 //! \date    April 2014
@@ -11,44 +11,44 @@
 #include "SDL.h"
 
 //========================================================
-SDLInterface::SDLTimer::SDLTimer()
+SDLInterface::Timer::Timer()
 : m_startTime( 0 )
 {
 
 }
 
 //========================================================
-SDLInterface::SDLTimer::~SDLTimer()
+SDLInterface::Timer::~Timer()
 {
 
 }
 
 //========================================================
-ms SDLInterface::SDLTimer::GetGlobalLifetime(void)
+ms SDLInterface::Timer::GetGlobalLifetime(void)
 {
 	return SDL_GetTicks();
 }
 
 //========================================================
-ms SDLInterface::SDLTimer::GetGlobalTicksSince(ms time)
+ms SDLInterface::Timer::GetGlobalTicksSince(ms time)
 {
 	return GetGlobalLifetime() - time;
 }
 
 //========================================================
-void SDLInterface::SDLTimer::Start(void)
+void SDLInterface::Timer::Start(void)
 {
 	m_startTime = GetGlobalLifetime();
 }
 
 //========================================================
-ms SDLInterface::SDLTimer::GetTimePassed(void)
+ms SDLInterface::Timer::GetTimePassed(void)
 {
 	return GetGlobalLifetime() - m_startTime;
 }
 
 //========================================================
-void SDLInterface::SDLTimer::Reset(void)
+void SDLInterface::Timer::Reset(void)
 {
 	m_startTime = 0;
 }

@@ -1,9 +1,9 @@
-//! \file SDLMutex.h
+//! \file Mutex.h
 //!
 //! \author  Marc Di luzio
 //! \date    April 2014
 //!
-//! Header for SDLMutex.cpp
+//! Header for Mutex.cpp
 //!	
 #ifndef _SDLMUTEX_H_
 #define _SDLMUTEX_H_
@@ -24,13 +24,13 @@ namespace SDLInterface
 	//! In short: a mutex prevents concurrent access of data
 	//! ie. Thread1 locks the mutex, does some stuff. Thread2 meanwhile needs to do things but when 
 	//! it tries to lock the mutex, it must wait untill Thread1 has unlocked and let it continue.
-	class SDLMutex
+	class Mutex
 	{
 	public:
 
 		// Constructor and destructor
-		SDLMutex();
-		~SDLMutex();
+		Mutex();
+		~Mutex();
 
 		//! \brief Create the mutex (must be called)
 		eError Create();
@@ -54,13 +54,13 @@ namespace SDLInterface
 
 
 	//! \brief Semaphore class. Allows one thread to wait on another thread completing a function
-	class SDLSemaphore
+	class Semaphore
 	{
 	public:
 
 		// Constructor and destructor
-		SDLSemaphore();
-		~SDLSemaphore();
+		Semaphore();
+		~Semaphore();
 
 		//! \brief Create the semaphore (must be called)
 		eError Create();

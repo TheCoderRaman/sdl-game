@@ -1,4 +1,4 @@
-//! \file SDLEventLoop.cpp
+//! \file EventLoop.cpp
 //!
 //! \author  Marc Di luzio
 //! \date    April 2014
@@ -61,11 +61,11 @@ eError LEngine::init()
     eError err = eError::NoErr;
 
 	// initialise SDL
-	err = SDLInterface::SDLMain::Init();
+	err = SDLInterface::Main::Init();
 
 	// create the sdl event loop
 	if (!ERROR_HAS_TYPE_FATAL(err))
-		err = SDLInterface::SDLEventLoop::Create();
+		err = SDLInterface::EventLoop::Create();
 
 	// Create the window
 	if (!ERROR_HAS_TYPE_FATAL(err))
@@ -105,7 +105,7 @@ eError LEngine::quit()
 
     //Quit SDL subsystems
 	if (!ERROR_HAS_TYPE_FATAL(err))
-		SDLInterface::SDLMain::Quit();
+		SDLInterface::Main::Quit();
 
     return err;
 }
@@ -139,7 +139,7 @@ eError LEngine::loop()
 	m_renderThread.Spawn(this);
 
 	// Do the main SDL event loop
-	err = SDLInterface::SDLEventLoop::DoLoop();
+	err = SDLInterface::EventLoop::DoLoop();
 
 	// Remove any quit request error
 	REMOVE_ERR(err, eError::QuitRequest);
@@ -187,10 +187,10 @@ eError LEngine::RenderThreadLoop()
 		err |= Render();
 
 		// TODO: Better delay mechanism for update rate and such
-		SDLInterface::SDLThread::Delay(10);
+		SDLInterface::Thread::Delay(10);
 
-		// get if the SDLEventLoop has finished
-		err |= SDLInterface::SDLEventLoop::GetHasFinished();
+		// get if the EventLoop has finished
+		err |= SDLInterface::EventLoop::GetHasFinished();
 	}
 
 	// remove any quit request error
@@ -212,10 +212,10 @@ eError LEngine::GameThreadLoop()
 		err |= LGameBase::GetGame()->Update();
 
 		// TODO: Better delay mechanism for update rate and such
-		SDLInterface::SDLThread::Delay(10);
+		SDLInterface::Thread::Delay(10);
 
-		// get if the SDLEventLoop has finished
-		err |= SDLInterface::SDLEventLoop::GetHasFinished();
+		// get if the EventLoop has finished
+		err |= SDLInterface::EventLoop::GetHasFinished();
 	}
 
 	// remove any quit request error

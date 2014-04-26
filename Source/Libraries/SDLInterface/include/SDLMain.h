@@ -1,9 +1,9 @@
-//! \file SDLMain.h
+//! \file Main.h
 //!
 //! \author  Marc Di luzio
 //! \date    April 2014
 //!
-//! Header for SDLMain.cpp
+//! Header for Main.cpp
 //!
 #ifndef _SDLMAIN_H_
 #define _SDLMAIN_H_
@@ -18,7 +18,7 @@ namespace SDLInterface
 	//!
 	//! Used for intialising and tearing down SDL
 	//!
-	namespace SDLMain
+	namespace Main
 	{
 		//! \brief Initialise SDL
 		//!

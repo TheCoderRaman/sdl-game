@@ -1,4 +1,4 @@
-//! \file SDLMain.cpp
+//! \file Main.cpp
 //!
 //! \author  Marc Di luzio
 //! \date    April 2014
@@ -12,7 +12,7 @@
 #include "eError.h"
 
 //========================================================
-eError SDLInterface::SDLMain::Init()
+eError SDLInterface::Main::Init()
 {
 	eError err = eError::NoErr;
 
@@ -27,7 +27,7 @@ eError SDLInterface::SDLMain::Init()
 }
 
 //========================================================
-eError SDLInterface::SDLMain::Quit()
+eError SDLInterface::Main::Quit()
 {
 	eError err = eError::NoErr;
 

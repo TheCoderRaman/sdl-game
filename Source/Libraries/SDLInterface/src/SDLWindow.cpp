@@ -1,4 +1,4 @@
-//! \file SDLWindow.cpp
+//! \file Window.cpp
 //!
 //! \author  Marc Di luzio
 //! \date    April 2014
@@ -16,7 +16,7 @@
 #include "SDLEventLoop.h"
 
 //========================================================
-SDLInterface::SDLWindow::SDLWindow()
+SDLInterface::Window::Window()
 : m_SDL_Window(nullptr)
 , m_SDL_Surface(nullptr)
 {
@@ -24,7 +24,7 @@ SDLInterface::SDLWindow::SDLWindow()
 }
 
 //========================================================
-SDLInterface::SDLWindow::~SDLWindow()
+SDLInterface::Window::~Window()
 {
     // Sanity check here
 	DEBUG_ASSERT( nullptr == m_SDL_Window );
@@ -32,7 +32,7 @@ SDLInterface::SDLWindow::~SDLWindow()
 }
 
 //========================================================
-eError SDLInterface::SDLWindow::Create()
+eError SDLInterface::Window::Create()
 {
 	eError err = eError::NoErr;
 
@@ -65,12 +65,12 @@ eError SDLInterface::SDLWindow::Create()
 }
 
 //========================================================
-eError SDLInterface::SDLWindow::Update()
+eError SDLInterface::Window::Update()
 {
     eError err = eError::NoErr;
 
     // SDL Window functions must be run on the main thread
-	SDLEventLoop::RunOnMainThread_Sync(err,
+	EventLoop::RunOnMainThread_Sync(err,
 	[&]()->eError {
 
 		SDL_UpdateWindowSurface(m_SDL_Window);
@@ -81,7 +81,7 @@ eError SDLInterface::SDLWindow::Update()
 }
 
 //========================================================
-eError SDLInterface::SDLWindow::Destroy()
+eError SDLInterface::Window::Destroy()
 {
 	eError err = eError::NoErr;
 

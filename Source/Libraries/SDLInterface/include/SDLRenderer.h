@@ -1,9 +1,9 @@
-//! \file SDLRenderer.h
+//! \file Renderer.h
 //!
 //! \author  Marc Di luzio
 //! \date    April 2014
 //!
-//! Header for SDLRenderer.cpp
+//! Header for Renderer.cpp
 //! References for how to use SDL_Renderer can be found
 //! here : https://wiki.libsdl.org/CategoryRender
 
@@ -24,24 +24,24 @@ namespace SDLInterface
 {
 
 	// Forward declare the window
-	class SDLWindow;
+	class Window;
 
 
 	//! \brief the Renderer class
 	//! functions as a wrapper for SDL_Renderer
-	class SDLRenderer
+	class Renderer
 	{
-		friend class SDLHelper; // Allow SDLHelper to access my members
+		friend class Helper; // Allow Helper to access my members
 	public:
 
 		//! \brief Constructor
-		SDLRenderer();
+		Renderer();
 
 		//! \brief Destructor
-		~SDLRenderer();
+		~Renderer();
 
 		//! \brief Create the renderer from a window
-		eError Create(SDLWindow* window);
+		eError Create(Window* window);
 
 		//! \brief render using the renderer
 		eError Render();

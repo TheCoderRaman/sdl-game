@@ -1,9 +1,9 @@
-//! \file SDLTimer.h
+//! \file Timer.h
 //!
 //! \author  Marc Di luzio
 //! \date    April 2014
 //!
-//! Header for SDLTimer.cpp
+//! Header for Timer.cpp
 //!
 #ifndef _SDLTIMER_H_
 #define _SDLTIMER_H_
@@ -19,13 +19,13 @@ namespace SDLInterface
 
 	//! \brief class to contain a timer, useful for timekeeping
 	//! Could be extended with various stopwatch like abilities like laps and pause/play
-	class SDLTimer
+	class Timer
 	{
 	public:
 
 		//! Default ctor and dtor
-		SDLTimer();
-		~SDLTimer();
+		Timer();
+		~Timer();
 
 		//! \brief Start the timer
 		void Start(void);

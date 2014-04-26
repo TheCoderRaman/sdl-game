@@ -1,9 +1,9 @@
-//! \file SDLThread.h
+//! \file Thread.h
 //!
 //! \author  Marc Di luzio
 //! \date    April 2014
 //!
-//! Header for SDLThread.cpp
+//! Header for Thread.cpp
 //!	
 #ifndef _SDLTHREAD_H_
 #define _SDLTHREAD_H_
@@ -21,21 +21,21 @@ typedef int (* SDL_ThreadFunction) (void *data);
 namespace SDLInterface
 {
 
-	//! \brief the SDLThread class
-	class SDLThread
+	//! \brief the Thread class
+	class Thread
 	{
 	public:
 		//! \brief Typedef for the function required to launch a thread
 		typedef SDL_ThreadFunction ThreadFunction;
 
 		//! \brief tiny constructor to ensure everything is set to default
-		SDLThread();
+		Thread();
 
 		//! \brief destructor
-		~SDLThread();
+		~Thread();
 
 		//! \brief second constructor with name
-		SDLThread(const char* name, ThreadFunction func);
+		Thread(const char* name, ThreadFunction func);
 
 		//! \brief Spawn a thread with \a name and \a func with \a data
 		//! \warning this Thread will hang around untill Wait or Detach are called on it
