@@ -15,7 +15,7 @@
 #include "SDLMutex.h"
 
 //! \brief the custom function event type
-Uint32 s_kCustomFunctionEventType = -1;
+Uint32 s_iCustomFunctionEventType = -1;
 
 //! \brief boolean to check if we're currently event handling
 THREAD_LOCAL bool s_isCurrentlyEventHandling = false;
@@ -43,13 +43,14 @@ eError SDLInterface::EventLoop::Create()
 	s_hasFinished = false;
 
 	// Register the custom event
-	if (s_kCustomFunctionEventType == -1)
+	if (s_iCustomFunctionEventType < 0)
 	{
-		s_kCustomFunctionEventType = SDL_RegisterEvents(1);
+		s_iCustomFunctionEventType = SDL_RegisterEvents(1);
 	}
 	else
 	{
 		err = eError::SDL_Fatal;
+		DEBUG_LOG("ERROR Possible EventLoop::Create called twice?")
 	}
 
 	return err;
@@ -69,18 +70,17 @@ eError SDLInterface::EventLoop::DoLoop()
 	//Handle events on queue
 	while ( !toEnd )
     {
-		// Peep into the events. SDL_PeepEvents is thread safe, unlike wait or 
+		// Wait for an event 
 		SDL_WaitEvent(&event);
-		
-		s_isCurrentlyEventHandling = true;
 
+		// Handle the event
 		err = HandleEvent(&event);
-
-		s_isCurrentlyEventHandling = false;
 
 		toEnd = ( ERROR_HAS_TYPE_FATAL(err)				// Fatal errors
 			|| ERROR_HAS(err, eError::QuitRequest));	// Quit requests
     }
+
+	REMOVE_ERR(err, eError::QuitRequest);
 
     if ( err != eError::NoErr )
     	DEBUG_LOG("DoLoop Dropped out with eError %i",err);
@@ -96,77 +96,84 @@ eError SDLInterface::EventLoop::HandleEvent(SDL_Event *event)
 {
 	eError err = eError::NoErr;
 
+	// Set we're currently event handling
+	s_isCurrentlyEventHandling = true;
+
+	// switch through all the event types
 	switch (event->type)
 	{
-	case SDL_QUIT:
-		DEBUG_LOG("Quit requested");
-		err |= eError::QuitRequest;
-		break;
+		case SDL_QUIT:
+			DEBUG_LOG("SDL_QUIT recieved");
+			err |= eError::QuitRequest;
+			break;
 
-		// Keyboard events
-	case SDL_KEYUP:
-	case SDL_KEYDOWN:
-		err |= HandleKeyboardEvent(event);
-		break;
+			// Keyboard events
+		case SDL_KEYUP:
+		case SDL_KEYDOWN:
+			err |= HandleKeyboardEvent(event);
+			break;
 
-		// Text input events
-	case SDL_TEXTEDITING:
-	case SDL_TEXTINPUT:
-		DEBUG_LOG("Unhandled SDL Event: SDL_TEXT");
-		break;
+			// Text input events
+		case SDL_TEXTEDITING:
+		case SDL_TEXTINPUT:
+			DEBUG_LOG("Unhandled SDL Event: SDL_TEXT");
+			break;
 
-		// Mouse events
-	case SDL_MOUSEMOTION:
-	case SDL_MOUSEBUTTONUP:
-	case SDL_MOUSEBUTTONDOWN:
-	case SDL_MOUSEWHEEL:
-		err |= HandleMouseEvent(event);
-		break;
+			// Mouse events
+		case SDL_MOUSEMOTION:
+		case SDL_MOUSEBUTTONUP:
+		case SDL_MOUSEBUTTONDOWN:
+		case SDL_MOUSEWHEEL:
+			err |= HandleMouseEvent(event);
+			break;
 
-		// Joystick events
-	case SDL_JOYAXISMOTION:
-	case SDL_JOYBALLMOTION:
-	case SDL_JOYHATMOTION:
-	case SDL_JOYBUTTONDOWN:
-	case SDL_JOYBUTTONUP:
-	case SDL_JOYDEVICEADDED:
-	case SDL_JOYDEVICEREMOVED:
-		err |= HandleJoystickEvent(event);
-		break;
+			// Joystick events
+		case SDL_JOYAXISMOTION:
+		case SDL_JOYBALLMOTION:
+		case SDL_JOYHATMOTION:
+		case SDL_JOYBUTTONDOWN:
+		case SDL_JOYBUTTONUP:
+		case SDL_JOYDEVICEADDED:
+		case SDL_JOYDEVICEREMOVED:
+			err |= HandleJoystickEvent(event);
+			break;
 
-		// Controller events
-	case SDL_CONTROLLERAXISMOTION:
-	case SDL_CONTROLLERBUTTONDOWN:
-	case SDL_CONTROLLERBUTTONUP:
-	case SDL_CONTROLLERDEVICEADDED:
-	case SDL_CONTROLLERDEVICEREMOVED:
-	case SDL_CONTROLLERDEVICEREMAPPED:
-		err |= HandleControllerEvent(event);
-		break;
+			// Controller events
+		case SDL_CONTROLLERAXISMOTION:
+		case SDL_CONTROLLERBUTTONDOWN:
+		case SDL_CONTROLLERBUTTONUP:
+		case SDL_CONTROLLERDEVICEADDED:
+		case SDL_CONTROLLERDEVICEREMOVED:
+		case SDL_CONTROLLERDEVICEREMAPPED:
+			err |= HandleControllerEvent(event);
+			break;
 
-		// Window events
-	case SDL_WINDOWEVENT:
-		HandleWindowEvent(event);
-		break;
+			// Window events
+		case SDL_WINDOWEVENT:
+			err |= HandleWindowEvent(event);
+			break;
 
-		// SysWM events?
-	case SDL_SYSWMEVENT:
-		DEBUG_LOG("Unhandled SDL Event: SDL_SYSWMEVENT");
-		break;
+			// SysWM events ignored
+			// see https://wiki.libsdl.org/SDL_SysWMEvent
+		case SDL_SYSWMEVENT:
+			break;
 
-	default:
-	{
-		if (event->type == s_kCustomFunctionEventType)
-		{
-			HandleCustomFunctionEvent(event);
-		}
-		else
-		{
-			DEBUG_LOG("Unhandled SDL Event: type %i", event->type);
-		}
+		default:
+			{
+				if (event->type == s_iCustomFunctionEventType)
+				{
+					err |= HandleCustomFunctionEvent(event);
+				}
+				else
+				{
+					DEBUG_LOG("Unhandled SDL Event: type %i", event->type);
+				}
+			}
+			break;
 	}
-		break;
-	}
+
+	// Turn off current event handline
+	s_isCurrentlyEventHandling = false;
 
 	return err;
 }
@@ -225,7 +232,7 @@ eError SDLInterface::EventLoop::HandleCustomFunctionEvent(SDL_Event *event)
 	TMainThreadFunction* function = static_cast<TMainThreadFunction*>(event->user.data1);
 
 	// Call the function
-	function->operator()();
+	err |= function->operator()();
 
 	// delete the function ( it was newed in PostCustomFunctionEvent )
 	delete function;
@@ -247,11 +254,12 @@ eError SDLInterface::EventLoop::PostCustomFunctionEvent(TMainThreadFunction& fun
 	SDL_zero(customEvent);
 
 	// Set the custom event type and data
-	customEvent.type = s_kCustomFunctionEventType;
+	customEvent.type = s_iCustomFunctionEventType;
 	customEvent.user.code = 0; /* dunno */
 	customEvent.user.data1 = tempFunc;
 	customEvent.user.data2 = 0; /* anything else? */
 
+	// push the event into the SDL event queue
 	SDL_PushEvent(&customEvent);
 
 	return err;
@@ -276,7 +284,7 @@ eError SDLInterface::EventLoop::RunOnMainThread_Sync(eError& returnVal, TMainThr
 
 		// Create a new temporary function that will post the semaphore and grab the return value
 		TMainThreadFunction newTempFunc = [&]()->eError {
-			returnVal = func();
+			returnVal |= func();
 			tempSem->Post();
 			
 			return eError::NoErr;
@@ -301,7 +309,7 @@ eError SDLInterface::EventLoop::RunOnMainThread_ASync(TMainThreadFunction func)
 	eError err = eError::NoErr;
 
 	// Post the custom function event
-	PostCustomFunctionEvent(func);
+	err |= PostCustomFunctionEvent(func);
 
 	return err;
 }
