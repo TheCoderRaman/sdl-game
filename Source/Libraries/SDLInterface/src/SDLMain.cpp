@@ -11,7 +11,7 @@
 #include "debug.h"
 #include "eError.h"
 
-// Initialise SDL
+//========================================================
 eError SDLMain::Init()
 {
 	eError err = eError::noErr;
@@ -26,7 +26,7 @@ eError SDLMain::Init()
     return err;
 }
 
-// Quit SDL
+//========================================================
 eError SDLMain::Quit()
 {
 	eError err = eError::noErr;

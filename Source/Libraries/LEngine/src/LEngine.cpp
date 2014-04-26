@@ -18,23 +18,17 @@
 #include "eError.h"
 
 //===============================================================
-// LEngine::
-//===============================================================
 LEngine::LEngine()
 {
 
 }
 
 //===============================================================
-// LEngine::
-//===============================================================
 LEngine::~LEngine()
 {
 
 }
 
-//===============================================================
-// LEngine::
 //===============================================================
 eError LEngine::run_full()
 {
@@ -57,8 +51,6 @@ eError LEngine::run_full()
 }
 
 //===============================================================
-// LEngine::
-//===============================================================
 eError LEngine::init()
 {
 	RUNTIME_LOG("Initialising...")
@@ -66,42 +58,39 @@ eError LEngine::init()
     //Initialization flag
     eError err = eError::noErr;
 
+	// initialise SDL
     err = SDLMain::Init();
 
+	// create the sdl event loop
 	if (!ERROR_HAS_TYPE_FATAL(err))
-	{
-		err = m_MainWindow.Create();
-	}
-
-	if (!ERROR_HAS_TYPE_FATAL(err))
-	{
-		// create the sdl event loop
 		err = SDLEventLoop::Create();
-	}
+
+	// Create the window
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err = m_MainWindow.Create();
 
     return err;
 }
 
 //===============================================================
-// LEngine::
-//===============================================================
 eError LEngine::run()
 {
 	eError err = eError::noErr;
 
+	// Load up
 	err |= load();
 
-	if ( eError::noErr == err )
+	// do the full engine loop
+	if (!ERROR_HAS_TYPE_FATAL(err))
 		err |= loop();
 
-	if ( eError::noErr == err )
+	// unload
+	if (!ERROR_HAS_TYPE_FATAL(err))
 		err |= unload();
 
 	return err;
 }
 
-//===============================================================
-// LEngine::
 //===============================================================
 eError LEngine::quit()
 {
@@ -109,16 +98,16 @@ eError LEngine::quit()
 
 	eError err = eError::noErr;
 
+	// Destroy the main window
 	err |= m_MainWindow.Destroy();
 
     //Quit SDL subsystems
-    SDLMain::Quit();
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		SDLMain::Quit();
 
     return err;
 }
 
-//===============================================================
-// LEngine::
 //===============================================================
 eError LEngine::load()
 {
@@ -127,16 +116,16 @@ eError LEngine::load()
 	//Loading err flag
     eError err = eError::noErr;
 
+	// Create the game
     err |= LGameBase::GetGame()->Create();
 
-    if( eError::noErr == err )
+	// Initialse the game
+	if (!ERROR_HAS_TYPE_FATAL(err))
         err |= LGameBase::GetGame()->Initialise();
 
     return err;
 }
 
-//===============================================================
-// LEngine::
 //===============================================================
 eError LEngine::loop()
 {
@@ -168,8 +157,6 @@ eError LEngine::loop()
 }
 
 //===============================================================
-// LEngine::
-//===============================================================
 eError LEngine::unload()
 {
 	eError err = eError::noErr;
@@ -180,8 +167,6 @@ eError LEngine::unload()
 	return err;
 }
 
-//===============================================================
-// LEngine::UpdateWindow
 //===============================================================
 eError LEngine::UpdateWindow()
 {

@@ -13,8 +13,7 @@
 #include "SDL.h"
 
 
-//! \brief Spawn a thread with \a name and \a func with \a data
-//! \warning this Thread will hang around untill Wait or Detach are called on it
+//========================================================
 eError SDLThread::SpawnThread(SDLThread::Thread& newThread, ThreadFunction func, void* data)
 {
 	eError err = eError::noErr;
@@ -27,8 +26,7 @@ eError SDLThread::SpawnThread(SDLThread::Thread& newThread, ThreadFunction func,
 	return err;
 }
 
-//! \brief Wait for a thread to finish
-//! \warning this will not return until the thread returns
+//========================================================
 eError SDLThread::WaitForThread(SDLThread::Thread& thread, int* returnVal)
 {
 	eError err = eError::noErr;
@@ -41,11 +39,7 @@ eError SDLThread::WaitForThread(SDLThread::Thread& thread, int* returnVal)
 	return err;
 }
 
-//! \brief Detach a thread
-//! This detaches the thread, telling it that it does not need to hang around
-//! until Wait is called.
-//! \warning This thread is now completely detached so no return code can be recieved
-//! \warning This Thread object is now invalid and cannot have Wait or Detach called on it
+//========================================================
 eError SDLThread::DetachThread(SDLThread::Thread& thread)
 {
 	eError err = eError::noErr;
@@ -61,7 +55,7 @@ eError SDLThread::DetachThread(SDLThread::Thread& thread)
 	return err;
 }
 
-//! \brief thread time delay
+//========================================================
 eError SDLThread::Delay(ms time)
 {
 	// Call the SDL delay function

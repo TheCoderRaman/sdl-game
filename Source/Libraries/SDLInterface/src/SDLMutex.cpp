@@ -12,18 +12,21 @@
 
 #include "SDL.h"
 
+//========================================================
 SDLMutex::SDLMutex()
 : my_sdl_mutex( nullptr )
 {
 
 }
 
+//========================================================
 SDLMutex::~SDLMutex()
 {
 	// Sanity check that destroy has been called
 	DEBUG_ASSERT(my_sdl_mutex == nullptr);
 }
 
+//========================================================
 eError SDLMutex::Create()
 {
 	DEBUG_ASSERT(my_sdl_mutex == nullptr);
@@ -33,6 +36,7 @@ eError SDLMutex::Create()
 	return eError::noErr;
 }
 
+//========================================================
 eError SDLMutex::Destroy()
 {
 	DEBUG_ASSERT(my_sdl_mutex != nullptr);
@@ -43,6 +47,7 @@ eError SDLMutex::Destroy()
 	return eError::noErr;
 }
 
+//========================================================
 eError SDLMutex::Lock()
 {
 	DEBUG_ASSERT(my_sdl_mutex != nullptr);
@@ -52,6 +57,7 @@ eError SDLMutex::Lock()
 	return eError::noErr;
 }
 
+//========================================================
 eError SDLMutex::Unlock()
 {
 	DEBUG_ASSERT(my_sdl_mutex != nullptr);
@@ -61,18 +67,21 @@ eError SDLMutex::Unlock()
 	return eError::noErr;
 }
 
+//========================================================
 SDLSemaphore::SDLSemaphore()
 : m_mySem(nullptr)
 {
 
 }
 
+//========================================================
 SDLSemaphore::~SDLSemaphore()
 {
 	// Sanity check that destroy has been called
 	DEBUG_ASSERT(m_mySem == nullptr);
 }
 
+//========================================================
 eError SDLSemaphore::Create()
 {
 	DEBUG_ASSERT(m_mySem == nullptr);
@@ -82,6 +91,7 @@ eError SDLSemaphore::Create()
 	return eError::noErr;
 }
 
+//========================================================
 eError SDLSemaphore::Destroy()
 {
 	DEBUG_ASSERT(m_mySem != nullptr);
@@ -92,6 +102,7 @@ eError SDLSemaphore::Destroy()
 	return eError::noErr;
 }
 
+//========================================================
 eError SDLSemaphore::Post()
 {
 	DEBUG_ASSERT(m_mySem != nullptr);
@@ -101,6 +112,7 @@ eError SDLSemaphore::Post()
 	return eError::noErr;
 }
 
+//========================================================
 eError SDLSemaphore::Wait()
 {
 	DEBUG_ASSERT(m_mySem != nullptr);

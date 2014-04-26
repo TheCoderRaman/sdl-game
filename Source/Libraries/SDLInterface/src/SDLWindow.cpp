@@ -15,7 +15,7 @@
 
 #include "SDLEventLoop.h"
 
-// Default constructor
+//========================================================
 SDLWindow::SDLWindow()
 : m_SDL_Window(nullptr)
 , m_SDL_Surface(nullptr)
@@ -23,7 +23,7 @@ SDLWindow::SDLWindow()
 
 }
 
-// Default destructor
+//========================================================
 SDLWindow::~SDLWindow()
 {
     // Sanity check here
@@ -31,7 +31,7 @@ SDLWindow::~SDLWindow()
 	DEBUG_ASSERT( nullptr == m_SDL_Surface);
 }
 
-// Create the window
+//========================================================
 eError SDLWindow::Create()
 {
 	eError err = eError::noErr;
@@ -64,7 +64,7 @@ eError SDLWindow::Create()
 	return err;
 }
 
-// Update the window
+//========================================================
 eError SDLWindow::Update()
 {
     eError err = eError::noErr;
@@ -80,7 +80,7 @@ eError SDLWindow::Update()
     return err;
 }
 
-// Destroy the window
+//========================================================
 eError SDLWindow::Destroy()
 {
 	eError err = eError::noErr;

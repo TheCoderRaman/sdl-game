@@ -12,18 +12,20 @@
 #include "debug.h"
 #include "eError.h"
 
+//========================================================
 SDLRenderer::SDLRenderer()
 : m_SDL_Renderer(NULL)
 {
 
 }
 
+//========================================================
 SDLRenderer::~SDLRenderer()
 {
 	DEBUG_ASSERT(NULL == m_SDL_Renderer);
 }
 
-// Create
+//========================================================
 eError SDLRenderer::Create( SDLWindow* window )
 {
 	eError err = eError::noErr;
@@ -42,14 +44,14 @@ eError SDLRenderer::Create( SDLWindow* window )
 	return err;
 }
 
-// Render
+//========================================================
 eError SDLRenderer::Render()
 {
 	eError err = eError::noErr;
 	return err;
 }
 
-// Destroy
+//========================================================
 eError SDLRenderer::Destroy()
 {
 	eError err = eError::noErr;

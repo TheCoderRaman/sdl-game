@@ -1,10 +1,15 @@
+//! \file debug.cpp
+//!
+//! \author  Marc Di luzio
+//! \date    April 2014
+//!
+//! various definitions for different debug methods
+//!	
 #include "debug.h"
 
 #include <stdio.h>	// for printf functions
 #include <string.h> // for strncat
 #include <stdarg.h> // for the va_ arg list
-
-#include "Windows.h"
 
 //! Path seperators are different on Unix compared to windows
 #if defined(WIN32) || defined(_WIN32)
@@ -28,8 +33,7 @@
 //! The alignment of the messages, will need to be expanded for long file names or any other data put in the headr
 #define FINAL_ALIGNMENT 25
 
-//! Actual debug log method, used to produce the log output
-//! \warning never call directly, always call one of the various LOG macros
+//========================================================
 void _log(const char* file, int line, const char* format, ...)
 { 
 	//! The final output string

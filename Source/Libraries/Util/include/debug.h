@@ -12,6 +12,8 @@
 #define RUNTIME_LOGGING 1
 
 //! \brief method to log information to stdout
+//! Actual debug log method, used to produce the log output
+//! \warning never call directly, always call one of the various LOG macros
 void _log(const char* file, int line, const char* format, ...);
 
 // DEBUG ONLY LOGGING

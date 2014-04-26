@@ -23,7 +23,7 @@ THREAD_LOCAL bool s_isCurrentlyEventHandling = false;
 //! \brief boolean to store if the SDLEvent loop has finished
 bool s_hasFinished = false;
 
-//! \brief accessor method to check if the SDLEventLoop has finished
+//========================================================
 eError SDLEventLoop::GetHasFinished()
 {
 	eError err = eError::noErr;
@@ -34,7 +34,7 @@ eError SDLEventLoop::GetHasFinished()
 	return err;
 }
 
-// Create the loop
+//========================================================
 eError SDLEventLoop::Create()
 {
 	eError err = eError::noErr;
@@ -55,7 +55,7 @@ eError SDLEventLoop::Create()
 	return err;
 }
 
-// Do the event loop
+//========================================================
 eError SDLEventLoop::DoLoop()
 {
 	eError err = eError::noErr;
@@ -91,7 +91,7 @@ eError SDLEventLoop::DoLoop()
     return err;
 }
 
-// Handle all events
+//========================================================
 eError SDLEventLoop::HandleEvent(SDL_Event *event)
 {
 	eError err = eError::noErr;
@@ -171,35 +171,35 @@ eError SDLEventLoop::HandleEvent(SDL_Event *event)
 	return err;
 }
 
-// Handle all keyboard events
+//========================================================
 eError SDLEventLoop::HandleKeyboardEvent( SDL_Event *event )
 {
 	eError err = eError::noErr;
 	return err;
 }
 
-// Handles all mouse events
+//========================================================
 eError SDLEventLoop::HandleMouseEvent( SDL_Event *event )
 {
 	eError err = eError::noErr;
 	return err;
 }
 
-// Handles all Joystick events
+//========================================================
 eError SDLEventLoop::HandleJoystickEvent( SDL_Event *event )
 {
 	eError err = eError::noErr;
 	return err;
 }
 
-// Handles all Controller events
+//========================================================
 eError SDLEventLoop::HandleControllerEvent( SDL_Event *event )
 {
 	eError err = eError::noErr;
 	return err;
 }
 
-// Handles all Controller events
+//========================================================
 eError SDLEventLoop::HandleWindowEvent(SDL_Event *event)
 {
 	eError err = eError::noErr;
@@ -216,7 +216,7 @@ eError SDLEventLoop::HandleWindowEvent(SDL_Event *event)
 	return err;
 }
 
-//! \brief Handle a custom function event
+//========================================================
 eError SDLEventLoop::HandleCustomFunctionEvent(SDL_Event *event)
 {
 	eError err = eError::noErr;
@@ -233,7 +233,7 @@ eError SDLEventLoop::HandleCustomFunctionEvent(SDL_Event *event)
 	return err;
 }
 
-//! \brief Handle a custom function event
+//========================================================
 eError SDLEventLoop::PostCustomFunctionEvent(TMainThreadFunction func)
 {
 	eError err = eError::noErr;
@@ -257,8 +257,7 @@ eError SDLEventLoop::PostCustomFunctionEvent(TMainThreadFunction func)
 	return err;
 }
 
-//! \brief Run a function on the main thread Syncronously with return value
-//! This function will not return untill the function on the main thread is complete
+//========================================================
 eError SDLEventLoop::RunOnMainThread_Sync(eError& returnVal, TMainThreadFunction func)
 {
 	eError err = eError::noErr;
@@ -296,8 +295,7 @@ eError SDLEventLoop::RunOnMainThread_Sync(eError& returnVal, TMainThreadFunction
 	return err;
 }
 
-//! \brief Run a function on the main thread ASyncronously
-//! This function will return instantly, with no wait, and give any error code if there was an issue
+//========================================================
 eError SDLEventLoop::RunOnMainThread_ASync(TMainThreadFunction func)
 {
 	eError err = eError::noErr;
