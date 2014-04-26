@@ -42,6 +42,8 @@ private:
 
 	//! \brief the internal SDL window
 	SDL_Window* 		m_SDL_Window;
+
+	//! \brief the internal SDL surface
 	SDL_Surface* 		m_SDL_Surface;
 
 };
