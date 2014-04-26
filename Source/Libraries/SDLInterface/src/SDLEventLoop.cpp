@@ -265,7 +265,7 @@ eError SDLInterface::EventLoop::HandleWindowEvent(SDL_Event *event)
 		case SDL_WINDOWEVENT_FOCUS_GAINED:
 		case SDL_WINDOWEVENT_FOCUS_LOST:
 		case SDL_WINDOWEVENT_CLOSE:
-			DEBUG_LOG("SDL_WINDOWEVENT_SHOWN");
+			DEBUG_LOG("Unhandled Window event");
 			break;
 		default:
 			DEBUG_LOG("Unexpected SDL Event: SDL_WINDOWEVENT %i", event->window.event);
