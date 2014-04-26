@@ -12,50 +12,84 @@
 
 #include "SDL.h"
 
+//========================================================
+SDLThread::SDLThread()
+: m_sdl_thread(nullptr)
+, m_threadFunc(nullptr)
+, m_name("unnamed")
+{
+
+}
 
 //========================================================
-eError SDLThread::SpawnThread(SDLThread::Thread& newThread, void* data)
+SDLThread::SDLThread(const char* name, ThreadFunction func)
+: m_sdl_thread(nullptr)
+, m_threadFunc(func)
+, m_name(name)
+{
+
+}
+
+SDLThread::~SDLThread()
+{
+	// Detach or Wait must be called before allowing an SDLThread to destruct
+	DEBUG_ASSERT(m_sdl_thread == nullptr);
+}
+
+//========================================================
+eError SDLThread::Spawn(void* data)
 {
 	eError err = eError::NoErr;
 	
 	//TODO: Use error right
 
 	// Sanity asserts
-	DEBUG_ASSERT(newThread.threadFunc != nullptr);
-	DEBUG_ASSERT(newThread.name != nullptr);
-	DEBUG_ASSERT(newThread.m_sdl_thread == nullptr);
+	DEBUG_ASSERT(m_threadFunc != nullptr);
+	DEBUG_ASSERT(m_name != nullptr);
+	DEBUG_ASSERT(m_sdl_thread == nullptr);
 
-	newThread.m_sdl_thread = SDL_CreateThread(*newThread.threadFunc, newThread.name, data);
+	m_sdl_thread = SDL_CreateThread(*m_threadFunc, m_name, data);
 
 	return err;
 }
 
 //========================================================
-eError SDLThread::WaitForThread(SDLThread::Thread& thread)
+eError SDLThread::Wait()
 {
 	eError err = eError::NoErr;
 
 	//TODO: Use error right
+
+	// Sanity check on this
+	DEBUG_ASSERT(m_sdl_thread != nullptr);
+
+	// The return value of the thread
 	int returnVal = 0;
 
-	DEBUG_ASSERT(thread.m_sdl_thread != nullptr);
-	SDL_WaitThread(thread.m_sdl_thread, &returnVal);
+	// Wait for the thread to finish
+	SDL_WaitThread(m_sdl_thread, &returnVal);
+
+	// Invalidate the thread pointer
+	m_sdl_thread = nullptr;
 
 	return (eError)returnVal;
 }
 
 //========================================================
-eError SDLThread::DetachThread(SDLThread::Thread& thread)
+eError SDLThread::Detach()
 {
 	eError err = eError::NoErr;
 
 	//TODO: Use error right
 
-	DEBUG_ASSERT(thread.m_sdl_thread != nullptr);
-	SDL_DetachThread(thread.m_sdl_thread);
+	// Sanity check
+	DEBUG_ASSERT(m_sdl_thread != nullptr);
+
+	// Detach the thre
+	SDL_DetachThread(m_sdl_thread);
 
 	//invalidate the thread pointer
-	thread.m_sdl_thread = nullptr;
+	m_sdl_thread = nullptr;
 
 	return err;
 }

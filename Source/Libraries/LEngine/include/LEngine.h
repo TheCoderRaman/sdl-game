@@ -61,10 +61,10 @@ private:
 	SDLWindow m_MainWindow;
 
 	//! \brief the game update thread
-	SDLThread::Thread m_gameUpdateThread;
+	SDLThread m_gameUpdateThread;
 
 	//! \brief the render thread
-	SDLThread::Thread m_renderThread;
+	SDLThread m_renderThread;
 
 };
 

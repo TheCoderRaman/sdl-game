@@ -135,8 +135,8 @@ eError LEngine::loop()
 	RUNTIME_LOG("Looping...")
 
 	// Spawn both the threads
-	SDLThread::SpawnThread(m_gameUpdateThread, this);
-	SDLThread::SpawnThread(m_renderThread, this);
+	m_gameUpdateThread.Spawn(this);
+	m_renderThread.Spawn(this);
 
 	// Do the main SDL event loop
 	err = SDLEventLoop::DoLoop();
@@ -145,8 +145,8 @@ eError LEngine::loop()
 	REMOVE_ERR(err, eError::QuitRequest);
 
 	// Wait for all the threads to close off
-	err |= SDLThread::WaitForThread(m_renderThread);
-	err |= SDLThread::WaitForThread(m_gameUpdateThread);
+	err |= m_renderThread.Wait();
+	err |= m_gameUpdateThread.Wait();
 
     return err;
 }
