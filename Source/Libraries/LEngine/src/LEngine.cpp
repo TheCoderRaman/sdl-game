@@ -135,7 +135,7 @@ eError LEngine::loop()
 
 	// Spawn Game thread
 	SDLThread::Thread gameUpdateThread;
-	gameUpdateThread.name = "LGameUpdate";
+	gameUpdateThread.name = "Game";
 	SDLThread::SpawnThread(gameUpdateThread, GameThreadStart, this);
 
 	// Spawn the render thread
@@ -168,9 +168,11 @@ eError LEngine::unload()
 }
 
 //===============================================================
-eError LEngine::UpdateWindow()
+eError LEngine::Render()
 {
 	eError err = eError::noErr;
+
+	//TODO: render the objects
 
 	// Update the main window
 	err |= m_MainWindow.Update();
@@ -179,11 +181,31 @@ eError LEngine::UpdateWindow()
 }
 
 //===============================================================
-int GameThreadStart(void* data)
+eError LEngine::RenderThreadLoop()
 {
-	DEBUG_LOG("GameThread Starting");
 	eError err = eError::noErr;
-	
+
+	while (!ERROR_HAS_TYPE_FATAL(err)
+		&& !ERROR_HAS(err, eError::quitRequest))
+	{
+		// Update the engine window
+		err |= Render();
+
+		// TODO: Better delay mechanism for update rate and such
+		SDLThread::Delay(10);
+
+		// get if the SDLEventLoop has finished
+		err |= SDLEventLoop::GetHasFinished();
+	}
+
+	return err;
+}
+
+//===============================================================
+eError LEngine::GameThreadLoop()
+{
+	eError err = eError::noErr;
+
 	// The main loop
 	while (!ERROR_HAS_TYPE_FATAL(err)
 		&& !ERROR_HAS(err, eError::quitRequest))
@@ -198,6 +220,21 @@ int GameThreadStart(void* data)
 		err |= SDLEventLoop::GetHasFinished();
 	}
 
+	return err;
+}
+
+//===============================================================
+int GameThreadStart(void* data)
+{
+	DEBUG_LOG("GameThread Starting");
+	eError err = eError::noErr;
+
+	// Grab the engine from the thread data
+	LEngine* thisEngine = (LEngine*)data;
+
+	// Run the game thread loop
+	thisEngine->GameThreadLoop();
+
 	DEBUG_LOG("GameThread Ending");
 	return 0;
 }
@@ -211,18 +248,8 @@ int RenderThreadStart(void* data)
 	// Grab the engine from the thread data
 	LEngine* thisEngine = (LEngine*)data;
 
-	while (!ERROR_HAS_TYPE_FATAL(err)
-		&& !ERROR_HAS(err, eError::quitRequest))
-	{
-		// Update the engine window
-		err |= thisEngine->UpdateWindow();
-
-		// TODO: Better delay mechanism for update rate and such
-		SDLThread::Delay(10);
-
-		// get if the SDLEventLoop has finished
-		err |= SDLEventLoop::GetHasFinished();
-	}
+	// Run the render thread loop
+	thisEngine->RenderThreadLoop();
 
 	DEBUG_LOG("RenderThread Ending");
 	return 0;

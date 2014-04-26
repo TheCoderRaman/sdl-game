@@ -25,8 +25,11 @@ public:
 
 	// Other functions
 
-	//! \brief Update the window
-	eError UpdateWindow();
+	//! \brief the main render thread loop
+	eError RenderThreadLoop();
+
+	//! \brief the main game thread loop
+	eError GameThreadLoop();
 
 private:
 
@@ -43,6 +46,9 @@ private:
 
 		//! \brief calls the event loop	
 		eError loop();
+
+		//! \brief Update the window
+		eError Render();
 
 		//! \brief unloads the assets
 		eError unload();
