@@ -13,31 +13,24 @@
 // Start the SDLInterface Namespace
 namespace SDLInterface
 {
-
-	//! \brief Namespace that contains any of the main SDL functions
+	//! \brief Initialise SDL
 	//!
-	//! Used for intialising and tearing down SDL
+	//! Initialises the needed SDL subsystems
 	//!
-	namespace Main
-	{
-		//! \brief Initialise SDL
-		//!
-		//! Initialises the needed SDL subsystems
-		//!
-		//! \return Any eError produced
-		//! \sa Quit() for the yang to this ying
-		//! \warning Do not call this twice
-		eError Init();
+	//! \return Any eError produced
+	//! \sa Quit() for the yang to this ying
+	//! \warning Do not call this twice
+	eError Init();
 
-		//! \brief Quit SDL
-		//!
-		//! Quits SDL
-		//!
-		//! \return Any eError produced
-		//! \sa Init() for the ying to this yang
-		//! \warning Do not call this twice
-		eError Quit();
-	}
+	//! \brief Quit SDL
+	//!
+	//! Quits SDL
+	//!
+	//! \return Any eError produced
+	//! \sa Init() for the ying to this yang
+	//! \warning Do not call this twice
+	eError Quit();
+
 
 }
 

@@ -61,7 +61,7 @@ eError LEngine::init()
     eError err = eError::NoErr;
 
 	// initialise SDL
-	err = SDLInterface::Main::Init();
+	err = SDLInterface::Init();
 
 	// create the sdl event loop
 	if (!ERROR_HAS_TYPE_FATAL(err))
@@ -105,7 +105,7 @@ eError LEngine::quit()
 
     //Quit SDL subsystems
 	if (!ERROR_HAS_TYPE_FATAL(err))
-		SDLInterface::Main::Quit();
+		SDLInterface::Quit();
 
     return err;
 }

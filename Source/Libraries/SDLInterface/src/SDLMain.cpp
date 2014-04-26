@@ -12,7 +12,7 @@
 #include "eError.h"
 
 //========================================================
-eError SDLInterface::Main::Init()
+eError SDLInterface::Init()
 {
 	eError err = eError::NoErr;
 
@@ -27,7 +27,7 @@ eError SDLInterface::Main::Init()
 }
 
 //========================================================
-eError SDLInterface::Main::Quit()
+eError SDLInterface::Quit()
 {
 	eError err = eError::NoErr;
 
