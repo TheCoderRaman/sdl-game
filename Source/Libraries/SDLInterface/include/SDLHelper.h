@@ -24,8 +24,13 @@ class SDLHelper
 {
 public:
 
+	//! \brief Fetches the underlying SDL_Renderer from an SDLRenderer
 	static SDL_Renderer*	GetSDL_Renderer( SDLRenderer* renderer );
+
+	//! \brief Fetches the underlying SDL_Window from an SDLWindow
 	static SDL_Window*		GetSDL_Window( SDLWindow* window );
+
+	//! \brief Fetches the underlying SDL_Surface from an SDLWindow
 	static SDL_Surface*		GetSDL_Surface( SDLWindow* window );
 
 

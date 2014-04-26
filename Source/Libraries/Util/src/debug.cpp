@@ -14,12 +14,16 @@
 //! Path seperators are different on Unix compared to windows
 #if defined(WIN32) || defined(_WIN32)
 
+//! \brief file path seperator
 #define PATH_SEP '\\'
+//! \brief strncat for each platform
 #define STRNCAT	strncat_s
 
 #else
 
+//! \brief file path seperator
 #define PATH_SEP '/' 
+//! \brief strncat for each platform
 #define STRNCAT	strncat
 
 #endif
