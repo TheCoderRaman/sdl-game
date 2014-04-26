@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>SDLGame: Member List</title>
+<title>SDLGame: SDLHelper Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -82,18 +82,41 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 
 </div><!-- top -->
 <div class="header">
+  <div class="summary">
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="class_s_d_l_helper-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">LEngine Member List</div>  </div>
+<div class="title">SDLHelper Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 
-<p>This is the complete list of members for <a class="el" href="class_l_engine.html">LEngine</a>, including all inherited members.</p>
-<table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="class_l_engine.html#a225fc685b417b7fdb7aa4280430ff6bb">LEngine</a>()</td><td class="entry"><a class="el" href="class_l_engine.html">LEngine</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="class_l_engine.html#a9d603d5d5350f8487b8382eccadba40a">run_full</a>()</td><td class="entry"><a class="el" href="class_l_engine.html">LEngine</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_l_engine.html#ad4e862e657e0c410f94aeb6ca5b901d9">UpdateWindow</a>()</td><td class="entry"><a class="el" href="class_l_engine.html">LEngine</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>~LEngine</b>() (defined in <a class="el" href="class_l_engine.html">LEngine</a>)</td><td class="entry"><a class="el" href="class_l_engine.html">LEngine</a></td><td class="entry"></td></tr>
-</table></div><!-- contents -->
+<p>Class to help with interrelation between other SDL classes This class will enable other SDLInterface classes to interact with their SDL components while also keeping a solid interface from that outside that does not confuse things.  
+ <a href="class_s_d_l_helper.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="_s_d_l_helper_8h_source.html">SDLHelper.h</a>&gt;</code></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:abdce5e1c34bfadb131664407f9a4d902"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abdce5e1c34bfadb131664407f9a4d902"></a>
+static SDL_Renderer *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_d_l_helper.html#abdce5e1c34bfadb131664407f9a4d902">GetSDL_Renderer</a> (<a class="el" href="class_s_d_l_renderer.html">SDLRenderer</a> *renderer)</td></tr>
+<tr class="memdesc:abdce5e1c34bfadb131664407f9a4d902"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the SDL_Renderer from an <a class="el" href="class_s_d_l_renderer.html" title="the Renderer class functions as a wrapper for SDL_Renderer ">SDLRenderer</a>. <br/></td></tr>
+<tr class="separator:abdce5e1c34bfadb131664407f9a4d902"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af85e1fc77010f6cab01e7feaf443035c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af85e1fc77010f6cab01e7feaf443035c"></a>
+static SDL_Window *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_d_l_helper.html#af85e1fc77010f6cab01e7feaf443035c">GetSDL_Window</a> (<a class="el" href="class_s_d_l_window.html">SDLWindow</a> *window)</td></tr>
+<tr class="memdesc:af85e1fc77010f6cab01e7feaf443035c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the SDL_Window from an <a class="el" href="class_s_d_l_window.html" title="SDL_Window wrapper. ">SDLWindow</a>. <br/></td></tr>
+<tr class="separator:af85e1fc77010f6cab01e7feaf443035c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2ab0beeffc734811ddc1871e65740b79"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2ab0beeffc734811ddc1871e65740b79"></a>
+static SDL_Surface *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_d_l_helper.html#a2ab0beeffc734811ddc1871e65740b79">GetSDL_Surface</a> (<a class="el" href="class_s_d_l_window.html">SDLWindow</a> *window)</td></tr>
+<tr class="memdesc:a2ab0beeffc734811ddc1871e65740b79"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the SDL_Surface from an <a class="el" href="class_s_d_l_window.html" title="SDL_Window wrapper. ">SDLWindow</a>. <br/></td></tr>
+<tr class="separator:a2ab0beeffc734811ddc1871e65740b79"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>Class to help with interrelation between other SDL classes This class will enable other SDLInterface classes to interact with their SDL components while also keeping a solid interface from that outside that does not confuse things. </p>
+</div><hr/>The documentation for this class was generated from the following files:<ul>
+<li>Source/Libraries/SDLInterface/include/<a class="el" href="_s_d_l_helper_8h_source.html">SDLHelper.h</a></li>
+<li>Source/Libraries/SDLInterface/src/<a class="el" href="_s_d_l_helper_8cpp.html">SDLHelper.cpp</a></li>
+</ul>
+</div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated on Sat Apr 26 2014 13:46:37 for SDLGame by &#160;<a href="http://www.doxygen.org/index.html">

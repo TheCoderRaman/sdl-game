@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.6"/>
-<title>SDLGame: Member List</title>
+<title>SDLGame: Source/Libraries/SDLInterface/include/SDLMutex.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -38,8 +38,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
     <ul class="tablist">
       <li><a href="index.html"><span>Main&#160;Page</span></a></li>
       <li><a href="namespaces.html"><span>Namespaces</span></a></li>
-      <li class="current"><a href="annotated.html"><span>Classes</span></a></li>
-      <li><a href="files.html"><span>Files</span></a></li>
+      <li><a href="annotated.html"><span>Classes</span></a></li>
+      <li class="current"><a href="files.html"><span>Files</span></a></li>
       <li>
         <div id="MSearchBox" class="MSearchBoxInactive">
         <span class="left">
@@ -60,10 +60,8 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
   </div>
   <div id="navrow2" class="tabs2">
     <ul class="tablist">
-      <li><a href="annotated.html"><span>Class&#160;List</span></a></li>
-      <li><a href="classes.html"><span>Class&#160;Index</span></a></li>
-      <li><a href="hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
-      <li><a href="functions.html"><span>Class&#160;Members</span></a></li>
+      <li><a href="files.html"><span>File&#160;List</span></a></li>
+      <li><a href="globals.html"><span>File&#160;Members</span></a></li>
     </ul>
   </div>
 <!-- window showing the filter options -->
@@ -80,20 +78,36 @@ var searchBox = new SearchBox("searchBox", "search",false,'Search');
 </iframe>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><a class="el" href="dir_0cbd5071c3bd3d21495d11c1a590c746.html">Source</a></li><li class="navelem"><a class="el" href="dir_56a09560ed076604eaa034ff1a4c46a7.html">Libraries</a></li><li class="navelem"><a class="el" href="dir_6d25ddb5480d0b1f67306dca0cfea917.html">SDLInterface</a></li><li class="navelem"><a class="el" href="dir_243a5bffe03e2b00bf21976623d9970f.html">include</a></li>  </ul>
+</div>
 </div><!-- top -->
 <div class="header">
+  <div class="summary">
+<a href="#nested-classes">Classes</a>  </div>
   <div class="headertitle">
-<div class="title">LEngine Member List</div>  </div>
+<div class="title">SDLMutex.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-
-<p>This is the complete list of members for <a class="el" href="class_l_engine.html">LEngine</a>, including all inherited members.</p>
-<table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="class_l_engine.html#a225fc685b417b7fdb7aa4280430ff6bb">LEngine</a>()</td><td class="entry"><a class="el" href="class_l_engine.html">LEngine</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="class_l_engine.html#a9d603d5d5350f8487b8382eccadba40a">run_full</a>()</td><td class="entry"><a class="el" href="class_l_engine.html">LEngine</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="class_l_engine.html#ad4e862e657e0c410f94aeb6ca5b901d9">UpdateWindow</a>()</td><td class="entry"><a class="el" href="class_l_engine.html">LEngine</a></td><td class="entry"></td></tr>
-  <tr bgcolor="#f0f0f0"><td class="entry"><b>~LEngine</b>() (defined in <a class="el" href="class_l_engine.html">LEngine</a>)</td><td class="entry"><a class="el" href="class_l_engine.html">LEngine</a></td><td class="entry"></td></tr>
-</table></div><!-- contents -->
+<div class="textblock"><code>#include &quot;<a class="el" href="types_8h_source.html">types.h</a>&quot;</code><br/>
+</div>
+<p><a href="_s_d_l_mutex_8h_source.html">Go to the source code of this file.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
+Classes</h2></td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_d_l_mutex.html">SDLMutex</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">a Mutex class A mutex is used to allow a function to stop progress until some other concurrent progress is finished In short: a mutex prevents concurrent access of data ie. Thread1 locks the mutex, does some stuff. Thread2 meanwhile needs to do things but when it tries to lock the mutex, it must wait untill Thread1 has unlocked and let it continue.  <a href="class_s_d_l_mutex.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_s_d_l_semaphore.html">SDLSemaphore</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Semaphore class. Allows one thread to wait on another thread completing a function.  <a href="class_s_d_l_semaphore.html#details">More...</a><br/></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><dl class="section author"><dt>Author</dt><dd>Marc Di luzio </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>April 2014</dd></dl>
+<p>Header for <a class="el" href="_s_d_l_mutex_8cpp.html">SDLMutex.cpp</a> </p>
+</div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
 Generated on Sat Apr 26 2014 13:46:37 for SDLGame by &#160;<a href="http://www.doxygen.org/index.html">
