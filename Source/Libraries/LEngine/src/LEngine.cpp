@@ -184,7 +184,7 @@ int GameThreadStart(void* data)
 		err |= LGameBase::GetGame()->Update();
 
 		// TODO: Better delay mechanism for update rate and such
-		SDLTimer::GlobalDelay(10);
+		SDLThread::Delay(10);
 
 		// get if the SDLEventLoop has finished
 		err |= SDLEventLoop::GetHasFinished();
@@ -210,7 +210,7 @@ int RenderThreadStart(void* data)
 		err |= thisEngine->UpdateWindow();
 
 		// TODO: Better delay mechanism for update rate and such
-		SDLTimer::GlobalDelay(10);
+		SDLThread::Delay(10);
 
 		// get if the SDLEventLoop has finished
 		err |= SDLEventLoop::GetHasFinished();

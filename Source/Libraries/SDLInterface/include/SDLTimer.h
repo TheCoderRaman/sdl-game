@@ -8,8 +8,7 @@
 #ifndef _SDLTIMER_H_
 #define _SDLTIMER_H_
 
-//! \brief all timer methods are in ms (milliseconds)
-typedef int ms;
+#include "types.h"
 
 #define msToSec(ms) (ms/1000)
 
@@ -19,11 +18,9 @@ class SDLTimer
 {
 public:	
 	
-	//! \brief Get the number of ticks since program initialisation
-	static ms GetGlobalLifetime(void);
-
-	//! \brief Get number of ticks since
-	static ms GetGlobalTicksSince(ms since);
+	//! Default ctor and dtor
+	SDLTimer();
+	~SDLTimer();
 
 	//! \brief Start the timer
 	void Start( void );
@@ -34,8 +31,13 @@ public:
 	//! \brief Reset the timer
 	void Reset( void );
 
-	//! \brief global time delay
-	static void GlobalDelay(ms time);
+	// Static timer methods
+
+	//! \brief Get the number of ticks since program initialisation
+	static ms GetGlobalLifetime(void);
+
+	//! \brief Get number of ticks since
+	static ms GetGlobalTicksSince(ms time);
 
 private:
 

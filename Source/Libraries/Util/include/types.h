@@ -11,6 +11,9 @@
 //! \brief You can forward declare strongly typed enums!
 enum class eError : long;
 
+//! \brief all timer methods are in ms (milliseconds)
+typedef long ms;
+
 //! \brief the thread local define
 #if defined(WIN32) || defined(_WIN32)
 #define THREAD_LOCAL __declspec(thread) 

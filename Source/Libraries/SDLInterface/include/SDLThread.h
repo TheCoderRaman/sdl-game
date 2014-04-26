@@ -52,6 +52,10 @@ namespace SDLThread
 	//! \warning This Thread object is now invalid and cannot have Wait or Detach called on it
 	eError DetachThread(Thread& thread);
 
+
+	//! \brief thread time delay
+	eError Delay(ms time);
+
 }
 
 

@@ -60,3 +60,12 @@ eError SDLThread::DetachThread(SDLThread::Thread& thread)
 
 	return err;
 }
+
+//! \brief thread time delay
+eError SDLThread::Delay(ms time)
+{
+	// Call the SDL delay function
+	SDL_Delay(time);
+
+	return eError::noErr;
+}

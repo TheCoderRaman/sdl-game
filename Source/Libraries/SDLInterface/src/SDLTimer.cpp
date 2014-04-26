@@ -10,8 +10,45 @@
 
 #include "SDL.h"
 
-void SDLTimer::GlobalDelay(ms time)
+//! Default ctor
+SDLTimer::SDLTimer()
+: m_startTime( 0 )
 {
-	// Call the SDL delay function
-	SDL_Delay(time);
+
+}
+
+//! Default dtor
+SDLTimer::~SDLTimer()
+{
+
+}
+
+//! \brief Get the number of ticks since program initialisation
+ms SDLTimer::GetGlobalLifetime(void)
+{
+	return SDL_GetTicks();
+}
+
+//! \brief Get number of ticks since
+ms SDLTimer::GetGlobalTicksSince(ms time)
+{
+	return GetGlobalLifetime() - time;
+}
+
+//! \brief Start the timer
+void SDLTimer::Start(void)
+{
+	m_startTime = GetGlobalLifetime();
+}
+
+//! \brief Get the time passed since Start
+ms SDLTimer::GetTimePassed(void)
+{
+	return GetGlobalLifetime() - m_startTime;
+}
+
+//! \brief Reset the timer
+void SDLTimer::Reset(void)
+{
+	m_startTime = 0;
 }
