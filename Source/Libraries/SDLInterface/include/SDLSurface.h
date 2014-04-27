@@ -11,15 +11,22 @@
 
 #include "types.h" // For eError
 
+#include "SDLHelper.h" // for friending
+
 // Forward declare the SDL_Surface type from SDL
 struct SDL_Surface;
 
 // Start the SDLInterface Namespace
 namespace SDLInterface
 {
+	// Forward declare of window
+	class Window;
+
 	//! \brief wrapper class for SDL_Surface
 	class Surface
 	{
+		//! Friends with Helper to let it access it's internals
+		friend class Helper;
 	public:
 
 		//! \brief default constructor
@@ -29,7 +36,10 @@ namespace SDLInterface
 		~Surface();
 
 		//! \brief Create the surface
-		eError Create();
+		eError CreateFromBMP(const char* bmpFile);
+
+		//! \brief Create the surface from a window
+		eError CreateFromWindow(Window* window);
 
 		//! \brief destroy the surface
 		eError Destroy();

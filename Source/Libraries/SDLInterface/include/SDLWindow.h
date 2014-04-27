@@ -11,12 +11,12 @@
 // Includes
 #include "types.h"
 
-// for friending
-#include "SDLHelper.h"
+
+#include "SDLHelper.h" // for friending
+#include "SDLSurface.h" // For surface
 
 // Forward declares
 struct SDL_Window;
-struct SDL_Surface;
 
 // Start the SDLInterface Namespace
 namespace SDLInterface
@@ -47,8 +47,8 @@ namespace SDLInterface
 		//! \brief the internal SDL window
 		SDL_Window* 		m_SDL_Window;
 
-		//! \brief the internal SDL surface
-		SDL_Surface* 		m_SDL_Surface;
+		//! \brief the internal surface
+		Surface 		m_Surface;
 
 	};
 }

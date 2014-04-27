@@ -18,7 +18,6 @@
 //========================================================
 SDLInterface::Window::Window()
 : m_SDL_Window(nullptr)
-, m_SDL_Surface(nullptr)
 {
 
 }
@@ -28,7 +27,6 @@ SDLInterface::Window::~Window()
 {
     // Sanity check here
 	DEBUG_ASSERT( nullptr == m_SDL_Window );
-	DEBUG_ASSERT( nullptr == m_SDL_Surface);
 }
 
 //========================================================
@@ -52,13 +50,7 @@ eError SDLInterface::Window::Create()
     else
     {
         //Get window surface
-        m_SDL_Surface = SDL_GetWindowSurface( m_SDL_Window );
-
-        if( m_SDL_Surface == NULL )
-        {
-            DEBUG_LOG( "Surface could not be fetched! SDL_Error: %s", SDL_GetError() );
-            err |= eError::SDL_Fatal;
-        }
+		m_Surface.CreateFromWindow(this);
     }
 
 	return err;
@@ -86,8 +78,7 @@ eError SDLInterface::Window::Destroy()
 	eError err = eError::NoErr;
 
 	//Deallocate surface
-    SDL_FreeSurface( m_SDL_Surface );
-    m_SDL_Surface = nullptr;
+	m_Surface.Destroy();
 
     //Destroy window
     SDL_DestroyWindow( m_SDL_Window );

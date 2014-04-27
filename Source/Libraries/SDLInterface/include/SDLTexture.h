@@ -11,7 +11,7 @@
 
 #include "types.h" // For eError
 
-#include "SDLSurface.h" // for SDLInterface::Surface
+#include "SDLHelper.h" // for friending
 
 // Forward declare the SDL_Texture type from SDL
 struct SDL_Texture;
@@ -19,9 +19,14 @@ struct SDL_Texture;
 // Start the SDLInterface Namespace
 namespace SDLInterface
 {
+	class Surface;
+	class Renderer;
+
 	//! \brief wrapper class for SDL_Texture
 	class Texture
 	{
+		//! Friends with Helper to let it access it's internals
+		friend class Helper;
 	public:
 
 		//! \brief default constructor
@@ -31,10 +36,11 @@ namespace SDLInterface
 		~Texture();
 
 		//! \brief Create the texture
+		//! \warning Not implemented, not sure how to do this properly
 		eError Create();
 
-		//! \brief Create the texture from a surface
-		eError Create(Surface* surface);
+		//! \brief Create the texture from a surface adn a renderer
+		eError Create(Renderer* renderer, Surface* surface);
 
 		//! \brief destroy the surface
 		eError Destroy();

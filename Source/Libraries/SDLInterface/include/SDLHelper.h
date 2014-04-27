@@ -13,6 +13,7 @@
 struct SDL_Renderer;
 struct SDL_Window;
 struct SDL_Surface;
+struct SDL_Texture;
 
 // Start the SDLInterface Namespace
 namespace SDLInterface
@@ -21,6 +22,8 @@ namespace SDLInterface
 	// Forward declares
 	class Window;
 	class Renderer;
+	class Texture;
+	class Surface;
 
 	//! \brief Class to help with interrelation between other SDL classes
 	//! This class will enable other SDLInterface classes to interact with their SDL components
@@ -35,10 +38,11 @@ namespace SDLInterface
 		//! \brief Fetches the underlying SDL_Window from an Window
 		static SDL_Window*		GetSDL_Window(Window* window);
 
-		//! \brief Fetches the underlying SDL_Surface from an Window
-		static SDL_Surface*		GetSDL_Surface(Window* window);
+		//! \brief Fetches the underlying SDL_Surface from an surface
+		static SDL_Surface*		GetSDL_Surface(Surface* surface);
 
-
+		//! \brief Fetches the underlying SDL_Texture from an Texture
+		static SDL_Texture*		GetSDL_Texture(Texture* texture);
 	};
 
 }

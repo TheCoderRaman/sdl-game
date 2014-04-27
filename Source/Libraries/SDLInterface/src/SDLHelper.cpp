@@ -9,6 +9,8 @@
 
 #include "SDLRenderer.h"
 #include "SDLWindow.h"
+#include "SDLSurface.h"
+#include "SDLTexture.h"
 
 //========================================================
 SDL_Renderer*	SDLInterface::Helper::GetSDL_Renderer(Renderer* renderer)
@@ -23,7 +25,13 @@ SDL_Window*		SDLInterface::Helper::GetSDL_Window(Window* window)
 }
 
 //========================================================
-SDL_Surface*	SDLInterface::Helper::GetSDL_Surface(Window* window)
+SDL_Surface*	SDLInterface::Helper::GetSDL_Surface(Surface* surface)
 {
-	return window->m_SDL_Surface;
+	return surface->m_sdl_surface;
+}
+
+//========================================================
+SDL_Texture*	SDLInterface::Helper::GetSDL_Texture(Texture* texture)
+{
+	return texture->m_sdl_texture;
 }
