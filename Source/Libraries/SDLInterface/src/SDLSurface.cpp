@@ -7,6 +7,8 @@
 //! here : https://wiki.libsdl.org/SDL_Surface
 #include "SDLSurface.h"
 
+#include "eError.h"
+
 //========================================================
 SDLInterface::Surface::Surface()
 : m_sdl_surface( nullptr )
@@ -18,4 +20,20 @@ SDLInterface::Surface::Surface()
 SDLInterface::Surface::~Surface()
 {
 
+}
+
+//========================================================
+eError SDLInterface::Surface::Create()
+{
+	eError err = eError::NoErr;
+
+	return err;
+}
+
+//========================================================
+eError SDLInterface::Surface::Destroy()
+{
+	eError err = eError::NoErr;
+
+	return err;
 }

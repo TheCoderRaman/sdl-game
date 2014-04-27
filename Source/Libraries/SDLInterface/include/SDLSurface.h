@@ -9,6 +9,8 @@
 #ifndef _SDLSURFACE_H_
 #define _SDLSURFACE_H_
 
+#include "types.h" // For eError
+
 // Forward declare the SDL_Surface type from SDL
 struct SDL_Surface;
 
@@ -25,6 +27,12 @@ namespace SDLInterface
 
 		//! \brief default destructor
 		~Surface();
+
+		//! \brief Create the surface
+		eError Create();
+
+		//! \brief destroy the surface
+		eError Destroy();
 
 	private:
 

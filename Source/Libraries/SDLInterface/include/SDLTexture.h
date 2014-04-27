@@ -9,6 +9,10 @@
 #ifndef _SDLTEXTURE_H_
 #define _SDLTEXTURE_H_
 
+#include "types.h" // For eError
+
+#include "SDLSurface.h" // for SDLInterface::Surface
+
 // Forward declare the SDL_Texture type from SDL
 struct SDL_Texture;
 
@@ -25,6 +29,15 @@ namespace SDLInterface
 
 		//! \brief default destructor
 		~Texture();
+
+		//! \brief Create the texture
+		eError Create();
+
+		//! \brief Create the texture from a surface
+		eError Create(Surface* surface);
+
+		//! \brief destroy the surface
+		eError Destroy();
 
 	private:
 
