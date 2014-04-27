@@ -6,3 +6,16 @@
 //! References for how to use SDL_Texture can be found
 //! here : https://wiki.libsdl.org/SDL_Texture
 #include "SDLTexture.h"
+
+//========================================================
+SDLInterface::Texture::Texture()
+: m_sdl_texture(nullptr)
+{
+
+}
+
+//========================================================
+SDLInterface::Texture::~Texture()
+{
+
+}

@@ -6,3 +6,16 @@
 //! References for how to use SDL_Surface can be found
 //! here : https://wiki.libsdl.org/SDL_Surface
 #include "SDLSurface.h"
+
+//========================================================
+SDLInterface::Surface::Surface()
+: m_sdl_surface( nullptr )
+{
+
+}
+
+//========================================================
+SDLInterface::Surface::~Surface()
+{
+
+}

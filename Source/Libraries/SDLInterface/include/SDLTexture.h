@@ -9,4 +9,29 @@
 #ifndef _SDLTEXTURE_H_
 #define _SDLTEXTURE_H_
 
+// Forward declare the SDL_Texture type from SDL
+struct SDL_Texture;
+
+// Start the SDLInterface Namespace
+namespace SDLInterface
+{
+	//! \brief wrapper class for SDL_Texture
+	class Texture
+	{
+	public:
+
+		//! \brief default constructor
+		Texture();
+
+		//! \brief default destructor
+		~Texture();
+
+	private:
+
+		//! \brief the internal SDL_Texture
+		SDL_Texture* m_sdl_texture;
+
+	};
+}
+
 #endif //_SDLTEXTURE_H_
