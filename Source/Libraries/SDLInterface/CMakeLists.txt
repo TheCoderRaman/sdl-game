@@ -34,6 +34,8 @@ SET(PROJECT_HEADERS
 	${CMAKE_CURRENT_SOURCE_DIR}/include/SDLTimer.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/SDLThread.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/SDLMutex.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/SDLSurface.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/SDLTexture.h
 )
 
 set(PROJECT_SRCS 
@@ -45,6 +47,8 @@ set(PROJECT_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/src/SDLTimer.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/SDLThread.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/SDLMutex.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/SDLSurface.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/SDLTexture.cpp
 )
 
 #-----------------------------------------------------------------
