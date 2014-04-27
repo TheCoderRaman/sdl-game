@@ -1,4 +1,4 @@
-//! \file Timer.h
+//! \file SDLTimer.h
 //!
 //! \author  Marc Di luzio
 //! \date    April 2014

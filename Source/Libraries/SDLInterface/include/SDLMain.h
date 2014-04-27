@@ -1,4 +1,4 @@
-//! \file Main.h
+//! \file SDLMain.h
 //!
 //! \author  Marc Di luzio
 //! \date    April 2014

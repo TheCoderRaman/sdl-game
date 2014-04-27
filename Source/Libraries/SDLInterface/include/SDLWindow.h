@@ -1,4 +1,4 @@
-//! \file Window.h
+//! \file SDLWindow.h
 //!
 //! \author  Marc Di luzio
 //! \date    April 2014

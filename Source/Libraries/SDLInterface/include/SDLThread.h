@@ -1,4 +1,4 @@
-//! \file Thread.h
+//! \file SDLThread.h
 //!
 //! \author  Marc Di luzio
 //! \date    April 2014

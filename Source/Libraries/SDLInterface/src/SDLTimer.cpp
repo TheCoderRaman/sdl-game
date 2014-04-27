@@ -1,4 +1,4 @@
-//! \file Timer.cpp
+//! \file SDLTimer.cpp
 //!
 //! \author  Marc Di luzio
 //! \date    April 2014

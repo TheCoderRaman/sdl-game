@@ -1,4 +1,4 @@
-//! \file Renderer.h
+//! \file SDLRenderer.h
 //!
 //! \author  Marc Di luzio
 //! \date    April 2014

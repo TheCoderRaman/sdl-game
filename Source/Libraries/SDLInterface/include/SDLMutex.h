@@ -1,4 +1,4 @@
-//! \file Mutex.h
+//! \file SDLMutex.h
 //!
 //! \author  Marc Di luzio
 //! \date    April 2014

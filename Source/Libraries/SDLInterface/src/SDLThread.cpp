@@ -1,4 +1,4 @@
-//! \file Thread.cpp
+//! \file SDLThread.cpp
 //!
 //! \author  Marc Di luzio
 //! \date    April 2014

@@ -1,4 +1,4 @@
-//! \file Renderer.cpp
+//! \file SDLRenderer.cpp
 //!
 //! \author  Marc Di luzio
 //! \date    April 2014

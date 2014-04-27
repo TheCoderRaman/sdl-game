@@ -1,4 +1,4 @@
-//! \file Helper.cpp
+//! \file SDLHelper.cpp
 //!
 //! \author  Marc Di luzio
 //! \date    April 2014
