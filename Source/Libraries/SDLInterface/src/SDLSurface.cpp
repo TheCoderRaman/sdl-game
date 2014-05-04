@@ -62,7 +62,7 @@ eError SDLInterface::Surface::CreateFromWindow(Window* window)
 	SDL_Window* sdlwindow = Helper::GetSDL_Window(window);
 
 	// Sanity check
-	DEBUG_ASSERT(sdlwindow == nullptr);
+	DEBUG_ASSERT(sdlwindow != nullptr);
 
 	// Get the surface from the window
 	m_sdl_surface = SDL_GetWindowSurface(sdlwindow);
