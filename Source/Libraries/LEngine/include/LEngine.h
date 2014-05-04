@@ -51,7 +51,10 @@ private:
 		//! \brief calls the event loop	
 		eError loop();
 
-		//! \brief Render the window
+		//! \brief update the engine
+		eError Update(ms elapsed);
+
+		//! \brief Render the engine
 		eError Render();
 
 		//! \brief unloads the assets

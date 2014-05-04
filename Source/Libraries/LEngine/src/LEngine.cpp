@@ -183,8 +183,19 @@ eError LEngine::Render()
 
 	//TODO: render the objects
 
-	// Update the main window
+	// Update the main window surface once render is complete
 	err |= m_MainWindow.UpdateSurface();
+
+	return err;
+}
+
+//===============================================================
+eError LEngine::Update(ms elapsed)
+{
+	eError err = eError::NoErr;
+
+	// Update the game
+	err |= LGameBase::GetGame()->Update(elapsed);
 
 	return err;
 }
@@ -264,10 +275,8 @@ eError LEngine::GameThreadLoop()
 		// Delay until the end of the desired frame time
 		err |= SDLInterface::Thread::DelayUntil(frameTime + m_msDesiredFrameTime);
 
-		// Update the game
-		// Using the desired frame time.
-		// May be useful to 
-		err |= LGameBase::GetGame()->Update(m_msDesiredFrameTime);
+		// Call the main engine update method
+		err |= Update(m_msDesiredFrameTime);
 
 		// grab the current time
 		frameTime = SDLInterface::Timer::GetGlobalLifetime();
