@@ -196,7 +196,7 @@ eError SDLInterface::EventLoop::HandleKeyboardEvent(SDL_Event *event)
 eError SDLInterface::EventLoop::HandleMouseEvent(SDL_Event *event)
 {
 	eError err = eError::NoErr;
-	DEBUG_LOG("Unhandled Mouse Event");
+//	DEBUG_LOG("Unhandled Mouse Event");
 
 	/*
 		case SDL_MOUSEMOTION:
