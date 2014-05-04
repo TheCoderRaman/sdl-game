@@ -38,14 +38,14 @@ enum class eError : int
 //! returns an enum containing a combination the bits of \a lhs and \a rhs
 inline eError operator | (eError lhs, eError rhs)
 {
-	return (eError)((long)lhs | (long)rhs);
+	return (eError)((int)lhs | (int)rhs);
 }
 
 //! \brief bitwise & operator
 //! returns an enum containing only the shared bits of \a lhs and \a rhs
 inline eError operator & (eError lhs, eError rhs)
 {
-	return (eError)((long)lhs & (long)rhs);
+	return (eError)((int)lhs & (int)rhs);
 }
 
 //! \brief bitwise ~ operator for const errors

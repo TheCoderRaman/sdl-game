@@ -261,7 +261,7 @@ eError LEngine::RenderThreadLoop()
 		if (logTimer.GetTimePassed() >= secToMS(DebugTimerUpdateRate_Sec))
 		{
 			// Debug output
-			DEBUG_LOG("Render thread updates per second %f", (float)frameCounter / DebugTimerUpdateRate_Sec);
+			RUNTIME_LOG("Render thread updates per second %f", (float)frameCounter / DebugTimerUpdateRate_Sec);
 
 			// Reset the timer and the frame counter
 			logTimer.Reset();
@@ -320,7 +320,7 @@ eError LEngine::GameThreadLoop()
 		if (logTimer.GetTimePassed() >= secToMS(DebugTimerUpdateRate_Sec))
 		{
 			// Debug output
-			DEBUG_LOG("Game thread updates per second %f", (float)frameCounter / DebugTimerUpdateRate_Sec);
+			RUNTIME_LOG("Game thread updates per second %f", (float)frameCounter / DebugTimerUpdateRate_Sec);
 
 			// Reset the timer and the frame counter
 			logTimer.Reset();

@@ -42,8 +42,6 @@ SDLInterface::Thread::~Thread()
 eError SDLInterface::Thread::Spawn(void* data)
 {
 	eError err = eError::NoErr;
-	
-	//TODO: Use error right
 
 	// Sanity asserts
 	DEBUG_ASSERT(m_threadFunc != nullptr);
@@ -51,6 +49,12 @@ eError SDLInterface::Thread::Spawn(void* data)
 	DEBUG_ASSERT(m_sdl_thread == nullptr);
 
 	m_sdl_thread = SDL_CreateThread(*m_threadFunc, m_name, data);
+
+	// sanity check
+	if (m_threadFunc == nullptr)
+	{
+		err |= eError::SDL_Fatal;
+	}
 
 	return err;
 }
@@ -60,8 +64,6 @@ eError SDLInterface::Thread::Wait()
 {
 	eError err = eError::NoErr;
 
-	//TODO: Use error right
-
 	// Sanity check on this
 	DEBUG_ASSERT(m_sdl_thread != nullptr);
 
@@ -69,6 +71,7 @@ eError SDLInterface::Thread::Wait()
 	int returnVal = 0;
 
 	// Wait for the thread to finish
+	// Possible timeout?
 	SDL_WaitThread(m_sdl_thread, &returnVal);
 
 	// Invalidate the thread pointer
@@ -82,12 +85,10 @@ eError SDLInterface::Thread::Detach()
 {
 	eError err = eError::NoErr;
 
-	//TODO: Use error right
-
 	// Sanity check
 	DEBUG_ASSERT(m_sdl_thread != nullptr);
 
-	// Detach the thre
+	// Detach the thread
 	SDL_DetachThread(m_sdl_thread);
 
 	//invalidate the thread pointer
