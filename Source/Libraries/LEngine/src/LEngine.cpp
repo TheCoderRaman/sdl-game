@@ -184,7 +184,7 @@ eError LEngine::Render()
 	//TODO: render the objects
 
 	// Update the main window
-	err |= m_MainWindow.Update();
+	err |= m_MainWindow.UpdateSurface();
 
 	return err;
 }

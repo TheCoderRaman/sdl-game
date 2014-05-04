@@ -37,7 +37,7 @@ namespace SDLInterface
 		eError Create();
 
 		//! \brief update the window
-		eError Update();
+		eError UpdateSurface();
 
 		//! \brief destroy the window
 		eError Destroy();

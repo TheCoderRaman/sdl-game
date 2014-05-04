@@ -57,7 +57,7 @@ eError SDLInterface::Window::Create()
 }
 
 //========================================================
-eError SDLInterface::Window::Update()
+eError SDLInterface::Window::UpdateSurface()
 {
     eError err = eError::NoErr;
 
