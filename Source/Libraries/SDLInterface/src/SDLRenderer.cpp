@@ -64,12 +64,14 @@ eError SDLInterface::Renderer::Render()
 
 		SDL_Rect myRect;
 
-		myRect.h = 100;
-		myRect.w = 100;
+		myRect.h = 50;
+		myRect.w = 50;
 		myRect.x = 50;
 		myRect.y = 50;
 
-		SDL_RenderDrawRect( m_SDL_Renderer, &myRect );
+		SDL_RenderFillRect( m_SDL_Renderer, &myRect );
+
+		SDL_SetRenderDrawColor( m_SDL_Renderer, 0, 0, 0, 255 );
 
 		SDL_RenderPresent( m_SDL_Renderer );
 
