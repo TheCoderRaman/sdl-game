@@ -7,6 +7,8 @@
 //!	Found at https://wiki.libsdl.org/CategoryThread
 #include "SDLThread.h"
 
+#include "SDLTimer.h"
+
 #include "eError.h"
 #include "debug.h"
 
@@ -101,4 +103,27 @@ eError SDLInterface::Thread::Delay(ms time)
 	SDL_Delay(time);
 
 	return eError::NoErr;
+}
+
+//========================================================
+eError SDLInterface::Thread::DelayUntil(ms globaltime)
+{
+	eError err = eError::NoErr; 
+
+	// Grab the current time
+	ms currentTime = Timer::GetGlobalLifetime();
+
+	// calculate the time until the specified time
+	ms timeUntil = globaltime - currentTime;
+
+	// if the time is positive
+	if (timeUntil > 0)
+	{
+		// Call the SDL delay function
+		err |= Delay(timeUntil);
+	}
+	// Otherwise we just want to return straight away
+	//else
+
+	return err;
 }

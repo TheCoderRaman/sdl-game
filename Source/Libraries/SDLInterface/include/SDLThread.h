@@ -53,7 +53,13 @@ namespace SDLInterface
 		eError Detach();
 
 		//! \brief thread time delay
+		//! \warning will not return until time has passed
 		static eError Delay(ms time);
+
+		//! \brief thread delay until a specific time
+		//! returns Instantly if the time has already been reached
+		//! \warning will not return until the specific time has been reached
+		static eError DelayUntil(ms globaltime);
 
 	private:
 
