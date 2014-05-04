@@ -77,7 +77,7 @@ void _log(const char* file, int line, const char* format, ...)
 #if defined(WIN32) || defined(_WIN32)
 	char stupidWindowsArray[ FINAL_STR_MAX ];
 
-	sprintf_s( stupidWindowsArray, finalStr, args );
+	vsprintf_s( stupidWindowsArray, finalStr, args );
 
 	OutputDebugString( stupidWindowsArray );
 #else
