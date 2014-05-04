@@ -29,7 +29,7 @@ public:
 	//! \brief Update the LObject's state
 	//! To be used to update the object
 	//! Not nessasarily once per frame or on a timestamp
-	virtual eError Update() = 0;
+	virtual eError Update(ms elapsed) = 0;
 
 	//! \brief Reset the object
 	//! Should the LObject back in it's original state

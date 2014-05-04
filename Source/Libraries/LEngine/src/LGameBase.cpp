@@ -36,7 +36,7 @@ eError LGameBase::Initialise()
 }
 
 //===============================================================
-eError LGameBase::Update()
+eError LGameBase::Update(ms elapsed)
 {
 	eError err = eError::NoErr;
 	return err;

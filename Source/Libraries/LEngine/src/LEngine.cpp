@@ -265,7 +265,9 @@ eError LEngine::GameThreadLoop()
 		err |= SDLInterface::Thread::DelayUntil(frameTime + m_msDesiredFrameTime);
 
 		// Update the game
-		err |= LGameBase::GetGame()->Update();
+		// Using the desired frame time.
+		// May be useful to 
+		err |= LGameBase::GetGame()->Update(m_msDesiredFrameTime);
 
 		// grab the current time
 		frameTime = SDLInterface::Timer::GetGlobalLifetime();
