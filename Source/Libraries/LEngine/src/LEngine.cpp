@@ -77,6 +77,10 @@ eError LEngine::init()
 	if (!ERROR_HAS_TYPE_FATAL(err))
 		err = m_MainWindow.Create();
 
+	// Create the renderer
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err = m_Renderer.Create(&m_MainWindow);
+
     return err;
 }
 
@@ -106,8 +110,13 @@ eError LEngine::quit()
 
 	eError err = eError::NoErr;
 
+	// Destroy the renderer
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err |= m_Renderer.Destroy();
+
 	// Destroy the main window
-	err |= m_MainWindow.Destroy();
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err |= m_MainWindow.Destroy();
 
     //Quit SDL subsystems
 	if (!ERROR_HAS_TYPE_FATAL(err))

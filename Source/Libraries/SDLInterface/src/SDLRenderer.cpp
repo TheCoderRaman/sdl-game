@@ -51,8 +51,11 @@ eError SDLInterface::Renderer::Render()
 {
 	eError err = eError::NoErr;
 
+	// Sanity check to see if renderer has been created
+	DEBUG_ASSERT(NULL != m_SDL_Renderer);
+
 	EventLoop::RunOnMainThread_Sync( err,
-									 [ & ]()->eError
+	[ & ]()->eError
 	{
 
 		SDL_RenderClear( m_SDL_Renderer );
@@ -61,8 +64,8 @@ eError SDLInterface::Renderer::Render()
 
 		SDL_Rect myRect;
 
-		myRect.h = 10;
-		myRect.w = 10;
+		myRect.h = 100;
+		myRect.w = 100;
 		myRect.x = 50;
 		myRect.y = 50;
 
@@ -83,6 +86,8 @@ eError SDLInterface::Renderer::Destroy()
 	eError err = eError::NoErr;
 
 	SDL_DestroyRenderer(m_SDL_Renderer);
+
+	m_SDL_Renderer = nullptr;
 
 	return err;
 }
