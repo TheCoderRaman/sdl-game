@@ -11,6 +11,7 @@
 #include "types.h"
 #include "SDLWindow.h"
 #include "SDLThread.h"
+#include "SDLRenderer.h"
 
 #include "LObjectManager.h"
 
@@ -85,6 +86,8 @@ private:
 
 	//! \brief The Object Manager
 	LObjectManager	m_ObjectManager;
+
+	SDLInterface::Renderer m_Renderer;
 
 };
 

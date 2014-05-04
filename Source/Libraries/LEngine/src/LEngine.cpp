@@ -182,6 +182,7 @@ eError LEngine::Render()
 	eError err = eError::NoErr;
 
 	//TODO: render the objects
+	err |= m_Renderer.Render();
 
 	// Update the main window surface once render is complete
 	err |= m_MainWindow.UpdateSurface();
