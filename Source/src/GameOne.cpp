@@ -44,10 +44,24 @@ eError GameOne::Initialise()
 }
 
 //========================================================
+eError GameOne::PreUpdate()
+{
+	eError err = eError::NoErr;
+	return err;
+}
+
+//========================================================
 eError GameOne::Update(ms elapsed)
 {
  	eError err = eError::NoErr;
  	return err;
+}
+
+//========================================================
+eError GameOne::PostUpdate()
+{
+	eError err = eError::NoErr;
+	return err;
 }
 
 //========================================================

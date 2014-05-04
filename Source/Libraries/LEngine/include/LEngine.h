@@ -12,6 +12,8 @@
 #include "SDLWindow.h"
 #include "SDLThread.h"
 
+#include "LObjectManager.h"
+
 //! \brief LEngine delegate class
 class LEngine
 {
@@ -51,8 +53,14 @@ private:
 		//! \brief calls the event loop	
 		eError loop();
 
+		//! \brief Pre-Update
+		eError PreUpdate();
+
 		//! \brief update the engine
 		eError Update(ms elapsed);
+
+		//! \brief post-update
+		eError PostUpdate();
 
 		//! \brief Render the engine
 		eError Render();
@@ -74,6 +82,9 @@ private:
 
 	//! \brief the desired time for each frame
 	ms m_msDesiredFrameTime;
+
+	//! \brief The Object Manager
+	LObjectManager	m_ObjectManager;
 
 };
 

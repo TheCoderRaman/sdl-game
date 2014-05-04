@@ -36,7 +36,21 @@ eError LGameBase::Initialise()
 }
 
 //===============================================================
+eError LGameBase::PreUpdate()
+{
+	eError err = eError::NoErr;
+	return err;
+}
+
+//===============================================================
 eError LGameBase::Update(ms elapsed)
+{
+	eError err = eError::NoErr;
+	return err;
+}
+
+//===============================================================
+eError LGameBase::PostUpdate()
 {
 	eError err = eError::NoErr;
 	return err;

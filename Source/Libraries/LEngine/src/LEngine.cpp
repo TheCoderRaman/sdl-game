@@ -190,12 +190,35 @@ eError LEngine::Render()
 }
 
 //===============================================================
+eError LEngine::PreUpdate( void )
+{
+	eError err = eError::NoErr;
+
+	err |= LGameBase::GetGame()->PreUpdate();
+
+	return err;
+}
+
+//===============================================================
 eError LEngine::Update(ms elapsed)
 {
 	eError err = eError::NoErr;
 
+	// We need to decide when this happens
+	err |=  m_ObjectManager.Update( elapsed );
+
 	// Update the game
 	err |= LGameBase::GetGame()->Update(elapsed);
+
+	return err;
+}
+
+//===============================================================
+eError LEngine::PostUpdate( void )
+{
+	eError err = eError::NoErr;
+
+	err |= LGameBase::GetGame()->PostUpdate();
 
 	return err;
 }
@@ -269,14 +292,20 @@ eError LEngine::GameThreadLoop()
 	unsigned int frameCounter = 0;
 
 	// The main loop
-	while (!ERROR_HAS_TYPE_FATAL(err)
-		&& !ERROR_HAS(err, eError::QuitRequest))
+	while ( !ERROR_HAS_TYPE_FATAL( err )
+		&& !ERROR_HAS( err, eError::QuitRequest ) )
 	{
 		// Delay until the end of the desired frame time
-		err |= SDLInterface::Thread::DelayUntil(frameTime + m_msDesiredFrameTime);
+		err |= SDLInterface::Thread::DelayUntil( frameTime + m_msDesiredFrameTime );
+
+		// Call any pre-update functionality
+		err |= PreUpdate();
 
 		// Call the main engine update method
-		err |= Update(m_msDesiredFrameTime);
+		err |= Update( m_msDesiredFrameTime );
+
+		// Call any post-update functionality
+		err |= PostUpdate();
 
 		// grab the current time
 		frameTime = SDLInterface::Timer::GetGlobalLifetime();
