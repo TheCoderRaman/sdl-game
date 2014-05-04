@@ -16,7 +16,7 @@
 
 //========================================================
 SDLInterface::Renderer::Renderer()
-: m_SDL_Renderer(NULL)
+: m_SDL_Renderer( nullptr )
 {
 
 }
@@ -24,7 +24,7 @@ SDLInterface::Renderer::Renderer()
 //========================================================
 SDLInterface::Renderer::~Renderer()
 {
-	DEBUG_ASSERT(NULL == m_SDL_Renderer);
+	DEBUG_ASSERT( nullptr == m_SDL_Renderer );
 }
 
 //========================================================
@@ -37,7 +37,7 @@ eError SDLInterface::Renderer::Create(Window* window)
 			0,  	// Uses whichever default device is available
 			0);		// Uses the default SDL_RENDERER_ACCELERATED
 
-	if (NULL == m_SDL_Renderer)
+	if( nullptr == m_SDL_Renderer )
 	{
 		DEBUG_LOG("Renderer failed to be created");
 		err |= eError::SDL_Fatal;
@@ -52,7 +52,7 @@ eError SDLInterface::Renderer::Render()
 	eError err = eError::NoErr;
 
 	// Sanity check to see if renderer has been created
-	DEBUG_ASSERT(NULL != m_SDL_Renderer);
+	DEBUG_ASSERT( nullptr != m_SDL_Renderer );
 
 	EventLoop::RunOnMainThread_Sync( err,
 	[ & ]()->eError
