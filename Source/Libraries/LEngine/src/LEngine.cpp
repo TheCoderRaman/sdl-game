@@ -17,6 +17,8 @@
 #include "debug.h"
 #include "eError.h"
 
+#define DebugTimerUpdateRate_Sec 5.0f
+
 #define ms_30FPS 33
 #define ms_60FPS 16
 
@@ -195,6 +197,14 @@ eError LEngine::RenderThreadLoop()
 	// the current frame time
 	ms frameTime = SDLInterface::Timer::GetGlobalLifetime();
 
+	// Timer for the logging
+	SDLInterface::Timer logTimer;
+	logTimer.Start();
+
+	// frame counter
+	unsigned int frameCounter = 0;
+
+
 	while (!ERROR_HAS_TYPE_FATAL(err)
 		&& !ERROR_HAS(err, eError::QuitRequest))
 	{
@@ -209,6 +219,21 @@ eError LEngine::RenderThreadLoop()
 
 		// get if the EventLoop has finished
 		err |= SDLInterface::EventLoop::GetHasFinished();
+
+		// Increment the framecounter
+		frameCounter++;
+
+		// if the timer is over the 
+		if (logTimer.GetTimePassed() >= secToMS(DebugTimerUpdateRate_Sec))
+		{
+			// Debug output
+			DEBUG_LOG("Render thread updates per second %f", (float)frameCounter / DebugTimerUpdateRate_Sec);
+
+			// Reset the timer and the frame counter
+			logTimer.Reset();
+			frameCounter = 0;
+		}
+
 	}
 
 	// remove any quit request error
@@ -224,6 +249,13 @@ eError LEngine::GameThreadLoop()
 
 	// the current frame time
 	ms frameTime = SDLInterface::Timer::GetGlobalLifetime();
+
+	// Timer for the logging
+	SDLInterface::Timer logTimer;
+	logTimer.Start();
+
+	// frame counter
+	unsigned int frameCounter = 0;
 
 	// The main loop
 	while (!ERROR_HAS_TYPE_FATAL(err)
@@ -241,7 +273,20 @@ eError LEngine::GameThreadLoop()
 		// get if the EventLoop has finished
 		err |= SDLInterface::EventLoop::GetHasFinished();
 
+		// Increment the framecounter
+		frameCounter++;
 
+		// if the timer is over the 
+		if (logTimer.GetTimePassed() >= secToMS(DebugTimerUpdateRate_Sec))
+		{
+			// Debug output
+			DEBUG_LOG("Game thread updates per second %f", (float)frameCounter / DebugTimerUpdateRate_Sec);
+
+			// Reset the timer and the frame counter
+			logTimer.Reset();
+			frameCounter = 0;
+		}
+			
 	}
 
 	// remove any quit request error

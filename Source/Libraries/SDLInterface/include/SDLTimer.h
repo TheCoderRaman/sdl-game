@@ -13,6 +13,9 @@
 //! \brief convert ms to seconds
 #define msToSec(ms) (ms/1000)
 
+//! \brief convert ms to seconds
+#define secToMS(ms) (ms*1000)
+
 // Start the SDLInterface Namespace
 namespace SDLInterface
 {
