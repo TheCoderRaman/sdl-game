@@ -17,10 +17,14 @@
 #include "debug.h"
 #include "eError.h"
 
+#define ms_30FPS 33
+#define ms_60FPS 16
+
 //===============================================================
 LEngine::LEngine()
-: m_gameUpdateThread("Game",GameThreadStart)
-, m_renderThread("Render",RenderThreadStart)
+: m_gameUpdateThread		( "Game" , GameThreadStart		)
+, m_renderThread			( "Render" , RenderThreadStart	)
+, m_msDesiredFrameTime		( ms_60FPS )
 {
 
 }
@@ -188,14 +192,20 @@ eError LEngine::RenderThreadLoop()
 {
 	eError err = eError::NoErr;
 
+	// the current frame time
+	ms frameTime = SDLInterface::Timer::GetGlobalLifetime();
+
 	while (!ERROR_HAS_TYPE_FATAL(err)
 		&& !ERROR_HAS(err, eError::QuitRequest))
 	{
+		// Delay until the end of the desired frame time
+		err |= SDLInterface::Thread::DelayUntil(frameTime + m_msDesiredFrameTime);
+		
 		// Update the engine window
 		err |= Render();
 
-		// TODO: Better delay mechanism for update rate and such
-		SDLInterface::Thread::Delay(10);
+		// grab the current time
+		frameTime = SDLInterface::Timer::GetGlobalLifetime();
 
 		// get if the EventLoop has finished
 		err |= SDLInterface::EventLoop::GetHasFinished();
@@ -212,22 +222,42 @@ eError LEngine::GameThreadLoop()
 {
 	eError err = eError::NoErr;
 
+	// the current frame time
+	ms frameTime = SDLInterface::Timer::GetGlobalLifetime();
+
 	// The main loop
 	while (!ERROR_HAS_TYPE_FATAL(err)
 		&& !ERROR_HAS(err, eError::QuitRequest))
 	{
+		// Delay until the end of the desired frame time
+		err |= SDLInterface::Thread::DelayUntil(frameTime + m_msDesiredFrameTime);
+
 		// Update the game
 		err |= LGameBase::GetGame()->Update();
 
-		// TODO: Better delay mechanism for update rate and such
-		SDLInterface::Thread::Delay(10);
+		// grab the current time
+		frameTime = SDLInterface::Timer::GetGlobalLifetime();
 
 		// get if the EventLoop has finished
 		err |= SDLInterface::EventLoop::GetHasFinished();
+
+
 	}
 
 	// remove any quit request error
 	REMOVE_ERR(err, eError::QuitRequest);
+
+	return err;
+}
+
+//===============================================================
+eError LEngine::SetDesiredFrameTime(ms frameTime)
+{
+	eError err = eError::NoErr;
+
+	DEBUG_ASSERT(frameTime > 0);
+
+	m_msDesiredFrameTime = frameTime;
 
 	return err;
 }

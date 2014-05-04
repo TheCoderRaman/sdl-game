@@ -32,6 +32,9 @@ public:
 	//! \brief the main game thread loop
 	eError GameThreadLoop();
 
+	//! \brief set the desired frame time
+	eError SetDesiredFrameTime( ms frameTime );
+
 private:
 
 	// main engine run cycle functions (managed by run_full)
@@ -65,6 +68,9 @@ private:
 
 	//! \brief the render thread
 	SDLInterface::Thread m_renderThread;
+
+	//! \brief the desired time for each frame
+	ms m_msDesiredFrameTime;
 
 };
 

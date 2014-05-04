@@ -324,7 +324,8 @@ eError SDLInterface::EventLoop::RunOnMainThread_Sync(eError& returnVal, TMainThr
 	// s_isCurrentlyEventHandling is thread local
 	// That means if this is true then we're on the main thread AND we're alread handling an event
 	// This means we may as well just call the function to prevent deadlocks
-	if (s_isCurrentlyEventHandling)
+	if (	s_isCurrentlyEventHandling 
+		||	ERROR_HAS( GetHasFinished() , eError::NoErr ) )
 	{
 		returnVal = func();
 	}
