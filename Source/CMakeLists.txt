@@ -1,6 +1,6 @@
 #-----------------------------------------------------------------
 # CMAKE SETTINGS
-cmake_minimum_required( VERSION 2.8.4 )
+cmake_minimum_required( VERSION 2.8 )
 
 #-----------------------------------------------------------------
 # PROJECT NAME
@@ -52,7 +52,7 @@ if ( NOT MSVC ) # Not needed with vc++
 endif( NOT MSVC )
 
 #-----------------------------------------------------------------
-set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/build)
+set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/build/)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 
@@ -73,10 +73,32 @@ target_link_libraries(
 
 #-----------------------------------------------------------------
 # POST BUILD
-if ( MSVC )
-	file(TO_NATIVE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/../SDL2/lib/x86/SDL2.dll" SDL_DLL)
 
+# Set a couple of directories
+set( SDL_LIB "${CMAKE_CURRENT_SOURCE_DIR}/../SDL2/lib/x86/" )
+set( MEDIA_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/../Media/" )
+
+# Convert these to native
+file(TO_NATIVE_PATH ${SDL_LIB} SDL_LIB)
+file(TO_NATIVE_PATH ${MEDIA_DIRECTORY} MEDIA_DIRECTORY)
+
+# on MSVC we need to copy over the SDL dll files
+if ( MSVC )
+
+	# Copy the SDL2 DLL
 	add_custom_command(TARGET SDLGame POST_BUILD
-		COMMAND copy ${SDL_DLL} $<CONFIGURATION>
+		COMMAND copy ${SDL_LIB}\\SDL2.dll $<CONFIGURATION>
 	)
+
+	# Copy the SDL2 Image DLL
+	add_custom_command(TARGET SDLGame POST_BUILD
+		COMMAND copy ${SDL_LIB}\\SDL2_image.dll $<CONFIGURATION>
+	)
+
 endif ( MSVC )
+
+# Copy the media folder
+add_custom_command(TARGET SDLGame POST_BUILD
+					COMMAND ${CMAKE_COMMAND} -E copy_directory
+					${MEDIA_DIRECTORY} $<TARGET_FILE_DIR:SDLGame>/Media
+)
