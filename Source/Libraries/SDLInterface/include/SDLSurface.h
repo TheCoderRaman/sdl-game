@@ -38,6 +38,9 @@ namespace SDLInterface
 		//! \brief Create the surface
 		eError CreateFromBMP(const char* bmpFile);
 
+		//! \brief Create the surface
+		eError CreateFromFile(const char* file);
+
 		//! \brief Create the surface from a window
 		eError CreateFromWindow(Window* window);
 

@@ -15,6 +15,7 @@
 #include "SDLWindow.h"
 
 #include "SDL.h"
+#include "SDL_image.h"
 
 //========================================================
 SDLInterface::Surface::Surface()
@@ -44,6 +45,27 @@ eError SDLInterface::Surface::CreateFromBMP(const char* bmpFile)
 	if (m_sdl_surface == NULL)
 	{
 		DEBUG_LOG("Surface could not be created from %s! SDL_Error: %s", bmpFile,SDL_GetError());
+		err |= eError::SDL_Fatal;
+	}
+
+	return err;
+}
+
+//========================================================
+eError SDLInterface::Surface::CreateFromFile(const char* file)
+{
+	eError err = eError::NoErr;
+
+	// Sanity check
+	DEBUG_ASSERT(m_sdl_surface == nullptr);
+
+	// Get a surface from the BMP
+	m_sdl_surface = IMG_Load(file);
+
+	// Error handling
+	if (m_sdl_surface == NULL)
+	{
+		DEBUG_LOG("Surface could not be created from %s! SDL_Error: %s", file, SDL_GetError());
 		err |= eError::SDL_Fatal;
 	}
 
