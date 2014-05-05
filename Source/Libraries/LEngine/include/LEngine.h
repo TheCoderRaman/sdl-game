@@ -9,9 +9,11 @@
 #define _LENGINE_H_
 
 #include "types.h"
+
 #include "SDLWindow.h"
 #include "SDLThread.h"
 #include "SDLRenderer.h"
+#include "SDLTexture.h"
 
 #include "LObjectManager.h"
 
@@ -87,7 +89,11 @@ private:
 	//! \brief The Object Manager
 	LObjectManager	m_ObjectManager;
 
+	//! \brief The Renderer
 	SDLInterface::Renderer m_Renderer;
+
+	//! \brief The banana
+	SDLInterface::Texture m_banana;
 
 };
 

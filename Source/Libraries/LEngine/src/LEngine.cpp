@@ -140,6 +140,10 @@ eError LEngine::load()
 	if (!ERROR_HAS_TYPE_FATAL(err))
         err |= LGameBase::GetGame()->Initialise();
 
+	// Load the banana
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err |= m_banana.Create(&m_Renderer, "Media/banana.jpg");
+
     return err;
 }
 
@@ -179,8 +183,12 @@ eError LEngine::unload()
 {
 	eError err = eError::NoErr;
 
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err |= m_banana.Destroy();
+
 	// Destroy the game
-    err |= LGameBase::GetGame()->Destroy();
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err |= LGameBase::GetGame()->Destroy();
 
 	return err;
 }
@@ -195,9 +203,14 @@ eError LEngine::Render()
 
 	//TODO: render the objects
 
-	// Test code
-	SDLInterface::Rect rect = { 50, 50, 50, 50 };
-	err |= m_Renderer.RenderRectangle( rect, 100, 150, 0, 255);
+	// Test code for rendering a rectangle
+	//SDLInterface::Rect rect = { 50, 50, 50, 50 };
+	//err |= m_Renderer.RenderRectangle( rect, 100, 150, 0, 255);
+
+	// Render the banana
+	SDLInterface::Rect rect = { 0, 0, 400, 300 };
+	SDLInterface::Rect drect = { 0, 0, 500, 300 };
+	m_Renderer.RenderTexture(&m_banana, rect, drect);
 
 	// End the renderer
 	err |= m_Renderer.RenderEnd();
