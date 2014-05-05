@@ -85,14 +85,9 @@ file(TO_NATIVE_PATH ${MEDIA_DIRECTORY} MEDIA_DIRECTORY)
 # on MSVC we need to copy over the SDL dll files
 if ( MSVC )
 
-	# Copy the SDL2 DLL
+	# Copy ALL the SDL dll files
 	add_custom_command(TARGET SDLGame POST_BUILD
-		COMMAND copy ${SDL_LIB}\\SDL2.dll $<CONFIGURATION>
-	)
-
-	# Copy the SDL2 Image DLL
-	add_custom_command(TARGET SDLGame POST_BUILD
-		COMMAND copy ${SDL_LIB}\\SDL2_image.dll $<CONFIGURATION>
+		COMMAND copy ${SDL_LIB}\\*.dll $<CONFIGURATION>
 	)
 
 endif ( MSVC )
@@ -100,5 +95,5 @@ endif ( MSVC )
 # Copy the media folder
 add_custom_command(TARGET SDLGame POST_BUILD
 					COMMAND ${CMAKE_COMMAND} -E copy_directory
-					${MEDIA_DIRECTORY} $<TARGET_FILE_DIR:SDLGame>/Media
+					${MEDIA_DIRECTORY} ${CMAKE_BINARY_DIR}/Media
 )
