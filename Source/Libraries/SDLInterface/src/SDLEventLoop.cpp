@@ -182,7 +182,6 @@ eError SDLInterface::EventLoop::HandleEvent(SDL_Event *event)
 eError SDLInterface::EventLoop::HandleKeyboardEvent(SDL_Event *event)
 {
 	eError err = eError::NoErr;
-	DEBUG_LOG("Unhandled Keyboard Event");
 
 	/*
 		case SDL_KEYUP:
@@ -212,7 +211,6 @@ eError SDLInterface::EventLoop::HandleMouseEvent(SDL_Event *event)
 eError SDLInterface::EventLoop::HandleJoystickEvent(SDL_Event *event)
 {
 	eError err = eError::NoErr;
-	DEBUG_LOG("Unhandled Joystick Event");
 
 	/*
 		case SDL_JOYAXISMOTION:
@@ -231,7 +229,6 @@ eError SDLInterface::EventLoop::HandleJoystickEvent(SDL_Event *event)
 eError SDLInterface::EventLoop::HandleControllerEvent(SDL_Event *event)
 {
 	eError err = eError::NoErr;
-	DEBUG_LOG("Unhandled Controller Event");
 
 	/*
 		case SDL_CONTROLLERAXISMOTION:
@@ -265,7 +262,6 @@ eError SDLInterface::EventLoop::HandleWindowEvent(SDL_Event *event)
 		case SDL_WINDOWEVENT_FOCUS_GAINED:
 		case SDL_WINDOWEVENT_FOCUS_LOST:
 		case SDL_WINDOWEVENT_CLOSE:
-			DEBUG_LOG("Unhandled Window event");
 			break;
 		default:
 			DEBUG_LOG("Unexpected SDL Event: SDL_WINDOWEVENT %i", event->window.event);
