@@ -30,7 +30,7 @@ SDLInterface::Window::~Window()
 }
 
 //========================================================
-eError SDLInterface::Window::Create()
+eError SDLInterface::Window::Create(int w, int h)
 {
 	eError err = eError::NoErr;
 
@@ -41,9 +41,7 @@ eError SDLInterface::Window::Create()
 		m_SDL_Window = SDL_CreateWindow("Window",
 			SDL_WINDOWPOS_UNDEFINED,
 			SDL_WINDOWPOS_UNDEFINED,
-			500,
-			300,
-			SDL_WINDOW_SHOWN);
+			w,h,SDL_WINDOW_SHOWN);
 
 		return eError::NoErr;
 	});

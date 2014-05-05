@@ -22,11 +22,16 @@
 #define ms_30FPS 33
 #define ms_60FPS 16
 
+#define defaultWindowWidth 720 
+#define defaultWindowHeight 480
+
 //===============================================================
 LEngine::LEngine()
 : m_gameUpdateThread		( "Game" , GameThreadStart		)
 , m_renderThread			( "Render" , RenderThreadStart	)
 , m_msDesiredFrameTime		( ms_60FPS )
+, m_windowWidth				( defaultWindowWidth )
+, m_windowHeight			( defaultWindowHeight )
 {
 
 }
@@ -75,7 +80,7 @@ eError LEngine::init()
 
 	// Create the window
 	if (!ERROR_HAS_TYPE_FATAL(err))
-		err = m_MainWindow.Create();
+		err = m_MainWindow.Create(m_windowWidth, m_windowHeight);
 
 	// Create the renderer
 	if (!ERROR_HAS_TYPE_FATAL(err))
@@ -209,7 +214,7 @@ eError LEngine::Render()
 
 	// Render the banana
 	SDLInterface::Rect rect = { 0, 0, 400, 300 };
-	SDLInterface::Rect drect = { 0, 0, 500, 300 };
+	SDLInterface::Rect drect = { 0, 0, defaultWindowWidth, defaultWindowHeight };
 	m_Renderer.RenderTexture(&m_banana, rect, drect);
 
 	// End the renderer
@@ -374,6 +379,15 @@ eError LEngine::SetDesiredFrameTime(ms frameTime)
 	m_msDesiredFrameTime = frameTime;
 
 	return err;
+}
+
+//===============================================================
+eError LEngine::SetWindowSize(int w, int h)
+{
+	m_windowWidth = w;
+	m_windowHeight = h;
+
+	return eError::NoErr;
 }
 
 //===============================================================

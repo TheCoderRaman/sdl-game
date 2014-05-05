@@ -40,6 +40,9 @@ public:
 	//! \brief set the desired frame time
 	eError SetDesiredFrameTime( ms frameTime );
 
+	//! \brief set the window size
+	eError SetWindowSize(int w, int h);
+
 private:
 
 	// main engine run cycle functions (managed by run_full)
@@ -74,14 +77,20 @@ private:
 	//! \brief quit the engine
 	eError quit();
 
+	
+	// Various members for the Engine
+
+	//! \brief The window Width
+	int m_windowWidth;
+
+	//! \brief The window Height
+	int m_windowHeight;
+
 	//! \brief Member variables
 	SDLInterface::Window m_MainWindow;
 
-	//! \brief the game update thread
-	SDLInterface::Thread m_gameUpdateThread;
-
-	//! \brief the render thread
-	SDLInterface::Thread m_renderThread;
+	//! \brief The Renderer
+	SDLInterface::Renderer m_Renderer;
 
 	//! \brief the desired time for each frame
 	ms m_msDesiredFrameTime;
@@ -89,11 +98,17 @@ private:
 	//! \brief The Object Manager
 	LObjectManager	m_ObjectManager;
 
-	//! \brief The Renderer
-	SDLInterface::Renderer m_Renderer;
-
-	//! \brief The banana
+	//! \brief The  test banana
 	SDLInterface::Texture m_banana;
+
+
+	// The threads
+
+	//! \brief the game update thread
+	SDLInterface::Thread m_gameUpdateThread;
+
+	//! \brief the render thread
+	SDLInterface::Thread m_renderThread;
 
 };
 

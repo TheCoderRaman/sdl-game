@@ -34,7 +34,7 @@ namespace SDLInterface
 		~Window();
 
 		//! \brief create the window
-		eError Create();
+		eError Create( int w, int h );
 
 		//! \brief update the window
 		eError UpdateSurface();
