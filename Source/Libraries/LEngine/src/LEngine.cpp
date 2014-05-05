@@ -190,11 +190,17 @@ eError LEngine::Render()
 {
 	eError err = eError::NoErr;
 
-	//TODO: render the objects
-	err |= m_Renderer.Render();
+	// Start the renderer
+	err |= m_Renderer.RenderStart();
 
-	// Update the main window surface once render is complete
-	err |= m_MainWindow.UpdateSurface();
+	//TODO: render the objects
+
+	// Test code
+	SDLInterface::Rect rect = { 50, 50, 50, 50 };
+	err |= m_Renderer.RenderRectangle( rect, 100, 150, 0, 255);
+
+	// End the renderer
+	err |= m_Renderer.RenderEnd();
 
 	return err;
 }

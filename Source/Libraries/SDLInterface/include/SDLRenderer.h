@@ -16,6 +16,9 @@
 // for friending
 #include "SDLHelper.h"
 
+// for the rectangles
+#include "SDLRect.h"
+
 // Forward declare SDL struct 
 struct SDL_Renderer;
 
@@ -25,6 +28,9 @@ namespace SDLInterface
 
 	// Forward declare the window
 	class Window;
+
+	// Forward declare the Texture
+	class Texture;
 
 
 	//! \brief the Renderer class
@@ -44,7 +50,16 @@ namespace SDLInterface
 		eError Create(Window* window);
 
 		//! \brief render using the renderer
-		eError Render();
+		eError RenderStart();
+
+		//! \brief render a texture
+		eError RenderTexture(Texture* tex, const Rect& src, const Rect& dest);
+
+		//! \brief render a texture
+		eError RenderRectangle(const Rect& src, int r, int g, int b, int a, bool fill = true);
+
+		//! \brief render using the renderer
+		eError RenderEnd();
 
 		//! \brief destroy the renderer
 		eError Destroy();
@@ -53,6 +68,9 @@ namespace SDLInterface
 
 		//! \brief The actual SDL Renderer
 		SDL_Renderer* m_SDL_Renderer;
+
+		//! \brief boolean to check if we're rendering
+		bool m_bRendering;
 	};
 
 }
