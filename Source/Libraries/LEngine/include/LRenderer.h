@@ -11,8 +11,9 @@
 #include "types.h"
 
 #include "SDLRenderer.h"
+#include "SDLWindow.h"
 
-#include <vector>
+#include <list>
 
 //! \brief The renderable base class
 class LRendereable2D
@@ -63,13 +64,13 @@ public:
 	~LRenderer2D();
 
 	//! \brief create the renderer
-	eError Create();
+	eError Create(SDLInterface::Window &window);
 
 	//! \brief Add a renderable
 	eError AddRenderable(LRendereable2D* toAdd);
 
 	//! \brief Remove a renderable
-	eError RemoveRenderable(LRendereable2D* toAdd);
+	eError RemoveRenderable(LRendereable2D* toRemove);
 
 	//! \brief perform the render
 	eError Render();
@@ -79,11 +80,14 @@ public:
 
 private:
 
+	//! \brief call render on all renderables
+	eError RenderRenderables();
+
 	//! \brief the full list of renderables
-	std::vector<LRendereable2D*> m_vecRenderables;
+	std::list<LRendereable2D*> m_vecRenderables;
 
 	//! \brief The underlying renderer
-	SDLInterface::Renderer m_Renderer;
+	SDLInterface::Renderer m_BaseSDLRenderer;
 
 };
 

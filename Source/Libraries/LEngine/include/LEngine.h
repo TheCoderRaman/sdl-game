@@ -12,10 +12,10 @@
 
 #include "SDLWindow.h"
 #include "SDLThread.h"
-#include "SDLRenderer.h"
 #include "SDLTexture.h"
 
 #include "LObjectManager.h"
+#include "LRenderer.h"
 
 //! \brief LEngine delegate class
 class LEngine
@@ -90,16 +90,13 @@ private:
 	SDLInterface::Window m_MainWindow;
 
 	//! \brief The Renderer
-	SDLInterface::Renderer m_Renderer;
+	LRenderer2D m_Renderer;
 
 	//! \brief the desired time for each frame
 	ms m_msDesiredFrameTime;
 
 	//! \brief The Object Manager
 	LObjectManager	m_ObjectManager;
-
-	//! \brief The test banana
-	SDLInterface::Texture m_banana;
 
 
 	// The threads
