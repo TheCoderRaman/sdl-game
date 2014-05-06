@@ -15,19 +15,20 @@
 #ifdef WINDOWS_BUILD
 
 #include <Windows.h>
-
 //! \brief file path seperator
 #define PATH_SEP '\\'
 //! \brief strncat for each platform
 #define STRNCAT	strncat_s
 
-#else
+#elif defined LINUX_BUILD
 
 //! \brief file path seperator
 #define PATH_SEP '/' 
 //! \brief strncat for each platform
 #define STRNCAT	strncat
 
+#else
+#error "unimplemented platform type"
 #endif
 
 //! Grab only the file name not the full path
@@ -49,8 +50,10 @@ void _log(const char* file, int line, const char* format, ...)
 	//! print in the formatted prefix into the output
 #ifdef WINDOWS_BUILD
 	sprintf_s( finalStr, "%s:%i", FILE_NAME(file) , line );
-#else 
+#elif defined LINUX_BUILD
 	snprintf( finalStr, FINAL_STR_MAX, "%s:%i", FILE_NAME(file) , line );
+#else
+#error "not known platform"
 #endif
 
 	// Check the alignment amount
@@ -80,9 +83,11 @@ void _log(const char* file, int line, const char* format, ...)
 	vsprintf_s( stupidWindowsArray, finalStr, args );
 
 	OutputDebugString( stupidWindowsArray );
-#else
+#elif defined LINUX_BUILD
 	//! print to stderr the final string with it's arguments
 	vfprintf( stderr, finalStr, args );
+#else
+#error "not known platform"
 #endif
 
 	//! close the list
