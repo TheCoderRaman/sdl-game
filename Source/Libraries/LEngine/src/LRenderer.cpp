@@ -14,6 +14,7 @@
 //===============================================================
 LRendereable2D::LRendereable2D()
 : m_zValue( 0 )
+, m_bVisible( true )
 {
 
 }
@@ -92,11 +93,6 @@ eError LRenderer2D::Render()
 	return err;
 }
 
-//! \brief simple local scope compare Z function for renderables
-bool renderable_compare_Z(const LRendereable2D* lhs, const LRendereable2D* rhs)
-{
-	return lhs->GetZ() > rhs->GetZ();
-}
 
 //===============================================================
 eError LRenderer2D::RenderRenderables()
@@ -104,7 +100,11 @@ eError LRenderer2D::RenderRenderables()
 	eError err = eError::NoErr;
 
 	// Sort the renderables based on Z value
-	m_Renderables.sort(renderable_compare_Z);
+	m_Renderables.sort(
+	[](const LRendereable2D* lhs, const LRendereable2D* rhs)->bool
+	{
+		return lhs->GetZ() > rhs->GetZ(); 
+	});
 
 	// For each renderable
 	for (LRendereable2D* pRenderable : m_Renderables)
@@ -112,8 +112,12 @@ eError LRenderer2D::RenderRenderables()
 		// Sanity check
 		DEBUG_ASSERT(pRenderable);
 
-		// Render the renderable
-		pRenderable->Render(this);
+		// if the renderable is visible, then render it
+		if (pRenderable->IsVisible())
+		{
+			// Render the renderable
+			pRenderable->Render(this);
+		}
 	}
 
 	return err;

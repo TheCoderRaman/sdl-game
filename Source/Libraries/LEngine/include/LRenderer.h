@@ -44,10 +44,26 @@ public:
 		return m_zValue;
 	}
 
+	//! \brief inline set for the Z value
+	inline void SetVisible(bool visible)
+	{
+		m_bVisible = visible;
+	}
+
+	//! \brief inline get for the Z value
+	inline bool IsVisible() const
+	{
+		return m_bVisible;
+	}
+
+
 private:
 
 	//! \brief the internal Z value
 	int m_zValue;
+
+	//! \brief if the renderable is visible
+	bool m_bVisible;
 	
 };
 
