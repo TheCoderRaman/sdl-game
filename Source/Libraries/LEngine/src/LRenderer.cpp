@@ -7,6 +7,9 @@
 #include "LRenderer.h"
 
 #include "eError.h"
+#include "debug.h"
+
+#define MAX_NUM_RENDERABLES 256
 
 //===============================================================
 LRenderer2D::LRenderer2D()
@@ -36,8 +39,11 @@ eError LRenderer2D::AddRenderable(LRendereable2D* toAdd)
 {
 	eError err = eError::NoErr;
 
+	// Assert the max number of renderables
+	DEBUG_ASSERT(m_Renderables.size() <= MAX_NUM_RENDERABLES);
+	
 	// Add the renderable to the list
-	m_vecRenderables.push_back(toAdd);
+	m_Renderables.push_back(toAdd);
 
 	return err;
 }
@@ -48,7 +54,7 @@ eError LRenderer2D::RemoveRenderable(LRendereable2D* toRemove)
 	eError err = eError::NoErr;
 
 	// Remove the renderable from the list
-	m_vecRenderables.remove(toRemove);
+	m_Renderables.remove(toRemove);
 
 	return err;
 }
@@ -79,7 +85,7 @@ eError LRenderer2D::RenderRenderables()
 	eError err = eError::NoErr;
 
 	// For each renderable
-	for (LRendereable2D* pRenderable : m_vecRenderables)
+	for (LRendereable2D* pRenderable : m_Renderables)
 	{
 		// Render the renderable
 		pRenderable->Render(m_BaseSDLRenderer);

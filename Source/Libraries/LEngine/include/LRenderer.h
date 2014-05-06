@@ -84,7 +84,7 @@ private:
 	eError RenderRenderables();
 
 	//! \brief the full list of renderables
-	std::list<LRendereable2D*> m_vecRenderables;
+	std::list<LRendereable2D*> m_Renderables;
 
 	//! \brief The underlying renderer
 	SDLInterface::Renderer m_BaseSDLRenderer;
