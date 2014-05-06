@@ -31,6 +31,8 @@ LObjectManager::~LObjectManager( void )
 
 eError LObjectManager::RegisterObject( LObject* pObjectToRegister )
 {
+	eError toReturn = eError::NoErr;
+
 	if( m_vecObjects.size() <= m_vecObjects.capacity() )
 	{
 		m_vecObjects.push_back( pObjectToRegister );
@@ -38,8 +40,34 @@ eError LObjectManager::RegisterObject( LObject* pObjectToRegister )
 	else
 	{
 		DEBUG_ASSERT( "Trying to add an object into the object manager when it is full" );
+		toReturn = eError::Type_Fatal;
 	}
 
+	return toReturn;
+}
+
+eError LObjectManager::Create( void )
+{
+	for( LObject* pObj : m_vecObjects )
+	{
+		if( pObj != nullptr )
+		{
+			pObj->Create();
+		}
+	}
+
+	return eError::NoErr;
+}
+
+eError LObjectManager::Initialise( void )
+{
+	for( LObject* pObj : m_vecObjects )
+	{
+		if( pObj != nullptr )
+		{
+			pObj->Initialise();
+		}
+	}
 
 	return eError::NoErr;
 }
@@ -53,6 +81,33 @@ eError LObjectManager::Update( ms frameTime )
 			pObj->Update( frameTime );
 		}
 	}
-	
+
 	return eError::NoErr;
 }
+
+eError LObjectManager::Reset( void )
+{
+	for( LObject* pObj : m_vecObjects )
+	{
+		if( pObj != nullptr )
+		{
+			pObj->Reset();
+		}
+	}
+
+	return eError::NoErr;
+}
+
+eError LObjectManager::Destroy( void )
+{
+	for( LObject* pObj : m_vecObjects )
+	{
+		if( pObj != nullptr )
+		{
+			pObj->Destroy();
+		}
+	}
+
+	return eError::NoErr;
+}
+

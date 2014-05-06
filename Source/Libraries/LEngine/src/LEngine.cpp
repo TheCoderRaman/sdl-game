@@ -71,8 +71,6 @@ eError LEngine::init()
     //Initialization flag
     eError err = eError::NoErr;
 
-	m_ObjectManager.RegisterObject( &m_myFirstObject );
-
 	// initialise SDL
 	err = SDLInterface::Init();
 

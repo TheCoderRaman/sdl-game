@@ -11,7 +11,7 @@
 #include "types.h"
 #include <vector>
 
-class LObject;
+#include "LObject.h"
 
 //! \brief Manages all LObject types
 //! Designed as a base type for all LEngine parts
