@@ -12,7 +12,7 @@
 
 #include "LEngine.h"	//! for the engine itself
 
-#if defined(WIN32) || defined(_WIN32)
+#ifdef WINDOWS_BUILD
 	#include <Windows.h>
 #endif
 
@@ -23,7 +23,7 @@ int main( int argc, char* args[] )
 	// log the program start
 	RUNTIME_LOG("Program Starting...");
 	
-#if defined(WIN32) || defined(_WIN32)
+#ifdef WINDOWS_BUILD
 	// Removes the default VS output window
 	FreeConsole();
 #endif
