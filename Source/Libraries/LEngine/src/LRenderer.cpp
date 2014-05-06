@@ -13,6 +13,7 @@
 
 //===============================================================
 LRendereable2D::LRendereable2D()
+: m_zValue( 0 )
 {
 
 }
@@ -91,14 +92,26 @@ eError LRenderer2D::Render()
 	return err;
 }
 
+//! \brief simple local scope compare Z function for renderables
+bool renderable_compare_Z(const LRendereable2D* lhs, const LRendereable2D* rhs)
+{
+	return lhs->GetZ() > rhs->GetZ();
+}
+
 //===============================================================
 eError LRenderer2D::RenderRenderables()
 {
 	eError err = eError::NoErr;
 
+	// Sort the renderables based on Z value
+	m_Renderables.sort(renderable_compare_Z);
+
 	// For each renderable
 	for (LRendereable2D* pRenderable : m_Renderables)
 	{
+		// Sanity check
+		DEBUG_ASSERT(pRenderable);
+
 		// Render the renderable
 		pRenderable->Render(this);
 	}
