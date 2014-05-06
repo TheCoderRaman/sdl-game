@@ -15,7 +15,7 @@
 
 //! \brief Manages all LObject types
 //! Designed as a base type for all LEngine parts
-//! Allows similarity of interface
+//! Is a subclass of LObject to gain its interface.
 class LObjectManager : public LObject
 {
 public:

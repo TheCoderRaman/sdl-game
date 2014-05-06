@@ -153,7 +153,7 @@ eError LEngine::load()
 	if (!ERROR_HAS_TYPE_FATAL(err))
 		err |= m_banana.Create(&m_Renderer, "Media/banana.jpg");
 
-	// Create the objects
+	// Initialise the objects
 	if( !ERROR_HAS_TYPE_FATAL( err ) )
 		err = m_ObjectManager.Initialise();
 
@@ -196,7 +196,7 @@ eError LEngine::unload()
 {
 	eError err = eError::NoErr;
 
-	// Create the objects
+	// Destroy the objects
 	if( !ERROR_HAS_TYPE_FATAL( err ) )
 		err |= m_ObjectManager.Destroy();
 
