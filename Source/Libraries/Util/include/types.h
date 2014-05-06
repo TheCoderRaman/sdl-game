@@ -15,7 +15,7 @@ enum class eError : int;
 typedef long ms;
 
 //! \brief the thread local define
-#if defined(WIN32) || defined(_WIN32)
+#ifdef WINDOWS_BUILD
 #define THREAD_LOCAL __declspec(thread) 
 #else
 #define THREAD_LOCAL __thread

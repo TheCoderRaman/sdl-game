@@ -12,7 +12,7 @@
 #include <stdarg.h> // for the va_ arg list
 
 //! Path seperators are different on Unix compared to windows
-#if defined(WIN32) || defined(_WIN32)
+#ifdef WINDOWS_BUILD
 
 #include <Windows.h>
 
@@ -47,7 +47,7 @@ void _log(const char* file, int line, const char* format, ...)
 
 	// THE HEADER
 	//! print in the formatted prefix into the output
-#if defined(WIN32) || defined(_WIN32)
+#ifdef WINDOWS_BUILD
 	sprintf_s( finalStr, "%s:%i", FILE_NAME(file) , line );
 #else 
 	snprintf( finalStr, FINAL_STR_MAX, "%s:%i", FILE_NAME(file) , line );
@@ -74,7 +74,7 @@ void _log(const char* file, int line, const char* format, ...)
 	va_list args;
 	va_start (args, format);
 
-#if defined(WIN32) || defined(_WIN32)
+#ifdef WINDOWS_BUILD
 	char stupidWindowsArray[ FINAL_STR_MAX ];
 
 	vsprintf_s( stupidWindowsArray, finalStr, args );
