@@ -86,6 +86,10 @@ eError LEngine::init()
 	if (!ERROR_HAS_TYPE_FATAL(err))
 		err = m_Renderer.Create(m_MainWindow);
 
+	// Create the objects
+	if( !ERROR_HAS_TYPE_FATAL( err ) )
+		err = m_ObjectManager.Create();
+
     return err;
 }
 
@@ -157,6 +161,10 @@ eError LEngine::load()
 	// Add said banana to the renderer
 	if (!ERROR_HAS_TYPE_FATAL(err))
 		err |= m_Renderer.AddRenderable(&m_banana);
+
+	// Initialise the objects
+	if( !ERROR_HAS_TYPE_FATAL( err ) )
+		err = m_ObjectManager.Initialise();
 
     return err;
 }
