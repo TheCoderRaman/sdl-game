@@ -71,6 +71,8 @@ eError LEngine::init()
     //Initialization flag
     eError err = eError::NoErr;
 
+	m_ObjectManager.RegisterObject( &m_myFirstObject );
+
 	// initialise SDL
 	err = SDLInterface::Init();
 
@@ -85,6 +87,10 @@ eError LEngine::init()
 	// Create the renderer
 	if (!ERROR_HAS_TYPE_FATAL(err))
 		err = m_Renderer.Create(&m_MainWindow);
+
+	// Create the objects
+	if( !ERROR_HAS_TYPE_FATAL( err ) )
+		err = m_ObjectManager.Create();
 
     return err;
 }
@@ -149,6 +155,10 @@ eError LEngine::load()
 	if (!ERROR_HAS_TYPE_FATAL(err))
 		err |= m_banana.Create(&m_Renderer, "Media/banana.jpg");
 
+	// Create the objects
+	if( !ERROR_HAS_TYPE_FATAL( err ) )
+		err = m_ObjectManager.Initialise();
+
     return err;
 }
 
@@ -187,6 +197,10 @@ eError LEngine::loop()
 eError LEngine::unload()
 {
 	eError err = eError::NoErr;
+
+	// Create the objects
+	if( !ERROR_HAS_TYPE_FATAL( err ) )
+		err |= m_ObjectManager.Destroy();
 
 	if (!ERROR_HAS_TYPE_FATAL(err))
 		err |= m_banana.Destroy();

@@ -9,6 +9,8 @@
 #define _GAMEONE_H_
 
 #include "LGameBase.h"
+#include "LObject.h"
+#include "MyFirstGameObject.h"
 
 #include "types.h"
 
@@ -33,6 +35,7 @@ public:
 
 private:
 
+	MyFirstGameObject m_myFirstObject;
 };
 
 

@@ -7,6 +7,8 @@
 //!
 #include "GameOne.h"
 
+#include "LObjectManager.h"
+
 #include "eError.h"
 
 //========================================================
@@ -40,6 +42,9 @@ eError GameOne::Create()
 eError GameOne::Initialise()
 {
  	eError err = eError::NoErr;
+
+	
+
  	return err;
 }
 

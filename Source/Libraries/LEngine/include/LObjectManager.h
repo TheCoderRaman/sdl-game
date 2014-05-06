@@ -9,13 +9,14 @@
 #define _LOBJECTMANAGER_H_
 
 #include "types.h"
+#include <vector>
 
 class LObject;
 
 //! \brief Manages all LObject types
 //! Designed as a base type for all LEngine parts
 //! Allows similarity of interface
-class LObjectManager
+class LObjectManager : public LObject
 {
 public:
 	
@@ -25,11 +26,24 @@ public:
 	//! \brief Register an object with this manager
 	eError RegisterObject( LObject* pObjectToRegister );
 
+	eError Create( void );
+
+	eError Initialise( void );
+
 	//! \brief Update the LObject's state
 	//! To be used to update the object
 	//! Not nessasarily once per frame or on a timestamp
 	eError Update( ms frameTime );
 
+	eError Reset( void );
+
+	eError Destroy( void );
+
+private:
+
+	const int mk_iMaxObjects = 256;
+
+	std::vector< LObject* > m_vecObjects;
 };
 
 #endif //_LOBJECTMANAGER_H_
