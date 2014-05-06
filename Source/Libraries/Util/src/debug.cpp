@@ -14,6 +14,8 @@
 //! Path seperators are different on Unix compared to windows
 #if defined(WIN32) || defined(_WIN32)
 
+#include <Windows.h>
+
 //! \brief file path seperator
 #define PATH_SEP '\\'
 //! \brief strncat for each platform
@@ -72,8 +74,16 @@ void _log(const char* file, int line, const char* format, ...)
 	va_list args;
 	va_start (args, format);
 
+#if defined(WIN32) || defined(_WIN32)
+	char stupidWindowsArray[ FINAL_STR_MAX ];
+
+	vsprintf_s( stupidWindowsArray, finalStr, args );
+
+	OutputDebugString( stupidWindowsArray );
+#else
 	//! print to stderr the final string with it's arguments
 	vfprintf( stderr, finalStr, args );
+#endif
 
 	//! close the list
 	va_end (args);

@@ -30,17 +30,22 @@ SDLInterface::Window::~Window()
 }
 
 //========================================================
-eError SDLInterface::Window::Create()
+eError SDLInterface::Window::Create(int w, int h)
 {
 	eError err = eError::NoErr;
 
     //Create window
-    m_SDL_Window = SDL_CreateWindow( "Window", 
-    	SDL_WINDOWPOS_UNDEFINED, 
-    	SDL_WINDOWPOS_UNDEFINED, 
-    	500, 
-    	300, 
-    	SDL_WINDOW_SHOWN );
+	EventLoop::RunOnMainThread_Sync(err,
+		[&]()->eError {
+
+		m_SDL_Window = SDL_CreateWindow("Window",
+			SDL_WINDOWPOS_UNDEFINED,
+			SDL_WINDOWPOS_UNDEFINED,
+			w,h,SDL_WINDOW_SHOWN);
+
+		return eError::NoErr;
+	});
+
 
     if( m_SDL_Window == NULL )
     {
@@ -57,7 +62,7 @@ eError SDLInterface::Window::Create()
 }
 
 //========================================================
-eError SDLInterface::Window::Update()
+eError SDLInterface::Window::UpdateSurface()
 {
     eError err = eError::NoErr;
 
@@ -81,7 +86,14 @@ eError SDLInterface::Window::Destroy()
 	m_Surface.Destroy();
 
     //Destroy window
-    SDL_DestroyWindow( m_SDL_Window );
+	EventLoop::RunOnMainThread_Sync(err,
+		[&]()->eError {
+
+		SDL_DestroyWindow(m_SDL_Window);
+
+		return eError::NoErr;
+	});
+
     m_SDL_Window = nullptr;
 
 	return err;

@@ -24,11 +24,17 @@ SET(PROJECT_HEADERS
 	${CMAKE_CURRENT_SOURCE_DIR}/include/LEngine.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/LGameBase.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/LObject.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/LObjectManager.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/LRenderer.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/LSprite.h
 )
 
 SET(PROJECT_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/src/LEngine.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/LGameBase.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/LObjectManager.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/LRenderer.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/LSprite.cpp
 )
 
 #-----------------------------------------------------------------

@@ -25,7 +25,9 @@ public:
 	//! \brief Inherited methods as defined in LObject.h
 	virtual eError Create();
 	virtual eError Initialise();
-	virtual eError Update();
+	virtual eError PreUpdate();
+	virtual eError Update(ms elapsed);
+	virtual eError PostUpdate();
 	virtual eError Reset();
 	virtual eError Destroy();
 

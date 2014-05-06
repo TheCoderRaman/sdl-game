@@ -182,7 +182,6 @@ eError SDLInterface::EventLoop::HandleEvent(SDL_Event *event)
 eError SDLInterface::EventLoop::HandleKeyboardEvent(SDL_Event *event)
 {
 	eError err = eError::NoErr;
-	DEBUG_LOG("Unhandled Keyboard Event");
 
 	/*
 		case SDL_KEYUP:
@@ -196,7 +195,7 @@ eError SDLInterface::EventLoop::HandleKeyboardEvent(SDL_Event *event)
 eError SDLInterface::EventLoop::HandleMouseEvent(SDL_Event *event)
 {
 	eError err = eError::NoErr;
-	DEBUG_LOG("Unhandled Mouse Event");
+//	DEBUG_LOG("Unhandled Mouse Event");
 
 	/*
 		case SDL_MOUSEMOTION:
@@ -212,7 +211,6 @@ eError SDLInterface::EventLoop::HandleMouseEvent(SDL_Event *event)
 eError SDLInterface::EventLoop::HandleJoystickEvent(SDL_Event *event)
 {
 	eError err = eError::NoErr;
-	DEBUG_LOG("Unhandled Joystick Event");
 
 	/*
 		case SDL_JOYAXISMOTION:
@@ -231,7 +229,6 @@ eError SDLInterface::EventLoop::HandleJoystickEvent(SDL_Event *event)
 eError SDLInterface::EventLoop::HandleControllerEvent(SDL_Event *event)
 {
 	eError err = eError::NoErr;
-	DEBUG_LOG("Unhandled Controller Event");
 
 	/*
 		case SDL_CONTROLLERAXISMOTION:
@@ -265,7 +262,6 @@ eError SDLInterface::EventLoop::HandleWindowEvent(SDL_Event *event)
 		case SDL_WINDOWEVENT_FOCUS_GAINED:
 		case SDL_WINDOWEVENT_FOCUS_LOST:
 		case SDL_WINDOWEVENT_CLOSE:
-			DEBUG_LOG("Unhandled Window event");
 			break;
 		default:
 			DEBUG_LOG("Unexpected SDL Event: SDL_WINDOWEVENT %i", event->window.event);
@@ -324,7 +320,8 @@ eError SDLInterface::EventLoop::RunOnMainThread_Sync(eError& returnVal, TMainThr
 	// s_isCurrentlyEventHandling is thread local
 	// That means if this is true then we're on the main thread AND we're alread handling an event
 	// This means we may as well just call the function to prevent deadlocks
-	if (s_isCurrentlyEventHandling)
+	if (	s_isCurrentlyEventHandling 
+		||	ERROR_HAS( GetHasFinished() , eError::NoErr ) )
 	{
 		returnVal = func();
 	}

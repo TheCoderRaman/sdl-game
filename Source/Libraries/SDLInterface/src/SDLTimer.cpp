@@ -50,5 +50,5 @@ ms SDLInterface::Timer::GetTimePassed(void)
 //========================================================
 void SDLInterface::Timer::Reset(void)
 {
-	m_startTime = 0;
+	m_startTime = GetGlobalLifetime();
 }

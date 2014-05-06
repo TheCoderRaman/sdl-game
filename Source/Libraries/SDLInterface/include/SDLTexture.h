@@ -39,7 +39,10 @@ namespace SDLInterface
 		//! \warning Not implemented, not sure how to do this properly
 		eError Create();
 
-		//! \brief Create the texture from a surface adn a renderer
+		//! \brief Create the texture from a file and a renderer
+		eError Create(Renderer* renderer, const char* file);
+
+		//! \brief Create the texture from a surface and a renderer
 		eError Create(Renderer* renderer, Surface* surface);
 
 		//! \brief destroy the surface

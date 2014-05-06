@@ -12,6 +12,9 @@
 #include "eError.h"
 #include "debug.h"
 
+#include "SDLSurface.h"
+#include "SDLEventLoop.h"
+
 //========================================================
 SDLInterface::Texture::Texture()
 : m_sdl_texture(nullptr)
@@ -31,6 +34,40 @@ eError SDLInterface::Texture::Create()
 	eError err = eError::NoErr;
 
 	DEBUG_LOG("NOT IMPLEMENTED");
+
+	return err;
+}
+
+//========================================================
+eError SDLInterface::Texture::Create(Renderer* renderer, const char* file)
+{
+	eError err = eError::NoErr;
+
+	// Sanity checks
+	DEBUG_ASSERT(renderer != nullptr);
+	DEBUG_ASSERT(file != nullptr);
+
+	// Grab the surface and renderer
+	Surface tempSurf;
+	err |= tempSurf.CreateFromFile(file);
+
+	// Grab the renderer
+	SDL_Renderer* sdlRenderer = Helper::GetSDL_Renderer(renderer);
+
+	// Sanity checks
+	DEBUG_ASSERT(sdlRenderer != nullptr);
+
+	// Create the texture
+	m_sdl_texture = SDL_CreateTextureFromSurface(sdlRenderer, Helper::GetSDL_Surface(&tempSurf));
+
+	// Error handling
+	if (m_sdl_texture == NULL)
+	{
+		DEBUG_LOG("Texture could not be created from surface! SDL_Error: %s", SDL_GetError());
+		err |= eError::SDL_Fatal;
+	}
+
+	tempSurf.Destroy();
 
 	return err;
 }

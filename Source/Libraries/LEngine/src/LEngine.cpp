@@ -17,10 +17,21 @@
 #include "debug.h"
 #include "eError.h"
 
+#define DebugTimerUpdateRate_Sec 5.0f
+
+#define ms_30FPS 33
+#define ms_60FPS 16
+
+#define defaultWindowWidth 720 
+#define defaultWindowHeight 480
+
 //===============================================================
 LEngine::LEngine()
-: m_gameUpdateThread("Game",GameThreadStart)
-, m_renderThread("Render",RenderThreadStart)
+: m_gameUpdateThread		( "Game" , GameThreadStart		)
+, m_renderThread			( "Render" , RenderThreadStart	)
+, m_msDesiredFrameTime		( ms_60FPS )
+, m_windowWidth				( defaultWindowWidth )
+, m_windowHeight			( defaultWindowHeight )
 {
 
 }
@@ -69,7 +80,11 @@ eError LEngine::init()
 
 	// Create the window
 	if (!ERROR_HAS_TYPE_FATAL(err))
-		err = m_MainWindow.Create();
+		err = m_MainWindow.Create(m_windowWidth, m_windowHeight);
+
+	// Create the renderer
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err = m_Renderer.Create(&m_MainWindow);
 
     return err;
 }
@@ -100,8 +115,13 @@ eError LEngine::quit()
 
 	eError err = eError::NoErr;
 
+	// Destroy the renderer
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err |= m_Renderer.Destroy();
+
 	// Destroy the main window
-	err |= m_MainWindow.Destroy();
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err |= m_MainWindow.Destroy();
 
     //Quit SDL subsystems
 	if (!ERROR_HAS_TYPE_FATAL(err))
@@ -124,6 +144,10 @@ eError LEngine::load()
 	// Initialse the game
 	if (!ERROR_HAS_TYPE_FATAL(err))
         err |= LGameBase::GetGame()->Initialise();
+
+	// Load the banana
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err |= m_banana.Create(&m_Renderer, "Media/banana.jpg");
 
     return err;
 }
@@ -164,8 +188,12 @@ eError LEngine::unload()
 {
 	eError err = eError::NoErr;
 
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err |= m_banana.Destroy();
+
 	// Destroy the game
-    err |= LGameBase::GetGame()->Destroy();
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err |= LGameBase::GetGame()->Destroy();
 
 	return err;
 }
@@ -175,10 +203,56 @@ eError LEngine::Render()
 {
 	eError err = eError::NoErr;
 
+	// Start the renderer
+	err |= m_Renderer.RenderStart();
+
 	//TODO: render the objects
 
-	// Update the main window
-	err |= m_MainWindow.Update();
+	// Test code for rendering a rectangle
+	//SDLInterface::Rect rect = { 50, 50, 50, 50 };
+	//err |= m_Renderer.RenderRectangle( rect, 100, 150, 0, 255);
+
+	// Render the banana
+	SDLInterface::Rect rect = { 0, 0, 400, 300 };
+	SDLInterface::Rect drect = { 0, 0, defaultWindowWidth, defaultWindowHeight };
+	m_Renderer.RenderTexture(&m_banana, rect, drect);
+
+	// End the renderer
+	err |= m_Renderer.RenderEnd();
+
+	return err;
+}
+
+//===============================================================
+eError LEngine::PreUpdate( void )
+{
+	eError err = eError::NoErr;
+
+	err |= LGameBase::GetGame()->PreUpdate();
+
+	return err;
+}
+
+//===============================================================
+eError LEngine::Update(ms elapsed)
+{
+	eError err = eError::NoErr;
+
+	// We need to decide when this happens
+	err |=  m_ObjectManager.Update( elapsed );
+
+	// Update the game
+	err |= LGameBase::GetGame()->Update(elapsed);
+
+	return err;
+}
+
+//===============================================================
+eError LEngine::PostUpdate( void )
+{
+	eError err = eError::NoErr;
+
+	err |= LGameBase::GetGame()->PostUpdate();
 
 	return err;
 }
@@ -188,17 +262,46 @@ eError LEngine::RenderThreadLoop()
 {
 	eError err = eError::NoErr;
 
+	// the current frame time
+	ms frameTime = SDLInterface::Timer::GetGlobalLifetime();
+
+	// Timer for the logging
+	SDLInterface::Timer logTimer;
+	logTimer.Start();
+
+	// frame counter
+	unsigned int frameCounter = 0;
+
+
 	while (!ERROR_HAS_TYPE_FATAL(err)
 		&& !ERROR_HAS(err, eError::QuitRequest))
 	{
+		// Delay until the end of the desired frame time
+		err |= SDLInterface::Thread::DelayUntil(frameTime + m_msDesiredFrameTime);
+		
 		// Update the engine window
 		err |= Render();
 
-		// TODO: Better delay mechanism for update rate and such
-		SDLInterface::Thread::Delay(10);
+		// grab the current time
+		frameTime = SDLInterface::Timer::GetGlobalLifetime();
 
 		// get if the EventLoop has finished
 		err |= SDLInterface::EventLoop::GetHasFinished();
+
+		// Increment the framecounter
+		frameCounter++;
+
+		// if the timer is over the 
+		if (logTimer.GetTimePassed() >= secToMS(DebugTimerUpdateRate_Sec))
+		{
+			// Debug output
+			RUNTIME_LOG("Render thread updates per second %f", (float)frameCounter / DebugTimerUpdateRate_Sec);
+
+			// Reset the timer and the frame counter
+			logTimer.Reset();
+			frameCounter = 0;
+		}
+
 	}
 
 	// remove any quit request error
@@ -212,24 +315,79 @@ eError LEngine::GameThreadLoop()
 {
 	eError err = eError::NoErr;
 
-	// The main loop
-	while (!ERROR_HAS_TYPE_FATAL(err)
-		&& !ERROR_HAS(err, eError::QuitRequest))
-	{
-		// Update the game
-		err |= LGameBase::GetGame()->Update();
+	// the current frame time
+	ms frameTime = SDLInterface::Timer::GetGlobalLifetime();
 
-		// TODO: Better delay mechanism for update rate and such
-		SDLInterface::Thread::Delay(10);
+	// Timer for the logging
+	SDLInterface::Timer logTimer;
+	logTimer.Start();
+
+	// frame counter
+	unsigned int frameCounter = 0;
+
+	// The main loop
+	while ( !ERROR_HAS_TYPE_FATAL( err )
+		&& !ERROR_HAS( err, eError::QuitRequest ) )
+	{
+		// Delay until the end of the desired frame time
+		err |= SDLInterface::Thread::DelayUntil( frameTime + m_msDesiredFrameTime );
+
+		// Call any pre-update functionality
+		err |= PreUpdate();
+
+		// Call the main engine update method
+		err |= Update( m_msDesiredFrameTime );
+
+		// Call any post-update functionality
+		err |= PostUpdate();
+
+		// grab the current time
+		frameTime = SDLInterface::Timer::GetGlobalLifetime();
 
 		// get if the EventLoop has finished
 		err |= SDLInterface::EventLoop::GetHasFinished();
+
+		// Increment the framecounter
+		frameCounter++;
+
+		// if the timer is over the 
+		if (logTimer.GetTimePassed() >= secToMS(DebugTimerUpdateRate_Sec))
+		{
+			// Debug output
+			RUNTIME_LOG("Game thread updates per second %f", (float)frameCounter / DebugTimerUpdateRate_Sec);
+
+			// Reset the timer and the frame counter
+			logTimer.Reset();
+			frameCounter = 0;
+		}
+			
 	}
 
 	// remove any quit request error
 	REMOVE_ERR(err, eError::QuitRequest);
 
 	return err;
+}
+
+//===============================================================
+eError LEngine::SetDesiredFrameTime(ms frameTime)
+{
+	eError err = eError::NoErr;
+
+	DEBUG_ASSERT(frameTime > 0);
+
+	m_msDesiredFrameTime = frameTime;
+
+	return err;
+}
+
+//===============================================================
+eError LEngine::SetWindowSize(int w, int h)
+{
+	m_windowWidth = w;
+	m_windowHeight = h;
+
+	return eError::NoErr;
 }
 
 //===============================================================

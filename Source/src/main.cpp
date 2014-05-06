@@ -12,12 +12,21 @@
 
 #include "LEngine.h"	//! for the engine itself
 
+#if defined(WIN32) || defined(_WIN32)
+	#include <Windows.h>
+#endif
+
 //========================================================
 //! \brief main entry point for the program
 int main( int argc, char* args[] )
 {
 	// log the program start
 	RUNTIME_LOG("Program Starting...");
+	
+#if defined(WIN32) || defined(_WIN32)
+	// Removes the default VS output window
+	FreeConsole();
+#endif
 
     // Create and run the engine
     LEngine myEngine = LEngine();

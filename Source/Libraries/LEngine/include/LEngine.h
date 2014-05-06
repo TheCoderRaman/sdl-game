@@ -9,8 +9,13 @@
 #define _LENGINE_H_
 
 #include "types.h"
+
 #include "SDLWindow.h"
 #include "SDLThread.h"
+#include "SDLRenderer.h"
+#include "SDLTexture.h"
+
+#include "LObjectManager.h"
 
 //! \brief LEngine delegate class
 class LEngine
@@ -32,6 +37,12 @@ public:
 	//! \brief the main game thread loop
 	eError GameThreadLoop();
 
+	//! \brief set the desired frame time
+	eError SetDesiredFrameTime( ms frameTime );
+
+	//! \brief set the window size
+	eError SetWindowSize(int w, int h);
+
 private:
 
 	// main engine run cycle functions (managed by run_full)
@@ -48,7 +59,16 @@ private:
 		//! \brief calls the event loop	
 		eError loop();
 
-		//! \brief Update the window
+		//! \brief Pre-Update
+		eError PreUpdate();
+
+		//! \brief update the engine
+		eError Update(ms elapsed);
+
+		//! \brief post-update
+		eError PostUpdate();
+
+		//! \brief Render the engine
 		eError Render();
 
 		//! \brief unloads the assets
@@ -57,8 +77,32 @@ private:
 	//! \brief quit the engine
 	eError quit();
 
+	
+	// Various members for the Engine
+
+	//! \brief The window Width
+	int m_windowWidth;
+
+	//! \brief The window Height
+	int m_windowHeight;
+
 	//! \brief Member variables
 	SDLInterface::Window m_MainWindow;
+
+	//! \brief The Renderer
+	SDLInterface::Renderer m_Renderer;
+
+	//! \brief the desired time for each frame
+	ms m_msDesiredFrameTime;
+
+	//! \brief The Object Manager
+	LObjectManager	m_ObjectManager;
+
+	//! \brief The  test banana
+	SDLInterface::Texture m_banana;
+
+
+	// The threads
 
 	//! \brief the game update thread
 	SDLInterface::Thread m_gameUpdateThread;
