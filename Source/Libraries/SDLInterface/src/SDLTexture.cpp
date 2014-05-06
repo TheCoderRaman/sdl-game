@@ -113,5 +113,7 @@ eError SDLInterface::Texture::Destroy()
 	// Destroy the texture
 	SDL_DestroyTexture(m_sdl_texture);
 
+	m_sdl_texture = nullptr;
+
 	return err;
 }

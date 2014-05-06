@@ -110,5 +110,7 @@ eError SDLInterface::Surface::Destroy()
 	// Free the SDL surface
 	SDL_FreeSurface(m_sdl_surface);
 
+	m_sdl_surface = nullptr;
+
 	return err;
 }
