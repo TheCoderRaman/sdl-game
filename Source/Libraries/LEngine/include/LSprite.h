@@ -29,19 +29,22 @@ public:
 	~LSprite();
 
 	//! \brief create the sprite from the file
-	eError Create(const char* file);
+	eError Create(SDLInterface::Renderer& renderer, const char* file);
 
 	//! \brief set the source rectangle from the texture
-	eError SetSourceRect(SDLInterface::Rect rect);
+	eError SetSourceRect(const SDLInterface::Rect& rect);
 
 	//! \brief set the sprite position
 	eError SetPos(int x, int y);
 
 	//! \brief set the sprite size
-	eError SetSize(int x, int y);
+	eError SetSize(int w, int h);
 
 	//! \brief Overload for the base type render function
 	virtual eError Render(SDLInterface::Renderer& renderer);
+
+	//! \brief create the sprite from the file
+	eError Destroy();
 
 private:
 
@@ -53,6 +56,9 @@ private:
 
 	//! \brief the destination rectangle on screen
 	SDLInterface::Rect m_destRect;
+
+	//! \brief the filename
+	const char* m_pchFileName;
 
 };
 
