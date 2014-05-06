@@ -23,7 +23,7 @@ LSprite::~LSprite()
 }
 
 //===============================================================
-eError LSprite::Create(SDLInterface::Renderer& renderer, const char* file)
+eError LSprite::Create(LRenderer2D& renderer, const char* file)
 {
 	eError err = eError::NoErr;
 
@@ -34,7 +34,7 @@ eError LSprite::Create(SDLInterface::Renderer& renderer, const char* file)
 	m_pchFileName = file;
 
 	// Create the texture
-	err |= m_Texture.Create(&renderer, file);
+	err |= m_Texture.Create(&renderer.GetBaseRenderer(), file);
 
 	return err;
 }

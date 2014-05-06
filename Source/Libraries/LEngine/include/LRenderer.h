@@ -78,6 +78,12 @@ public:
 	//! \brief destroy the renderer
 	eError Destroy();
 
+	//! \brief the base renderer get method
+	inline SDLInterface::Renderer& GetBaseRenderer()
+	{
+		return m_BaseSDLRenderer;
+	}
+
 private:
 
 	//! \brief call render on all renderables

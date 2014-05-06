@@ -29,7 +29,7 @@ public:
 	~LSprite();
 
 	//! \brief create the sprite from the file
-	eError Create(SDLInterface::Renderer& renderer, const char* file);
+	eError Create(LRenderer2D& renderer, const char* file);
 
 	//! \brief set the source rectangle from the texture
 	eError SetSourceRect(const SDLInterface::Rect& rect);
