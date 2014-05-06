@@ -11,7 +11,7 @@ project( SDLInterface )
 if ( NOT MSVC )
 	find_package(PkgConfig)
 	pkg_search_module( SDL2 REQUIRED sdl2 )
-endif ( NOT MSVC )
+endif() 
 
 set (PROJECT_INCLUDE_DIR 
 	${CMAKE_CURRENT_SOURCE_DIR}/include
@@ -56,7 +56,7 @@ set(PROJECT_SRCS
 # COMPILER FLAGS 
 if ( NOT MSVC ) # Not needed with vc++
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-endif( NOT MSVC )
+endif()
  
  # flags for release and debug builds
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG_BUILD")
@@ -67,7 +67,7 @@ if ( MSCV )
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DWINDOWS_BUILD")
 else ( MSCV )
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DLINUX_BUILD")
-endif( MSVC )
+endif()
 
 #-----------------------------------------------------------------
 # PULL IN DEPENDENCIES
@@ -79,11 +79,11 @@ if ( MSVC )
 	set(SDL2_IMAGE_LIBRARIES ${CMAKE_CURRENT_SOURCE_DIR}/../../../SDL2/lib/x86/SDL2_image.lib)
 	add_library(SDL2_IMAGE SHARED IMPORTED)
 	set_property(TARGET SDL2 PROPERTY IMPORTED_LOCATION ${SDL2_IMAGE_LIBRARIES})
-endif ( MSVC )
+endif()
 
 if (NOT TARGET Util)
 	add_subdirectory(../Util "Util")
-endif() 
+endif()
 
 #-----------------------------------------------------------------
 # INCLUDES AND COMPILE
@@ -95,6 +95,10 @@ add_library(${PROJECT_NAME} ${PROJECT_SRCS} ${PROJECT_HEADERS})
 # SET THE PROPERTIES
 set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
 
+
+if( NOT MSVC )
+	set( SDL2_IMAGE_LIBRARIES SDL2_image )
+endif()
 
 # Link project with SDL
 target_link_libraries(${PROJECT_NAME} 

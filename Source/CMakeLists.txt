@@ -49,7 +49,7 @@ endif()
 # COMPILER FLAGS 
 if ( NOT MSVC ) # Not needed with vc++
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-endif( NOT MSVC )
+endif()
 
 # flags for release and debug builds
 set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG_BUILD")
@@ -60,7 +60,7 @@ if ( MSCV )
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DWINDOWS_BUILD")
 else ( MSCV )
 	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DLINUX_BUILD")
-endif( MSVC )
+endif()
 
 #-----------------------------------------------------------------
 set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/build/)
@@ -101,7 +101,7 @@ if ( MSVC )
 		COMMAND copy ${SDL_LIB}\\*.dll $<CONFIGURATION>
 	)
 
-endif ( MSVC )
+endif() 
 
 # Copy the media folder
 add_custom_command(TARGET SDLGame POST_BUILD
