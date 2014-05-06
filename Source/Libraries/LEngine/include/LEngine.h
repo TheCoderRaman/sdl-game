@@ -76,9 +76,9 @@ private:
 
 	//! \brief quit the engine
 	eError quit();
-
 	
 	// Various members for the Engine
+private:
 
 	//! \brief The window Width
 	int m_windowWidth;
@@ -86,7 +86,7 @@ private:
 	//! \brief The window Height
 	int m_windowHeight;
 
-	//! \brief Member variables
+	//! \brief The main window
 	SDLInterface::Window m_MainWindow;
 
 	//! \brief The Renderer
@@ -98,7 +98,7 @@ private:
 	//! \brief The Object Manager
 	LObjectManager	m_ObjectManager;
 
-	//! \brief The  test banana
+	//! \brief The test banana
 	SDLInterface::Texture m_banana;
 
 
@@ -111,6 +111,8 @@ private:
 	SDLInterface::Thread m_renderThread;
 
 };
+
+// These functions must be anonymous to be called by a starting thread
 
 //! \brief start point for the game thread
 int GameThreadStart(void* data);
