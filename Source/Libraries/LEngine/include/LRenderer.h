@@ -15,6 +15,8 @@
 
 #include <list>
 
+class LRenderer2D;
+
 //! \brief The renderable base class
 class LRendereable2D
 {
@@ -28,7 +30,7 @@ public:
 
 	//! \brief the pure virtual render method
 	//! Overload this to perform the render
-	virtual eError Render( SDLInterface::Renderer& renderer ) = 0;
+	virtual eError Render(LRenderer2D* renderer) = 0;
 
 	//! \brief inline set for the Z value
 	inline void SetZ( int Z )

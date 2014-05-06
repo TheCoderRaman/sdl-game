@@ -41,7 +41,7 @@ public:
 	eError SetSize(int w, int h);
 
 	//! \brief Overload for the base type render function
-	virtual eError Render(SDLInterface::Renderer& renderer);
+	virtual eError Render(LRenderer2D* renderer);
 
 	//! \brief create the sprite from the file
 	eError Destroy();

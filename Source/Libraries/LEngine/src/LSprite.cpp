@@ -75,12 +75,12 @@ eError LSprite::SetSize(int w, int h)
 }
 
 //===============================================================
-eError LSprite::Render(SDLInterface::Renderer& renderer)
+eError LSprite::Render(LRenderer2D* renderer)
 {
 	eError err = eError::NoErr;
 
 	// Render the texture
-	err |= renderer.RenderTexture(&m_Texture, m_srcRect, m_destRect);
+	err |= renderer->GetBaseRenderer().RenderTexture(&m_Texture, m_srcRect, m_destRect);
 
 	return err;
 }

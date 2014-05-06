@@ -100,7 +100,7 @@ eError LRenderer2D::RenderRenderables()
 	for (LRendereable2D* pRenderable : m_Renderables)
 	{
 		// Render the renderable
-		pRenderable->Render(m_BaseSDLRenderer);
+		pRenderable->Render(this);
 	}
 
 	return err;
