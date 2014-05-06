@@ -12,10 +12,10 @@
 
 #include "SDLWindow.h"
 #include "SDLThread.h"
-#include "SDLTexture.h"
 
 #include "LObjectManager.h"
 #include "LRenderer.h"
+#include "LSprite.h"
 
 //! \brief LEngine delegate class
 class LEngine
@@ -98,6 +98,8 @@ private:
 	//! \brief The Object Manager
 	LObjectManager	m_ObjectManager;
 
+	//! \brief The Banana
+	LSprite	m_banana;
 
 	// The threads
 

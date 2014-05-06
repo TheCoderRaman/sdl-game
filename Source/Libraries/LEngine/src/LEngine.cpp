@@ -145,6 +145,19 @@ eError LEngine::load()
 	if (!ERROR_HAS_TYPE_FATAL(err))
         err |= LGameBase::GetGame()->Initialise();
 
+	// Create the banana
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err |= m_banana.Create(m_Renderer, "Media/banana.jpg");
+
+	// Set up the banana
+	m_banana.SetSourceRect( {0,0,400,300} );
+	m_banana.SetSize(200, 150);
+	m_banana.SetPos(defaultWindowWidth / 2, defaultWindowHeight / 2);
+
+	// Add said banana to the renderer
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err |= m_Renderer.AddRenderable(&m_banana);
+
     return err;
 }
 
@@ -183,6 +196,10 @@ eError LEngine::loop()
 eError LEngine::unload()
 {
 	eError err = eError::NoErr;
+
+	// Remove the banana from the renderer
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err |= m_Renderer.RemoveRenderable(&m_banana);
 
 	// Destroy the game
 	if (!ERROR_HAS_TYPE_FATAL(err))
