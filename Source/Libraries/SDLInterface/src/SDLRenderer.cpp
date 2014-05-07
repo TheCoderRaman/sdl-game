@@ -34,14 +34,25 @@ eError SDLInterface::Renderer::Create(Window* window)
 {
 	eError err = eError::NoErr;
 
-	// Create the renderer
-	m_SDL_Renderer = SDL_CreateRenderer( Helper::GetSDL_Window(window),
-			0,  	// Uses whichever default device is available
-			0);		// Uses the default SDL_RENDERER_ACCELERATED
+	// Attempt to get the renderer from the window
+	m_SDL_Renderer = SDL_GetRenderer(Helper::GetSDL_Window(window));
 
-	if (nullptr == m_SDL_Renderer)
+	// if the window did not give a renderer
+	if (m_SDL_Renderer == nullptr)
 	{
-		DEBUG_LOG("Renderer failed to be created");
+		// log this, it's not fatal
+		DEBUG_LOG("Window did not have renderer, creating new one: %s", SDL_GetError());
+
+		// Create a new renderer
+		m_SDL_Renderer = SDL_CreateRenderer(Helper::GetSDL_Window(window),
+			-1,  	// Uses whichever default device is available
+			0);		// Uses the default SDL_RENDERER_ACCELERATED
+	}
+
+	// Sanity check here
+	if (m_SDL_Renderer == nullptr)
+	{
+		DEBUG_LOG("Renderer failed to be created: %s", SDL_GetError());
 		err |= eError::SDL_Fatal;
 	}
 
