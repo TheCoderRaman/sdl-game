@@ -10,14 +10,29 @@ project( SDLInterface )
 # Package Search
 if ( NOT MSVC )
 	find_package(PkgConfig)
-	pkg_search_module( SDL2 REQUIRED sdl2 )
+	pkg_search_module( SDL2 REQUIRED SDL2 )
+	pkg_search_module( SDL2_IMAGE REQUIRED SDL2_image )
 endif() 
 
+# Set the include directories
 set (PROJECT_INCLUDE_DIR 
 	${CMAKE_CURRENT_SOURCE_DIR}/include
 	${CMAKE_CURRENT_SOURCE_DIR}/../Util/include
-	${CMAKE_CURRENT_SOURCE_DIR}/../../../SDL2/include	# SDL headers
 )	
+
+# Set the include directories for SDL
+if ( MSVC )
+	set (PROJECT_INCLUDE_DIR 
+		${CMAKE_CURRENT_SOURCE_DIR}/../../../SDL2/include
+		${SDL2_INCLUDE_DIRS}
+	)
+else()
+	set (PROJECT_INCLUDE_DIR 
+		${PROJECT_INCLUDE_DIR}
+		${SDL2_INCLUDE_DIRS}
+		${SDL2_IMAGE_INCLUDE_DIRS}
+	)
+endif()
 
 set (PROJECT_SOURCE_DIR 
 	${CMAKE_CURRENT_SOURCE_DIR}/src
