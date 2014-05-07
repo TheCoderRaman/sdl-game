@@ -52,38 +52,14 @@ eError SDLInterface::Window::Create(int w, int h)
         DEBUG_LOG( "Window could not be created! SDL_Error: %s", SDL_GetError() );
         err |= eError::SDL_Fatal;
     }
-    else
-    {
-        //Get window surface
-		m_Surface.CreateFromWindow(this);
-    }
 
 	return err;
-}
-
-//========================================================
-eError SDLInterface::Window::UpdateSurface()
-{
-    eError err = eError::NoErr;
-
-    // SDL Window functions must be run on the main thread
-	EventLoop::RunOnMainThread_Sync(err,
-	[&]()->eError {
-
-		SDL_UpdateWindowSurface(m_SDL_Window);
-		return eError::NoErr;
-	});
-
-    return err;
 }
 
 //========================================================
 eError SDLInterface::Window::Destroy()
 {
 	eError err = eError::NoErr;
-
-	//Deallocate surface
-	m_Surface.Destroy();
 
     //Destroy window
 	EventLoop::RunOnMainThread_Sync(err,

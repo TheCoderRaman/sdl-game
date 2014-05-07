@@ -13,7 +13,6 @@
 
 
 #include "SDLHelper.h" // for friending
-#include "SDLSurface.h" // For surface
 
 // Forward declares
 struct SDL_Window;
@@ -36,9 +35,6 @@ namespace SDLInterface
 		//! \brief create the window
 		eError Create( int w, int h );
 
-		//! \brief update the window
-		eError UpdateSurface();
-
 		//! \brief destroy the window
 		eError Destroy();
 
@@ -47,8 +43,6 @@ namespace SDLInterface
 		//! \brief the internal SDL window
 		SDL_Window* 		m_SDL_Window;
 
-		//! \brief the internal surface
-		Surface 		m_Surface;
 
 	};
 }
