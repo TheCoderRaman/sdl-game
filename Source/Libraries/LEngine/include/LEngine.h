@@ -12,11 +12,12 @@
 
 #include "SDLWindow.h"
 #include "SDLThread.h"
-#include "SDLMutex.h"
 
 #include "LObjectManager.h"
 #include "LRenderer.h"
 #include "LSprite.h"
+
+#include <atomic>
 
 //! \brief LEngine delegate class
 class LEngine
@@ -120,9 +121,8 @@ private:
 	//! \brief The Object Manager
 	LObjectManager	m_ObjectManager;
 
-	// TODO: Make this atomic
 	//! \brief member to show that the engine is quitting
-	bool m_bQuitting;
+	std::atomic<bool> m_bQuitting;
 
 	//! \brief The Banana
 	LSprite	m_banana;

@@ -14,23 +14,22 @@
 
 #include "SDLMutex.h"
 
+#include <atomic>
+
 //! \brief the custom function event type
 Uint32 s_iCustomFunctionEventType = 0;
 
 //! \brief boolean to check if we're currently event handling
 THREAD_LOCAL bool s_isCurrentlyEventHandling = false;
 
-// TODO: Make this atomic
 //! \brief param to check if it is safe to quit
-bool s_isSafeToQuit = false;
+std::atomic<bool> s_isSafeToQuit = false;
 
-// TODO: Make this atomic
 //! \brief member to show that the eventloop is quitting
-bool s_bQuitting					= false;
+std::atomic<bool> s_bQuitting = false;
 
-// TODO: Make this atomic
 //! \brief parameter to see if the eventloop is running
-bool s_isRunning = false;
+std::atomic<bool> s_isRunning = false;
 
 //========================================================
 bool SDLInterface::EventLoop::IsSafeToQuit()

@@ -8,8 +8,6 @@
 #ifndef _SDLEVENTLOOP_H_
 #define _SDLEVENTLOOP_H_
 
-#include "SDLMutex.h"
-
 #include "types.h"
 #include <functional>
 
