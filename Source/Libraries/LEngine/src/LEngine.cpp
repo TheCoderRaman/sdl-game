@@ -46,14 +46,14 @@ LEngine::~LEngine()
 
 
 //===============================================================
-eError LEngine::start()
+eError LEngine::Start()
 {
 	//Initialization flag
 	eError err = eError::NoErr;
 
 	// Initialise the engine
 	if (!ERROR_HAS_TYPE_FATAL(err))
-		err |= preInit();
+		err |= PreInit();
 
 	// Spawn both the threads
 	if (!ERROR_HAS_TYPE_FATAL(err))
@@ -74,22 +74,22 @@ eError LEngine::start()
 }
 
 //===============================================================
-eError LEngine::run_full()
+eError LEngine::RunFull()
 {
 	//Initialization flag
 	eError err = eError::NoErr;
 
 	// Initialise the engine
 	if (!ERROR_HAS_TYPE_FATAL(err))
-		err |= init();
+		err |= Init();
 
 	// Run the engine
 	if (!ERROR_HAS_TYPE_FATAL(err))
-		err |= run();
+		err |= Run();
 
 	// Quit the engine
 	if (!ERROR_HAS_TYPE_FATAL(err))
-		err |= quit();
+		err |= Quit();
 
 	// Request the quit for the SDLEventLoop
 	// Note: by the point this is called ALL dependent code must have finished
@@ -99,7 +99,7 @@ eError LEngine::run_full()
 }
 
 //===============================================================
-eError LEngine::preInit()
+eError LEngine::PreInit()
 {
     //Initialization flag
     eError err = eError::NoErr;
@@ -115,7 +115,7 @@ eError LEngine::preInit()
 }
 
 //===============================================================
-eError LEngine::init()
+eError LEngine::Init()
 {
 	RUNTIME_LOG("Initialising...")
 
@@ -138,26 +138,26 @@ eError LEngine::init()
 }
 
 //===============================================================
-eError LEngine::run()
+eError LEngine::Run()
 {
 	eError err = eError::NoErr;
 
 	// Load up
-	err |= load();
+	err |= Load();
 
 	// do the full engine loop
 	if (!ERROR_HAS_TYPE_FATAL(err))
-		err |= loop();
+		err |= Loop();
 
 	// unload
 	if (!ERROR_HAS_TYPE_FATAL(err))
-		err |= unload();
+		err |= Unload();
 
 	return err;
 }
 
 //===============================================================
-eError LEngine::quit()
+eError LEngine::Quit()
 {
 	RUNTIME_LOG("Quiting...")
 
@@ -175,7 +175,7 @@ eError LEngine::quit()
 }
 
 //===============================================================
-eError LEngine::end()
+eError LEngine::End()
 {
 	eError err = eError::NoErr;
 
@@ -187,7 +187,7 @@ eError LEngine::end()
 }
 
 //===============================================================
-eError LEngine::load()
+eError LEngine::Load()
 {
 	RUNTIME_LOG("Loading...")
     
@@ -222,7 +222,7 @@ eError LEngine::load()
 }
 
 //===============================================================
-eError LEngine::loop()
+eError LEngine::Loop()
 {
 	eError err = eError::NoErr;
 	RUNTIME_LOG("Looping...")
@@ -259,7 +259,7 @@ eError LEngine::loop()
 }
 
 //===============================================================
-eError LEngine::unload()
+eError LEngine::Unload()
 {
 	eError err = eError::NoErr;
 
@@ -476,7 +476,7 @@ int EngineThreadStart(void* data)
 	LEngine* thisEngine = (LEngine*)data;
 
 	// Run the game thread loop
-	err |= thisEngine->run_full();
+	err |= thisEngine->RunFull();
 
 	DEBUG_LOG("EngineThread Ending");
 	return (int)err;

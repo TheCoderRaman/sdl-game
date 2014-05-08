@@ -34,10 +34,10 @@ int main( int argc, char* args[] )
     LEngine myEngine = LEngine();
 	
 	// Run the engine
-	err |= myEngine.start();
+	err |= myEngine.Start();
 
 	// end the engine once it returns
-	err |= myEngine.end();
+	err |= myEngine.End();
     
 	// LOG the program exit parameter
 	RUNTIME_LOG("Program Exiting with error value %i", err);

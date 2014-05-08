@@ -29,15 +29,15 @@ public:
 	~LEngine();
 
 	//! \brief start the engine
-	eError start();
+	eError Start();
 
 	//! \brief end the engine
-	eError end();
+	eError End();
 
 	//! \brief run ( will not return until finished running )
 	//! Includes the full cycle 
 	//! To be run from a seperate thread
-	eError run_full();
+	eError RunFull();
 
 	// Other functions
 
@@ -65,22 +65,22 @@ public:
 private:
 
 	//! \brief Init the engine
-	eError preInit();
+	eError PreInit();
 
 	// main engine run cycle functions (managed by run_full)
 
 		//! \brief Init the engine
-		eError init();
+		eError Init();
 
 		//! \brief run ( will not return until finished running )
-		eError run();
+		eError Run();
 
 
 			//! \brief Loads assets
-			eError load();
+			eError Load();
 
 			//! \brief calls the event loop	
-			eError loop();
+			eError Loop();
 
 			//! \brief Pre-Update
 			eError PreUpdate();
@@ -95,10 +95,10 @@ private:
 			eError Render();
 
 			//! \brief unloads the assets
-			eError unload();
+			eError Unload();
 
 		//! \brief quit the engine
-		eError quit();
+		eError Quit();
 	
 	// Various members for the Engine
 private:
