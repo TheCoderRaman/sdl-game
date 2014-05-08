@@ -267,6 +267,10 @@ eError LEngine::Unload()
 	if (!ERROR_HAS_TYPE_FATAL(err))
 		err |= m_Renderer.RemoveRenderable(&m_banana);
 
+	// Destroy the banana
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err |= m_banana.Destroy();
+
 	// Destroy the game
 	if (!ERROR_HAS_TYPE_FATAL(err))
 		err |= LGameBase::GetGame()->Destroy();
