@@ -21,18 +21,18 @@
 
 #define ms_30FPS 33
 #define ms_60FPS 16
+#define ms_£0FPS 32
 
-#define defaultWindowWidth 720 
-#define defaultWindowHeight 480
+#define WINDOW_WIDTH			720 
+#define WINDOW_HEIGHT			480
+
+#define DESIRED_FRAMETIME_MS	ms_60FPS
 
 //===============================================================
 LEngine::LEngine()
 : m_gameUpdateThread		( "Game" , GameThreadStart		)
 , m_renderThread			( "Render" , RenderThreadStart	)
 , m_engineThread			( "LEngine" , EngineThreadStart )
-, m_msDesiredFrameTime		( ms_60FPS )
-, m_windowWidth				( defaultWindowWidth )
-, m_windowHeight			( defaultWindowHeight )
 , m_bQuitting				( false )
 {
 
@@ -120,7 +120,7 @@ eError LEngine::Init()
 
 	// Create the window
 	if (!ERROR_HAS_TYPE_FATAL(err))
-		err |= m_MainWindow.Create(m_windowWidth, m_windowHeight);
+		err |= m_MainWindow.Create(WINDOW_WIDTH, WINDOW_HEIGHT);
 
 	// Create the renderer
 	if (!ERROR_HAS_TYPE_FATAL(err))
@@ -185,7 +185,7 @@ eError LEngine::Load()
 	// Set up the banana
 	m_banana.SetSourceRect( {0,0,400,300} );
 	m_banana.SetSize(200, 150);
-	m_banana.SetPos(defaultWindowWidth / 2, defaultWindowHeight / 2);
+	m_banana.SetPos(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
 
 	// Add said banana to the renderer
 	if (!ERROR_HAS_TYPE_FATAL(err))
@@ -309,7 +309,7 @@ eError LEngine::RenderThreadLoop()
 		&& !ERROR_HAS(err, eError::QuitRequest))
 	{
 		// Delay until the end of the desired frame time
-		err |= SDLInterface::Thread::DelayUntil(frameTime + m_msDesiredFrameTime);
+		err |= SDLInterface::Thread::DelayUntil(frameTime + DESIRED_FRAMETIME_MS);
 		
 		// Update the engine window
 		err |= m_Renderer.Render();
@@ -363,13 +363,13 @@ eError LEngine::GameThreadLoop()
 		&& !ERROR_HAS( err, eError::QuitRequest ) )
 	{
 		// Delay until the end of the desired frame time
-		err |= SDLInterface::Thread::DelayUntil( frameTime + m_msDesiredFrameTime );
+		err |= SDLInterface::Thread::DelayUntil(frameTime + DESIRED_FRAMETIME_MS);
 
 		// Call any pre-update functionality
 		err |= PreUpdate();
 
 		// Call the main engine update method
-		err |= Update( m_msDesiredFrameTime );
+		err |= Update(DESIRED_FRAMETIME_MS);
 
 		// Call any post-update functionality
 		err |= PostUpdate();
@@ -401,27 +401,6 @@ eError LEngine::GameThreadLoop()
 	REMOVE_ERR(err, eError::QuitRequest);
 
 	return err;
-}
-
-//===============================================================
-eError LEngine::SetDesiredFrameTime(ms frameTime)
-{
-	eError err = eError::NoErr;
-
-	DEBUG_ASSERT(frameTime > 0);
-
-	m_msDesiredFrameTime = frameTime;
-
-	return err;
-}
-
-//===============================================================
-eError LEngine::SetWindowSize(int w, int h)
-{
-	m_windowWidth = w;
-	m_windowHeight = h;
-
-	return eError::NoErr;
 }
 
 //===============================================================

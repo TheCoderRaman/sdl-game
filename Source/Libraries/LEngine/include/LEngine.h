@@ -34,7 +34,8 @@ public:
 	//! \brief end the engine
 	eError End();
 
-	// Other functions
+
+	// Thread loop functions
 
 	//! \brief the main engine thread loop
 	eError EngineThreadLoop();
@@ -45,11 +46,6 @@ public:
 	//! \brief the main game thread loop
 	eError GameThreadLoop();
 
-	//! \brief set the desired frame time
-	eError SetDesiredFrameTime( ms frameTime );
-
-	//! \brief set the window size
-	eError SetWindowSize(int w, int h);
 
 	//! \brief get if the engine is quitting
 	bool QuitHasBeenRequested();
@@ -88,20 +84,11 @@ private:
 	// Various members for the Engine
 private:
 
-	//! \brief The window Width
-	int m_windowWidth;
-
-	//! \brief The window Height
-	int m_windowHeight;
-
 	//! \brief The main window
 	SDLInterface::Window	m_MainWindow;
 
 	//! \brief The Renderer
 	LRenderer2D				m_Renderer;
-
-	//! \brief the desired time for each frame
-	ms						m_msDesiredFrameTime;
 
 	//! \brief The Object Manager
 	LObjectManager			m_ObjectManager;
