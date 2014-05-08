@@ -33,29 +33,20 @@ public:
 	virtual eError Render(LRenderer2D* renderer) = 0;
 
 	//! \brief inline set for the Z value
-	inline void SetZ( int Z )
-	{
-		m_zValue = Z;
-	}
+	inline void SetZ( int Z ) { m_zValue = Z; }
 
 	//! \brief inline get for the Z value
-	inline int GetZ() const 
-	{
-		return m_zValue;
-	}
+	inline int GetZ() const { return m_zValue; }
 
 	//! \brief inline set for the Z value
-	inline void SetVisible(bool visible)
-	{
-		m_bVisible = visible;
-	}
+	inline void SetVisible(bool visible) { m_bVisible = visible; }
 
 	//! \brief inline get for the Z value
-	inline bool IsVisible() const
-	{
-		return m_bVisible;
-	}
+	inline bool IsVisible() const { return m_bVisible; }
 
+	//! \brief set the internal renderer parent
+	//! useful for debugging and sanity checks
+	eError SetRenderer(LRenderer2D* parent);
 
 private:
 
@@ -64,6 +55,9 @@ private:
 
 	//! \brief if the renderable is visible
 	bool m_bVisible;
+
+	//! \brief internal pointer to the renderer parent
+	LRenderer2D* m_pRenderer;
 	
 };
 

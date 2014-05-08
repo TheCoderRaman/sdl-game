@@ -15,6 +15,7 @@
 LRendereable2D::LRendereable2D()
 : m_zValue( 0 )
 , m_bVisible( true )
+, m_pRenderer( nullptr )
 {
 
 }
@@ -22,7 +23,25 @@ LRendereable2D::LRendereable2D()
 //===============================================================
 LRendereable2D::~LRendereable2D()
 {
+	// the rendererable must get detached before destruction
+	DEBUG_ASSERT(m_pRenderer == nullptr);
+}
 
+//===============================================================
+eError LRendereable2D::SetRenderer(LRenderer2D* parent)
+{
+	eError err = eError::NoErr;
+	
+	// Throw an error if the renderer was already attached to another renderer
+	if (m_pRenderer != nullptr)
+	{
+		// TODO: use a more specific error code here
+		err |= eError::Type_Warning;
+	}
+
+	m_pRenderer = parent;
+
+	return err;
 }
 
 //===============================================================
@@ -59,6 +78,8 @@ eError LRenderer2D::AddRenderable(LRendereable2D* toAdd)
 	// Add the renderable to the list
 	m_Renderables.push_back(toAdd);
 
+	toAdd->SetRenderer(this);
+
 	return err;
 }
 
@@ -69,6 +90,8 @@ eError LRenderer2D::RemoveRenderable(LRendereable2D* toRemove)
 
 	// Remove the renderable from the list
 	m_Renderables.remove(toRemove);
+
+	toRemove->SetRenderer(nullptr);
 
 	return err;
 }
