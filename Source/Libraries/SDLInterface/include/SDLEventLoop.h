@@ -8,6 +8,8 @@
 #ifndef _SDLEVENTLOOP_H_
 #define _SDLEVENTLOOP_H_
 
+#include "SDLMutex.h"
+
 #include "types.h"
 #include <functional>
 
@@ -30,6 +32,9 @@ namespace SDLInterface
 
 		//! \brief create the event loop
 		static eError Create();
+
+		//! \brief destroy the event loop
+		static eError Destroy();
 
 		//! \brief Do the event loop
 		//!
@@ -78,6 +83,21 @@ namespace SDLInterface
 		//! \brief Run a function on the main thread ASyncronously
 		//! This function will return instantly, with no wait, and give any error code if there was an issue
 		static eError RunOnMainThread_ASync(TMainThreadFunction func);
+
+		//! \brief get if the eventloop is quitting
+		static bool GetIsQuitting();
+
+		//! \brief request an eventloop quit
+		static void RequestQuit();
+
+	private:
+
+		//! \brief member to show that the eventloop is quitting
+		static bool s_bQuitting;
+
+		// TODO: Implement atomic variables so we don't need this mutex
+		//! \brief quit mutex
+		static SDLInterface::Mutex s_quitMutex;
 
 	};
 

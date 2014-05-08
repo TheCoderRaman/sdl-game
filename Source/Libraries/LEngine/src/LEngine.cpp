@@ -63,6 +63,10 @@ eError LEngine::start()
 	if (!ERROR_HAS_TYPE_FATAL(err))
 		err |= SDLInterface::EventLoop::DoLoop();
 
+	// If the event loop has quit here without the engine requesting it we need to request one
+	// This should only happen if the event loop has recieved a fatal error of some kind
+	RequestQuit();
+
 	if (!ERROR_HAS_TYPE_FATAL(err))
 		err |= m_engineThread.Wait();
 
@@ -86,6 +90,10 @@ eError LEngine::run_full()
 	// Quit the engine
 	if (!ERROR_HAS_TYPE_FATAL(err))
 		err |= quit();
+
+	// Request the quit for the SDLEventLoop
+	// Note: by the point this is called ALL dependent code must have finished
+	SDLInterface::EventLoop::RequestQuit();
 
 	return err;
 }

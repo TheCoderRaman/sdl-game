@@ -21,6 +21,39 @@ Uint32 s_iCustomFunctionEventType = 0;
 THREAD_LOCAL bool s_isCurrentlyEventHandling = false;
 
 //========================================================
+// Member static
+bool SDLInterface::EventLoop::s_bQuitting					= false;
+SDLInterface::Mutex SDLInterface::EventLoop::s_quitMutex	= SDLInterface::Mutex();
+
+//========================================================
+bool SDLInterface::EventLoop::GetIsQuitting()
+{
+	bool bret;
+
+	// lock the mutex while grabbing the value
+	s_quitMutex.Lock();
+
+	bret = s_bQuitting;
+
+	// unlock the mutex
+	s_quitMutex.Unlock();
+
+	return bret;
+}
+
+//========================================================
+void SDLInterface::EventLoop::RequestQuit()
+{
+	// lock the mutex while setting the value
+	s_quitMutex.Lock();
+
+	s_bQuitting = true;
+
+	// unlock the mutex
+	s_quitMutex.Unlock();
+}
+
+//========================================================
 eError SDLInterface::EventLoop::Create()
 {
 	eError err = eError::NoErr;
@@ -35,6 +68,21 @@ eError SDLInterface::EventLoop::Create()
 		err |= eError::SDL_Fatal;
 		DEBUG_LOG("ERROR Possible EventLoop::Create called twice?")
 	}
+
+	// Create the quit mutex
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err |= s_quitMutex.Create();
+
+	return err;
+}
+
+//========================================================
+eError SDLInterface::EventLoop::Destroy()
+{
+	eError err = eError::NoErr;
+
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err |= s_quitMutex.Destroy();
 
 	return err;
 }
@@ -58,6 +106,10 @@ eError SDLInterface::EventLoop::DoLoop()
 
 		// Handle the event
 		err |= HandleEvent(&event);
+		
+		// Check for quit request recieving
+		if (GetIsQuitting())
+			err |= eError::QuitRequest;
 
 		toEnd = ( ERROR_HAS_TYPE_FATAL(err)				// Fatal errors
 			|| ERROR_HAS(err, eError::QuitRequest));	// Quit requests
@@ -297,7 +349,10 @@ eError SDLInterface::EventLoop::RunOnMainThread_Sync(eError& returnVal, TMainThr
 {
 	eError err = eError::NoErr;
 
-	// TODO: Add check to make sure the event loop is running
+	// We must NOT be quitting at this point
+	// Any functions that call into here after the event loop is quitting
+	// expose serious issues in call order
+	DEBUG_ASSERT(!GetIsQuitting());
 
 	// s_isCurrentlyEventHandling is thread local
 	// That means if this is true then we're on the main thread AND we're alread handling an event
