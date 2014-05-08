@@ -120,12 +120,9 @@ private:
 	//! \brief The Object Manager
 	LObjectManager	m_ObjectManager;
 
+	// TODO: Make this atomic
 	//! \brief member to show that the engine is quitting
 	bool m_bQuitting;
-
-	// TODO: Implement atomic variables so we don't need this mutex
-	//! \brief quit mutex
-	SDLInterface::Mutex m_quitMutex;
 
 	//! \brief The Banana
 	LSprite	m_banana;

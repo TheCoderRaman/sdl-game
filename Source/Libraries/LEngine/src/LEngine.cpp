@@ -111,10 +111,6 @@ eError LEngine::preInit()
 	if (!ERROR_HAS_TYPE_FATAL(err))
 		err |= SDLInterface::EventLoop::Create();
 
-	// create the quit mutex
-	if (!ERROR_HAS_TYPE_FATAL(err))
-		err |= m_quitMutex.Create();
-
     return err;
 }
 
@@ -182,10 +178,6 @@ eError LEngine::quit()
 eError LEngine::end()
 {
 	eError err = eError::NoErr;
-
-	// destroy the quit mutex
-	if (!ERROR_HAS_TYPE_FATAL(err))
-		err |= m_quitMutex.Destroy();
 
 	//Quit SDL subsystems
 	if (!ERROR_HAS_TYPE_FATAL(err))
@@ -465,29 +457,13 @@ eError LEngine::SetWindowSize(int w, int h)
 //===============================================================
 bool LEngine::GetIsQuitting()
 {
-	bool bret;
-
-	// lock the mutex while grabbing the value
-	m_quitMutex.Lock();
-
-	bret = m_bQuitting;
-
-	// unlock the mutex
-	m_quitMutex.Unlock();
-
-	return bret;
+	return m_bQuitting;
 }
 
 //===============================================================
 void LEngine::RequestQuit()
 {
-	// lock the mutex while setting the value
-	m_quitMutex.Lock();
-
 	m_bQuitting = true;
-
-	// unlock the mutex
-	m_quitMutex.Unlock();
 }
 
 //===============================================================

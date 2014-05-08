@@ -20,74 +20,40 @@ Uint32 s_iCustomFunctionEventType = 0;
 //! \brief boolean to check if we're currently event handling
 THREAD_LOCAL bool s_isCurrentlyEventHandling = false;
 
+// TODO: Make this atomic
 //! \brief param to check if it is safe to quit
 bool s_isSafeToQuit = false;
 
+// TODO: Make this atomic
 //! \brief member to show that the eventloop is quitting
 bool s_bQuitting					= false;
 
-// TODO: Implement atomic variables so we don't need this mutex
-//! \brief quit mutex
-SDLInterface::Mutex s_quitMutex	= SDLInterface::Mutex();
-
+// TODO: Make this atomic
 //! \brief parameter to see if the eventloop is running
 bool s_isRunning = false;
 
 //========================================================
 bool SDLInterface::EventLoop::IsSafeToQuit()
 {
-	bool bret;
-
-	// lock the mutex while grabbing the value
-	s_quitMutex.Lock();
-
-	bret = s_isSafeToQuit;
-
-	// unlock the mutex
-	s_quitMutex.Unlock();
-
-
-	return bret;
+	return s_isSafeToQuit;
 }
 
 //========================================================
 void SDLInterface::EventLoop::SetSafeToQuit()
 {
-	// lock the mutex while grabbing the value
-	s_quitMutex.Lock();
-
 	s_isSafeToQuit = true;
-
-	// unlock the mutex
-	s_quitMutex.Unlock();
 }
 
 //========================================================
 bool SDLInterface::EventLoop::GetIsQuitting()
 {
-	bool bret;
-
-	// lock the mutex while grabbing the value
-	s_quitMutex.Lock();
-
-	bret = s_bQuitting;
-
-	// unlock the mutex
-	s_quitMutex.Unlock();
-
-	return bret;
+	return s_bQuitting;
 }
 
 //========================================================
 void SDLInterface::EventLoop::RequestQuit()
 {
-	// lock the mutex while setting the value
-	s_quitMutex.Lock();
-
 	s_bQuitting = true;
-
-	// unlock the mutex
-	s_quitMutex.Unlock();
 }
 
 //========================================================
@@ -106,10 +72,6 @@ eError SDLInterface::EventLoop::Create()
 		DEBUG_LOG("ERROR Possible EventLoop::Create called twice?")
 	}
 
-	// Create the quit mutex
-	if (!ERROR_HAS_TYPE_FATAL(err))
-		err |= s_quitMutex.Create();
-
 	return err;
 }
 
@@ -117,9 +79,6 @@ eError SDLInterface::EventLoop::Create()
 eError SDLInterface::EventLoop::Destroy()
 {
 	eError err = eError::NoErr;
-
-	if (!ERROR_HAS_TYPE_FATAL(err))
-		err |= s_quitMutex.Destroy();
 
 	return err;
 }
@@ -138,11 +97,13 @@ eError SDLInterface::EventLoop::DoLoop()
 	// End if there's a fatal error, or we've been told it's safe to quit
 	while (!(ERROR_HAS_TYPE_FATAL(err) || IsSafeToQuit()))
     {
-		// Wait for an event 
-		SDL_WaitEvent(&event);
+		// Wait for an event with a timout of 10
+		// timeout ensures we can quit
+		const int ret = SDL_WaitEventTimeout(&event,10);
 
 		// Handle the event
-		err |= HandleEvent(&event);
+		if (ret > 0)
+			err |= HandleEvent(&event);
     }
 
 	REMOVE_ERR(err, eError::QuitRequest);
