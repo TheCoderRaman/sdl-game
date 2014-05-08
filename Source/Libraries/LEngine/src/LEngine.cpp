@@ -41,6 +41,17 @@ LEngine::~LEngine()
 
 }
 
+//===============================================================
+bool LEngine::QuitHasBeenRequested()
+{
+	return m_bQuitting;
+}
+
+//===============================================================
+void LEngine::RequestQuit()
+{
+	m_bQuitting = true;
+}
 
 //===============================================================
 eError LEngine::Start()
@@ -56,12 +67,15 @@ eError LEngine::Start()
 	if (!ERROR_HAS_TYPE_FATAL(err))
 		err |= SDLInterface::EventLoop::Create();
 
-	// Spawn both the threads
+	// the engine thread
 	SDLInterface::Thread engineThread("LEngine", EngineThreadStart);
+
+	// Spawn the engine thread
 	if (!ERROR_HAS_TYPE_FATAL(err))
 		err | engineThread.Spawn(this);
 
 	// Do the main SDL event loop
+	// This won't return until requested
 	if (!ERROR_HAS_TYPE_FATAL(err))
 		err |= SDLInterface::EventLoop::DoLoop();
 
@@ -69,6 +83,7 @@ eError LEngine::Start()
 	// This should only happen if the event loop has recieved a fatal error of some kind
 	RequestQuit();
 
+	// Wait for the engine thread
 	if (!ERROR_HAS_TYPE_FATAL(err))
 		err |= engineThread.Wait();
 
@@ -216,6 +231,7 @@ eError LEngine::Loop()
 	while ( !QuitHasBeenRequested() 
 		&& !SDLInterface::EventLoop::QuitHasBeenRequested() )
 	{
+		// Do something useful here?
 		SDLInterface::Thread::Delay(10);
 	}
 
@@ -404,17 +420,7 @@ eError LEngine::GameThreadLoop()
 	return err;
 }
 
-//===============================================================
-bool LEngine::QuitHasBeenRequested()
-{
-	return m_bQuitting;
-}
-
-//===============================================================
-void LEngine::RequestQuit()
-{
-	m_bQuitting = true;
-}
+// Anonymous thread start functions
 
 //===============================================================
 int EngineThreadStart(void* data)
