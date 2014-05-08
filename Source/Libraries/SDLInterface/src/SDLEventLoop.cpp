@@ -26,6 +26,8 @@ bool s_hasFinished = false;
 //========================================================
 eError SDLInterface::EventLoop::GetHasFinished()
 {
+	// s_hasFinished really needs a lock around it, otherwise it's possible this could screw up major
+
 	eError err = eError::NoErr;
 
 	if (s_hasFinished)
@@ -317,11 +319,18 @@ eError SDLInterface::EventLoop::RunOnMainThread_Sync(eError& returnVal, TMainThr
 {
 	eError err = eError::NoErr;
 
+#if DEBUG_BUILD
+	// Debug sanity check here
+	if ( ERROR_HAS( GetHasFinished() , eError::QuitRequest ) )
+	{
+		DEBUG_LOG("WARNING - Methods being called into the main thread after the main thread has been destroyed");
+	}
+#endif
+
 	// s_isCurrentlyEventHandling is thread local
 	// That means if this is true then we're on the main thread AND we're alread handling an event
 	// This means we may as well just call the function to prevent deadlocks
-	if (	s_isCurrentlyEventHandling 
-		||	ERROR_HAS( GetHasFinished() , eError::QuitRequest ) )
+	if ( s_isCurrentlyEventHandling )
 	{
 		returnVal = func();
 	}
