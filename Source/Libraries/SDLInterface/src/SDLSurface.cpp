@@ -27,7 +27,7 @@ SDLInterface::Surface::Surface()
 //========================================================
 SDLInterface::Surface::~Surface()
 {
-
+	DEBUG_ASSERT(m_sdl_surface == nullptr);
 }
 
 //========================================================

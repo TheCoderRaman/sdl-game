@@ -25,7 +25,7 @@ SDLInterface::Texture::Texture()
 //========================================================
 SDLInterface::Texture::~Texture()
 {
-
+	DEBUG_ASSERT(m_sdl_texture == nullptr);
 }
 
 //========================================================

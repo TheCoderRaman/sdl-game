@@ -110,22 +110,23 @@ private:
 	int m_windowHeight;
 
 	//! \brief The main window
-	SDLInterface::Window m_MainWindow;
+	SDLInterface::Window	m_MainWindow;
 
 	//! \brief The Renderer
-	LRenderer2D m_Renderer;
+	LRenderer2D				m_Renderer;
 
 	//! \brief the desired time for each frame
-	ms m_msDesiredFrameTime;
+	ms						m_msDesiredFrameTime;
 
 	//! \brief The Object Manager
-	LObjectManager	m_ObjectManager;
+	LObjectManager			m_ObjectManager;
 
 	//! \brief member to show that the engine is quitting
-	std::atomic<bool> m_bQuitting;
+	std::atomic<bool>		m_bQuitting;
 
 	//! \brief The Banana
-	LSprite	m_banana;
+	LSprite					m_banana;
+
 
 	// The threads
 

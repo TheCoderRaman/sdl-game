@@ -355,15 +355,22 @@ eError SDLInterface::EventLoop::RunOnMainThread_Sync(eError& returnVal, TMainThr
 	}
 	else
 	{
+		// Create a temporary semaphore
 		Semaphore* tempSem = new Semaphore();
 		tempSem->Create();
 
 		// Create a new temporary function that will post the semaphore and grab the return value
 		TMainThreadFunction newTempFunc = [&]()->eError {
+
+			eError err = eError::NoErr;
+
+			// Call the custom function and grab it's return value
 			returnVal |= func();
-			tempSem->Post();
+
+			// Post the semaphore to show it has finished
+			err |= tempSem->Post();
 			
-			return eError::NoErr;
+			return err;
 		};
 
 		// run it async for now until semaphore is implemented
@@ -372,6 +379,7 @@ eError SDLInterface::EventLoop::RunOnMainThread_Sync(eError& returnVal, TMainThr
 		// Wait for the semaphore to be posted
 		tempSem->Wait();
 
+		// Destroy the temporary semaphore
 		tempSem->Destroy();
 		delete tempSem;
 	}
