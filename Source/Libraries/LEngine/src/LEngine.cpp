@@ -279,17 +279,6 @@ eError LEngine::Unload()
 }
 
 //===============================================================
-eError LEngine::Render()
-{
-	eError err = eError::NoErr;
-
-	// Run the renderer
-	err |= m_Renderer.Render();
-
-	return err;
-}
-
-//===============================================================
 eError LEngine::PreUpdate( void )
 {
 	eError err = eError::NoErr;
@@ -346,7 +335,7 @@ eError LEngine::RenderThreadLoop()
 		err |= SDLInterface::Thread::DelayUntil(frameTime + m_msDesiredFrameTime);
 		
 		// Update the engine window
-		err |= Render();
+		err |= m_Renderer.Render();
 
 		// grab the current time
 		frameTime = SDLInterface::Timer::GetGlobalLifetime();

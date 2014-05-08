@@ -70,24 +70,20 @@ private:
 		//! \brief run ( will not return until finished running )
 		eError Run();
 
-
 			//! \brief Loads assets
 			eError Load();
 
 			//! \brief calls the event loop	
 			eError Loop();
 
-			//! \brief Pre-Update
-			eError PreUpdate();
+				//! \brief Pre-Update
+				eError PreUpdate();
 
-			//! \brief update the engine
-			eError Update(ms elapsed);
+				//! \brief update the engine
+				eError Update(ms elapsed);
 
-			//! \brief post-update
-			eError PostUpdate();
-
-			//! \brief Render the engine
-			eError Render();
+				//! \brief post-update
+				eError PostUpdate();
 
 			//! \brief unloads the assets
 			eError Unload();
