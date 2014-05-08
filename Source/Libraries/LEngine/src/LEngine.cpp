@@ -51,9 +51,13 @@ eError LEngine::Start()
 	//Initialization flag
 	eError err = eError::NoErr;
 
-	// Initialise the engine
+	// initialise SDL
 	if (!ERROR_HAS_TYPE_FATAL(err))
-		err |= PreInit();
+		err |= SDLInterface::Init();
+
+	// create the sdl event loop
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err |= SDLInterface::EventLoop::Create();
 
 	// Spawn both the threads
 	if (!ERROR_HAS_TYPE_FATAL(err))
@@ -83,9 +87,17 @@ eError LEngine::EngineThreadLoop()
 	if (!ERROR_HAS_TYPE_FATAL(err))
 		err |= Init();
 
-	// Run the engine
+	// Load up
 	if (!ERROR_HAS_TYPE_FATAL(err))
-		err |= Run();
+		err |= Load();
+
+	// do the full engine loop
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err |= Loop();
+
+	// unload
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err |= Unload();
 
 	// Quit the engine
 	if (!ERROR_HAS_TYPE_FATAL(err))
@@ -96,22 +108,6 @@ eError LEngine::EngineThreadLoop()
 	SDLInterface::EventLoop::EndLoop();
 
 	return err;
-}
-
-//===============================================================
-eError LEngine::PreInit()
-{
-    //Initialization flag
-    eError err = eError::NoErr;
-
-	// initialise SDL
-	err |= SDLInterface::Init();
-
-	// create the sdl event loop
-	if (!ERROR_HAS_TYPE_FATAL(err))
-		err |= SDLInterface::EventLoop::Create();
-
-    return err;
 }
 
 //===============================================================
@@ -135,25 +131,6 @@ eError LEngine::Init()
 		err |= m_ObjectManager.Create();
 
     return err;
-}
-
-//===============================================================
-eError LEngine::Run()
-{
-	eError err = eError::NoErr;
-
-	// Load up
-	err |= Load();
-
-	// do the full engine loop
-	if (!ERROR_HAS_TYPE_FATAL(err))
-		err |= Loop();
-
-	// unload
-	if (!ERROR_HAS_TYPE_FATAL(err))
-		err |= Unload();
-
-	return err;
 }
 
 //===============================================================

@@ -59,37 +59,31 @@ public:
 
 private:
 
+	// main engine run cycle functions (managed by EngineThreadLoop)
+
 	//! \brief Init the engine
-	eError PreInit();
+	eError Init();
 
-	// main engine run cycle functions (managed by run_full)
+	//! \brief Loads assets
+	eError Load();
 
-		//! \brief Init the engine
-		eError Init();
+	//! \brief calls the event loop	
+	eError Loop();
 
-		//! \brief run ( will not return until finished running )
-		eError Run();
+		//! \brief Pre-Update
+		eError PreUpdate();
 
-			//! \brief Loads assets
-			eError Load();
+		//! \brief update the engine
+		eError Update(ms elapsed);
 
-			//! \brief calls the event loop	
-			eError Loop();
+		//! \brief post-update
+		eError PostUpdate();
 
-				//! \brief Pre-Update
-				eError PreUpdate();
+	//! \brief unloads the assets
+	eError Unload();
 
-				//! \brief update the engine
-				eError Update(ms elapsed);
-
-				//! \brief post-update
-				eError PostUpdate();
-
-			//! \brief unloads the assets
-			eError Unload();
-
-		//! \brief quit the engine
-		eError Quit();
+	//! \brief quit the engine
+	eError Quit();
 	
 	// Various members for the Engine
 private:
