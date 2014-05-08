@@ -33,6 +33,7 @@ LEngine::LEngine()
 , m_msDesiredFrameTime		( ms_60FPS )
 , m_windowWidth				( defaultWindowWidth )
 , m_windowHeight			( defaultWindowHeight )
+, m_bQuitting				( false )
 {
 
 }
@@ -54,7 +55,7 @@ eError LEngine::start()
 	if (!ERROR_HAS_TYPE_FATAL(err))
 		err |= preInit();
 
-		// Spawn both the threads
+	// Spawn both the threads
 	if (!ERROR_HAS_TYPE_FATAL(err))
 		err | m_engineThread.Spawn(this);
 
@@ -96,11 +97,15 @@ eError LEngine::preInit()
     eError err = eError::NoErr;
 
 	// initialise SDL
-	err = SDLInterface::Init();
+	err |= SDLInterface::Init();
 
 	// create the sdl event loop
 	if (!ERROR_HAS_TYPE_FATAL(err))
-		err = SDLInterface::EventLoop::Create();
+		err |= SDLInterface::EventLoop::Create();
+
+	// create the quit mutex
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err |= m_quitMutex.Create();
 
     return err;
 }
@@ -115,15 +120,15 @@ eError LEngine::init()
 
 	// Create the window
 	if (!ERROR_HAS_TYPE_FATAL(err))
-		err = m_MainWindow.Create(m_windowWidth, m_windowHeight);
+		err |= m_MainWindow.Create(m_windowWidth, m_windowHeight);
 
 	// Create the renderer
 	if (!ERROR_HAS_TYPE_FATAL(err))
-		err = m_Renderer.Create(m_MainWindow);
+		err |= m_Renderer.Create(m_MainWindow);
 
 	// Create the objects
 	if( !ERROR_HAS_TYPE_FATAL( err ) )
-		err = m_ObjectManager.Create();
+		err |= m_ObjectManager.Create();
 
     return err;
 }
@@ -162,11 +167,23 @@ eError LEngine::quit()
 	if (!ERROR_HAS_TYPE_FATAL(err))
 		err |= m_MainWindow.Destroy();
 
-    //Quit SDL subsystems
-	if (!ERROR_HAS_TYPE_FATAL(err))
-		SDLInterface::Quit();
-
     return err;
+}
+
+//===============================================================
+eError LEngine::end()
+{
+	eError err = eError::NoErr;
+
+	// destroy the quit mutex
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err |= m_quitMutex.Destroy();
+
+	//Quit SDL subsystems
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err |= SDLInterface::Quit();
+
+	return err;
 }
 
 //===============================================================
@@ -199,7 +216,7 @@ eError LEngine::load()
 
 	// Initialise the objects
 	if( !ERROR_HAS_TYPE_FATAL( err ) )
-		err = m_ObjectManager.Initialise();
+		err |= m_ObjectManager.Initialise();
 
     return err;
 }
@@ -217,7 +234,11 @@ eError LEngine::loop()
 	if (!ERROR_HAS_TYPE_FATAL(err))
 		err | m_renderThread.Spawn(this);
 
-	// Loop here in some form
+	// Spin while not quitting
+	while (!GetIsQuitting())
+	{
+		SDLInterface::Thread::Delay(10);
+	}
 
 	// Remove any quit request error
 	REMOVE_ERR(err, eError::QuitRequest);
@@ -323,7 +344,8 @@ eError LEngine::RenderThreadLoop()
 		frameTime = SDLInterface::Timer::GetGlobalLifetime();
 
 		// get if the engine has finished
-		//TODO: Check if the engine has a quit request
+		if (GetIsQuitting())
+			err |= eError::QuitRequest;
 
 		// Increment the framecounter
 		frameCounter++;
@@ -382,7 +404,8 @@ eError LEngine::GameThreadLoop()
 		frameTime = SDLInterface::Timer::GetGlobalLifetime();
 
 		// get if the engine has finished
-		//TODO: Check if the engine has a quit request
+		if (GetIsQuitting())
+			err |= eError::QuitRequest;
 
 		// Increment the framecounter
 		frameCounter++;
@@ -428,6 +451,34 @@ eError LEngine::SetWindowSize(int w, int h)
 }
 
 //===============================================================
+bool LEngine::GetIsQuitting()
+{
+	bool bret;
+
+	// lock the mutex while grabbing the value
+	m_quitMutex.Lock();
+
+	bret = m_bQuitting;
+
+	// unlock the mutex
+	m_quitMutex.Unlock();
+
+	return bret;
+}
+
+//===============================================================
+void LEngine::RequestQuit()
+{
+	// lock the mutex while setting the value
+	m_quitMutex.Lock();
+
+	m_bQuitting = true;
+
+	// unlock the mutex
+	m_quitMutex.Unlock();
+}
+
+//===============================================================
 int EngineThreadStart(void* data)
 {
 	DEBUG_LOG("EngineThread Starting");
@@ -437,7 +488,7 @@ int EngineThreadStart(void* data)
 	LEngine* thisEngine = (LEngine*)data;
 
 	// Run the game thread loop
-	err =thisEngine->run_full();
+	err |= thisEngine->run_full();
 
 	DEBUG_LOG("EngineThread Ending");
 	return (int)err;
@@ -453,7 +504,7 @@ int GameThreadStart(void* data)
 	LEngine* thisEngine = (LEngine*)data;
 
 	// Run the game thread loop
-	err =thisEngine->GameThreadLoop();
+	err |= thisEngine->GameThreadLoop();
 
 	DEBUG_LOG("GameThread Ending");
 	return (int)err;
@@ -469,7 +520,7 @@ int RenderThreadStart(void* data)
 	LEngine* thisEngine = (LEngine*)data;
 
 	// Run the render thread loop
-	err = thisEngine->RenderThreadLoop();
+	err |= thisEngine->RenderThreadLoop();
 
 	DEBUG_LOG("RenderThread Ending");
 	return (int)err;

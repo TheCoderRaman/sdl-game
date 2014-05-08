@@ -32,7 +32,7 @@ eError SDLInterface::EventLoop::Create()
 	}
 	else
 	{
-		err = eError::SDL_Fatal;
+		err |= eError::SDL_Fatal;
 		DEBUG_LOG("ERROR Possible EventLoop::Create called twice?")
 	}
 
@@ -57,7 +57,7 @@ eError SDLInterface::EventLoop::DoLoop()
 		SDL_WaitEvent(&event);
 
 		// Handle the event
-		err = HandleEvent(&event);
+		err |= HandleEvent(&event);
 
 		toEnd = ( ERROR_HAS_TYPE_FATAL(err)				// Fatal errors
 			|| ERROR_HAS(err, eError::QuitRequest));	// Quit requests
@@ -320,7 +320,7 @@ eError SDLInterface::EventLoop::RunOnMainThread_Sync(eError& returnVal, TMainThr
 		};
 
 		// run it async for now until semaphore is implemented
-		err = PostCustomFunctionEvent(newTempFunc);
+		err |= PostCustomFunctionEvent(newTempFunc);
 
 		// Wait for the semaphore to be posted
 		tempSem->Wait();

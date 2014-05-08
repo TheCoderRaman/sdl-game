@@ -22,6 +22,8 @@ int main( int argc, char* args[] )
 {
 	// log the program start
 	RUNTIME_LOG("Program Starting...");
+
+	eError err = eError::NoErr;
 	
 #ifdef WINDOWS_BUILD
 	// Removes the default VS output window
@@ -30,7 +32,12 @@ int main( int argc, char* args[] )
 
     // Create and run the engine
     LEngine myEngine = LEngine();
-	eError err = myEngine.start();
+	
+	// Run the engine
+	err |= myEngine.start();
+
+	// end the engine once it returns
+	err |= myEngine.end();
     
 	// LOG the program exit parameter
 	RUNTIME_LOG("Program Exiting with error value %i", err);

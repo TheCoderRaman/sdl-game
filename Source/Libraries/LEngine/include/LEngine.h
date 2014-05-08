@@ -12,6 +12,7 @@
 
 #include "SDLWindow.h"
 #include "SDLThread.h"
+#include "SDLMutex.h"
 
 #include "LObjectManager.h"
 #include "LRenderer.h"
@@ -28,6 +29,9 @@ public:
 
 	//! \brief start the engine
 	eError start();
+
+	//! \brief end the engine
+	eError end();
 
 	//! \brief run ( will not return until finished running )
 	//! Includes the full cycle 
@@ -50,6 +54,12 @@ public:
 
 	//! \brief set the window size
 	eError SetWindowSize(int w, int h);
+
+	//! \brief get if the engine is quitting
+	bool GetIsQuitting();
+
+	//! \brief request an engine quit
+	void RequestQuit();
 
 private:
 
@@ -109,6 +119,13 @@ private:
 
 	//! \brief The Object Manager
 	LObjectManager	m_ObjectManager;
+
+	//! \brief member to show that the engine is quitting
+	bool m_bQuitting;
+
+	// TODO: Implement atomic variables so we don't need this mutex
+	//! \brief quit mutex
+	SDLInterface::Mutex m_quitMutex;
 
 	//! \brief The Banana
 	LSprite	m_banana;
