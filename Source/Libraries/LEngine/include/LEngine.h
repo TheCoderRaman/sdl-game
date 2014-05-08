@@ -57,7 +57,7 @@ public:
 	eError SetWindowSize(int w, int h);
 
 	//! \brief get if the engine is quitting
-	bool GetIsQuitting();
+	bool QuitHasBeenRequested();
 
 	//! \brief request an engine quit
 	void RequestQuit();

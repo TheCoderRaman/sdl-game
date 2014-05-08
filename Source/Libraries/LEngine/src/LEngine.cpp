@@ -93,7 +93,7 @@ eError LEngine::run_full()
 
 	// Request the quit for the SDLEventLoop
 	// Note: by the point this is called ALL dependent code must have finished
-	SDLInterface::EventLoop::SetSafeToQuit();
+	SDLInterface::EventLoop::EndLoop();
 
 	return err;
 }
@@ -235,8 +235,8 @@ eError LEngine::loop()
 		err | m_renderThread.Spawn(this);
 
 	// Spin while not quitting
-	while ( !GetIsQuitting() 
-		&& !SDLInterface::EventLoop::GetIsQuitting() )
+	while ( !QuitHasBeenRequested() 
+		&& !SDLInterface::EventLoop::QuitHasBeenRequested() )
 	{
 		SDLInterface::Thread::Delay(10);
 	}
@@ -348,7 +348,7 @@ eError LEngine::RenderThreadLoop()
 		frameTime = SDLInterface::Timer::GetGlobalLifetime();
 
 		// get if the engine has finished
-		if (GetIsQuitting())
+		if (QuitHasBeenRequested())
 			err |= eError::QuitRequest;
 
 		// Increment the framecounter
@@ -408,7 +408,7 @@ eError LEngine::GameThreadLoop()
 		frameTime = SDLInterface::Timer::GetGlobalLifetime();
 
 		// get if the engine has finished
-		if (GetIsQuitting())
+		if (QuitHasBeenRequested())
 			err |= eError::QuitRequest;
 
 		// Increment the framecounter
@@ -455,7 +455,7 @@ eError LEngine::SetWindowSize(int w, int h)
 }
 
 //===============================================================
-bool LEngine::GetIsQuitting()
+bool LEngine::QuitHasBeenRequested()
 {
 	return m_bQuitting;
 }

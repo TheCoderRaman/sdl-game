@@ -42,6 +42,9 @@ namespace SDLInterface
 		//! \warning this method will not return until SDL_Quit is sent, or a fatal error is encountered
 		static eError DoLoop();
 
+		//! \brief Ask the event loop to end
+		static void EndLoop();
+
 		//! \brief Handle any event
 		//! \return Any eError produced
 		static eError HandleEvent(SDL_Event *event);
@@ -83,18 +86,15 @@ namespace SDLInterface
 		static eError RunOnMainThread_ASync(TMainThreadFunction func);
 
 		//! \brief get if the eventloop is quitting
-		static bool GetIsQuitting();
-
-		//! \brief set if we are safe to quite
-		static void SetSafeToQuit();
+		static bool QuitHasBeenRequested();
 
 	private:
 
-		//! \brief get if we are safe to quite
-		static bool IsSafeToQuit();
-
 		//! \brief request an eventloop quit
 		static void RequestQuit();
+
+		//! \brief get if we are safe to quite
+		static bool IsLoopEnding();
 
 	};
 

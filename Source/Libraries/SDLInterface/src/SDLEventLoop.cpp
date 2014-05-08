@@ -23,7 +23,7 @@ Uint32 s_iCustomFunctionEventType = 0;
 THREAD_LOCAL bool s_isCurrentlyEventHandling = false;
 
 //! \brief param to check if it is safe to quit
-std::atomic<bool> s_isSafeToQuit = false;
+std::atomic<bool> s_IsLoopEnding = false;
 
 //! \brief member to show that the eventloop is quitting
 std::atomic<bool> s_bQuitting = false;
@@ -32,19 +32,19 @@ std::atomic<bool> s_bQuitting = false;
 std::atomic<bool> s_isRunning = false;
 
 //========================================================
-bool SDLInterface::EventLoop::IsSafeToQuit()
+bool SDLInterface::EventLoop::IsLoopEnding()
 {
-	return s_isSafeToQuit;
+	return s_IsLoopEnding;
 }
 
 //========================================================
-void SDLInterface::EventLoop::SetSafeToQuit()
+void SDLInterface::EventLoop::EndLoop()
 {
-	s_isSafeToQuit = true;
+	s_IsLoopEnding = true;
 }
 
 //========================================================
-bool SDLInterface::EventLoop::GetIsQuitting()
+bool SDLInterface::EventLoop::QuitHasBeenRequested()
 {
 	return s_bQuitting;
 }
@@ -94,7 +94,7 @@ eError SDLInterface::EventLoop::DoLoop()
 
 	// Handle events on queue
 	// End if there's a fatal error, or we've been told it's safe to quit
-	while (!(ERROR_HAS_TYPE_FATAL(err) || IsSafeToQuit()))
+	while (!(ERROR_HAS_TYPE_FATAL(err) || IsLoopEnding()))
     {
 		// Wait for an event with a timout of 10
 		// timeout ensures we can quit
