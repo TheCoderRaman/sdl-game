@@ -27,9 +27,17 @@ public:
 	~LEngine();
 
 	//! \brief run ( will not return until finished running )
+	//! Includes the full cycle
 	eError run_full();
 
+	//! \brief run ( will not return until finished running )
+	//! start to run the engine, useful for seperate threads
+	eError run();
+
 	// Other functions
+
+	//! \brief the main render thread loop
+	eError EngineThreadLoop();
 
 	//! \brief the main render thread loop
 	eError RenderThreadLoop();
@@ -49,9 +57,6 @@ private:
 
 	//! \brief Init the engine
 	eError init();
-
-	//! \brief run ( will not return until finished running )
-	eError run();
 
 		//! \brief Loads assets
 		eError load();
@@ -103,6 +108,9 @@ private:
 
 	// The threads
 
+	//! \brief the engine thread
+	SDLInterface::Thread m_engineThread;
+
 	//! \brief the game update thread
 	SDLInterface::Thread m_gameUpdateThread;
 
@@ -112,6 +120,9 @@ private:
 };
 
 // These functions must be anonymous to be called by a starting thread
+
+//! \brief start point for the engine thread
+int EngineThreadStart(void* data);
 
 //! \brief start point for the game thread
 int GameThreadStart(void* data);

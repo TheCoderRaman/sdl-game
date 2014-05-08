@@ -29,6 +29,7 @@
 LEngine::LEngine()
 : m_gameUpdateThread		( "Game" , GameThreadStart		)
 , m_renderThread			( "Render" , RenderThreadStart	)
+, m_engineThread			( "LEngine" , EngineThreadStart )
 , m_msDesiredFrameTime		( ms_60FPS )
 , m_windowWidth				( defaultWindowWidth )
 , m_windowHeight			( defaultWindowHeight )
@@ -392,6 +393,22 @@ eError LEngine::SetWindowSize(int w, int h)
 	m_windowHeight = h;
 
 	return eError::NoErr;
+}
+
+//===============================================================
+int EngineThreadStart(void* data)
+{
+	DEBUG_LOG("GameThread Starting");
+	eError err = eError::NoErr;
+
+	// Grab the engine from the thread data
+	LEngine* thisEngine = (LEngine*)data;
+
+	// Run the game thread loop
+	err =thisEngine->run();
+
+	DEBUG_LOG("GameThread Ending");
+	return (int)err;
 }
 
 //===============================================================

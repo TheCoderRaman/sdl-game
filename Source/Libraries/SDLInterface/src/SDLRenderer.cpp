@@ -34,20 +34,29 @@ eError SDLInterface::Renderer::Create(Window* window)
 {
 	eError err = eError::NoErr;
 
-	// Attempt to get the renderer from the window
-	m_SDL_Renderer = SDL_GetRenderer(Helper::GetSDL_Window(window));
-
-	// if the window did not give a renderer
-	if (m_SDL_Renderer == nullptr)
+	EventLoop::RunOnMainThread_Sync(err,
+	[&]()->eError
 	{
-		// log this, it's not fatal
-		DEBUG_LOG("Window did not have renderer, creating new one: %s", SDL_GetError());
+		eError err = eError::NoErr;
 
-		// Create a new renderer
-		m_SDL_Renderer = SDL_CreateRenderer(Helper::GetSDL_Window(window),
-			-1,  	// Uses whichever default device is available
-			0);		// Uses the default SDL_RENDERER_ACCELERATED
-	}
+		// Attempt to get the renderer from the window
+		m_SDL_Renderer = SDL_GetRenderer(Helper::GetSDL_Window(window));
+
+		// if the window did not give a renderer
+		if (m_SDL_Renderer == nullptr)
+		{
+			// log this, it's not fatal
+			DEBUG_LOG("SDL_Window did not have renderer, creating new one");
+
+			// Create a new renderer
+			m_SDL_Renderer = SDL_CreateRenderer(Helper::GetSDL_Window(window),
+				-1,  	// Uses whichever default device is available
+				0);		// Uses the default SDL_RENDERER_ACCELERATED
+		}
+
+		return err;
+	});
+	
 
 	// Sanity check here
 	if (m_SDL_Renderer == nullptr)
@@ -181,7 +190,16 @@ eError SDLInterface::Renderer::Destroy()
 {
 	eError err = eError::NoErr;
 
-	SDL_DestroyRenderer(m_SDL_Renderer);
+
+	EventLoop::RunOnMainThread_Sync(err,
+	[&]()->eError
+	{
+		eError err = eError::NoErr;
+
+		SDL_DestroyRenderer(m_SDL_Renderer);
+
+		return err;
+	});
 
 	m_SDL_Renderer = nullptr;
 
