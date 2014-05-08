@@ -30,7 +30,7 @@ int main( int argc, char* args[] )
 
     // Create and run the engine
     LEngine myEngine = LEngine();
-	eError err = myEngine.run_full();
+	eError err = myEngine.start();
     
 	// LOG the program exit parameter
 	RUNTIME_LOG("Program Exiting with error value %i", err);

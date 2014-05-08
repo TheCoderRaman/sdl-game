@@ -43,6 +43,31 @@ LEngine::~LEngine()
 
 }
 
+
+//===============================================================
+eError LEngine::start()
+{
+	//Initialization flag
+	eError err = eError::NoErr;
+
+	// Initialise the engine
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err |= preInit();
+
+		// Spawn both the threads
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err | m_engineThread.Spawn(this);
+
+	// Do the main SDL event loop
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err |= SDLInterface::EventLoop::DoLoop();
+
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err |= m_engineThread.Wait();
+
+	return err;
+}
+
 //===============================================================
 eError LEngine::run_full()
 {
@@ -65,10 +90,8 @@ eError LEngine::run_full()
 }
 
 //===============================================================
-eError LEngine::init()
+eError LEngine::preInit()
 {
-	RUNTIME_LOG("Initialising...")
-
     //Initialization flag
     eError err = eError::NoErr;
 
@@ -78,6 +101,17 @@ eError LEngine::init()
 	// create the sdl event loop
 	if (!ERROR_HAS_TYPE_FATAL(err))
 		err = SDLInterface::EventLoop::Create();
+
+    return err;
+}
+
+//===============================================================
+eError LEngine::init()
+{
+	RUNTIME_LOG("Initialising...")
+
+    //Initialization flag
+    eError err = eError::NoErr;
 
 	// Create the window
 	if (!ERROR_HAS_TYPE_FATAL(err))
@@ -183,9 +217,7 @@ eError LEngine::loop()
 	if (!ERROR_HAS_TYPE_FATAL(err))
 		err | m_renderThread.Spawn(this);
 
-	// Do the main SDL event loop
-	if (!ERROR_HAS_TYPE_FATAL(err))
-		err |= SDLInterface::EventLoop::DoLoop();
+	// Loop here in some form
 
 	// Remove any quit request error
 	REMOVE_ERR(err, eError::QuitRequest);
@@ -398,16 +430,16 @@ eError LEngine::SetWindowSize(int w, int h)
 //===============================================================
 int EngineThreadStart(void* data)
 {
-	DEBUG_LOG("GameThread Starting");
+	DEBUG_LOG("EngineThread Starting");
 	eError err = eError::NoErr;
 
 	// Grab the engine from the thread data
 	LEngine* thisEngine = (LEngine*)data;
 
 	// Run the game thread loop
-	err =thisEngine->run();
+	err =thisEngine->run_full();
 
-	DEBUG_LOG("GameThread Ending");
+	DEBUG_LOG("EngineThread Ending");
 	return (int)err;
 }
 

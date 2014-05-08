@@ -26,13 +26,13 @@ public:
 	LEngine();
 	~LEngine();
 
-	//! \brief run ( will not return until finished running )
-	//! Includes the full cycle
-	eError run_full();
+	//! \brief start the engine
+	eError start();
 
 	//! \brief run ( will not return until finished running )
-	//! start to run the engine, useful for seperate threads
-	eError run();
+	//! Includes the full cycle 
+	//! To be run from a seperate thread
+	eError run_full();
 
 	// Other functions
 
@@ -53,34 +53,41 @@ public:
 
 private:
 
+	//! \brief Init the engine
+	eError preInit();
+
 	// main engine run cycle functions (managed by run_full)
 
-	//! \brief Init the engine
-	eError init();
+		//! \brief Init the engine
+		eError init();
 
-		//! \brief Loads assets
-		eError load();
+		//! \brief run ( will not return until finished running )
+		eError run();
 
-		//! \brief calls the event loop	
-		eError loop();
 
-		//! \brief Pre-Update
-		eError PreUpdate();
+			//! \brief Loads assets
+			eError load();
 
-		//! \brief update the engine
-		eError Update(ms elapsed);
+			//! \brief calls the event loop	
+			eError loop();
 
-		//! \brief post-update
-		eError PostUpdate();
+			//! \brief Pre-Update
+			eError PreUpdate();
 
-		//! \brief Render the engine
-		eError Render();
+			//! \brief update the engine
+			eError Update(ms elapsed);
 
-		//! \brief unloads the assets
-		eError unload();
+			//! \brief post-update
+			eError PostUpdate();
 
-	//! \brief quit the engine
-	eError quit();
+			//! \brief Render the engine
+			eError Render();
+
+			//! \brief unloads the assets
+			eError unload();
+
+		//! \brief quit the engine
+		eError quit();
 	
 	// Various members for the Engine
 private:
