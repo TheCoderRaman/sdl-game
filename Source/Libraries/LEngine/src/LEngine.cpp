@@ -93,7 +93,7 @@ eError LEngine::run_full()
 
 	// Request the quit for the SDLEventLoop
 	// Note: by the point this is called ALL dependent code must have finished
-	SDLInterface::EventLoop::RequestQuit();
+	SDLInterface::EventLoop::SetSafeToQuit();
 
 	return err;
 }
@@ -243,10 +243,14 @@ eError LEngine::loop()
 		err | m_renderThread.Spawn(this);
 
 	// Spin while not quitting
-	while (!GetIsQuitting())
+	while ( !GetIsQuitting() 
+		&& !SDLInterface::EventLoop::GetIsQuitting() )
 	{
 		SDLInterface::Thread::Delay(10);
 	}
+
+	// Set that we're quiting now ( in the case that the event loop has quit )
+	RequestQuit();
 
 	// Remove any quit request error
 	REMOVE_ERR(err, eError::QuitRequest);

@@ -20,10 +20,47 @@ Uint32 s_iCustomFunctionEventType = 0;
 //! \brief boolean to check if we're currently event handling
 THREAD_LOCAL bool s_isCurrentlyEventHandling = false;
 
+//! \brief param to check if it is safe to quit
+bool s_isSafeToQuit = false;
+
+//! \brief member to show that the eventloop is quitting
+bool s_bQuitting					= false;
+
+// TODO: Implement atomic variables so we don't need this mutex
+//! \brief quit mutex
+SDLInterface::Mutex s_quitMutex	= SDLInterface::Mutex();
+
+//! \brief parameter to see if the eventloop is running
+bool s_isRunning = false;
+
 //========================================================
-// Member static
-bool SDLInterface::EventLoop::s_bQuitting					= false;
-SDLInterface::Mutex SDLInterface::EventLoop::s_quitMutex	= SDLInterface::Mutex();
+bool SDLInterface::EventLoop::IsSafeToQuit()
+{
+	bool bret;
+
+	// lock the mutex while grabbing the value
+	s_quitMutex.Lock();
+
+	bret = s_isSafeToQuit;
+
+	// unlock the mutex
+	s_quitMutex.Unlock();
+
+
+	return bret;
+}
+
+//========================================================
+void SDLInterface::EventLoop::SetSafeToQuit()
+{
+	// lock the mutex while grabbing the value
+	s_quitMutex.Lock();
+
+	s_isSafeToQuit = true;
+
+	// unlock the mutex
+	s_quitMutex.Unlock();
+}
 
 //========================================================
 bool SDLInterface::EventLoop::GetIsQuitting()
@@ -95,30 +132,25 @@ eError SDLInterface::EventLoop::DoLoop()
 	//Event handler
     SDL_Event event;
 
-	// Boolean to store the end
-	bool toEnd = false;
+	s_isRunning = true;
 
-	//Handle events on queue
-	while ( !toEnd )
+	// Handle events on queue
+	// End if there's a fatal error, or we've been told it's safe to quit
+	while (!(ERROR_HAS_TYPE_FATAL(err) || IsSafeToQuit()))
     {
 		// Wait for an event 
 		SDL_WaitEvent(&event);
 
 		// Handle the event
 		err |= HandleEvent(&event);
-		
-		// Check for quit request recieving
-		if (GetIsQuitting())
-			err |= eError::QuitRequest;
-
-		toEnd = ( ERROR_HAS_TYPE_FATAL(err)				// Fatal errors
-			|| ERROR_HAS(err, eError::QuitRequest));	// Quit requests
     }
 
 	REMOVE_ERR(err, eError::QuitRequest);
 
     if ( err != eError::NoErr )
     	DEBUG_LOG("DoLoop Dropped out with eError %i",err);
+
+	s_isRunning = false;
 
     return err;
 }
@@ -136,7 +168,7 @@ eError SDLInterface::EventLoop::HandleEvent(SDL_Event *event)
 	{
 		case SDL_QUIT:
 			DEBUG_LOG("SDL_QUIT recieved");
-			err |= eError::QuitRequest;
+			RequestQuit();
 			break;
 
 			// Keyboard events
@@ -349,10 +381,10 @@ eError SDLInterface::EventLoop::RunOnMainThread_Sync(eError& returnVal, TMainThr
 {
 	eError err = eError::NoErr;
 
-	// We must NOT be quitting at this point
-	// Any functions that call into here after the event loop is quitting
+	// We must be running at this point
+	// Any functions that call into here before or after we're running the event loop
 	// expose serious issues in call order
-	DEBUG_ASSERT(!GetIsQuitting());
+	DEBUG_ASSERT(s_isRunning);
 
 	// s_isCurrentlyEventHandling is thread local
 	// That means if this is true then we're on the main thread AND we're alread handling an event

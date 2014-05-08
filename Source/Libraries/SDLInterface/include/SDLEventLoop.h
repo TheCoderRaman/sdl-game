@@ -87,17 +87,16 @@ namespace SDLInterface
 		//! \brief get if the eventloop is quitting
 		static bool GetIsQuitting();
 
-		//! \brief request an eventloop quit
-		static void RequestQuit();
+		//! \brief set if we are safe to quite
+		static void SetSafeToQuit();
 
 	private:
 
-		//! \brief member to show that the eventloop is quitting
-		static bool s_bQuitting;
+		//! \brief get if we are safe to quite
+		static bool IsSafeToQuit();
 
-		// TODO: Implement atomic variables so we don't need this mutex
-		//! \brief quit mutex
-		static SDLInterface::Mutex s_quitMutex;
+		//! \brief request an eventloop quit
+		static void RequestQuit();
 
 	};
 
