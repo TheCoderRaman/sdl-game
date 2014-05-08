@@ -34,14 +34,9 @@ public:
 	//! \brief end the engine
 	eError End();
 
-	//! \brief run ( will not return until finished running )
-	//! Includes the full cycle 
-	//! To be run from a seperate thread
-	eError RunFull();
-
 	// Other functions
 
-	//! \brief the main render thread loop
+	//! \brief the main engine thread loop
 	eError EngineThreadLoop();
 
 	//! \brief the main render thread loop

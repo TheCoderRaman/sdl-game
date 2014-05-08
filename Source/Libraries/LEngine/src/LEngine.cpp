@@ -74,7 +74,7 @@ eError LEngine::Start()
 }
 
 //===============================================================
-eError LEngine::RunFull()
+eError LEngine::EngineThreadLoop()
 {
 	//Initialization flag
 	eError err = eError::NoErr;
@@ -480,7 +480,7 @@ int EngineThreadStart(void* data)
 	LEngine* thisEngine = (LEngine*)data;
 
 	// Run the game thread loop
-	err |= thisEngine->RunFull();
+	err |= thisEngine->EngineThreadLoop();
 
 	DEBUG_LOG("EngineThread Ending");
 	return (int)err;
