@@ -23,36 +23,36 @@ Uint32 s_iCustomFunctionEventType = 0;
 THREAD_LOCAL bool s_isCurrentlyEventHandling = false;
 
 //! \brief param to check if it is safe to quit
-std::atomic<bool> s_IsLoopEnding = false;
+std::atomic<bool> s_bEventLoopEnding = false;
 
 //! \brief member to show that the eventloop is quitting
-std::atomic<bool> s_bQuitting = false;
+std::atomic<bool> s_bEventLoopQuitRequested = false;
 
 //! \brief parameter to see if the eventloop is running
-std::atomic<bool> s_isRunning = false;
+std::atomic<bool> s_bEventLoopRunning = false;
 
 //========================================================
 bool SDLInterface::EventLoop::IsLoopEnding()
 {
-	return s_IsLoopEnding;
+	return s_bEventLoopEnding;
 }
 
 //========================================================
 void SDLInterface::EventLoop::EndLoop()
 {
-	s_IsLoopEnding = true;
+	s_bEventLoopEnding = true;
 }
 
 //========================================================
 bool SDLInterface::EventLoop::QuitHasBeenRequested()
 {
-	return s_bQuitting;
+	return s_bEventLoopQuitRequested;
 }
 
 //========================================================
 void SDLInterface::EventLoop::RequestQuit()
 {
-	s_bQuitting = true;
+	s_bEventLoopQuitRequested = true;
 }
 
 //========================================================
@@ -90,7 +90,7 @@ eError SDLInterface::EventLoop::DoLoop()
 	//Event handler
     SDL_Event event;
 
-	s_isRunning = true;
+	s_bEventLoopRunning = true;
 
 	// Handle events on queue
 	// End if there's a fatal error, or we've been told it's safe to quit
@@ -110,7 +110,7 @@ eError SDLInterface::EventLoop::DoLoop()
     if ( err != eError::NoErr )
     	DEBUG_LOG("DoLoop Dropped out with eError %i",err);
 
-	s_isRunning = false;
+	s_bEventLoopRunning = false;
 
     return err;
 }
@@ -344,7 +344,7 @@ eError SDLInterface::EventLoop::RunOnMainThread_Sync(eError& returnVal, TMainThr
 	// We must be running at this point
 	// Any functions that call into here before or after we're running the event loop
 	// expose serious issues in call order
-	DEBUG_ASSERT(s_isRunning);
+	DEBUG_ASSERT(s_bEventLoopRunning);
 
 	// s_isCurrentlyEventHandling is thread local
 	// That means if this is true then we're on the main thread AND we're alread handling an event
