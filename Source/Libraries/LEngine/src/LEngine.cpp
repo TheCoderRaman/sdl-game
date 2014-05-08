@@ -30,10 +30,7 @@
 
 //===============================================================
 LEngine::LEngine()
-: m_gameUpdateThread		( "Game" , GameThreadStart		)
-, m_renderThread			( "Render" , RenderThreadStart	)
-, m_engineThread			( "LEngine" , EngineThreadStart )
-, m_bQuitting				( false )
+: m_bQuitting				( false )
 {
 
 }
@@ -60,8 +57,9 @@ eError LEngine::Start()
 		err |= SDLInterface::EventLoop::Create();
 
 	// Spawn both the threads
+	SDLInterface::Thread engineThread("LEngine", EngineThreadStart);
 	if (!ERROR_HAS_TYPE_FATAL(err))
-		err | m_engineThread.Spawn(this);
+		err | engineThread.Spawn(this);
 
 	// Do the main SDL event loop
 	if (!ERROR_HAS_TYPE_FATAL(err))
@@ -72,7 +70,7 @@ eError LEngine::Start()
 	RequestQuit();
 
 	if (!ERROR_HAS_TYPE_FATAL(err))
-		err |= m_engineThread.Wait();
+		err |= engineThread.Wait();
 
 	return err;
 }
@@ -202,14 +200,17 @@ eError LEngine::Load()
 eError LEngine::Loop()
 {
 	eError err = eError::NoErr;
-	RUNTIME_LOG("Looping...")
+	RUNTIME_LOG("Looping...");
 
 	// Spawn both the threads
-	if (!ERROR_HAS_TYPE_FATAL(err))
-		err | m_gameUpdateThread.Spawn(this);
+	SDLInterface::Thread gameThread("LEngine", GameThreadStart);
+	SDLInterface::Thread renderThread("Render", RenderThreadStart);
 
 	if (!ERROR_HAS_TYPE_FATAL(err))
-		err | m_renderThread.Spawn(this);
+		err | gameThread.Spawn(this);
+
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err | renderThread.Spawn(this);
 
 	// Spin while not quitting
 	while ( !QuitHasBeenRequested() 
@@ -227,10 +228,10 @@ eError LEngine::Loop()
 	// Wait for all the threads to close off
 	// Do this regardless of Error state
 	if (!ERROR_HAS_TYPE_FATAL(err))
-		err |= m_renderThread.Wait();
+		err |= renderThread.Wait();
 
 	if (!ERROR_HAS_TYPE_FATAL(err))
-		err |= m_gameUpdateThread.Wait();
+		err |= gameThread.Wait();
 
     return err;
 }

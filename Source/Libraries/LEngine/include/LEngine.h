@@ -98,19 +98,6 @@ private:
 
 	//! \brief The Banana
 	LSprite					m_banana;
-
-
-	// The threads
-
-	//! \brief the engine thread
-	SDLInterface::Thread m_engineThread;
-
-	//! \brief the game update thread
-	SDLInterface::Thread m_gameUpdateThread;
-
-	//! \brief the render thread
-	SDLInterface::Thread m_renderThread;
-
 };
 
 // These functions must be anonymous to be called by a starting thread
