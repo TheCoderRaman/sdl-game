@@ -23,6 +23,7 @@ set (PROJECT_INCLUDE_DIR
 # Set the include directories for SDL
 if ( MSVC )
 	set (PROJECT_INCLUDE_DIR 
+		${PROJECT_INCLUDE_DIR}
 		${CMAKE_CURRENT_SOURCE_DIR}/../../../SDL2/include
 		${SDL2_INCLUDE_DIRS}
 	)

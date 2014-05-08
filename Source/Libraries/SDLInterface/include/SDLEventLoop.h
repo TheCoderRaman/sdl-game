@@ -79,9 +79,6 @@ namespace SDLInterface
 		//! This function will return instantly, with no wait, and give any error code if there was an issue
 		static eError RunOnMainThread_ASync(TMainThreadFunction func);
 
-		//! \brief accessor method to check if the EventLoop has finished
-		static eError GetHasFinished();
-
 	};
 
 }

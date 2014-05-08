@@ -20,29 +20,10 @@ Uint32 s_iCustomFunctionEventType = 0;
 //! \brief boolean to check if we're currently event handling
 THREAD_LOCAL bool s_isCurrentlyEventHandling = false;
 
-//! \brief boolean to store if the SDLEvent loop has finished
-bool s_hasFinished = false;
-
-//========================================================
-eError SDLInterface::EventLoop::GetHasFinished()
-{
-	// s_hasFinished really needs a lock around it, otherwise it's possible this could screw up major
-
-	eError err = eError::NoErr;
-
-	if (s_hasFinished)
-		err = eError::QuitRequest;
-
-	return err;
-}
-
 //========================================================
 eError SDLInterface::EventLoop::Create()
 {
 	eError err = eError::NoErr;
-
-	// Reset to ensure HadFinished is false
-	s_hasFinished = false;
 
 	// Register the custom event
 	if (s_iCustomFunctionEventType == 0)
@@ -86,9 +67,6 @@ eError SDLInterface::EventLoop::DoLoop()
 
     if ( err != eError::NoErr )
     	DEBUG_LOG("DoLoop Dropped out with eError %i",err);
-
-	// Set that the eventloop has finished
-	s_hasFinished = true;
 
     return err;
 }
@@ -319,13 +297,7 @@ eError SDLInterface::EventLoop::RunOnMainThread_Sync(eError& returnVal, TMainThr
 {
 	eError err = eError::NoErr;
 
-#if DEBUG_BUILD
-	// Debug sanity check here
-	if ( ERROR_HAS( GetHasFinished() , eError::QuitRequest ) )
-	{
-		DEBUG_LOG("WARNING - Methods being called into the main thread after the main thread has been destroyed");
-	}
-#endif
+	// TODO: Add check to make sure the event loop is running
 
 	// s_isCurrentlyEventHandling is thread local
 	// That means if this is true then we're on the main thread AND we're alread handling an event

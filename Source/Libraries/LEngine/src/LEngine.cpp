@@ -322,8 +322,8 @@ eError LEngine::RenderThreadLoop()
 		// grab the current time
 		frameTime = SDLInterface::Timer::GetGlobalLifetime();
 
-		// get if the EventLoop has finished
-		err |= SDLInterface::EventLoop::GetHasFinished();
+		// get if the engine has finished
+		//TODO: Check if the engine has a quit request
 
 		// Increment the framecounter
 		frameCounter++;
@@ -381,8 +381,8 @@ eError LEngine::GameThreadLoop()
 		// grab the current time
 		frameTime = SDLInterface::Timer::GetGlobalLifetime();
 
-		// get if the EventLoop has finished
-		err |= SDLInterface::EventLoop::GetHasFinished();
+		// get if the engine has finished
+		//TODO: Check if the engine has a quit request
 
 		// Increment the framecounter
 		frameCounter++;
