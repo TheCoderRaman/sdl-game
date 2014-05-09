@@ -85,11 +85,18 @@ eError SDLInterface::Thread::Detach()
 {
 	eError err = eError::NoErr;
 
+
 	// Sanity check
 	DEBUG_ASSERT(m_sdl_thread != nullptr);
 
+#ifndef LINUX_BUILD
 	// Detach the thread
 	SDL_DetachThread(m_sdl_thread);
+#else 
+	// for some unknown and weirdo reason SDL_DetachThread fails to link here
+	// on my ubuntu install. lo frikkin clue
+	DEBUG_ASSERT(nullptr);
+#endif
 
 	//invalidate the thread pointer
 	m_sdl_thread = nullptr;

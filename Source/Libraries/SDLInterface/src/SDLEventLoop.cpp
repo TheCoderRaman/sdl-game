@@ -20,16 +20,16 @@
 Uint32 s_iCustomFunctionEventType = 0;
 
 //! \brief boolean to check if we're currently event handling
-THREAD_LOCAL bool s_isCurrentlyEventHandling = false;
+THREAD_LOCAL bool s_isCurrentlyEventHandling(false);
 
 //! \brief param to check if it is safe to quit
-std::atomic<bool> s_bEventLoopEnding = false;
+std::atomic<bool> s_bEventLoopEnding(false);
 
 //! \brief member to show that the eventloop is quitting
-std::atomic<bool> s_bEventLoopQuitRequested = false;
+std::atomic<bool> s_bEventLoopQuitRequested(false);
 
 //! \brief parameter to see if the eventloop is running
-std::atomic<bool> s_bEventLoopRunning = false;
+std::atomic<bool> s_bEventLoopRunning(false);
 
 //========================================================
 bool SDLInterface::EventLoop::IsLoopEnding()

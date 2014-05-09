@@ -10,7 +10,7 @@ project( SDLInterface )
 # Package Search
 if ( NOT MSVC )
 	find_package(PkgConfig)
-	pkg_search_module( SDL2 REQUIRED SDL2 )
+	pkg_search_module( SDL2 REQUIRED sdl2 )
 	pkg_search_module( SDL2_IMAGE REQUIRED SDL2_image )
 endif() 
 

@@ -21,7 +21,6 @@
 
 #define ms_30FPS 33
 #define ms_60FPS 16
-#define ms_£0FPS 32
 
 #define WINDOW_WIDTH			720 
 #define WINDOW_HEIGHT			480

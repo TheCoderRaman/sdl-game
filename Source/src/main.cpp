@@ -31,7 +31,7 @@ int main( int argc, char* args[] )
 #endif
 
     // Create and run the engine
-    LEngine myEngine = LEngine();
+    LEngine myEngine;
 	
 	// Run the engine
 	err |= myEngine.Start();
