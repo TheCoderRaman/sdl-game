@@ -13,6 +13,7 @@
 
 // SDLInterface includes
 #include "SDLWindow.h"
+#include "SDLEventLoop.h"
 
 #include "SDL.h"
 #include "SDL_image.h"
@@ -38,8 +39,14 @@ eError SDLInterface::Surface::CreateFromBMP(const char* bmpFile)
 	// Sanity check
 	DEBUG_ASSERT(m_sdl_surface == nullptr);
 
-	// Get a surface from the BMP
-	m_sdl_surface = SDL_LoadBMP(bmpFile);
+	EventLoop::RunOnMainThread_Sync(err,
+	[&]()->eError
+	{
+		// Get a surface from the BMP
+		m_sdl_surface = SDL_LoadBMP(bmpFile);
+
+		return eError::NoErr;
+	});
 
 	// Error handling
 	if (m_sdl_surface == NULL)
@@ -59,8 +66,14 @@ eError SDLInterface::Surface::CreateFromFile(const char* file)
 	// Sanity check
 	DEBUG_ASSERT(m_sdl_surface == nullptr);
 
-	// Get a surface from the BMP
-	m_sdl_surface = IMG_Load(file);
+	EventLoop::RunOnMainThread_Sync(err,
+	[&]()->eError
+	{
+		// Get a surface from the BMP
+		m_sdl_surface = IMG_Load(file);
+
+		return eError::NoErr;
+	});
 
 	// Error handling
 	if (m_sdl_surface == NULL)
@@ -86,8 +99,14 @@ eError SDLInterface::Surface::CreateFromWindow(Window* window)
 	// Sanity check
 	DEBUG_ASSERT(sdlwindow != nullptr);
 
-	// Get the surface from the window
-	m_sdl_surface = SDL_GetWindowSurface(sdlwindow);
+	EventLoop::RunOnMainThread_Sync(err,
+	[&]()->eError
+	{
+		// Get the surface from the window
+		m_sdl_surface = SDL_GetWindowSurface(sdlwindow);
+
+		return eError::NoErr;
+	});
 
 	// Error handling
 	if (m_sdl_surface == NULL)
@@ -107,8 +126,14 @@ eError SDLInterface::Surface::Destroy()
 	// Sanity check
 	DEBUG_ASSERT(m_sdl_surface != nullptr);
 
-	// Free the SDL surface
-	SDL_FreeSurface(m_sdl_surface);
+	EventLoop::RunOnMainThread_Sync(err,
+	[&]()->eError
+	{
+		// Free the SDL surface
+		SDL_FreeSurface(m_sdl_surface);
+
+		return eError::NoErr;
+	});
 
 	m_sdl_surface = nullptr;
 

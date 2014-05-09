@@ -57,8 +57,14 @@ eError SDLInterface::Texture::Create(Renderer* renderer, const char* file)
 	// Sanity checks
 	DEBUG_ASSERT(sdlRenderer != nullptr);
 
-	// Create the texture
-	m_sdl_texture = SDL_CreateTextureFromSurface(sdlRenderer, Helper::GetSDL_Surface(&tempSurf));
+	EventLoop::RunOnMainThread_Sync(err,
+	[&]()->eError
+	{
+		// Create the texture
+		m_sdl_texture = SDL_CreateTextureFromSurface(sdlRenderer, Helper::GetSDL_Surface(&tempSurf));
+
+		return eError::NoErr;
+	});
 
 	// Error handling
 	if (m_sdl_texture == NULL)
@@ -81,16 +87,22 @@ eError SDLInterface::Texture::Create(Renderer* renderer,Surface* surface)
 	DEBUG_ASSERT(renderer != nullptr);
 	DEBUG_ASSERT(surface != nullptr);
 
-	// Grab the surface and renderer
-	SDL_Surface* sdlSurface = Helper::GetSDL_Surface(surface);
-	SDL_Renderer* sdlRenderer = Helper::GetSDL_Renderer(renderer);
+	EventLoop::RunOnMainThread_Sync(err,
+	[&]()->eError
+	{
+		// Grab the surface and renderer
+		SDL_Surface* sdlSurface = Helper::GetSDL_Surface(surface);
+		SDL_Renderer* sdlRenderer = Helper::GetSDL_Renderer(renderer);
 
-	// Sanity checks
-	DEBUG_ASSERT(sdlSurface != nullptr);
-	DEBUG_ASSERT(sdlRenderer != nullptr);
+		// Sanity checks
+		DEBUG_ASSERT(sdlSurface != nullptr);
+		DEBUG_ASSERT(sdlRenderer != nullptr);
 
-	// Create the texture
-	m_sdl_texture = SDL_CreateTextureFromSurface(sdlRenderer, sdlSurface);
+		// Create the texture
+		m_sdl_texture = SDL_CreateTextureFromSurface(sdlRenderer, sdlSurface);
+		
+		return eError::NoErr;
+	});
 
 	// Error handling
 	if (m_sdl_texture == NULL)
@@ -110,8 +122,14 @@ eError SDLInterface::Texture::Destroy()
 	// Sanity check
 	DEBUG_ASSERT(m_sdl_texture != nullptr);
 
-	// Destroy the texture
-	SDL_DestroyTexture(m_sdl_texture);
+	EventLoop::RunOnMainThread_Sync(err,
+	[&]()->eError
+	{
+		// Destroy the texture
+		SDL_DestroyTexture(m_sdl_texture);
+
+		return eError::NoErr;
+	});
 
 	m_sdl_texture = nullptr;
 
