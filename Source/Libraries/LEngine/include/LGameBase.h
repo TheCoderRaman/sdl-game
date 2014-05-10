@@ -10,10 +10,10 @@
 
 #include "types.h"
 #include "LObject.h"
+#include "LRenderer.h"
 
 //! \brief Base class for the Game, to be overloaded by the game specific class
 class LGameBase
-: public LObject
 {
 public:
 
@@ -22,7 +22,7 @@ public:
 	//! \brief destructor
 	~LGameBase();
 
-	//! \brief Inherited methods as defined in LObject.h
+	//! \brief Virtual methods, all BASE methods must call down into these
 	virtual eError Create();
 	virtual eError Initialise();
 	virtual eError PreUpdate();
@@ -34,11 +34,31 @@ public:
 	//! \brief static method to be declared in base class
 	static LGameBase* GetGame();
 
+	//! \brief get the renderer
+	inline LRenderer2D* GetRenderer();
+
+	//! \brief set the renderer
+	inline void SetRenderer(LRenderer2D* renderer);
+
 protected:
 
 
 private:
 
+	//! \brief pointer to the renderer
+	LRenderer2D* m_Renderer;
+
 };
+
+// Inline functions
+inline LRenderer2D* LGameBase::GetRenderer()
+{
+	return m_Renderer;
+}
+
+void LGameBase::SetRenderer(LRenderer2D* renderer)
+{
+	m_Renderer = renderer;
+}
 
 #endif //_LGAMEBASE_H_

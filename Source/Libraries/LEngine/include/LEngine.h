@@ -15,7 +15,6 @@
 
 #include "LObjectManager.h"
 #include "LRenderer.h"
-#include "LSprite.h"
 
 #include <atomic>
 
@@ -95,9 +94,6 @@ private:
 
 	//! \brief member to show that the engine is quitting
 	std::atomic<bool>		m_bQuitting;
-
-	//! \brief The Banana
-	LSprite					m_banana;
 };
 
 // These functions must be anonymous to be called by a starting thread
