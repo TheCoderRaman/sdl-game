@@ -18,9 +18,11 @@ union SDL_Event;
 namespace SDLInterface
 {
 
-	//! \brief Namespace for all SDL_Event related methods
+	//! \brief Class to manage the running of the SDL_Event Loop on the main thread
 	//! 
-	//! Handles the SDL_Event loop and fires off the events to appropriate deligates
+	//! Handles the SDL_Event loop
+	//! Allows for calling functions on it's thread
+	//! \warning the EventLoop MUST be run on the main thread
 	class EventLoop
 	{
 	public:

@@ -40,7 +40,7 @@ int main( int argc, char* args[] )
 	err |= myEngine.End();
     
 	// LOG the program exit parameter
-	RUNTIME_LOG("Program Exiting with error value %i", err);
+	RUNTIME_LOG("Program Exiting with error value 0x%08X", err);
 
 	// Assert here if we've had an error
 	DEBUG_ASSERT(err == eError::NoErr);
