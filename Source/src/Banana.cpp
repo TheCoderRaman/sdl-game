@@ -16,6 +16,8 @@ eError Banana::Create( void )
 
 	eError err = eError::NoErr;
 
+	m_iTimeElapsed = 100;
+
 	// Create the banana
 	err |= m_banana.Create( *GetRenderer(), "Media/banana.png" );
 
@@ -42,6 +44,15 @@ eError Banana::Initialise( void )
 
 eError Banana::Update( ms elapsed )
 {
+	m_iTimeElapsed += elapsed / 1.5;
+
+	if( m_iTimeElapsed > 700 )
+	{
+		m_iTimeElapsed = -450;
+	}
+
+	m_banana.SetPos( m_iTimeElapsed, 100 );
+
 	return eError::NoErr;
 }
 

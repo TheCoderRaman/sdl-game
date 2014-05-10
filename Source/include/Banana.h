@@ -31,5 +31,7 @@ public:
 private:
 
 	//! \brief The Banana
-	LSprite					m_banana;
+	LSprite		m_banana;
+
+	int			m_iTimeElapsed;
 };
