@@ -12,6 +12,8 @@
 
 #include "LEngine.h"	//! for the engine itself
 
+#include "GameOne.h"	//! for GameOne
+
 #ifdef WINDOWS_BUILD
 	#include <Windows.h>
 #endif
@@ -30,8 +32,11 @@ int main( int argc, char* args[] )
 	FreeConsole();
 #endif
 
+	// Create the game
+	GameOne myGame;
+
     // Create and run the engine
-    LEngine myEngine;
+	LEngine myEngine(myGame);
 	
 	// Run the engine
 	err |= myEngine.Start();

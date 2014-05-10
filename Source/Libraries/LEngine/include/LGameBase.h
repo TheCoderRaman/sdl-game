@@ -31,9 +31,6 @@ public:
 	virtual eError Reset();
 	virtual eError Destroy();
 
-	//! \brief static method to be declared in base class
-	static LGameBase* GetGame();
-
 	//! \brief get the renderer
 	inline LRenderer2D* GetRenderer();
 

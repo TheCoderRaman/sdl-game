@@ -15,6 +15,7 @@
 
 #include "LObjectManager.h"
 #include "LRenderer.h"
+#include "LGameBase.h"
 
 #include <atomic>
 
@@ -24,7 +25,7 @@ class LEngine
 public:
 
 	//! \brief Constructor and destructor
-	LEngine();
+	LEngine(LGameBase& game);
 	~LEngine();
 
 	//! \brief start the engine
@@ -53,6 +54,9 @@ public:
 	void RequestQuit();
 
 private:
+
+	// Cannot call the normal constructor
+	LEngine();
 
 	// main engine run cycle functions (managed by EngineThreadLoop)
 
@@ -94,6 +98,8 @@ private:
 
 	//! \brief member to show that the engine is quitting
 	std::atomic<bool>		m_bQuitting;
+
+	LGameBase&	m_myGame;
 };
 
 // These functions must be anonymous to be called by a starting thread

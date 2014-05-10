@@ -28,8 +28,9 @@
 #define DESIRED_FRAMETIME_MS	ms_60FPS
 
 //===============================================================
-LEngine::LEngine()
+LEngine::LEngine(LGameBase& game)
 : m_bQuitting				( false )
+, m_myGame					( game )
 {
 
 }
@@ -184,14 +185,14 @@ eError LEngine::Load()
     eError err = eError::NoErr;
 
 	// Set the games renderer
-	LGameBase::GetGame()->SetRenderer(&m_Renderer);
+	m_myGame.SetRenderer(&m_Renderer);
 
 	// Create the game
-    err |= LGameBase::GetGame()->Create();
+	err |= m_myGame.Create();
 
 	// Initialse the game
 	if (!ERROR_HAS_TYPE_FATAL(err))
-        err |= LGameBase::GetGame()->Initialise();
+		err |= m_myGame.Initialise();
 
 	// Initialise the objects
 	if( !ERROR_HAS_TYPE_FATAL( err ) )
@@ -248,10 +249,10 @@ eError LEngine::Unload()
 
 	// Destroy the game
 	if (!ERROR_HAS_TYPE_FATAL(err))
-		err |= LGameBase::GetGame()->Destroy();
+		err |= m_myGame.Destroy();
 
 	// Set the games renderer back to null
-	LGameBase::GetGame()->SetRenderer(nullptr);
+	m_myGame.SetRenderer(nullptr);
 
 	return err;
 }
@@ -261,7 +262,7 @@ eError LEngine::PreUpdate( void )
 {
 	eError err = eError::NoErr;
 
-	err |= LGameBase::GetGame()->PreUpdate();
+	err |= m_myGame.PreUpdate();
 
 	return err;
 }
@@ -275,7 +276,7 @@ eError LEngine::Update(ms elapsed)
 	err |=  m_ObjectManager.Update( elapsed );
 
 	// Update the game
-	err |= LGameBase::GetGame()->Update(elapsed);
+	err |= m_myGame.Update(elapsed);
 
 	return err;
 }
@@ -285,7 +286,7 @@ eError LEngine::PostUpdate( void )
 {
 	eError err = eError::NoErr;
 
-	err |= LGameBase::GetGame()->PostUpdate();
+	err |= m_myGame.PostUpdate();
 
 	return err;
 }

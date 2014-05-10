@@ -12,14 +12,6 @@
 #include "eError.h"
 
 //========================================================
-LGameBase* LGameBase::GetGame()
-{
-	// Lazy initialisation, 
-	static GameOne game;
-	return &game;
-}
-
-//========================================================
 GameOne::GameOne()
 {
 	// Note, game is lazily initialised, so do nothing non POD here
