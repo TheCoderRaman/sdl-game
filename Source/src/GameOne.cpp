@@ -30,19 +30,9 @@ eError GameOne::Create()
 
 	err |= LGameBase::Create();
 
-
-	// Create the banana
-	if (!ERROR_HAS_TYPE_FATAL(err))
-		err |= m_banana.Create(*GetRenderer(), "Media/banana.png");
-
-	// Set up the banana
-	m_banana.SetSourceRect({ 0, 0, 400, 300 });
-	m_banana.SetSize(400,300);
-	m_banana.SetPos(100,100);
-
-	// Add said banana to the renderer
-	if (!ERROR_HAS_TYPE_FATAL(err))
-		err |= GetRenderer()->AddRenderable(&m_banana);
+	// Setting up the banana object
+	m_banana.SetRenderer( GetRenderer() );
+	GetObjectManager()->RegisterObject( &m_banana );
 
  	return err;
 }
@@ -101,15 +91,6 @@ eError GameOne::Reset()
 eError GameOne::Destroy()
 {
  	eError err = eError::NoErr;
-
-	// Remove the banana from the renderer
-	if (!ERROR_HAS_TYPE_FATAL(err))
-		err |= GetRenderer()->RemoveRenderable(&m_banana);
-
-	// Destroy the banana
-	if (!ERROR_HAS_TYPE_FATAL(err))
-		err |= m_banana.Destroy();
-
 
 	err |= LGameBase::Destroy();
 

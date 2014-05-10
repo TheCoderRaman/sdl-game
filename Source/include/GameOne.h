@@ -12,7 +12,7 @@
 #include "LObject.h"
 #include "LSprite.h"
 
-#include "MyFirstGameObject.h"
+#include "Banana.h"
 
 #include "types.h"
 
@@ -37,10 +37,7 @@ public:
 
 private:
 
-	MyFirstGameObject m_myFirstObject;
-
-	//! \brief The Banana
-	LSprite					m_banana;
+	Banana m_banana;
 };
 
 

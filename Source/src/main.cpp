@@ -36,7 +36,7 @@ int main( int argc, char* args[] )
 	GameOne myGame;
 
     // Create and run the engine
-	LEngine myEngine(myGame);
+	LEngine myEngine( myGame );
 	
 	// Run the engine
 	err |= myEngine.Start();

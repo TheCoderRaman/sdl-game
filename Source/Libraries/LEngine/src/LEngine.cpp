@@ -184,11 +184,17 @@ eError LEngine::Load()
 	//Loading err flag
     eError err = eError::NoErr;
 
-	// Set the games renderer
-	m_myGame.SetRenderer(&m_Renderer);
+	// Set the game's renderer
+	m_myGame.SetRenderer( &m_Renderer );
+	// Set the game's object manager
+	m_myGame.SetObjectManager( &m_ObjectManager );
 
 	// Create the game
 	err |= m_myGame.Create();
+
+	// Initialise the objects
+	if( !ERROR_HAS_TYPE_FATAL( err ) )
+		err |= m_ObjectManager.Create();
 
 	// Initialse the game
 	if (!ERROR_HAS_TYPE_FATAL(err))
@@ -247,12 +253,18 @@ eError LEngine::Unload()
 {
 	eError err = eError::NoErr;
 
+	// Destroy the objects
+	if( !ERROR_HAS_TYPE_FATAL( err ) )
+		err |= m_ObjectManager.Destroy();
+
 	// Destroy the game
-	if (!ERROR_HAS_TYPE_FATAL(err))
+	if ( !ERROR_HAS_TYPE_FATAL( err ) )
 		err |= m_myGame.Destroy();
 
 	// Set the games renderer back to null
 	m_myGame.SetRenderer(nullptr);
+
+
 
 	return err;
 }

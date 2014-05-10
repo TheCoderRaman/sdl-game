@@ -10,7 +10,9 @@
 
 #include "types.h"
 #include "LObject.h"
+#include "LObjectManager.h"
 #include "LRenderer.h"
+
 
 //! \brief Base class for the Game, to be overloaded by the game specific class
 class LGameBase
@@ -32,10 +34,12 @@ public:
 	virtual eError Destroy();
 
 	//! \brief get the renderer
-	inline LRenderer2D* GetRenderer();
+	inline LRenderer2D*		GetRenderer();
+	inline LObjectManager*	GetObjectManager();
 
 	//! \brief set the renderer
-	inline void SetRenderer(LRenderer2D* renderer);
+	inline void SetRenderer( LRenderer2D* renderer );
+	inline void SetObjectManager( LObjectManager* pObjMan );
 
 protected:
 
@@ -43,7 +47,8 @@ protected:
 private:
 
 	//! \brief pointer to the renderer
-	LRenderer2D* m_Renderer;
+	LRenderer2D*	m_Renderer;
+	LObjectManager* m_ObjectManager;
 
 };
 
@@ -53,9 +58,19 @@ inline LRenderer2D* LGameBase::GetRenderer()
 	return m_Renderer;
 }
 
+inline LObjectManager* LGameBase::GetObjectManager()
+{
+	return m_ObjectManager;
+}
+
 void LGameBase::SetRenderer(LRenderer2D* renderer)
 {
 	m_Renderer = renderer;
+}
+
+void LGameBase::SetObjectManager( LObjectManager* pObjMan )
+{
+	m_ObjectManager = pObjMan;
 }
 
 #endif //_LGAMEBASE_H_
