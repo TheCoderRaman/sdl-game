@@ -99,6 +99,7 @@ private:
 	//! \brief member to show that the engine is quitting
 	std::atomic<bool>		m_bQuitting;
 
+	//! \brief The game the engine will be using
 	LGameBase&	m_myGame;
 };
 

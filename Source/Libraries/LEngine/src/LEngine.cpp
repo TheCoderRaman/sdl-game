@@ -1,4 +1,4 @@
-//! \file EventLoop.cpp
+//! \file LEngine.cpp
 //!
 //! \author  Marc Di luzio
 //! \date    April 2014
