@@ -1,9 +1,9 @@
-//! \file EventLoop.h
+//! \file SDLEventLoop.h
 //!
 //! \author  Marc Di luzio
 //! \date    April 2014
 //!
-//! Header for EventLoop.cpp
+//! Header for SDLEventLoop.cpp
 //!
 #ifndef _SDLEVENTLOOP_H_
 #define _SDLEVENTLOOP_H_
@@ -39,7 +39,9 @@ namespace SDLInterface
 		//! Handles all SDL_Event types and calls down to deligate methods
 		//!
 		//! \return Any eError produced
-		//! \warning this method will not return until SDL_Quit is sent, or a fatal error is encountered
+		//! \warning this function will not return until SDL_Quit is sent, or a fatal error is encountered
+		//! \warning this function MUST be run on the main thread
+		//! \warning this function MUST be running for most other SDLInterface functionality to work
 		static eError DoLoop();
 
 		//! \brief Ask the event loop to end
@@ -48,28 +50,6 @@ namespace SDLInterface
 		//! \brief Handle any event
 		//! \return Any eError produced
 		static eError HandleEvent(SDL_Event *event);
-
-		//! \brief Handle any keyboard related event
-		//! \return Any eError produced
-		static eError HandleKeyboardEvent(SDL_Event *event);
-
-		//! \brief Handle any Mouse related event
-		//! \return Any eError produced
-		static eError HandleMouseEvent(SDL_Event *event);
-
-		//! \brief Handle any Window related event
-		//! \return Any eError produced
-		static eError HandleWindowEvent(SDL_Event *event);
-
-		//! \brief Handle any Joystick related event
-		//! \return Any eError produced
-		//! \sa HandleControllerEvent as these two are pretty related
-		static eError HandleJoystickEvent(SDL_Event *event);
-
-		//! \brief Handle any Controller related event
-		//! \return Any eError produced
-		//! \sa HandleJoystickEvent as these two are pretty related
-		static eError HandleControllerEvent(SDL_Event *event);
 
 		//! \brief Handle a custom function event
 		static eError HandleCustomFunctionEvent(SDL_Event *event);
