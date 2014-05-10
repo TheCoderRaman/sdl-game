@@ -17,7 +17,7 @@ typedef long ms;
 //! \brief the thread local define
 #ifdef WINDOWS_BUILD
 #define THREAD_LOCAL __declspec(thread) 
-#elif defined LINUX_BUILD
+#elif defined UNIX_BUILD
 #define THREAD_LOCAL __thread
 #else
 #error "not known platform"

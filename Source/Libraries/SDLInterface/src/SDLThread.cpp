@@ -89,7 +89,7 @@ eError SDLInterface::Thread::Detach()
 	// Sanity check
 	DEBUG_ASSERT(m_sdl_thread != nullptr);
 
-#ifndef LINUX_BUILD
+#ifndef UNIX_BUILD
 	// Detach the thread
 	SDL_DetachThread(m_sdl_thread);
 #else 
