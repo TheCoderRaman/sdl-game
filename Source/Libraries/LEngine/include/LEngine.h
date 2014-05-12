@@ -14,6 +14,7 @@
 #include "SDLThread.h"
 
 #include "LObjectManager.h"
+#include "LInput.h"
 #include "LRenderer.h"
 #include "LGameBase.h"
 
@@ -95,6 +96,9 @@ private:
 
 	//! \brief The Object Manager
 	LObjectManager			m_ObjectManager;
+
+	//! \brief The InputManager
+	LInput					m_InputManager;
 
 	//! \brief member to show that the engine is quitting
 	std::atomic<bool>		m_bQuitting;

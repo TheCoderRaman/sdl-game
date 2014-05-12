@@ -82,14 +82,74 @@ eError SDLInterface::EventHandling::HandleEvent(SDL_Event *event)
 }
 
 //========================================================
-eError SDLInterface::EventHandling::HandleKeyboardEvent(SDL_Event *event)
+eError SDLInterface::EventHandling::HandleKeyboardEvent( SDL_Event *event )
 {
 	eError err = eError::NoErr;
 
-	/*
-	case SDL_KEYUP:
-	case SDL_KEYDOWN:
-	*/
+	eSDLKeyInterface eKeyPressed = eSDLKeyInterface::key_invalid;
+
+	// Converts input from SDL-data to engine-data
+	switch( event->key.keysym.sym )
+	{
+		// Numbahs
+		case SDLK_0:
+			eKeyPressed = eSDLKeyInterface::key_0;
+			break;
+		case SDLK_1:
+			eKeyPressed = eSDLKeyInterface::key_1;
+			break;
+		case SDLK_2:
+			eKeyPressed = eSDLKeyInterface::key_2;
+			break;
+		case SDLK_3:
+			eKeyPressed = eSDLKeyInterface::key_3;
+			break;
+		case SDLK_4:
+			eKeyPressed = eSDLKeyInterface::key_4;
+			break;
+		case SDLK_5:
+			eKeyPressed = eSDLKeyInterface::key_5;
+			break;
+		case SDLK_6:
+			eKeyPressed = eSDLKeyInterface::key_6;
+			break;
+		case SDLK_7:
+			eKeyPressed = eSDLKeyInterface::key_7;
+			break;
+		case SDLK_8:
+			eKeyPressed = eSDLKeyInterface::key_8;
+			break;
+		case SDLK_9:
+			eKeyPressed = eSDLKeyInterface::key_9;
+			break;
+
+		// Speshul
+		case SDLK_ESCAPE:
+			eKeyPressed = eSDLKeyInterface::key_escape;
+			break;
+		case SDLK_RETURN:
+			eKeyPressed = eSDLKeyInterface::key_return;
+			break;
+		case SDLK_SPACE:
+			eKeyPressed = eSDLKeyInterface::key_space;
+			break;
+
+		// Movan
+		case SDLK_UP:
+			eKeyPressed = eSDLKeyInterface::key_up;
+			break;
+		case SDLK_DOWN:
+			eKeyPressed = eSDLKeyInterface::key_down;
+			break;
+		case SDLK_LEFT:
+			eKeyPressed = eSDLKeyInterface::key_left;
+			break;
+		case SDLK_RIGHT:
+			eKeyPressed = eSDLKeyInterface::key_right;
+			break;
+	}
+
+	SDLInterface::EventHandling::GetKeyboardEvents()->AddKeyboardEvent( eKeyPressed );
 
 	return err;
 }
@@ -171,4 +231,10 @@ eError SDLInterface::EventHandling::HandleWindowEvent(SDL_Event *event)
 		break;
 	}
 	return err;
+}
+
+SDLInterface::SDLKeyboardEvents* SDLInterface::EventHandling::GetKeyboardEvents( void )
+{
+	static SDLInterface::SDLKeyboardEvents m_KeyboardEventsThisFrame;
+	return &m_KeyboardEventsThisFrame;
 }

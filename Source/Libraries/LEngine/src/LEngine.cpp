@@ -188,6 +188,8 @@ eError LEngine::Load()
 	m_myGame.SetRenderer( &m_Renderer );
 	// Set the game's object manager
 	m_myGame.SetObjectManager( &m_ObjectManager );
+	// Set the game's input manager
+	m_myGame.SetInputManager( &m_InputManager );
 
 	// Create the game
 	err |= m_myGame.Create();
@@ -264,8 +266,6 @@ eError LEngine::Unload()
 	// Set the games renderer back to null
 	m_myGame.SetRenderer(nullptr);
 
-
-
 	return err;
 }
 
@@ -273,6 +273,9 @@ eError LEngine::Unload()
 eError LEngine::PreUpdate( void )
 {
 	eError err = eError::NoErr;
+
+	// Poll the keyboard now for the current frame's inputs
+	m_InputManager.StartKeyboardUpdate();
 
 	err |= m_myGame.PreUpdate();
 
@@ -297,6 +300,9 @@ eError LEngine::Update(ms elapsed)
 eError LEngine::PostUpdate( void )
 {
 	eError err = eError::NoErr;
+
+	// Push the current frame's inputs to last frame's and clear this frame's key buffer
+	m_InputManager.EndKeyboardUpdate();
 
 	err |= m_myGame.PostUpdate();
 

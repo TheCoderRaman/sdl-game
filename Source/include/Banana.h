@@ -28,6 +28,13 @@ public:
 
 	virtual eError Render( LRenderer2D* renderer );
 
+	void MoveBananaUpAFrame();
+	void MoveBananaLeftAFrame();
+	void MoveBananaRightAFrame();
+	void MoveBananaDownAFrame();
+
+	void SetPos( int x, int y );
+
 private:
 
 	//! \brief The Banana

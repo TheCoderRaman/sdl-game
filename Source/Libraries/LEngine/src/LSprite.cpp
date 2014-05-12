@@ -50,6 +50,8 @@ eError LSprite::SetSourceRect(const SDLInterface::Rect& rect)
 	return err;
 }
 
+
+
 //===============================================================
 eError LSprite::SetPos(int x, int y)
 {
@@ -60,6 +62,33 @@ eError LSprite::SetPos(int x, int y)
 	m_destRect.y = y;
 
 	return err;
+}
+
+
+//===============================================================
+eError LSprite::SetResetPos( int x, int y )
+{
+	eError err = eError::NoErr;
+
+	startX = x;
+	startY = y;
+
+	m_destRect.x = x;
+	m_destRect.y = y;
+
+	return err;
+}
+
+//===============================================================
+int LSprite::GetXPos()
+{
+	return m_destRect.x;
+}
+
+//===============================================================
+int LSprite::GetYPos()
+{
+	return m_destRect.y;
 }
 
 //===============================================================

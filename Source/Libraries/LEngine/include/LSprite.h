@@ -34,8 +34,15 @@ public:
 	//! \brief set the source rectangle from the texture
 	eError SetSourceRect(const SDLInterface::Rect& rect);
 
+	//! \brief set this as the reset location eventually
+	eError SetResetPos( int x, int y );
+
 	//! \brief set the sprite position
 	eError SetPos(int x, int y);
+
+	int GetXPos();
+
+	int GetYPos();
 
 	//! \brief set the sprite size
 	eError SetSize(int w, int h);
@@ -59,6 +66,10 @@ private:
 
 	//! \brief the filename
 	const char* m_pchFileName;
+
+	//! \brief The reset position of this sprite
+	int startX;
+	int startY;
 
 };
 

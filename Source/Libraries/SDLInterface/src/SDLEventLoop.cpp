@@ -99,7 +99,7 @@ eError SDLInterface::EventLoop::DoLoop()
     {
 		// Wait for an event with a timout of 10
 		// timeout ensures we can quit
-		const int ret = SDL_WaitEventTimeout(&event,10);
+		const int ret = SDL_WaitEventTimeout( &event, 10 );
 
 		// Handle the event
 		if (ret > 0)

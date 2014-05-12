@@ -8,6 +8,7 @@
 #include "GameOne.h"
 
 #include "LObjectManager.h"
+#include "LInput.h"
 
 #include "eError.h"
 
@@ -63,6 +64,26 @@ eError GameOne::Update(ms elapsed)
  	eError err = eError::NoErr;
 
 	err |= LGameBase::Update(elapsed);
+
+	if( LGameBase::GetInputManager() )
+	{
+		if( LGameBase::GetInputManager()->GetButtonJustPressed( LInput::eInputType::up ) )
+		{
+			m_banana.MoveBananaUpAFrame();
+		}
+		if( LGameBase::GetInputManager()->GetButtonJustPressed( LInput::eInputType::down ) )
+		{
+			m_banana.MoveBananaDownAFrame();
+		}
+		if( LGameBase::GetInputManager()->GetButtonJustPressed( LInput::eInputType::left ) )
+		{
+			m_banana.MoveBananaLeftAFrame();
+		}
+		if( LGameBase::GetInputManager()->GetButtonJustPressed( LInput::eInputType::right ) )
+		{
+			m_banana.MoveBananaRightAFrame();
+		}
+	}
 
  	return err;
 }

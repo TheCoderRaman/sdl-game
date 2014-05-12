@@ -42,16 +42,43 @@ eError Banana::Initialise( void )
 	return err;
 }
 
+void Banana::SetPos( int x, int y )
+{
+	m_banana.SetPos( x, y );
+}
+
+void Banana::MoveBananaDownAFrame( void )
+{
+	m_banana.SetPos( m_banana.GetXPos(), m_banana.GetYPos() + 20 );
+}
+
+void Banana::MoveBananaUpAFrame( void )
+{
+	m_banana.SetPos( m_banana.GetXPos(), m_banana.GetYPos() - 20 );
+}
+
+void Banana::MoveBananaLeftAFrame( void )
+{
+	m_banana.SetPos( m_banana.GetXPos() - 20, m_banana.GetYPos() );
+}
+
+void Banana::MoveBananaRightAFrame( void )
+{
+	m_banana.SetPos( m_banana.GetXPos() + 20, m_banana.GetYPos() );
+}
+
 eError Banana::Update( ms elapsed )
 {
-	m_iTimeElapsed += elapsed / 1.5;
+	m_iTimeElapsed += (int) elapsed / 1.5;
 
 	if( m_iTimeElapsed > 700 )
 	{
 		m_iTimeElapsed = -450;
 	}
 
-	m_banana.SetPos( m_iTimeElapsed, 100 );
+//	m_banana.SetPos( m_iTimeElapsed, 100 );
+
+
 
 	return eError::NoErr;
 }
