@@ -16,6 +16,36 @@
 
 #include "types.h"
 
+#include "LEvents.h"
+
+enum eGameEventType
+{
+	Event_One,
+	Event_Two,
+	Event_Three,
+};
+
+union uGameEventData
+{
+	struct one
+	{
+		int x;
+		int y;
+	};
+
+	struct two
+	{
+		float i;
+		float y;
+	};
+
+	struct three
+	{
+		int array[4];
+		float value;
+	};
+};
+
 //! \brief an Example game, called "One"
 class GameOne
 : public LGameBase
@@ -41,6 +71,9 @@ private:
 
 	//! \brief The Banana
 	LSprite					m_banana;
+
+	//! \brief The Game Event Manager
+	LEventManager<eGameEventType, uGameEventData> m_EventManager;
 };
 
 

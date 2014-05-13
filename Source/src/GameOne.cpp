@@ -30,6 +30,8 @@ eError GameOne::Create()
 
 	err |= LGameBase::Create();
 
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err |= m_EventManager.Create();
 
 	// Create the banana
 	if (!ERROR_HAS_TYPE_FATAL(err))
@@ -110,6 +112,8 @@ eError GameOne::Destroy()
 	if (!ERROR_HAS_TYPE_FATAL(err))
 		err |= m_banana.Destroy();
 
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err |= m_EventManager.Destroy();
 
 	err |= LGameBase::Destroy();
 
