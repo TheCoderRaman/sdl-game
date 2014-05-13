@@ -11,7 +11,7 @@
 #include "types.h"
 
 //! \brief convert ms to seconds
-#define msToSec(ms) (ms/1000)
+#define msToSec(ms) ((float)ms/(float)1000)
 
 //! \brief convert ms to seconds
 #define secToMS(ms) (ms*1000)
