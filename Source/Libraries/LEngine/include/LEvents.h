@@ -10,6 +10,7 @@
 
 #include "types.h"
 #include "eError.h"
+#include "debug.h"
 
 // SDL functions needed 
 #include "SDLThread.h"	// For the EventLoop thread, if wanted
@@ -75,6 +76,12 @@ public:
 	//! \brief typedef for the event listener used by this event manager
 	typedef LEventListener<TEventData>		TListener;
 
+	//! \brief pair of event type and listener
+	typedef std::pair< TEventType, TListener* >		TTypeListenerPair;
+
+	//! \brief typedef for the listener map
+	typedef std::multimap < TEventType, TListener* > TListenerMap;
+
 public:
 
 // Creation and Destruction
@@ -104,6 +111,7 @@ public:
 	//! \brief Get the number of events in the current queue
 	int GetNumEvents();
 
+
 // Event Sending methods
 
 	//! \brief Send an event by event
@@ -128,6 +136,9 @@ private:
 	//! \brief Add an event to the event queue
 	eError AddEventToQueue(TEvent& event);
 
+	//! \brief Pop an event off the queue
+	eError PopEventOffQueue(TEvent& event);
+
 	//! \brief Delegate an event to it's listeners
 	eError DelegateEvent(TEvent& event);
 
@@ -142,7 +153,7 @@ private:
 	SDLInterface::Mutex									m_QueueMutex;
 
 	//! \brief the map of event type to event listeners 
-	std::map < TEventType, std::vector<TListener*> >	m_ListenerMap;
+	TListenerMap										m_ListenerMap;
 
 	//! \brief A mutex for the Listener map
 	SDLInterface::Mutex									m_ListenerMapMutex;
@@ -188,6 +199,61 @@ eError LEventManager< typename TEventType, typename TEventData >::Destroy()
 
 	if (!ERROR_HAS_TYPE_FATAL(err))
 		m_QueueMutex.Destroy();
+
+	return err;
+}
+
+//===============================================================
+template< typename TEventType, typename TEventData >
+eError LEventManager< typename TEventType, typename TEventData >::AddEventToQueue(TEvent& event)
+{
+	eError err = eError::NoErr;
+
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		m_QueueMutex.Lock();
+
+	// TODO: Assert the queue size
+
+	m_Queue.push_back(event);
+
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		m_QueueMutex.Unlock();
+
+	return err;
+}
+
+//! \brief Add a listener to an event type
+template< typename TEventType, typename TEventData >
+eError LEventManager< typename TEventType, typename TEventData >::AddListener(TEventType type, TListener* listener)
+{
+	eError err = eError::NoErr;
+
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		m_ListenerMapMutex.Lock();
+
+	// TODO: Assert the listener map size
+	m_ListenerMap.insert(TTypeListenerPair(type, listener));
+
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		m_ListenerMapMutex.Unlock();
+
+	return err;
+}
+
+//! \brief Remove a listener from an event type
+template< typename TEventType, typename TEventData >
+eError LEventManager< typename TEventType, typename TEventData >::RemoveListener(TEventType type, TListener* listener)
+{
+	eError err = eError::NoErr;
+
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		m_ListenerMapMutex.Lock();
+
+	// TODO: Assert the listener map size
+	m_ListenerMap.erase(TTypeListenerPair(type, listener));
+
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		m_ListenerMapMutex.Unlock();
 
 	return err;
 }
