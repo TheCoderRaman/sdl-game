@@ -104,17 +104,6 @@ public:
 	//! \brief Get the number of events in the current queue
 	int GetNumEvents();
 
-	//! \brief Launch an event thread (alternative to FlushEvents or GetEvent)
-	//! this function launches a new event thread and returns instantly
-	//! the new thread will constantly handle and delegate events
-	//! the new thread can be accessed from this Event Manager
-	//! \warning ALL event delegates from this event thread will need to be thread safe
-	eError LaunchEventThread();
-
-	//! \brief Stop that event thread in it's tracks
-	//! will by default force the stop and not wait to finish delegating events
-	eError StopEventThread(bool force /* = true */ );
-
 // Event Sending methods
 
 	//! \brief Send an event by event
@@ -157,22 +146,13 @@ private:
 
 	//! \brief A mutex for the Listener map
 	SDLInterface::Mutex									m_ListenerMapMutex;
-
-	//! \brief The thread that can run the full event loop
-	SDLInterface::Thread								m_Thread;
-
-	//! \brief Parameter to check if event thread is to end
-	std::atomic_bool									m_toQuit;
 };
 
 //===============================================================
 template< typename TEventType, typename TEventData >
 LEventManager< typename TEventType, typename TEventData >::LEventManager()
 {
-	// Set initial parameters
 
-	// atomic_bool must be set, cannot be directly initialised
-	m_toQuit = false;
 }
 
 //===============================================================
