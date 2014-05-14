@@ -34,50 +34,31 @@ enum { eMaxEvents = 32 };
 //! \brief The maximum number of listerners to a single event type
 enum { eMacListeners = 8 };
 
-
-//! \brief the base untyped LEventManager
-//! This allows a set of private functions to be defined in a cpp file
-//! Most of eveything here is protected, to ensure that only the subclass can use it
-//! Put any EventManager function that is generic and does not need to be templated here
-class LEventManagerBase
-{
-protected:
-
-	LEventManagerBase();
-	~LEventManagerBase();
-
-};
-
-//! \brief The event type
-template< typename TEventType, typename TEventData >
-struct LEvent
-{
-	TEventType type; //! the type of the event
-	TEventData data; //! the data for the event
-};
-
-//! \brief the event Listener type
-template< typename TEventType, typename TEventData >
-struct LEventHandler
-{	
-	std::function< eError( LEvent<TEventType, TEventData>* ) >	function;
-};
-
 //! \brief The parent templated event manager
 //! This can be used to send and recieve events of a certain type
 template< typename TEventType, typename TEventData >
 class LEventManager
-	: public LEventManagerBase
 {
 public:
 
-//! Load of typedefs to help readability
+// Internal types
 
 	//! \brief typedef for the templated event type 
-	typedef LEvent<TEventType, TEventData>			TEvent;
+	struct TEvent
+	{
+		TEventType type; //! the type of the event
+		TEventData data; //! the data of the event
+	};
 
-	//! \brief typedef for the event listener used by this event manager
-	typedef LEventHandler<TEventType,TEventData>	THandler;
+	//! \brief The event Handler
+	struct THandler
+	{
+		//! \brief internal function that will be called on event handling
+		std::function< eError(TEvent*) >	function;
+	};
+
+
+//! couple of typedefs to help readability
 
 	//! \brief pair of event type and listener
 	typedef std::pair< TEventType, THandler* >		TTypeListenerPair;

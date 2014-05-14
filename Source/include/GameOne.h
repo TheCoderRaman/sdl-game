@@ -46,6 +46,8 @@ union uGameEventData
 	} three;
 };
 
+typedef LEventManager<eGameEventType, uGameEventData> TGameEventManager;
+
 //! \brief an Example game, called "One"
 class GameOne
 : public LGameBase
@@ -73,9 +75,9 @@ private:
 	LSprite					m_banana;
 
 	//! \brief The Game Event Manager
-	LEventManager<eGameEventType, uGameEventData> m_EventManager;
+	TGameEventManager m_EventManager;
 
-	LEventHandler<eGameEventType,uGameEventData> m_eventHandler;
+	TGameEventManager::THandler m_eventHandler;
 };
 
 

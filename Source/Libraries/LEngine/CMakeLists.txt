@@ -36,7 +36,6 @@ SET(PROJECT_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/src/LObjectManager.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/LRenderer.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/LSprite.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/src/LEvents.cpp
 )
 
 #-----------------------------------------------------------------

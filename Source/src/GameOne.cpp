@@ -14,7 +14,7 @@
 //========================================================
 GameOne::GameOne()
 {
-	// Note, game is lazily initialised, so do nothing non POD here
+
 }
 
 //========================================================
@@ -46,7 +46,7 @@ eError GameOne::Create()
 	if (!ERROR_HAS_TYPE_FATAL(err))
 		err |= GetRenderer()->AddRenderable(&m_banana);
 
-	m_eventHandler.function = [&](LEvent<eGameEventType,uGameEventData>* data)->eError 
+	m_eventHandler.function = [&](TGameEventManager::TEvent* data)->eError
 	{ 
 		int i = data->data.one.x;
 		return eError::NoErr; 
