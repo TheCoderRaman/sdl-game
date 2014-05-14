@@ -55,30 +55,36 @@ void multimap_remove_pair(std::multimap<TKey, TKeyVal>& tMap, const TKeyVal val,
 
 
 template< typename TKey, typename TKeyVal >
-void multimap_visit_all(std::multimap<TKey, TKeyVal>& tMap, std::function<void(TKey, TKeyVal)> func)
+void multimap_visit_all(std::multimap<TKey, TKeyVal>& tMap, std::function<eError(TKey, TKeyVal)> func)
 {
-	for (std::multimap<TKey, TKeyVal>::iterator it = tMap.begin(); it != tMap.end(); it++)
-	{
+	typedef std::multimap<TKey, TKeyVal> TMap;
 
+	for (TMap::iterator it = tMap.begin(); it != tMap.end(); it++)
+	{
+		func(it->first,it->second);
 	}
 }
 
 template< typename TKey, typename TKeyVal >
-void multimap_visit_all(std::multimap<TKey, TKeyVal>& tMap, TKey key)
+eError multimap_visit_all(std::multimap<TKey, TKeyVal>& tMap, TKey key, std::function<eError(TKeyVal)> func)
 {
+	eError err = eError::NoErr;
+
 	typedef std::multimap<TKey, TKeyVal> TMap;
 
 	std::pair<TMap::iterator, TMap::iterator> iterPair = tMap.equal_range(key);
 
 	for (TMap::iterator it = iterPair.first; it != iterPair.second; ++it)
 	{
-
+		err |= func(it->second);
 	}
+
+	return err;
 		
 }
 
 template< typename TKey, typename TKeyVal >
-void multimap_visit_all(std::multimap<TKey, TKeyVal>& tMap, int val)
+void multimap_visit_all(std::multimap<TKey, TKeyVal>& tMap, int val, std::function<eError(TKey, TKeyVal)> func)
 {
 	typedef std::multimap<TKey, TKeyVal> TMap;
 
@@ -87,7 +93,7 @@ void multimap_visit_all(std::multimap<TKey, TKeyVal>& tMap, int val)
 	{
 		if (it->second == val)
 		{
-
+			func(it->first, it->second);
 		}
 	}
 }

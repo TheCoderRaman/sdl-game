@@ -22,12 +22,14 @@ enum class eError : int
 
 	//  eError catagories    3rd and 4th bits for eError catagoreis
 	Catagory_SDL	= 0x00100000, 	// SDL flag
+	Catagory_Events = 0x00200000, 	// SDL flag
 
 	// 	Specific Errors     Last 4 bits for specific errors
 	QuitRequest		= 0x00000001,
 
 	//  Composite Errors (Errors produced as a composite of type, catagory and/or specifics)
 	SDL_Fatal		= 0x10100000,	// Contains Fatal eError AND SDL catagory
+	Event_Warning	= 0x20200000,	// Contains Fatal eError AND SDL catagory
 
 	// ALL errors
 	All = 0x11111111,

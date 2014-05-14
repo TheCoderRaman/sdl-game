@@ -84,6 +84,15 @@ eError GameOne::Update(ms elapsed)
 
 	err |= LGameBase::Update(elapsed);
 
+	uGameEventData data;
+	data.one.x = 2;
+
+	m_EventManager.SendEvent(eGameEventType::Event_One, data);
+	m_EventManager.SendEvent(eGameEventType::Event_Three, data);
+
+	// flush the events
+	m_EventManager.FlushEvents();
+
  	return err;
 }
 
