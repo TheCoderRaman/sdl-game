@@ -3,18 +3,39 @@
 //! \author  Marc Di luzio
 //! \date    May 2014
 //!
-//! Header for LEvents.cpp
+//! Definition for the templated LEvents system
+//! At first, this may look massively complicated, but I've tried to comment
+//! as much as possible, and at it's heart it's really just a very simple system
+//!
+//!	The user can create an event system with their own event types and event data
+//! ie. 
+//! typedef LEventManager<typeEnum,dataType> TMyEventSystem;
+//! TMyEventSystem m_EventSystem;
+//!	
+//!	The user can then add "Handlers" to this system
+//!	TMyEventSystem::THandler m_EventHandler;
+//! m_EventHandler.function = [](TMyEventSystem::TEvent*)->eError 
+//! {
+//!		// DO STUFF
+//!		return eError::Error_Val;
+//! };
+//!
+//! m_EventSystem.AddHandler(typeEnum::Event_Basic,&m_EventHandler);
+//!
+//! m_EventSystem.SendEvent(typeEnum::Event_Basic,dataType);
+//!
+//! Then, when the user needs to, they can call FlushEvents and that will delegate all events 
+//! calling all the event handlers functions that are listening to that event type
 //!
 #ifndef _LEVENTS_H_
 #define _LEVENTS_H_
 
-#include "types.h"
-#include "eError.h"
-#include "debug.h"
-#include "map_helpers.h"
+#include "types.h"		// For basic types
+#include "eError.h"		// For eError types
+#include "debug.h"		// For Debug Asserts
+#include "map_helpers.h"// For multimap helper functions
 
 // SDL functions needed 
-#include "SDLThread.h"	// For the EventLoop thread, if wanted
 #include "SDLMutex.h"	// For the Mutexes to guard the events
 
 // A while load of STD library things used here
@@ -25,6 +46,7 @@
 #include <map>			// For the event type -> listener map
 #include <vector>		// For the map, to map type -> vector of listeners
 
+
 // Maximum numbers here
 // Lowball for now to help debug
 
@@ -33,6 +55,7 @@ enum { eMaxEvents = 32 };
 
 //! \brief The maximum number of listerners to a single event type
 enum { eMacListeners = 8 };
+
 
 //! \brief The parent templated event manager
 //! This can be used to send and recieve events of a certain type
@@ -99,10 +122,10 @@ public:
 // Event Listening methods
 
 	//! \brief Add a listener to an event type
-	eError AddListener(TEventType type, THandler* listener);
+	eError AddHandler(TEventType type, THandler* listener);
 
 	//! \brief Remove a listener from an event type
-	eError RemoveListener(TEventType type, THandler* listener);
+	eError RemoveHandler(TEventType type, THandler* listener);
 
 private:
 
@@ -205,7 +228,7 @@ eError LEventManager< typename TEventType, typename TEventData >::AddEventToQueu
 
 //===============================================================
 template< typename TEventType, typename TEventData >
-eError LEventManager< typename TEventType, typename TEventData >::AddListener(TEventType type, THandler* listener)
+eError LEventManager< typename TEventType, typename TEventData >::AddHandler(TEventType type, THandler* listener)
 {
 	eError err = eError::NoErr;
 	err |= m_ListenerMapMutex.Lock();
@@ -219,7 +242,7 @@ eError LEventManager< typename TEventType, typename TEventData >::AddListener(TE
 
 //===============================================================
 template< typename TEventType, typename TEventData >
-eError LEventManager< typename TEventType, typename TEventData >::RemoveListener(TEventType type, THandler* listener)
+eError LEventManager< typename TEventType, typename TEventData >::RemoveHandler(TEventType type, THandler* listener)
 {
 	eError err = eError::NoErr;
 	err |= m_ListenerMapMutex.Lock();
