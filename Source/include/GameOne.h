@@ -18,7 +18,7 @@
 
 #include "LEvents.h"
 
-enum eGameEventType
+enum class eGameEventType
 {
 	Event_One,
 	Event_Two,
@@ -27,23 +27,23 @@ enum eGameEventType
 
 union uGameEventData
 {
-	struct one
+	struct
 	{
 		int x;
 		int y;
-	};
+	} one;
 
-	struct two
+	struct 
 	{
 		float i;
 		float y;
-	};
+	} two;
 
-	struct three
+	struct 
 	{
 		int array[4];
 		float value;
-	};
+	} three;
 };
 
 //! \brief an Example game, called "One"
@@ -74,6 +74,8 @@ private:
 
 	//! \brief The Game Event Manager
 	LEventManager<eGameEventType, uGameEventData> m_EventManager;
+
+	LEventHandler<eGameEventType,uGameEventData> m_eventHandler;
 };
 
 

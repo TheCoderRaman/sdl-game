@@ -11,6 +11,7 @@
 #include "types.h"
 #include "eError.h"
 #include "debug.h"
+#include "map_helpers.h"
 
 // SDL functions needed 
 #include "SDLThread.h"	// For the EventLoop thread, if wanted
@@ -47,19 +48,19 @@ protected:
 
 };
 
-//! \brief the event Listener type
-template< typename TEventData >
-struct LEventListener
-{	
-	std::function<eError(TEventData*)>	function;
-};
-
 //! \brief The event type
 template< typename TEventType, typename TEventData >
 struct LEvent
 {
 	TEventType type; //! the type of the event
 	TEventData data; //! the data for the event
+};
+
+//! \brief the event Listener type
+template< typename TEventType, typename TEventData >
+struct LEventHandler
+{	
+	std::function< eError( LEvent<TEventType, TEventData>* ) >	function;
 };
 
 //! \brief The parent templated event manager
@@ -74,13 +75,13 @@ public:
 	typedef LEvent<TEventType, TEventData>	TEvent;
 
 	//! \brief typedef for the event listener used by this event manager
-	typedef LEventListener<TEventData>		TListener;
+	typedef LEventHandler<TEventType,TEventData>		THandler;
 
 	//! \brief pair of event type and listener
-	typedef std::pair< TEventType, TListener* >		TTypeListenerPair;
+	typedef std::pair< TEventType, THandler* >		TTypeListenerPair;
 
 	//! \brief typedef for the listener map
-	typedef std::multimap < TEventType, TListener* > TListenerMap;
+	typedef std::multimap < TEventType, THandler* > THandlerMap;
 
 public:
 
@@ -124,10 +125,10 @@ public:
 // Event Listening methods
 
 	//! \brief Add a listener to an event type
-	eError AddListener(TEventType type, TListener* listener);
+	eError AddListener(TEventType type, THandler* listener);
 
 	//! \brief Remove a listener from an event type
-	eError RemoveListener(TEventType type, TListener* listener);
+	eError RemoveListener(TEventType type, THandler* listener);
 
 private:
 
@@ -153,7 +154,7 @@ private:
 	SDLInterface::Mutex									m_QueueMutex;
 
 	//! \brief the map of event type to event listeners 
-	TListenerMap										m_ListenerMap;
+	THandlerMap										m_ListenerMap;
 
 	//! \brief A mutex for the Listener map
 	SDLInterface::Mutex									m_ListenerMapMutex;
@@ -224,7 +225,7 @@ eError LEventManager< typename TEventType, typename TEventData >::AddEventToQueu
 
 //! \brief Add a listener to an event type
 template< typename TEventType, typename TEventData >
-eError LEventManager< typename TEventType, typename TEventData >::AddListener(TEventType type, TListener* listener)
+eError LEventManager< typename TEventType, typename TEventData >::AddListener(TEventType type, THandler* listener)
 {
 	eError err = eError::NoErr;
 
@@ -242,7 +243,7 @@ eError LEventManager< typename TEventType, typename TEventData >::AddListener(TE
 
 //! \brief Remove a listener from an event type
 template< typename TEventType, typename TEventData >
-eError LEventManager< typename TEventType, typename TEventData >::RemoveListener(TEventType type, TListener* listener)
+eError LEventManager< typename TEventType, typename TEventData >::RemoveListener(TEventType type, THandler* listener)
 {
 	eError err = eError::NoErr;
 
@@ -250,7 +251,7 @@ eError LEventManager< typename TEventType, typename TEventData >::RemoveListener
 		m_ListenerMapMutex.Lock();
 
 	// TODO: Assert the listener map size
-	m_ListenerMap.erase(TTypeListenerPair(type, listener));
+	multimap_remove_pair(m_ListenerMap, type, listener);
 
 	if (!ERROR_HAS_TYPE_FATAL(err))
 		m_ListenerMapMutex.Unlock();

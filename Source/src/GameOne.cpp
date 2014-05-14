@@ -46,6 +46,14 @@ eError GameOne::Create()
 	if (!ERROR_HAS_TYPE_FATAL(err))
 		err |= GetRenderer()->AddRenderable(&m_banana);
 
+	m_eventHandler.function = [&](LEvent<eGameEventType,uGameEventData>* data)->eError 
+	{ 
+		int i = data->data.one.x;
+		return eError::NoErr; 
+	};
+
+	m_EventManager.AddListener(eGameEventType::Event_One, &m_eventHandler);
+
  	return err;
 }
 
@@ -103,6 +111,9 @@ eError GameOne::Reset()
 eError GameOne::Destroy()
 {
  	eError err = eError::NoErr;
+
+
+	m_EventManager.RemoveListener(eGameEventType::Event_One, &m_eventHandler);
 
 	// Remove the banana from the renderer
 	if (!ERROR_HAS_TYPE_FATAL(err))
