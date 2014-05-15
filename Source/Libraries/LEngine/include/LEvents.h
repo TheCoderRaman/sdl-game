@@ -46,6 +46,8 @@
 #include <map>			// For the event type -> listener map
 #include <vector>		// For the map, to map type -> vector of listeners
 
+#include <string.h> 	// For memset APPARENTLY!?
+
 
 // Maximum numbers here
 // Lowball for now to help debug
@@ -159,21 +161,21 @@ private:
 
 //===============================================================
 template< typename TEventType, typename TEventData >
-LEventManager< typename TEventType, typename TEventData >::LEventManager()
+LEventManager< TEventType, TEventData >::LEventManager()
 {
 
 }
 
 //===============================================================
 template< typename TEventType, typename TEventData >
-LEventManager< typename TEventType, typename TEventData >::~LEventManager()
+LEventManager< TEventType, TEventData >::~LEventManager()
 {
 
 }
 
 //===============================================================
 template< typename TEventType, typename TEventData >
-eError LEventManager< typename TEventType, typename TEventData >::Create()
+eError LEventManager< TEventType, TEventData >::Create()
 {
 	eError err = eError::NoErr;
 
@@ -188,7 +190,7 @@ eError LEventManager< typename TEventType, typename TEventData >::Create()
 
 //===============================================================
 template< typename TEventType, typename TEventData >
-eError LEventManager< typename TEventType, typename TEventData >::Destroy()
+eError LEventManager< TEventType, TEventData >::Destroy()
 {
 	eError err = eError::NoErr;
 
@@ -203,7 +205,7 @@ eError LEventManager< typename TEventType, typename TEventData >::Destroy()
 
 //===============================================================
 template< typename TEventType, typename TEventData >
-eError LEventManager< typename TEventType, typename TEventData >::AddEventToQueue(TEvent& event)
+eError LEventManager< TEventType, TEventData >::AddEventToQueue(TEvent& event)
 {
 	eError err = eError::NoErr;
 	err |= m_QueueMutex.Lock();
@@ -228,7 +230,7 @@ eError LEventManager< typename TEventType, typename TEventData >::AddEventToQueu
 
 //===============================================================
 template< typename TEventType, typename TEventData >
-eError LEventManager< typename TEventType, typename TEventData >::AddHandler(TEventType type, THandler* listener)
+eError LEventManager< TEventType, TEventData >::AddHandler(TEventType type, THandler* listener)
 {
 	eError err = eError::NoErr;
 	err |= m_ListenerMapMutex.Lock();
@@ -242,7 +244,7 @@ eError LEventManager< typename TEventType, typename TEventData >::AddHandler(TEv
 
 //===============================================================
 template< typename TEventType, typename TEventData >
-eError LEventManager< typename TEventType, typename TEventData >::RemoveHandler(TEventType type, THandler* listener)
+eError LEventManager< TEventType, TEventData >::RemoveHandler(TEventType type, THandler* listener)
 {
 	eError err = eError::NoErr;
 	err |= m_ListenerMapMutex.Lock();
@@ -256,7 +258,7 @@ eError LEventManager< typename TEventType, typename TEventData >::RemoveHandler(
 
 //===============================================================
 template< typename TEventType, typename TEventData >
-eError LEventManager< typename TEventType, typename TEventData >::PopEventOffQueue(TEvent& event)
+eError LEventManager< TEventType, TEventData >::PopEventOffQueue(TEvent& event)
 {
 	eError err = eError::NoErr;
 	err |= m_QueueMutex.Lock();
@@ -288,7 +290,7 @@ eError LEventManager< typename TEventType, typename TEventData >::PopEventOffQue
 
 //===============================================================
 template< typename TEventType, typename TEventData >
-eError LEventManager< typename TEventType, typename TEventData >::DelegateEvent(TEvent& event)
+eError LEventManager< TEventType, TEventData >::DelegateEvent(TEvent& event)
 {
 	eError err = eError::NoErr;
 	err |= m_ListenerMapMutex.Lock();
@@ -310,7 +312,7 @@ eError LEventManager< typename TEventType, typename TEventData >::DelegateEvent(
 
 //===============================================================
 template< typename TEventType, typename TEventData >
-eError LEventManager< typename TEventType, typename TEventData >::SendEvent(TEventType type, TEventData& data)
+eError LEventManager< TEventType, TEventData >::SendEvent(TEventType type, TEventData& data)
 {
 	eError err = eError::NoErr;
 
@@ -327,7 +329,7 @@ eError LEventManager< typename TEventType, typename TEventData >::SendEvent(TEve
 
 //===============================================================
 template< typename TEventType, typename TEventData >
-eError LEventManager< typename TEventType, typename TEventData >::FlushEvents()
+eError LEventManager< TEventType, TEventData >::FlushEvents()
 {
 	eError err = eError::NoErr;
 
