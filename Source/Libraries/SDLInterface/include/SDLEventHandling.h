@@ -70,7 +70,8 @@ namespace SDLInterface
 		total_keys
 	};
 
-	//! \brief A struct that will hold this frame's keyboard data
+	//! \brief A struct that will hold this accumulated keyboard data until reset
+	//! this will usually be at the end of the frame
 	struct SDLKeyboardEvents
 	{
 		static const unsigned	sk_iTotalKeyboardEvents = ( unsigned ) eSDLKeyInterface::total_keys;
