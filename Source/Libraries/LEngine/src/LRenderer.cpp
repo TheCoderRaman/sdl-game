@@ -5,11 +5,14 @@
 //!
 //!
 #include "LRenderer.h"
+#include "SDLTimer.h"
 
 #include "eError.h"
 #include "debug.h"
 
 #define MAX_NUM_RENDERABLES 256
+
+#define RENDER_TIMING_DEBUG 0
 
 //===============================================================
 LRendereable2D::LRendereable2D()
@@ -101,6 +104,11 @@ eError LRenderer2D::Render()
 {
 	eError err = eError::NoErr;
 
+#if RENDER_TIMING_DEBUG
+	SDLInterface::Timer timer;
+	timer.Start();
+#endif
+
 	// Start the render
 	if (!ERROR_HAS_TYPE_FATAL(err))
 		err |= m_BaseSDLRenderer.RenderStart();
@@ -112,6 +120,11 @@ eError LRenderer2D::Render()
 	// End the render
 	if (!ERROR_HAS_TYPE_FATAL(err))
 		err |= m_BaseSDLRenderer.RenderEnd();
+
+#if RENDER_TIMING_DEBUG
+	ms time = timer.GetTimePassed();
+	DEBUG_LOG("RENDER TOOK: %i ticks %f seconds %f fps", time, msToSec(time), 1.0f / msToSec(time));
+#endif
 
 	return err;
 }

@@ -106,10 +106,16 @@ eError SDLInterface::Renderer::RenderRectangle(const Rect& src, int r, int g, in
 	DEBUG_ASSERT(nullptr != m_SDL_Renderer);
 
 	SDL_Rect myRect = RECT_TO_SDL_RECT(src);
-
+	
+	
+#ifndef WINDOWS_BUILD
+	// On Linux and OSX we have to render this on the main thread
+	// TODO: Work out how to ensure we don't need to do this
+	// I _think_ it would be a case of binding the context
 	EventLoop::RunOnMainThread_Sync(err,
 		[&]()->eError
 	{
+#endif
 
 		// Set the draw colour
 		SDL_SetRenderDrawColor(m_SDL_Renderer, r, g, b, a);
@@ -126,8 +132,10 @@ eError SDLInterface::Renderer::RenderRectangle(const Rect& src, int r, int g, in
 		// Reset the draw colour
 		SDL_SetRenderDrawColor(m_SDL_Renderer, 255, 255, 255, 255);
 
+#ifndef WINDOWS_BUILD
 		return eError::NoErr;
 	});
+#endif
 
 	return err;
 }
@@ -147,14 +155,21 @@ eError SDLInterface::Renderer::RenderTexture(Texture* tex, const Rect& src, cons
 	SDL_Rect source			= RECT_TO_SDL_RECT(src);
 	SDL_Rect destination	= RECT_TO_SDL_RECT(dest);
 
+#ifndef WINDOWS_BUILD
+	// On Linux and OSX we have to render this on the main thread
+	// TODO: Work out how to ensure we don't need to do this
+	// I _think_ it would be a case of binding the context
 	EventLoop::RunOnMainThread_Sync(err,
 		[&]()->eError
 	{
+#endif
 		// Copy the texture over to the renderer
 		SDL_RenderCopy(m_SDL_Renderer, Helper::GetSDL_Texture(tex), &source, &destination);
 
-		return eError::NoErr;
+#ifndef WINDOWS_BUILD
+		return eError::NoErr
 	});
+#endif
 
 	return err;
 }
