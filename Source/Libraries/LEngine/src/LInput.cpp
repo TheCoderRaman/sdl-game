@@ -28,33 +28,34 @@ LInput::~LInput()
 
 void LInput::StartKeyboardUpdate( void )
 {
-	RUNTIME_LOG( "Starting keyboard update in LInput" );
+	//RUNTIME_LOG( "Starting keyboard update in LInput" );
+
+	// flush the keys from intermediate states
+	SDLInterface::EventHandling::FlushKeys();
 
 	CopyOverAndResetThisFramesValues();
 	
-	if( SDLInterface::EventHandling::GetKeyboardEvent( SDLInterface::eSDLKeyInterface::key_up ) )
+	if( SDLInterface::EventHandling::GetKeyPressed( SDLInterface::eSDLKeyInterface::key_up ) )
 	{
 		m_abButtonsPressedThisFrame[ ( int ) eInputType::up ] = true;
 	}
-	if( SDLInterface::EventHandling::GetKeyboardEvent( SDLInterface::eSDLKeyInterface::key_down ) )
+	if( SDLInterface::EventHandling::GetKeyPressed( SDLInterface::eSDLKeyInterface::key_down ) )
 	{
 		m_abButtonsPressedThisFrame[ ( int ) eInputType::down ] = true;
 	}
-	if( SDLInterface::EventHandling::GetKeyboardEvent( SDLInterface::eSDLKeyInterface::key_left ) )
+	if( SDLInterface::EventHandling::GetKeyPressed( SDLInterface::eSDLKeyInterface::key_left ) )
 	{
 		m_abButtonsPressedThisFrame[ ( int ) eInputType::left ] = true;
 	}
-	if( SDLInterface::EventHandling::GetKeyboardEvent( SDLInterface::eSDLKeyInterface::key_right ) )
+	if( SDLInterface::EventHandling::GetKeyPressed( SDLInterface::eSDLKeyInterface::key_right ) )
 	{
 		m_abButtonsPressedThisFrame[ ( int ) eInputType::right ] = true;
 	}
-
 }
 
 void LInput::EndKeyboardUpdate( void )
 {
-	RUNTIME_LOG( "Ending update in LInput" );
-	SDLInterface::EventHandling::ResetStructValues();
+	//RUNTIME_LOG( "Ending update in LInput" );
 }
 
 //================================================================
@@ -66,7 +67,7 @@ bool LInput::GetButtonJustPressed( eInputType eButton )
 
 	bReturn = m_abButtonsPressedThisFrame[ iIndex ] && !m_abButtonsPressedLastFrame[ iIndex ];
 
-	RUNTIME_LOG( "Button just pressed returning %i for input %i", ( int ) bReturn, iIndex );
+	//RUNTIME_LOG( "Button just pressed returning %i for input %i", ( int ) bReturn, iIndex );
 
 	return bReturn;
 }
@@ -80,7 +81,7 @@ bool LInput::GetButtonHeldDown( eInputType eButton )
 
 	bReturn = m_abButtonsPressedThisFrame[ iIndex ] && m_abButtonsPressedLastFrame[ iIndex ];
 
-	RUNTIME_LOG( "Button held down returning %i for input %i", ( int ) bReturn, iIndex );
+	//RUNTIME_LOG( "Button held down returning %i for input %i", ( int ) bReturn, iIndex );
 
 	return bReturn;
 }

@@ -67,21 +67,13 @@ eError GameOne::Update(ms elapsed)
 
 	if( LGameBase::GetInputManager() )
 	{
-		if( LGameBase::GetInputManager()->GetButtonJustPressed( LInput::eInputType::up ) )
+		if( LGameBase::GetInputManager()->GetButtonHeldDown( LInput::eInputType::up ) )
 		{
 			m_banana.MoveBananaUpAFrame();
 		}
-		if( LGameBase::GetInputManager()->GetButtonHeldDown( LInput::eInputType::down ) )
+		if (LGameBase::GetInputManager()->GetButtonJustPressed(LInput::eInputType::down))
 		{
 			m_banana.MoveBananaDownAFrame();
-		}
-		if( LGameBase::GetInputManager()->GetButtonJustPressed( LInput::eInputType::left ) )
-		{
-			m_banana.MoveBananaLeftAFrame();
-		}
-		if( LGameBase::GetInputManager()->GetButtonJustPressed( LInput::eInputType::right ) )
-		{
-			m_banana.MoveBananaRightAFrame();
 		}
 	}
 

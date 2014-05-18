@@ -20,7 +20,7 @@ namespace SDLInterface
 
 	enum class eSDLKeyInterface
 	{
-		key_a,
+		key_a = 0,
 		key_b,
 		key_c,
 		key_d,
@@ -71,12 +71,20 @@ namespace SDLInterface
 		total_keys
 	};
 
+	enum class eKeyState
+	{
+		released,
+		being_pressed,
+		pressed,
+		being_released
+	};
+
 	//! \brief A struct that will hold this accumulated keyboard data until reset
 	//! this will usually be at the end of the frame
 	struct SDLKeyboardEvents
 	{
 		static const unsigned	sk_iTotalKeyboardEvents = ( unsigned ) eSDLKeyInterface::total_keys;
-		bool					m_abKeyboardEvents[ sk_iTotalKeyboardEvents ];
+		eKeyState				m_abKeyboardEvents[sk_iTotalKeyboardEvents];
 		int						m_iTotalCurrentEvents = 0;
 
 		SDLKeyboardEvents()
@@ -84,26 +92,14 @@ namespace SDLInterface
 			ResetValues();
 		}
 
-		~SDLKeyboardEvents()
+		void ResetValues(eKeyState state = eKeyState::released)
 		{
-			ResetValues();
-		}
-
-		void ResetValues( void )
-		{
-			RUNTIME_LOG( "Resetting SDL keyboard values" );
-			for( auto& bVal : m_abKeyboardEvents )
+			RUNTIME_LOG("Resetting SDL keyboard values");
+			for (auto& bVal : m_abKeyboardEvents)
 			{
-				bVal = false;
+				bVal = state;
 			}
 			m_iTotalCurrentEvents = 0;
-		}
-
-		void AddKeyboardEvent( eSDLKeyInterface eKeyPressed )
-		{
-			m_abKeyboardEvents[ ( unsigned ) eKeyPressed ] = true;
-			++m_iTotalCurrentEvents;
-			RUNTIME_LOG( "Adding an event with index %i, total events %i", ( int ) eKeyPressed, m_iTotalCurrentEvents );
 		}
 	};
 
@@ -139,9 +135,12 @@ namespace SDLInterface
 		//! \sa HandleJoystickEvent as these two are pretty related
 		static eError HandleControllerEvent(SDL_Event *event);
 
-		static bool GetKeyboardEvent( eSDLKeyInterface eKey );
 
-		static void ResetStructValues( void );
+
+
+		static bool GetKeyPressed( eSDLKeyInterface eKey );
+
+		static void FlushKeys(void);
 
 	private:
 

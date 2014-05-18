@@ -12,6 +12,15 @@
 #include "debug.h"
 #include "eError.h"
 
+#define INPUT_DEBUGGING 0
+
+#if INPUT_DEBUGGING
+#define INPUT_DEBUG(...) DEBUG_LOG(__VA_ARGS__)
+#else
+#define INPUT_DEBUG(...)
+#endif
+
+
 
 // what is even happen
 SDLInterface::SDLKeyboardEvents SDLInterface::EventHandling::sm_KeyboardStruct;
@@ -91,6 +100,9 @@ eError SDLInterface::EventHandling::HandleKeyboardEvent( SDL_Event *event )
 
 	eSDLKeyInterface eKeyPressed = eSDLKeyInterface::key_invalid;
 
+	bool keyDown = (event->key.state == SDL_PRESSED);
+	bool held = event->key.repeat;
+
 	// Converts input from SDL-data to engine-data
 	switch( event->key.keysym.sym )
 	{
@@ -140,11 +152,9 @@ eError SDLInterface::EventHandling::HandleKeyboardEvent( SDL_Event *event )
 		// Movan
 		case SDLK_UP:
 			eKeyPressed = eSDLKeyInterface::key_up;
-			RUNTIME_LOG( "Registering an UP key event from SDL" );
 			break;
 		case SDLK_DOWN:
 			eKeyPressed = eSDLKeyInterface::key_down;
-			RUNTIME_LOG( "Registering a DOWN key event from SDL" );
 			break;
 		case SDLK_LEFT:
 			eKeyPressed = eSDLKeyInterface::key_left;
@@ -154,7 +164,27 @@ eError SDLInterface::EventHandling::HandleKeyboardEvent( SDL_Event *event )
 			break;
 	}
 
-	sm_KeyboardStruct.AddKeyboardEvent( eKeyPressed );
+	eKeyState& state = sm_KeyboardStruct.m_abKeyboardEvents[(unsigned)eKeyPressed];
+
+	// For key down events
+	if (keyDown)
+	{
+		if (state == eKeyState::released || state == eKeyState::being_released)
+		{
+			INPUT_DEBUG("setting %i from released > being_pressed", (unsigned)eKeyPressed);
+			state = eKeyState::being_pressed;
+		}
+	
+	}
+	// for key up events
+	else
+	{
+		if (state == eKeyState::pressed || state == eKeyState::being_pressed )
+		{
+			INPUT_DEBUG("setting %i from pressed|being_pressed> being_released", (unsigned)eKeyPressed);
+			state = eKeyState::being_released;
+		}
+	}
 
 	return err;
 }
@@ -238,20 +268,32 @@ eError SDLInterface::EventHandling::HandleWindowEvent(SDL_Event *event)
 	return err;
 }
 
-bool SDLInterface::EventHandling::GetKeyboardEvent( eSDLKeyInterface eKey )
+bool SDLInterface::EventHandling::GetKeyPressed( eSDLKeyInterface eKey )
 {
-	bool bReturn = false;
+	eKeyState state = sm_KeyboardStruct.m_abKeyboardEvents[(unsigned)eKey];
 
-	if( sm_KeyboardStruct.m_abKeyboardEvents[ ( unsigned ) eKey ] )
-	{
-		bReturn = true;
-		sm_KeyboardStruct.m_abKeyboardEvents[ ( unsigned ) eKey ] = false;
-	}
-
-	return bReturn;
+	// Return true as long as we're not currently released
+	return (state != eKeyState::released);
 }
 
-void SDLInterface::EventHandling::ResetStructValues()
+void SDLInterface::EventHandling::FlushKeys()
 {
-	sm_KeyboardStruct.ResetValues();
+	for (int i = 0; i < (int)eSDLKeyInterface::total_keys; i++)
+	{
+		eKeyState& state = sm_KeyboardStruct.m_abKeyboardEvents[i];
+
+		// Progress the events past the intermediate stage
+		switch (state)
+		{
+		case eKeyState::being_released:
+			INPUT_DEBUG("flushing %i from being_released >> released",i);
+			state = eKeyState::released;
+			break;
+
+		case eKeyState::being_pressed:
+			INPUT_DEBUG("flushing %i from being_pressed >> pressed",i);
+			state = eKeyState::pressed;
+			break;
+		}
+	}
 }
