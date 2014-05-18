@@ -48,6 +48,7 @@
 
 #include <string.h> 	// For memset APPARENTLY!?
 
+#define LEVENTHANDLER_CALLBACK_FUNCTION(ManagerType) [&](const ManagerType::TEvent* event)->eError
 
 // Maximum numbers here
 // Lowball for now to help debug

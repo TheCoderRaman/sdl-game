@@ -47,7 +47,7 @@ eError GameOne::Create()
 		err |= GetRenderer()->AddRenderable(&m_banana);
 
 	m_myEventHandler.callbackFunction = 
-	[&](const TGameEventManager::TEvent* event)->eError
+	LEVENTHANDLER_CALLBACK_FUNCTION(TGameEventManager)
 	{ 
 		return HandleEvent(event);
 	};
