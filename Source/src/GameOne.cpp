@@ -46,7 +46,7 @@ eError GameOne::Create()
 	if (!ERROR_HAS_TYPE_FATAL(err))
 		err |= GetRenderer()->AddRenderable(&m_banana);
 
-	m_eventHandler.function = [&](TGameEventManager::TEvent* data)->eError
+	m_eventHandler.callbackFunction = [&](TGameEventManager::TEvent* data)->eError
 	{ 
 		int i = data->data.one.x;
 		return eError::NoErr; 

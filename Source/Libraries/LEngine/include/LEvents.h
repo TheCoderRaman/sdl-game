@@ -77,7 +77,7 @@ public:
 	struct THandler
 	{
 		//! \brief internal function that will be called on event handling
-		std::function< eError(TEvent*) >	function;
+		std::function< eError(TEvent*) >	callbackFunction;
 	};
 
 
@@ -298,7 +298,7 @@ eError LEventManager< typename TEventType, typename TEventData >::DelegateEvent(
 	std::function<eError(THandler*)> function = 
 	[&](THandler* handler)->eError
 	{
-		return handler->function(&event);
+		return handler->callbackFunction(&event);
 	};
 	
 	// Visit all the Handlers in the list and call their functions
