@@ -9,6 +9,7 @@
 #define _SDLEVENTHANDLING_H_
 
 #include "types.h"
+#include "debug.h"
 
 // Forward declare SDL union
 union SDL_Event;
@@ -76,6 +77,7 @@ namespace SDLInterface
 	{
 		static const unsigned	sk_iTotalKeyboardEvents = ( unsigned ) eSDLKeyInterface::total_keys;
 		bool					m_abKeyboardEvents[ sk_iTotalKeyboardEvents ];
+		int						m_iTotalCurrentEvents = 0;
 
 		SDLKeyboardEvents()
 		{
@@ -89,15 +91,19 @@ namespace SDLInterface
 
 		void ResetValues( void )
 		{
+			RUNTIME_LOG( "Resetting SDL keyboard values" );
 			for( auto& bVal : m_abKeyboardEvents )
 			{
 				bVal = false;
 			}
+			m_iTotalCurrentEvents = 0;
 		}
 
 		void AddKeyboardEvent( eSDLKeyInterface eKeyPressed )
 		{
 			m_abKeyboardEvents[ ( unsigned ) eKeyPressed ] = true;
+			++m_iTotalCurrentEvents;
+			RUNTIME_LOG( "Adding an event with index %i, total events %i", ( int ) eKeyPressed, m_iTotalCurrentEvents );
 		}
 	};
 
@@ -133,11 +139,13 @@ namespace SDLInterface
 		//! \sa HandleJoystickEvent as these two are pretty related
 		static eError HandleControllerEvent(SDL_Event *event);
 
-		//! \brief Getter for the static stored keyboard events struct
-		//! \return The member SDLKeyboardEvents struct
-		static SDLInterface::SDLKeyboardEvents* GetKeyboardEvents( void );
+		static bool GetKeyboardEvent( eSDLKeyInterface eKey );
+
+		static void ResetStructValues( void );
 
 	private:
+
+		static SDLKeyboardEvents sm_KeyboardStruct;
 
 	};
 }

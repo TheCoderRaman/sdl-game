@@ -13,6 +13,9 @@
 #include "eError.h"
 
 
+// what is even happen
+SDLInterface::SDLKeyboardEvents SDLInterface::EventHandling::sm_KeyboardStruct;
+
 //========================================================
 eError SDLInterface::EventHandling::HandleEvent(SDL_Event *event)
 {
@@ -137,9 +140,11 @@ eError SDLInterface::EventHandling::HandleKeyboardEvent( SDL_Event *event )
 		// Movan
 		case SDLK_UP:
 			eKeyPressed = eSDLKeyInterface::key_up;
+			RUNTIME_LOG( "Registering an UP key event from SDL" );
 			break;
 		case SDLK_DOWN:
 			eKeyPressed = eSDLKeyInterface::key_down;
+			RUNTIME_LOG( "Registering a DOWN key event from SDL" );
 			break;
 		case SDLK_LEFT:
 			eKeyPressed = eSDLKeyInterface::key_left;
@@ -149,7 +154,7 @@ eError SDLInterface::EventHandling::HandleKeyboardEvent( SDL_Event *event )
 			break;
 	}
 
-	SDLInterface::EventHandling::GetKeyboardEvents()->AddKeyboardEvent( eKeyPressed );
+	sm_KeyboardStruct.AddKeyboardEvent( eKeyPressed );
 
 	return err;
 }
@@ -233,8 +238,20 @@ eError SDLInterface::EventHandling::HandleWindowEvent(SDL_Event *event)
 	return err;
 }
 
-SDLInterface::SDLKeyboardEvents* SDLInterface::EventHandling::GetKeyboardEvents( void )
+bool SDLInterface::EventHandling::GetKeyboardEvent( eSDLKeyInterface eKey )
 {
-	static SDLInterface::SDLKeyboardEvents m_KeyboardEventsThisFrame;
-	return &m_KeyboardEventsThisFrame;
+	bool bReturn = false;
+
+	if( sm_KeyboardStruct.m_abKeyboardEvents[ ( unsigned ) eKey ] )
+	{
+		bReturn = true;
+		sm_KeyboardStruct.m_abKeyboardEvents[ ( unsigned ) eKey ] = false;
+	}
+
+	return bReturn;
+}
+
+void SDLInterface::EventHandling::ResetStructValues()
+{
+	sm_KeyboardStruct.ResetValues();
 }

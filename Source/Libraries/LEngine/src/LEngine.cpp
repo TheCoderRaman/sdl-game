@@ -274,6 +274,7 @@ eError LEngine::PreUpdate( void )
 {
 	eError err = eError::NoErr;
 
+	// Push the current frame's inputs to last frame's and clear this frame's key buffer
 	// Poll the keyboard now for the current frame's inputs
 	m_InputManager.StartKeyboardUpdate();
 
@@ -301,7 +302,7 @@ eError LEngine::PostUpdate( void )
 {
 	eError err = eError::NoErr;
 
-	// Push the current frame's inputs to last frame's and clear this frame's key buffer
+	// Reset the Engine level keyboard polling
 	m_InputManager.EndKeyboardUpdate();
 
 	err |= m_myGame.PostUpdate();

@@ -71,7 +71,7 @@ eError GameOne::Update(ms elapsed)
 		{
 			m_banana.MoveBananaUpAFrame();
 		}
-		if( LGameBase::GetInputManager()->GetButtonJustPressed( LInput::eInputType::down ) )
+		if( LGameBase::GetInputManager()->GetButtonHeldDown( LInput::eInputType::down ) )
 		{
 			m_banana.MoveBananaDownAFrame();
 		}
