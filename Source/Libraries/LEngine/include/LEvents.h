@@ -59,7 +59,7 @@ enum { eMacListeners = 8 };
 
 //! \brief The parent templated event manager
 //! This can be used to send and recieve events of a certain type
-template< typename TEventType, typename TEventData >
+template< typename TEventIdentifier, typename TEventData >
 class LEventManager
 {
 public:
@@ -69,7 +69,7 @@ public:
 	//! \brief typedef for the templated event type 
 	struct TEvent
 	{
-		TEventType type; //! the type of the event
+		TEventIdentifier type; //! the type of the event
 		TEventData data; //! the data of the event
 	};
 
@@ -84,10 +84,10 @@ public:
 //! couple of typedefs to help readability
 
 	//! \brief pair of event type and listener
-	typedef std::pair< TEventType, THandler* >		TTypeListenerPair;
+	typedef std::pair< TEventIdentifier, THandler* >		TTypeListenerPair;
 
 	//! \brief typedef for the listener map
-	typedef std::multimap < TEventType, THandler* > THandlerMap;
+	typedef std::multimap < TEventIdentifier, THandler* > THandlerMap;
 
 public:
 
@@ -116,16 +116,16 @@ public:
 // Event Sending methods
 
 	//! \brief Send an event by type and data
-	eError SendEvent(TEventType type, TEventData& data);
+	eError SendEvent(TEventIdentifier type, TEventData& data);
 
 
 // Event Listening methods
 
 	//! \brief Add a listener to an event type
-	eError AddHandler(TEventType type, THandler* listener);
+	eError AddHandler(TEventIdentifier type, THandler* listener);
 
 	//! \brief Remove a listener from an event type
-	eError RemoveHandler(TEventType type, THandler* listener);
+	eError RemoveHandler(TEventIdentifier type, THandler* listener);
 
 private:
 
@@ -158,22 +158,23 @@ private:
 };
 
 //===============================================================
-template< typename TEventType, typename TEventData >
-LEventManager< typename TEventType, typename TEventData >::LEventManager()
+template< typename TEventIdentifier, typename TEventData >
+LEventManager< typename TEventIdentifier, typename TEventData >::LEventManager()
 {
 
 }
 
 //===============================================================
-template< typename TEventType, typename TEventData >
-LEventManager< typename TEventType, typename TEventData >::~LEventManager()
+template< typename TEventIdentifier, typename TEventData >
+LEventManager< typename TEventIdentifier, typename TEventData >::~LEventManager()
 {
-
+	// TODO:
+	// Perform a load of checks to do with removed event handlers and the like
 }
 
 //===============================================================
-template< typename TEventType, typename TEventData >
-eError LEventManager< typename TEventType, typename TEventData >::Create()
+template< typename TEventIdentifier, typename TEventData >
+eError LEventManager< typename TEventIdentifier, typename TEventData >::Create()
 {
 	eError err = eError::NoErr;
 
@@ -187,8 +188,8 @@ eError LEventManager< typename TEventType, typename TEventData >::Create()
 }
 
 //===============================================================
-template< typename TEventType, typename TEventData >
-eError LEventManager< typename TEventType, typename TEventData >::Destroy()
+template< typename TEventIdentifier, typename TEventData >
+eError LEventManager< typename TEventIdentifier, typename TEventData >::Destroy()
 {
 	eError err = eError::NoErr;
 
@@ -202,8 +203,8 @@ eError LEventManager< typename TEventType, typename TEventData >::Destroy()
 }
 
 //===============================================================
-template< typename TEventType, typename TEventData >
-eError LEventManager< typename TEventType, typename TEventData >::AddEventToQueue(TEvent& event)
+template< typename TEventIdentifier, typename TEventData >
+eError LEventManager< typename TEventIdentifier, typename TEventData >::AddEventToQueue(TEvent& event)
 {
 	eError err = eError::NoErr;
 	err |= m_QueueMutex.Lock();
@@ -227,8 +228,8 @@ eError LEventManager< typename TEventType, typename TEventData >::AddEventToQueu
 }
 
 //===============================================================
-template< typename TEventType, typename TEventData >
-eError LEventManager< typename TEventType, typename TEventData >::AddHandler(TEventType type, THandler* listener)
+template< typename TEventIdentifier, typename TEventData >
+eError LEventManager< typename TEventIdentifier, typename TEventData >::AddHandler(TEventIdentifier type, THandler* listener)
 {
 	eError err = eError::NoErr;
 	err |= m_ListenerMapMutex.Lock();
@@ -241,8 +242,8 @@ eError LEventManager< typename TEventType, typename TEventData >::AddHandler(TEv
 }
 
 //===============================================================
-template< typename TEventType, typename TEventData >
-eError LEventManager< typename TEventType, typename TEventData >::RemoveHandler(TEventType type, THandler* listener)
+template< typename TEventIdentifier, typename TEventData >
+eError LEventManager< typename TEventIdentifier, typename TEventData >::RemoveHandler(TEventIdentifier type, THandler* listener)
 {
 	eError err = eError::NoErr;
 	err |= m_ListenerMapMutex.Lock();
@@ -255,8 +256,8 @@ eError LEventManager< typename TEventType, typename TEventData >::RemoveHandler(
 }
 
 //===============================================================
-template< typename TEventType, typename TEventData >
-eError LEventManager< typename TEventType, typename TEventData >::PopEventOffQueue(TEvent& event)
+template< typename TEventIdentifier, typename TEventData >
+eError LEventManager< typename TEventIdentifier, typename TEventData >::PopEventOffQueue(TEvent& event)
 {
 	eError err = eError::NoErr;
 	err |= m_QueueMutex.Lock();
@@ -287,8 +288,8 @@ eError LEventManager< typename TEventType, typename TEventData >::PopEventOffQue
 }
 
 //===============================================================
-template< typename TEventType, typename TEventData >
-eError LEventManager< typename TEventType, typename TEventData >::DelegateEvent(TEvent& event)
+template< typename TEventIdentifier, typename TEventData >
+eError LEventManager< typename TEventIdentifier, typename TEventData >::DelegateEvent(TEvent& event)
 {
 	eError err = eError::NoErr;
 	err |= m_ListenerMapMutex.Lock();
@@ -309,8 +310,8 @@ eError LEventManager< typename TEventType, typename TEventData >::DelegateEvent(
 }
 
 //===============================================================
-template< typename TEventType, typename TEventData >
-eError LEventManager< typename TEventType, typename TEventData >::SendEvent(TEventType type, TEventData& data)
+template< typename TEventIdentifier, typename TEventData >
+eError LEventManager< typename TEventIdentifier, typename TEventData >::SendEvent(TEventIdentifier type, TEventData& data)
 {
 	eError err = eError::NoErr;
 
@@ -326,8 +327,8 @@ eError LEventManager< typename TEventType, typename TEventData >::SendEvent(TEve
 }
 
 //===============================================================
-template< typename TEventType, typename TEventData >
-eError LEventManager< typename TEventType, typename TEventData >::FlushEvents()
+template< typename TEventIdentifier, typename TEventData >
+eError LEventManager< typename TEventIdentifier, typename TEventData >::FlushEvents()
 {
 	eError err = eError::NoErr;
 
