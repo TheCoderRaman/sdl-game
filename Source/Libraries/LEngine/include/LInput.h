@@ -21,7 +21,7 @@ public:
 	enum class eInputType
 	{
 		// System
-		quit,
+		quit = 0,
 		pause,
 
 		// Gameplay
