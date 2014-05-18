@@ -46,6 +46,8 @@
 #include <map>			// For the event type -> listener map
 #include <vector>		// For the map, to map type -> vector of listeners
 
+#include <string.h> 	// For memset APPARENTLY!?
+
 
 // Maximum numbers here
 // Lowball for now to help debug
@@ -159,14 +161,14 @@ private:
 
 //===============================================================
 template< typename TEventIdentifier, typename TEventData >
-LEventManager< typename TEventIdentifier, typename TEventData >::LEventManager()
+LEventManager< TEventIdentifier, TEventData >::LEventManager()
 {
 
 }
 
 //===============================================================
 template< typename TEventIdentifier, typename TEventData >
-LEventManager< typename TEventIdentifier, typename TEventData >::~LEventManager()
+LEventManager< TEventIdentifier, TEventData >::~LEventManager()
 {
 	// TODO:
 	// Perform a load of checks to do with removed event handlers and the like
@@ -174,7 +176,7 @@ LEventManager< typename TEventIdentifier, typename TEventData >::~LEventManager(
 
 //===============================================================
 template< typename TEventIdentifier, typename TEventData >
-eError LEventManager< typename TEventIdentifier, typename TEventData >::Create()
+eError LEventManager< TEventIdentifier, TEventData >::Create()
 {
 	eError err = eError::NoErr;
 
@@ -189,7 +191,7 @@ eError LEventManager< typename TEventIdentifier, typename TEventData >::Create()
 
 //===============================================================
 template< typename TEventIdentifier, typename TEventData >
-eError LEventManager< typename TEventIdentifier, typename TEventData >::Destroy()
+eError LEventManager< TEventIdentifier, TEventData >::Destroy()
 {
 	eError err = eError::NoErr;
 
@@ -204,7 +206,7 @@ eError LEventManager< typename TEventIdentifier, typename TEventData >::Destroy(
 
 //===============================================================
 template< typename TEventIdentifier, typename TEventData >
-eError LEventManager< typename TEventIdentifier, typename TEventData >::AddEventToQueue(TEvent& event)
+eError LEventManager< TEventIdentifier, TEventData >::AddEventToQueue(TEvent& event)
 {
 	eError err = eError::NoErr;
 	err |= m_QueueMutex.Lock();
@@ -229,7 +231,7 @@ eError LEventManager< typename TEventIdentifier, typename TEventData >::AddEvent
 
 //===============================================================
 template< typename TEventIdentifier, typename TEventData >
-eError LEventManager< typename TEventIdentifier, typename TEventData >::AddHandler(TEventIdentifier type, THandler* listener)
+eError LEventManager< TEventIdentifier, TEventData >::AddHandler(TEventIdentifier type, THandler* listener)
 {
 	eError err = eError::NoErr;
 	err |= m_ListenerMapMutex.Lock();
@@ -243,7 +245,7 @@ eError LEventManager< typename TEventIdentifier, typename TEventData >::AddHandl
 
 //===============================================================
 template< typename TEventIdentifier, typename TEventData >
-eError LEventManager< typename TEventIdentifier, typename TEventData >::RemoveHandler(TEventIdentifier type, THandler* listener)
+eError LEventManager< TEventIdentifier, TEventData >::RemoveHandler(TEventIdentifier type, THandler* listener)
 {
 	eError err = eError::NoErr;
 	err |= m_ListenerMapMutex.Lock();
@@ -256,7 +258,7 @@ eError LEventManager< typename TEventIdentifier, typename TEventData >::RemoveHa
 
 //===============================================================
 template< typename TEventIdentifier, typename TEventData >
-eError LEventManager< typename TEventIdentifier, typename TEventData >::PopEventOffQueue(TEvent& event)
+eError LEventManager< TEventIdentifier, TEventData >::PopEventOffQueue(TEvent& event)
 {
 	eError err = eError::NoErr;
 	err |= m_QueueMutex.Lock();
@@ -288,7 +290,7 @@ eError LEventManager< typename TEventIdentifier, typename TEventData >::PopEvent
 
 //===============================================================
 template< typename TEventIdentifier, typename TEventData >
-eError LEventManager< typename TEventIdentifier, typename TEventData >::DelegateEvent(TEvent& event)
+eError LEventManager< TEventIdentifier, TEventData >::DelegateEvent(TEvent& event)
 {
 	eError err = eError::NoErr;
 	err |= m_ListenerMapMutex.Lock();
@@ -310,7 +312,7 @@ eError LEventManager< typename TEventIdentifier, typename TEventData >::Delegate
 
 //===============================================================
 template< typename TEventIdentifier, typename TEventData >
-eError LEventManager< typename TEventIdentifier, typename TEventData >::SendEvent(TEventIdentifier type, TEventData& data)
+eError LEventManager< TEventIdentifier, TEventData >::SendEvent(TEventIdentifier type, TEventData& data)
 {
 	eError err = eError::NoErr;
 
@@ -327,7 +329,7 @@ eError LEventManager< typename TEventIdentifier, typename TEventData >::SendEven
 
 //===============================================================
 template< typename TEventIdentifier, typename TEventData >
-eError LEventManager< typename TEventIdentifier, typename TEventData >::FlushEvents()
+eError LEventManager< TEventIdentifier, TEventData >::FlushEvents()
 {
 	eError err = eError::NoErr;
 

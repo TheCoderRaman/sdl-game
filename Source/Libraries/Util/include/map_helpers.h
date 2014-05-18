@@ -17,7 +17,7 @@ template< typename TKey, typename TKeyVal >
 void multimap_remove_one(std::multimap<TKey, TKeyVal>& tMap, const TKey key)
 {
 	// Find the value
-	typename tMap::iterator it = tMap.find(key);
+	typename std::multimap<TKey, TKeyVal>::iterator it = tMap.find(key);
 
 	// Remove it
 	if (it != tMap.end())
@@ -41,10 +41,10 @@ void multimap_remove_pair(std::multimap<TKey, TKeyVal>& tMap, const TKey key, co
 	typedef std::multimap<TKey, TKeyVal> TMap;
 
 	// Grab the range of keys matching the same key value
-	std::pair<TMap::iterator, TMap::iterator> iterPair = tMap.equal_range(key);
+	std::pair<typename TMap::iterator,typename TMap::iterator> iterPair = tMap.equal_range(key);
 
 	// Iterate through all these key pairs and erase them
-	for (TMap::iterator it = iterPair.first; it != iterPair.second; ++it)
+	for (typename TMap::iterator it = iterPair.first; it != iterPair.second; ++it)
 	{
 		if (it->second == val)
 		{
@@ -71,7 +71,7 @@ void multimap_visit_all(std::multimap<TKey, TKeyVal>& tMap, std::function<eError
 	typedef std::multimap<TKey, TKeyVal> TMap;
 
 	// for every item in the map call the function that takes each part
-	for (TMap::iterator it = tMap.begin(); it != tMap.end(); it++)
+	for (typename TMap::iterator it = tMap.begin(); it != tMap.end(); it++)
 	{
 		func(it->first,it->second);
 	}
@@ -87,10 +87,10 @@ eError multimap_visit_all(std::multimap<TKey, TKeyVal>& tMap, TKey key, std::fun
 	typedef std::multimap<TKey, TKeyVal> TMap;
 
 	// grab the first and last item in the map matching the key
-	std::pair<TMap::iterator, TMap::iterator> iterPair = tMap.equal_range(key);
+	std::pair<typename TMap::iterator, typename TMap::iterator> iterPair = tMap.equal_range(key);
 
 	// Iterate over all these pairs and call the function
-	for (TMap::iterator it = iterPair.first; it != iterPair.second; ++it)
+	for (typename TMap::iterator it = iterPair.first; it != iterPair.second; ++it)
 	{
 		err |= func(it->second);
 	}
@@ -107,7 +107,7 @@ void multimap_visit_all_slow(std::multimap<TKey, TKeyVal>& tMap, int val, std::f
 	typedef std::multimap<TKey, TKeyVal> TMap;
 
 	// For all the items in the whole map
-	for (TMap::iterator it = tMap.begin(); it != tMap.end(); it++)
+	for (typename TMap::iterator it = tMap.begin(); it != tMap.end(); it++)
 	{
 		// if the value type matches, call the function
 		if (it->second == val)
