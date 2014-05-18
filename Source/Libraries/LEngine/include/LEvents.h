@@ -69,8 +69,8 @@ public:
 	//! \brief typedef for the templated event type 
 	struct TEvent
 	{
-		TEventIdentifier type; //! the type of the event
-		TEventData data; //! the data of the event
+		TEventIdentifier	type; //! the identifier for the event
+		TEventData			data; //! the data of the event
 	};
 
 	//! \brief The event Handler
@@ -87,7 +87,7 @@ public:
 	typedef std::pair< TEventIdentifier, THandler* >		TTypeListenerPair;
 
 	//! \brief typedef for the listener map
-	typedef std::multimap < TEventIdentifier, THandler* > THandlerMap;
+	typedef std::multimap < TEventIdentifier, THandler* >	THandlerMap;
 
 public:
 
@@ -248,7 +248,6 @@ eError LEventManager< typename TEventIdentifier, typename TEventData >::RemoveHa
 	eError err = eError::NoErr;
 	err |= m_ListenerMapMutex.Lock();
 
-	// TODO: Assert the listener map size
 	multimap_remove_pair(m_ListenerMap, type, listener);
 
 	err |= m_ListenerMapMutex.Unlock();
@@ -337,7 +336,7 @@ eError LEventManager< typename TEventIdentifier, typename TEventData >::FlushEve
 
 	// While the queue is not empty
 	// other possibility here would be to do a foreach on every event
-	// But that would probaly need either a full lock around it, or a full copy of the queue
+	// But that would probably need either a full lock around it, or a full copy of the queue
 	while ( ( m_Queue.size() > 0 )
 		&&	!ERROR_HAS_TYPE_FATAL(err) )
 	{
