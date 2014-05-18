@@ -16,8 +16,26 @@
 #include "LObjectManager.h"
 #include "LRenderer.h"
 #include "LGameBase.h"
+#include "LEvents.h"
 
 #include <atomic>
+
+//! \brief type define for engine events
+enum class EEngineEventType
+{
+	EEngineEvent_pause,
+	EEngineEvent_num
+};
+
+//! \brief typpe define for the data in engine events
+union UEngineEventData
+{
+	//! \brief data for pause events
+	struct
+	{
+		int pause_level;
+	} pause;
+};
 
 //! \brief LEngine delegate class
 class LEngine
@@ -95,6 +113,9 @@ private:
 
 	//! \brief The Object Manager
 	LObjectManager			m_ObjectManager;
+
+	//! \brief The engine event manager
+	LEventManager<EEngineEventType, UEngineEventData> m_engineEventManager;
 
 	//! \brief member to show that the engine is quitting
 	std::atomic<bool>		m_bQuitting;

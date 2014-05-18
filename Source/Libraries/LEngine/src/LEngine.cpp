@@ -143,6 +143,10 @@ eError LEngine::Init()
 	if( !ERROR_HAS_TYPE_FATAL( err ) )
 		err |= m_ObjectManager.Create();
 
+	// create the event manager for the engine events
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err |= m_engineEventManager.Create();
+
     return err;
 }
 
@@ -152,6 +156,10 @@ eError LEngine::Quit()
 	RUNTIME_LOG("Quiting...")
 
 	eError err = eError::NoErr;
+
+	// create the event manager for the engine events
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err |= m_engineEventManager.Destroy();
 
 	// Destroy the renderer
 	if (!ERROR_HAS_TYPE_FATAL(err))
