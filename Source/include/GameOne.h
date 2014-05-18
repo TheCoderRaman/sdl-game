@@ -20,30 +20,16 @@
 
 enum class eGameEventType
 {
-	Event_One,
-	Event_Two,
-	Event_Three,
+	GameEvent_pause,
+	GameEvent_Num,
 };
 
 union uGameEventData
 {
 	struct
 	{
-		int x;
-		int y;
-	} one;
-
-	struct 
-	{
-		float i;
-		float y;
-	} two;
-
-	struct 
-	{
-		int array[4];
-		float value;
-	} three;
+		int pause_level;
+	} pause;
 };
 
 typedef LEventManager<eGameEventType, uGameEventData> TGameEventManager;
@@ -67,6 +53,8 @@ public:
 	virtual eError Reset();
 	virtual eError Destroy();
 
+	eError HandleEvent(const TGameEventManager::TEvent* event);
+
 private:
 
 	MyFirstGameObject m_myFirstObject;
@@ -75,9 +63,10 @@ private:
 	LSprite					m_banana;
 
 	//! \brief The Game Event Manager
-	TGameEventManager m_EventManager;
+	TGameEventManager m_myEventManager;
 
-	TGameEventManager::THandler m_eventHandler;
+	//! \brief the event handler for the main game class
+	TGameEventManager::THandler m_myEventHandler;
 };
 
 

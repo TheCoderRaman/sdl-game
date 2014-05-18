@@ -31,7 +31,7 @@ eError GameOne::Create()
 	err |= LGameBase::Create();
 
 	if (!ERROR_HAS_TYPE_FATAL(err))
-		err |= m_EventManager.Create();
+		err |= m_myEventManager.Create();
 
 	// Create the banana
 	if (!ERROR_HAS_TYPE_FATAL(err))
@@ -46,13 +46,13 @@ eError GameOne::Create()
 	if (!ERROR_HAS_TYPE_FATAL(err))
 		err |= GetRenderer()->AddRenderable(&m_banana);
 
-	m_eventHandler.callbackFunction = [&](TGameEventManager::TEvent* data)->eError
+	m_myEventHandler.callbackFunction = 
+	[&](const TGameEventManager::TEvent* event)->eError
 	{ 
-		int i = data->data.one.x;
-		return eError::NoErr; 
+		return HandleEvent(event);
 	};
 
-	m_EventManager.AddHandler(eGameEventType::Event_One, &m_eventHandler);
+	m_myEventManager.AddHandler(eGameEventType::GameEvent_pause, &m_myEventHandler);
 
  	return err;
 }
@@ -84,14 +84,13 @@ eError GameOne::Update(ms elapsed)
 
 	err |= LGameBase::Update(elapsed);
 
+	// Send a pause event FOR SOME REASON I DON'T KNOW MAN
 	uGameEventData data;
-	data.one.x = 2;
-
-	m_EventManager.SendEvent(eGameEventType::Event_One, data);
-	m_EventManager.SendEvent(eGameEventType::Event_Three, data);
+	data.pause.pause_level = 1;
+	m_myEventManager.SendEvent(eGameEventType::GameEvent_pause, data);
 
 	// flush the events
-	m_EventManager.FlushEvents();
+	err |= m_myEventManager.FlushEvents();
 
  	return err;
 }
@@ -121,8 +120,9 @@ eError GameOne::Destroy()
 {
  	eError err = eError::NoErr;
 
-
-	m_EventManager.RemoveHandler(eGameEventType::Event_One, &m_eventHandler);
+	// Remove the event handler
+	if (!ERROR_HAS_TYPE_FATAL(err))
+		err |= m_myEventManager.RemoveHandler(eGameEventType::GameEvent_pause, &m_myEventHandler);
 
 	// Remove the banana from the renderer
 	if (!ERROR_HAS_TYPE_FATAL(err))
@@ -133,9 +133,17 @@ eError GameOne::Destroy()
 		err |= m_banana.Destroy();
 
 	if (!ERROR_HAS_TYPE_FATAL(err))
-		err |= m_EventManager.Destroy();
+		err |= m_myEventManager.Destroy();
 
 	err |= LGameBase::Destroy();
 
  	return err;
+}
+
+//========================================================
+eError GameOne::HandleEvent(const TGameEventManager::TEvent* event)
+{
+	// do stuff to handle the events
+
+	return eError::NoErr;
 }

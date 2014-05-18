@@ -79,7 +79,8 @@ public:
 	struct THandler
 	{
 		//! \brief internal function that will be called on event handling
-		std::function< eError(TEvent*) >	callbackFunction;
+		// This can be set by using the "[&](const TGameEventManager::TEvent* event)->eError{ do stuff; }" signature
+		std::function< eError(const TEvent*) >	callbackFunction;
 	};
 
 
