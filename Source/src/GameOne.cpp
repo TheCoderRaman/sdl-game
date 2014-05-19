@@ -31,6 +31,9 @@ eError GameOne::Create()
 
 	err |= LGameBase::Create();
 
+	if( !ERROR_HAS_TYPE_FATAL( err ) )
+		err |= m_myEventManager.Create();
+
 	// Setting up the banana object
 	m_banana.SetRenderer( GetRenderer() );
 	GetObjectManager()->RegisterObject( &m_banana );

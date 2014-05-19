@@ -14,7 +14,7 @@
 //!	
 //!	The user can then add "Handlers" to this system
 //!	TMyEventSystem::THandler m_EventHandler;
-//! m_EventHandler.function = [](TMyEventSystem::TEvent*)->eError 
+//! m_EventHandler.callbackFunction = [](TMyEventSystem::TEvent*)->eError 
 //! {
 //!		// DO STUFF
 //!		return eError::Error_Val;
