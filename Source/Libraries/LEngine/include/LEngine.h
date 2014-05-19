@@ -14,6 +14,7 @@
 #include "SDLThread.h"
 
 #include "LObjectManager.h"
+#include "LInput.h"
 #include "LRenderer.h"
 #include "LGameBase.h"
 #include "LEvents.h"
@@ -113,6 +114,9 @@ private:
 
 	//! \brief The Object Manager
 	LObjectManager			m_ObjectManager;
+
+	//! \brief The InputManager
+	LInput					m_InputManager;
 
 	//! \brief The engine event manager
 	LEventManager<EEngineEventType, UEngineEventData> m_engineEventManager;

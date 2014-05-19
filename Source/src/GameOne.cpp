@@ -8,6 +8,7 @@
 #include "GameOne.h"
 
 #include "LObjectManager.h"
+#include "LInput.h"
 
 #include "eError.h"
 
@@ -30,12 +31,9 @@ eError GameOne::Create()
 
 	err |= LGameBase::Create();
 
-	if (!ERROR_HAS_TYPE_FATAL(err))
-		err |= m_myEventManager.Create();
-
-	// Create the banana
-	if (!ERROR_HAS_TYPE_FATAL(err))
-		err |= m_banana.Create(*GetRenderer(), "Media/banana.png");
+	// Setting up the banana object
+	m_banana.SetRenderer( GetRenderer() );
+	GetObjectManager()->RegisterObject( &m_banana );
 
 	// Set up the banana
 	m_banana.SetSourceRect({ 0, 0, 400, 300 });
@@ -45,14 +43,6 @@ eError GameOne::Create()
 	// Add said banana to the renderer
 	if (!ERROR_HAS_TYPE_FATAL(err))
 		err |= GetRenderer()->AddRenderable(&m_banana);
-
-	m_myEventHandler.callbackFunction = 
-	LEVENTHANDLER_CALLBACK_FUNCTION(TGameEventManager)
-	{ 
-		return HandleEvent(event);
-	};
-
-	m_myEventManager.AddHandler(eGameEventType::GameEvent_pause, &m_myEventHandler);
 
  	return err;
 }
@@ -83,6 +73,18 @@ eError GameOne::Update(ms elapsed)
  	eError err = eError::NoErr;
 
 	err |= LGameBase::Update(elapsed);
+
+	if( LGameBase::GetInputManager() )
+	{
+		if( LGameBase::GetInputManager()->GetButtonHeldDown( LInput::eInputType::up ) )
+		{
+			m_banana.MoveBananaUpAFrame();
+		}
+		if (LGameBase::GetInputManager()->GetButtonJustPressed(LInput::eInputType::down))
+		{
+			m_banana.MoveBananaDownAFrame();
+		}
+	}
 
 	// Send a pause event FOR SOME REASON I DON'T KNOW MAN
 	uGameEventData data;

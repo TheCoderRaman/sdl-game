@@ -62,7 +62,7 @@ namespace SDLInterface
 		Semaphore();
 		~Semaphore();
 
-		//! \brief Create the semaphore (must be called)
+		//! \brief Create the semaphore (must be called) 
 		eError Create();
 
 		//! \brief Destroy the semaphore (must be called before destruction)

@@ -192,11 +192,19 @@ eError LEngine::Load()
 	//Loading err flag
     eError err = eError::NoErr;
 
-	// Set the games renderer
-	m_myGame.SetRenderer(&m_Renderer);
+	// Set the game's renderer
+	m_myGame.SetRenderer( &m_Renderer );
+	// Set the game's object manager
+	m_myGame.SetObjectManager( &m_ObjectManager );
+	// Set the game's input manager
+	m_myGame.SetInputManager( &m_InputManager );
 
 	// Create the game
 	err |= m_myGame.Create();
+
+	// Initialise the objects
+	if( !ERROR_HAS_TYPE_FATAL( err ) )
+		err |= m_ObjectManager.Create();
 
 	// Initialse the game
 	if (!ERROR_HAS_TYPE_FATAL(err))
@@ -255,8 +263,12 @@ eError LEngine::Unload()
 {
 	eError err = eError::NoErr;
 
+	// Destroy the objects
+	if( !ERROR_HAS_TYPE_FATAL( err ) )
+		err |= m_ObjectManager.Destroy();
+
 	// Destroy the game
-	if (!ERROR_HAS_TYPE_FATAL(err))
+	if ( !ERROR_HAS_TYPE_FATAL( err ) )
 		err |= m_myGame.Destroy();
 
 	// Set the games renderer back to null
@@ -269,6 +281,10 @@ eError LEngine::Unload()
 eError LEngine::PreUpdate( void )
 {
 	eError err = eError::NoErr;
+
+	// Push the current frame's inputs to last frame's and clear this frame's key buffer
+	// Poll the keyboard now for the current frame's inputs
+	m_InputManager.StartKeyboardUpdate();
 
 	err |= m_myGame.PreUpdate();
 
@@ -293,6 +309,9 @@ eError LEngine::Update(ms elapsed)
 eError LEngine::PostUpdate( void )
 {
 	eError err = eError::NoErr;
+
+	// Reset the Engine level keyboard polling
+	m_InputManager.EndKeyboardUpdate();
 
 	err |= m_myGame.PostUpdate();
 

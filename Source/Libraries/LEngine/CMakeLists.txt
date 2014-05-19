@@ -28,6 +28,7 @@ SET(PROJECT_HEADERS
 	${CMAKE_CURRENT_SOURCE_DIR}/include/LRenderer.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/LSprite.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/LEvents.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/LInput.h
 )
 
 SET(PROJECT_SRCS
@@ -36,6 +37,7 @@ SET(PROJECT_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/src/LObjectManager.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/LRenderer.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/LSprite.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/LInput.cpp
 )
 
 #-----------------------------------------------------------------

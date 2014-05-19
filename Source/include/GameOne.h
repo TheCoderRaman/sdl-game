@@ -12,27 +12,9 @@
 #include "LObject.h"
 #include "LSprite.h"
 
-#include "MyFirstGameObject.h"
+#include "Banana.h"
 
 #include "types.h"
-
-#include "LEvents.h"
-
-enum class eGameEventType
-{
-	GameEvent_pause,
-	GameEvent_Num,
-};
-
-union uGameEventData
-{
-	struct
-	{
-		int pause_level;
-	} pause;
-};
-
-typedef LEventManager<eGameEventType, uGameEventData> TGameEventManager;
 
 //! \brief an Example game, called "One"
 class GameOne
@@ -53,20 +35,9 @@ public:
 	virtual eError Reset();
 	virtual eError Destroy();
 
-	eError HandleEvent(const TGameEventManager::TEvent* event);
-
 private:
 
-	MyFirstGameObject m_myFirstObject;
-
-	//! \brief The Banana
-	LSprite					m_banana;
-
-	//! \brief The Game Event Manager
-	TGameEventManager m_myEventManager;
-
-	//! \brief the event handler for the main game class
-	TGameEventManager::THandler m_myEventHandler;
+	Banana m_banana;
 };
 
 

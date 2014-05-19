@@ -12,6 +12,18 @@
 #include "debug.h"
 #include "eError.h"
 
+#define INPUT_DEBUGGING 0
+
+#if INPUT_DEBUGGING
+#define INPUT_DEBUG(...) DEBUG_LOG(__VA_ARGS__)
+#else
+#define INPUT_DEBUG(...)
+#endif
+
+
+
+// what is even happen
+SDLInterface::SDLKeyboardEvents SDLInterface::EventHandling::sm_KeyboardStruct;
 
 //========================================================
 eError SDLInterface::EventHandling::HandleEvent(SDL_Event *event)
@@ -82,14 +94,97 @@ eError SDLInterface::EventHandling::HandleEvent(SDL_Event *event)
 }
 
 //========================================================
-eError SDLInterface::EventHandling::HandleKeyboardEvent(SDL_Event *event)
+eError SDLInterface::EventHandling::HandleKeyboardEvent( SDL_Event *event )
 {
 	eError err = eError::NoErr;
 
-	/*
-	case SDL_KEYUP:
-	case SDL_KEYDOWN:
-	*/
+	eSDLKeyInterface eKeyPressed = eSDLKeyInterface::key_invalid;
+
+	bool keyDown = (event->key.state == SDL_PRESSED);
+	bool held = event->key.repeat;
+
+	// Converts input from SDL-data to engine-data
+	switch( event->key.keysym.sym )
+	{
+		// Numbahs
+		case SDLK_0:
+			eKeyPressed = eSDLKeyInterface::key_0;
+			break;
+		case SDLK_1:
+			eKeyPressed = eSDLKeyInterface::key_1;
+			break;
+		case SDLK_2:
+			eKeyPressed = eSDLKeyInterface::key_2;
+			break;
+		case SDLK_3:
+			eKeyPressed = eSDLKeyInterface::key_3;
+			break;
+		case SDLK_4:
+			eKeyPressed = eSDLKeyInterface::key_4;
+			break;
+		case SDLK_5:
+			eKeyPressed = eSDLKeyInterface::key_5;
+			break;
+		case SDLK_6:
+			eKeyPressed = eSDLKeyInterface::key_6;
+			break;
+		case SDLK_7:
+			eKeyPressed = eSDLKeyInterface::key_7;
+			break;
+		case SDLK_8:
+			eKeyPressed = eSDLKeyInterface::key_8;
+			break;
+		case SDLK_9:
+			eKeyPressed = eSDLKeyInterface::key_9;
+			break;
+
+		// Speshul
+		case SDLK_ESCAPE:
+			eKeyPressed = eSDLKeyInterface::key_escape;
+			break;
+		case SDLK_RETURN:
+			eKeyPressed = eSDLKeyInterface::key_return;
+			break;
+		case SDLK_SPACE:
+			eKeyPressed = eSDLKeyInterface::key_space;
+			break;
+
+		// Movan
+		case SDLK_UP:
+			eKeyPressed = eSDLKeyInterface::key_up;
+			break;
+		case SDLK_DOWN:
+			eKeyPressed = eSDLKeyInterface::key_down;
+			break;
+		case SDLK_LEFT:
+			eKeyPressed = eSDLKeyInterface::key_left;
+			break;
+		case SDLK_RIGHT:
+			eKeyPressed = eSDLKeyInterface::key_right;
+			break;
+	}
+
+	eKeyState& state = sm_KeyboardStruct.m_abKeyboardEvents[(unsigned)eKeyPressed];
+
+	// For key down events
+	if (keyDown)
+	{
+		if (state == eKeyState::released || state == eKeyState::being_released)
+		{
+			INPUT_DEBUG("setting %i from released > being_pressed", (unsigned)eKeyPressed);
+			state = eKeyState::being_pressed;
+		}
+	
+	}
+	// for key up events
+	else
+	{
+		if (state == eKeyState::pressed || state == eKeyState::being_pressed )
+		{
+			INPUT_DEBUG("setting %i from pressed|being_pressed> being_released", (unsigned)eKeyPressed);
+			state = eKeyState::being_released;
+		}
+	}
 
 	return err;
 }
@@ -171,4 +266,34 @@ eError SDLInterface::EventHandling::HandleWindowEvent(SDL_Event *event)
 		break;
 	}
 	return err;
+}
+
+bool SDLInterface::EventHandling::GetKeyPressed( eSDLKeyInterface eKey )
+{
+	eKeyState state = sm_KeyboardStruct.m_abKeyboardEvents[(unsigned)eKey];
+
+	// Return true as long as we're not currently released
+	return (state != eKeyState::released);
+}
+
+void SDLInterface::EventHandling::FlushKeys()
+{
+	for (int i = 0; i < (int)eSDLKeyInterface::total_keys; i++)
+	{
+		eKeyState& state = sm_KeyboardStruct.m_abKeyboardEvents[i];
+
+		// Progress the events past the intermediate stage
+		switch (state)
+		{
+		case eKeyState::being_released:
+			INPUT_DEBUG("flushing %i from being_released >> released",i);
+			state = eKeyState::released;
+			break;
+
+		case eKeyState::being_pressed:
+			INPUT_DEBUG("flushing %i from being_pressed >> pressed",i);
+			state = eKeyState::pressed;
+			break;
+		}
+	}
 }
