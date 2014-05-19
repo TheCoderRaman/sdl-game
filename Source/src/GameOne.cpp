@@ -35,6 +35,14 @@ eError GameOne::Create()
 	m_banana.SetRenderer( GetRenderer() );
 	GetObjectManager()->RegisterObject( &m_banana );
 
+	m_myEventHandler.callbackFunction =
+		LEVENTHANDLER_CALLBACK_FUNCTION( TGameEventManager )
+	{
+			return HandleEvent( event );
+	};
+
+	m_myEventManager.AddHandler( eGameEventType::GameEvent_pause, &m_myEventHandler );
+
  	return err;
 }
 
@@ -80,7 +88,7 @@ eError GameOne::Update(ms elapsed)
 	// Send a pause event FOR SOME REASON I DON'T KNOW MAN
 	uGameEventData data;
 	data.pause.pause_level = 1;
-	m_myEventManager.SendEvent(eGameEventType::GameEvent_pause, data);
+	m_myEventManager.SendEvent( eGameEventType::GameEvent_pause, data );
 
 	// flush the events
 	err |= m_myEventManager.FlushEvents();
