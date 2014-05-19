@@ -35,15 +35,6 @@ eError GameOne::Create()
 	m_banana.SetRenderer( GetRenderer() );
 	GetObjectManager()->RegisterObject( &m_banana );
 
-	// Set up the banana
-	m_banana.SetSourceRect({ 0, 0, 400, 300 });
-	m_banana.SetSize(400,300);
-	m_banana.SetPos(100,100);
-
-	// Add said banana to the renderer
-	if (!ERROR_HAS_TYPE_FATAL(err))
-		err |= GetRenderer()->AddRenderable(&m_banana);
-
  	return err;
 }
 

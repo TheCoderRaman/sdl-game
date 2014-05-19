@@ -16,6 +16,24 @@
 
 #include "types.h"
 
+#include "LEvents.h"
+
+enum class eGameEventType
+{
+	GameEvent_pause,
+	GameEvent_Num,
+};
+
+union uGameEventData
+{
+	struct
+	{
+		int pause_level;
+	} pause;
+};
+
+typedef LEventManager<eGameEventType, uGameEventData> TGameEventManager;
+
 //! \brief an Example game, called "One"
 class GameOne
 : public LGameBase
@@ -35,9 +53,17 @@ public:
 	virtual eError Reset();
 	virtual eError Destroy();
 
+	eError HandleEvent( const TGameEventManager::TEvent* event );
+
 private:
 
 	Banana m_banana;
+
+	//! \brief The Game Event Manager
+	TGameEventManager m_myEventManager;
+
+	//! \brief the event handler for the main game class
+	TGameEventManager::THandler m_myEventHandler;
 };
 
 
