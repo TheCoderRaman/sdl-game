@@ -8,7 +8,7 @@
 #include "SDLSurface.h"
 
 // From Util
-#include "eError.h"
+#include "SDLError.h"
 #include "debug.h"
 
 // SDLInterface includes
@@ -32,63 +32,63 @@ SDLInterface::Surface::~Surface()
 }
 
 //========================================================
-eError SDLInterface::Surface::CreateFromBMP(const char* bmpFile)
+SDLInterface::Error SDLInterface::Surface::CreateFromBMP(const char* bmpFile)
 {
-	eError err = eError::NoErr;
+	Error err = Error::NoErr;
 
 	// Sanity check
 	DEBUG_ASSERT(m_sdl_surface == nullptr);
 
 	EventLoop::RunOnMainThread_Sync(err,
-	[&]()->eError
+	[&]()->Error
 	{
 		// Get a surface from the BMP
 		m_sdl_surface = SDL_LoadBMP(bmpFile);
 
-		return eError::NoErr;
+		return Error::NoErr;
 	});
 
 	// Error handling
 	if (m_sdl_surface == NULL)
 	{
 		DEBUG_LOG("Surface could not be created from %s! SDL_Error: %s", bmpFile,SDL_GetError());
-		err |= eError::SDL_Fatal;
+		err |= Error::Surface_create_fail;
 	}
 
 	return err;
 }
 
 //========================================================
-eError SDLInterface::Surface::CreateFromFile(const char* file)
+SDLInterface::Error SDLInterface::Surface::CreateFromFile(const char* file)
 {
-	eError err = eError::NoErr;
+	Error err = Error::NoErr;
 
 	// Sanity check
 	DEBUG_ASSERT(m_sdl_surface == nullptr);
 
 	EventLoop::RunOnMainThread_Sync(err,
-	[&]()->eError
+	[&]()->Error
 	{
 		// Get a surface from the BMP
 		m_sdl_surface = IMG_Load(file);
 
-		return eError::NoErr;
+		return Error::NoErr;
 	});
 
 	// Error handling
 	if (m_sdl_surface == NULL)
 	{
 		DEBUG_LOG("Surface could not be created from %s! SDL_Error: %s", file, SDL_GetError());
-		err |= eError::SDL_Fatal;
+		err |= Error::Surface_create_fail;
 	}
 
 	return err;
 }
 
 //========================================================
-eError SDLInterface::Surface::CreateFromWindow(Window* window)
+SDLInterface::Error SDLInterface::Surface::CreateFromWindow(Window* window)
 {
-	eError err = eError::NoErr;
+	Error err = Error::NoErr;
 
 	// Sanity check
 	DEBUG_ASSERT(m_sdl_surface == nullptr);
@@ -100,39 +100,39 @@ eError SDLInterface::Surface::CreateFromWindow(Window* window)
 	DEBUG_ASSERT(sdlwindow != nullptr);
 
 	EventLoop::RunOnMainThread_Sync(err,
-	[&]()->eError
+	[&]()->Error
 	{
 		// Get the surface from the window
 		m_sdl_surface = SDL_GetWindowSurface(sdlwindow);
 
-		return eError::NoErr;
+		return Error::NoErr;
 	});
 
 	// Error handling
 	if (m_sdl_surface == NULL)
 	{
 		DEBUG_LOG("Surface could not be fetched from window! SDL_Error: %s", SDL_GetError());
-		err |= eError::SDL_Fatal;
+		err |= Error::Surface_create_fail;
 	}
 
 	return err;
 }
 
 //========================================================
-eError SDLInterface::Surface::Destroy()
+SDLInterface::Error SDLInterface::Surface::Destroy()
 {
-	eError err = eError::NoErr;
+	Error err = Error::NoErr;
 
 	// Sanity check
 	DEBUG_ASSERT(m_sdl_surface != nullptr);
 
 	EventLoop::RunOnMainThread_Sync(err,
-	[&]()->eError
+	[&]()->Error
 	{
 		// Free the SDL surface
 		SDL_FreeSurface(m_sdl_surface);
 
-		return eError::NoErr;
+		return Error::NoErr;
 	});
 
 	m_sdl_surface = nullptr;

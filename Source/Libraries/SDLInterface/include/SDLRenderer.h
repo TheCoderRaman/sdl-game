@@ -10,8 +10,7 @@
 #ifndef _SDLRENDERER_H_
 #define _SDLRENDERER_H_
 
-// Includes
-#include "types.h"
+#include "SDLCommon.h"
 
 // for friending
 #include "SDLHelper.h"
@@ -47,22 +46,22 @@ namespace SDLInterface
 		~Renderer();
 
 		//! \brief Create the renderer from a window
-		eError Create(Window* window);
+		Error Create(Window* window);
 
 		//! \brief render using the renderer
-		eError RenderStart();
+		Error RenderStart();
 
 		//! \brief render a texture
-		eError RenderTexture(Texture* tex, const Rect& src, const Rect& dest);
+		Error RenderTexture(Texture* tex, const Rect& src, const Rect& dest);
 
 		//! \brief render a texture
-		eError RenderRectangle(const Rect& src, int r, int g, int b, int a, bool fill = true);
+		Error RenderRectangle(const Rect& src, int r, int g, int b, int a, bool fill = true);
 
 		//! \brief render using the renderer
-		eError RenderEnd();
+		Error RenderEnd();
 
 		//! \brief destroy the renderer
-		eError Destroy();
+		Error Destroy();
 
 	private:
 

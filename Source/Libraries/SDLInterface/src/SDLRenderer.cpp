@@ -10,7 +10,7 @@
 #include "SDL.h"
 
 #include "debug.h"
-#include "eError.h"
+#include "SDLError.h"
 
 #include "SDLEventLoop.h"
 #include "SDLTexture.h"
@@ -30,14 +30,14 @@ SDLInterface::Renderer::~Renderer()
 }
 
 //========================================================
-eError SDLInterface::Renderer::Create(Window* window)
+SDLInterface::Error SDLInterface::Renderer::Create(Window* window)
 {
-	eError err = eError::NoErr;
+	Error err = Error::NoErr;
 
 	EventLoop::RunOnMainThread_Sync(err,
-	[&]()->eError
+	[&]()->Error
 	{
-		eError err = eError::NoErr;
+		Error err = Error::NoErr;
 
 		// Attempt to get the renderer from the window
 		m_SDL_Renderer = SDL_GetRenderer(Helper::GetSDL_Window(window));
@@ -62,16 +62,16 @@ eError SDLInterface::Renderer::Create(Window* window)
 	if (m_SDL_Renderer == nullptr)
 	{
 		DEBUG_LOG("Renderer failed to be created: %s", SDL_GetError());
-		err |= eError::SDL_Fatal;
+		err |= Error::Renderer_create_fail;
 	}
 
 	return err;
 }
 
 //========================================================
-eError SDLInterface::Renderer::RenderStart()
+SDLInterface::Error SDLInterface::Renderer::RenderStart()
 {
-	eError err = eError::NoErr;
+	Error err = Error::NoErr;
 
 	// Sanity check
 	DEBUG_ASSERT(!m_bRendering);
@@ -80,12 +80,12 @@ eError SDLInterface::Renderer::RenderStart()
 	DEBUG_ASSERT(nullptr != m_SDL_Renderer);
 
 	EventLoop::RunOnMainThread_Sync(err,
-		[&]()->eError
+		[&]()->Error
 	{
 		// Start by clearing the render buffer
 		SDL_RenderClear(m_SDL_Renderer);
 
-		return eError::NoErr;
+		return Error::NoErr;
 	});
 
 	// Set us to be rendering
@@ -95,9 +95,9 @@ eError SDLInterface::Renderer::RenderStart()
 }
 
 //========================================================
-eError SDLInterface::Renderer::RenderRectangle(const Rect& src, int r, int g, int b, int a, bool fill  /* = true */)
+SDLInterface::Error SDLInterface::Renderer::RenderRectangle(const Rect& src, int r, int g, int b, int a, bool fill  /* = true */)
 {
-	eError err = eError::NoErr;
+	Error err = Error::NoErr;
 
 	// Sanity check
 	DEBUG_ASSERT(m_bRendering);
@@ -113,7 +113,7 @@ eError SDLInterface::Renderer::RenderRectangle(const Rect& src, int r, int g, in
 	// TODO: Work out how to ensure we don't need to do this
 	// I _think_ it would be a case of binding the context
 	EventLoop::RunOnMainThread_Sync(err,
-		[&]()->eError
+		[&]()->Error
 	{
 #endif
 
@@ -133,7 +133,7 @@ eError SDLInterface::Renderer::RenderRectangle(const Rect& src, int r, int g, in
 		SDL_SetRenderDrawColor(m_SDL_Renderer, 255, 255, 255, 255);
 
 #ifndef WINDOWS_BUILD
-		return eError::NoErr;
+		return Error::NoErr;
 	});
 #endif
 
@@ -141,9 +141,9 @@ eError SDLInterface::Renderer::RenderRectangle(const Rect& src, int r, int g, in
 }
 
 //========================================================
-eError SDLInterface::Renderer::RenderTexture(Texture* tex, const Rect& src, const Rect& dest)
+SDLInterface::Error SDLInterface::Renderer::RenderTexture(Texture* tex, const Rect& src, const Rect& dest)
 {
-	eError err = eError::NoErr;
+	Error err = Error::NoErr;
 
 	// Sanity check
 	DEBUG_ASSERT(m_bRendering);
@@ -160,14 +160,14 @@ eError SDLInterface::Renderer::RenderTexture(Texture* tex, const Rect& src, cons
 	// TODO: Work out how to ensure we don't need to do this
 	// I _think_ it would be a case of binding the context
 	EventLoop::RunOnMainThread_Sync(err,
-		[&]()->eError
+		[&]()->Error
 	{
 #endif
 		// Copy the texture over to the renderer
 		SDL_RenderCopy(m_SDL_Renderer, Helper::GetSDL_Texture(tex), &source, &destination);
 
 #ifndef WINDOWS_BUILD
-		return eError::NoErr
+		return Error::NoErr
 	});
 #endif
 
@@ -175,9 +175,9 @@ eError SDLInterface::Renderer::RenderTexture(Texture* tex, const Rect& src, cons
 }
 
 //========================================================
-eError SDLInterface::Renderer::RenderEnd()
+SDLInterface::Error SDLInterface::Renderer::RenderEnd()
 {
-	eError err = eError::NoErr;
+	Error err = Error::NoErr;
 
 	// Sanity check
 	DEBUG_ASSERT(m_bRendering);
@@ -186,12 +186,12 @@ eError SDLInterface::Renderer::RenderEnd()
 	DEBUG_ASSERT(nullptr != m_SDL_Renderer);
 
 	EventLoop::RunOnMainThread_Sync( err,
-	[ & ]()->eError
+	[ & ]()->Error
 	{
 		//Present the rendered image
 		SDL_RenderPresent( m_SDL_Renderer );
 
-		return eError::NoErr;
+		return Error::NoErr;
 	} );
 
 	// Set us to not be rendering
@@ -201,15 +201,15 @@ eError SDLInterface::Renderer::RenderEnd()
 }
 
 //========================================================
-eError SDLInterface::Renderer::Destroy()
+SDLInterface::Error SDLInterface::Renderer::Destroy()
 {
-	eError err = eError::NoErr;
+	Error err = Error::NoErr;
 
 
 	EventLoop::RunOnMainThread_Sync(err,
-	[&]()->eError
+	[&]()->Error
 	{
-		eError err = eError::NoErr;
+		Error err = Error::NoErr;
 
 		SDL_DestroyRenderer(m_SDL_Renderer);
 

@@ -10,9 +10,6 @@
 #ifndef _SDLRECT_H_
 #define _SDLRECT_H_
 
-// Includes
-#include "types.h"
-
 // for friending
 #include "SDLHelper.h"
 

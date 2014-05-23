@@ -9,7 +9,7 @@
 #ifndef _SDLTEXTURE_H_
 #define _SDLTEXTURE_H_
 
-#include "types.h" // For eError
+#include "SDLCommon.h"
 
 #include "SDLHelper.h" // for friending
 
@@ -37,16 +37,16 @@ namespace SDLInterface
 
 		//! \brief Create the texture
 		//! \warning Not implemented, not sure how to do this properly
-		eError Create();
+		Error Create();
 
 		//! \brief Create the texture from a file and a renderer
-		eError Create(Renderer* renderer, const char* file);
+		Error Create(Renderer* renderer, const char* file);
 
 		//! \brief Create the texture from a surface and a renderer
-		eError Create(Renderer* renderer, Surface* surface);
+		Error Create(Renderer* renderer, Surface* surface);
 
 		//! \brief destroy the surface
-		eError Destroy();
+		Error Destroy();
 
 	private:
 

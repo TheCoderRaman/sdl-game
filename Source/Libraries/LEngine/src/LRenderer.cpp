@@ -6,6 +6,7 @@
 //!
 #include "LRenderer.h"
 #include "SDLTimer.h"
+#include "SDLError.h"
 
 #include "eError.h"
 #include "debug.h"
@@ -62,12 +63,12 @@ LRenderer2D::~LRenderer2D()
 //===============================================================
 eError LRenderer2D::Create(SDLInterface::Window &window)
 {
-	eError err = eError::NoErr;
+	SDLInterface::Error err = SDLInterface::Error::NoErr;
 
 	// Create the renderer
 	err |= m_BaseSDLRenderer.Create(&window);
 
-	return err;
+	return SDL_ERROR_HAS_TYPE_FATAL(err) ? eError::Type_Fatal : eError::NoErr;;
 }
 
 //===============================================================
@@ -103,6 +104,7 @@ eError LRenderer2D::RemoveRenderable(LRendereable2D* toRemove)
 eError LRenderer2D::Render()
 {
 	eError err = eError::NoErr;
+	SDLInterface::Error sdlerr = SDLInterface::Error::NoErr;
 
 #if RENDER_TIMING_DEBUG
 	SDLInterface::Timer timer;
@@ -111,20 +113,23 @@ eError LRenderer2D::Render()
 
 	// Start the render
 	if (!ERROR_HAS_TYPE_FATAL(err))
-		err |= m_BaseSDLRenderer.RenderStart();
+		sdlerr |= m_BaseSDLRenderer.RenderStart();
 
 	// Render all the renderables
-	if (!ERROR_HAS_TYPE_FATAL(err))
+	if (!SDL_ERROR_HAS_TYPE_FATAL(sdlerr))
 		err |= RenderRenderables();
 
 	// End the render
 	if (!ERROR_HAS_TYPE_FATAL(err))
-		err |= m_BaseSDLRenderer.RenderEnd();
+		sdlerr |= m_BaseSDLRenderer.RenderEnd();
 
 #if RENDER_TIMING_DEBUG
 	ms time = timer.GetTimePassed();
 	DEBUG_LOG("RENDER TOOK: %i ticks %f seconds %f fps", time, msToSec(time), 1.0f / msToSec(time));
 #endif
+
+	// Pull in the SDL error
+	err |= SDL_ERROR_HAS_TYPE_FATAL(sdlerr) ? eError::Type_Fatal : eError::NoErr;
 
 	return err;
 }
@@ -165,7 +170,7 @@ eError LRenderer2D::Destroy()
 	eError err = eError::NoErr;
 
 	// Destroy the renderer
-	err |= m_BaseSDLRenderer.Destroy();
+	m_BaseSDLRenderer.Destroy();
 
 	return err;
 }

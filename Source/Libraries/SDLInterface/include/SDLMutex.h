@@ -8,8 +8,7 @@
 #ifndef _SDLMUTEX_H_
 #define _SDLMUTEX_H_
 
-// For eError
-#include "types.h"
+#include "SDLCommon.h"
 
 // Forward declare SDL structs
 struct SDL_semaphore;
@@ -33,18 +32,18 @@ namespace SDLInterface
 		~Mutex();
 
 		//! \brief Create the mutex (must be called)
-		eError Create();
+		Error Create();
 
 		//! \brief Destroy the mutex (must be called before destruction)
-		eError Destroy();
+		Error Destroy();
 
 		//! \brief Lock the mutex
 		//! \warning will not return untill mutex has been locked, ie. all other locks have unlocked
-		eError Lock();
+		Error Lock();
 
 		//! \brief Unlock the mutex
 		//! MUST be called if Lock() was called
-		eError Unlock();
+		Error Unlock();
 
 	private:
 
@@ -63,17 +62,17 @@ namespace SDLInterface
 		~Semaphore();
 
 		//! \brief Create the semaphore (must be called) 
-		eError Create();
+		Error Create();
 
 		//! \brief Destroy the semaphore (must be called before destruction)
-		eError Destroy();
+		Error Destroy();
 
 		//! \brief Post the semaphore
-		eError Post();
+		Error Post();
 
 		//! \brief Waits for the semaphore
 		//! \warning will block until Post is called
-		eError Wait();
+		Error Wait();
 
 	private:
 

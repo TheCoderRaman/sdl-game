@@ -8,8 +8,7 @@
 #ifndef _SDLTHREAD_H_
 #define _SDLTHREAD_H_
 
-// Includes
-#include "types.h"
+#include "SDLCommon.h"
 
 //! \brief  Forward declarations for SDL stuff
 struct SDL_Thread;
@@ -39,27 +38,27 @@ namespace SDLInterface
 
 		//! \brief Spawn a thread with \a name and \a func with \a data
 		//! \warning this Thread will hang around untill Wait or Detach are called on it
-		eError Spawn(void* data);
+		Error Spawn(void* data);
 
 		//! \brief Wait for a thread to finish
 		//! \warning this will not return until the thread returns
-		eError Wait();
+		Error Wait();
 
 		//! \brief Detach a thread
 		//! This detaches the thread, telling it that it does not need to hang around
 		//! until Wait is called.
 		//! \warning This thread is now completely detached so no return code can be recieved
 		//! \warning This Thread object is now invalid and cannot have Wait or Detach called on it
-		eError Detach();
+		Error Detach();
 
 		//! \brief thread time delay
 		//! \warning will not return until time has passed
-		static eError Delay(ms time);
+		static Error Delay(ms time);
 
 		//! \brief thread delay until a specific time
 		//! returns Instantly if the time has already been reached
 		//! \warning will not return until the specific time has been reached
-		static eError DelayUntil(ms globaltime);
+		static Error DelayUntil(ms globaltime);
 
 	private:
 

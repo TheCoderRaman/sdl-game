@@ -10,7 +10,8 @@
 #include "SDL.h"
 
 #include "debug.h"
-#include "eError.h"
+#include "types.h"
+#include "SDLError.h"
 
 #include "SDLMutex.h"
 #include "SDLEventHandling.h"
@@ -57,9 +58,9 @@ void SDLInterface::EventLoop::RequestQuit()
 }
 
 //========================================================
-eError SDLInterface::EventLoop::Create()
+SDLInterface::Error SDLInterface::EventLoop::Create()
 {
-	eError err = eError::NoErr;
+	Error err = Error::NoErr;
 
 	// Register the custom event
 	if (s_iCustomFunctionEventType == 0)
@@ -68,7 +69,7 @@ eError SDLInterface::EventLoop::Create()
 	}
 	else
 	{
-		err |= eError::SDL_Fatal;
+		err |= Error::Eventloop_double_create;
 		DEBUG_LOG("ERROR Possible EventLoop::Create called twice?")
 	}
 
@@ -76,17 +77,17 @@ eError SDLInterface::EventLoop::Create()
 }
 
 //========================================================
-eError SDLInterface::EventLoop::Destroy()
+SDLInterface::Error SDLInterface::EventLoop::Destroy()
 {
-	eError err = eError::NoErr;
+	Error err = Error::NoErr;
 
 	return err;
 }
 
 //========================================================
-eError SDLInterface::EventLoop::DoLoop()
+SDLInterface::Error SDLInterface::EventLoop::DoLoop()
 {
-	eError err = eError::NoErr;
+	Error err = Error::NoErr;
 
 	//Event handler
     SDL_Event event;
@@ -95,7 +96,7 @@ eError SDLInterface::EventLoop::DoLoop()
 
 	// Handle events on queue
 	// End if there's a fatal error, or we've been told it's safe to quit
-	while (!(ERROR_HAS_TYPE_FATAL(err) || IsLoopEnding()))
+	while (!(SDL_ERROR_HAS_TYPE_FATAL(err) || IsLoopEnding()))
     {
 		// Wait for an event with a timout of 10
 		// timeout ensures we can quit
@@ -106,10 +107,10 @@ eError SDLInterface::EventLoop::DoLoop()
 			err |= HandleEvent(&event);
     }
 
-	REMOVE_ERR(err, eError::QuitRequest);
+	SDL_REMOVE_ERR(err, Error::QuitRequest);
 
-    if ( err != eError::NoErr )
-    	DEBUG_LOG("DoLoop Dropped out with eError %i",err);
+    if ( err != Error::NoErr )
+    	DEBUG_LOG("DoLoop Dropped out with Error %i",err);
 
 	s_bEventLoopRunning = false;
 
@@ -117,9 +118,9 @@ eError SDLInterface::EventLoop::DoLoop()
 }
 
 //========================================================
-eError SDLInterface::EventLoop::HandleEvent(SDL_Event *event)
+SDLInterface::Error SDLInterface::EventLoop::HandleEvent(SDL_Event *event)
 {
-	eError err = eError::NoErr;
+	Error err = Error::NoErr;
 
 	// Set we're currently event handling
 	s_isCurrentlyEventHandling = true;
@@ -151,9 +152,9 @@ eError SDLInterface::EventLoop::HandleEvent(SDL_Event *event)
 }
 
 //========================================================
-eError SDLInterface::EventLoop::HandleCustomFunctionEvent(SDL_Event *event)
+SDLInterface::Error SDLInterface::EventLoop::HandleCustomFunctionEvent(SDL_Event *event)
 {
-	eError err = eError::NoErr;
+	Error err = Error::NoErr;
 
 	// Grab  the function
 	TMainThreadFunction* function = static_cast<TMainThreadFunction*>(event->user.data1);
@@ -168,9 +169,9 @@ eError SDLInterface::EventLoop::HandleCustomFunctionEvent(SDL_Event *event)
 }
 
 //========================================================
-eError SDLInterface::EventLoop::PostCustomFunctionEvent(TMainThreadFunction& func)
+SDLInterface::Error SDLInterface::EventLoop::PostCustomFunctionEvent(TMainThreadFunction& func)
 {
-	eError err = eError::NoErr;
+	Error err = Error::NoErr;
 
 	// NEW the function, to be deleted after the function is called
 	// This is because whatever function was passed in may be out of scope by the time it gets called
@@ -193,9 +194,9 @@ eError SDLInterface::EventLoop::PostCustomFunctionEvent(TMainThreadFunction& fun
 }
 
 //========================================================
-eError SDLInterface::EventLoop::RunOnMainThread_Sync(eError& returnVal, TMainThreadFunction func)
+SDLInterface::Error SDLInterface::EventLoop::RunOnMainThread_Sync(Error& returnVal, TMainThreadFunction func)
 {
-	eError err = eError::NoErr;
+	Error err = Error::NoErr;
 
 	// We must be running at this point
 	// Any functions that call into here before or after we're running the event loop
@@ -216,9 +217,9 @@ eError SDLInterface::EventLoop::RunOnMainThread_Sync(eError& returnVal, TMainThr
 		tempSem->Create();
 
 		// Create a new temporary function that will post the semaphore and grab the return value
-		TMainThreadFunction newTempFunc = [&]()->eError {
+		TMainThreadFunction newTempFunc = [&]()->Error {
 
-			eError err = eError::NoErr;
+			Error err = Error::NoErr;
 
 			// Call the custom function and grab it's return value
 			returnVal |= func();
@@ -244,9 +245,9 @@ eError SDLInterface::EventLoop::RunOnMainThread_Sync(eError& returnVal, TMainThr
 }
 
 //========================================================
-eError SDLInterface::EventLoop::RunOnMainThread_ASync(TMainThreadFunction func)
+SDLInterface::Error SDLInterface::EventLoop::RunOnMainThread_ASync(TMainThreadFunction func)
 {
-	eError err = eError::NoErr;
+	Error err = Error::NoErr;
 
 	// Post the custom function event
 	err |= PostCustomFunctionEvent(func);

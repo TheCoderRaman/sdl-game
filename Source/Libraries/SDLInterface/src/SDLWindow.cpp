@@ -11,7 +11,7 @@
 #include "SDL.h"
 
 #include "debug.h"
-#include "eError.h"
+#include "SDLError.h"
 
 #include "SDLEventLoop.h"
 
@@ -30,44 +30,44 @@ SDLInterface::Window::~Window()
 }
 
 //========================================================
-eError SDLInterface::Window::Create(int w, int h)
+SDLInterface::Error SDLInterface::Window::Create(int w, int h)
 {
-	eError err = eError::NoErr;
+	Error err = Error::NoErr;
 
     //Create window
 	EventLoop::RunOnMainThread_Sync(err,
-		[&]()->eError {
+		[&]()->Error {
 
 		m_SDL_Window = SDL_CreateWindow("Window",
 			SDL_WINDOWPOS_UNDEFINED,
 			SDL_WINDOWPOS_UNDEFINED,
 			w,h,SDL_WINDOW_SHOWN);
 
-		return eError::NoErr;
+		return Error::NoErr;
 	});
 
 
     if( m_SDL_Window == NULL )
     {
         DEBUG_LOG( "Window could not be created! SDL_Error: %s", SDL_GetError() );
-        err |= eError::SDL_Fatal;
+        err |= Error::Window_create_fail;
     }
 
 	return err;
 }
 
 //========================================================
-eError SDLInterface::Window::Destroy()
+SDLInterface::Error SDLInterface::Window::Destroy()
 {
-	eError err = eError::NoErr;
+	Error err = Error::NoErr;
 
     //Destroy window
 	EventLoop::RunOnMainThread_Sync(err,
-		[&]()->eError {
+		[&]()->Error {
 
 		SDL_DestroyWindow(m_SDL_Window);
 
-		return eError::NoErr;
+		return Error::NoErr;
 	});
 
     m_SDL_Window = nullptr;

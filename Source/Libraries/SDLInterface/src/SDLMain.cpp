@@ -11,34 +11,34 @@
 #include "SDL_image.h"
 
 #include "debug.h"
-#include "eError.h"
+#include "SDLError.h"
 
 //========================================================
-eError SDLInterface::Init()
+SDLInterface::Error SDLInterface::Init()
 {
-	eError err = eError::NoErr;
+	Error err = Error::NoErr;
 
 	//Initialize SDL
     if( SDL_Init( SDL_INIT_EVERYTHING ) < 0 )
     {
         DEBUG_LOG( "SDL could not initialize! Error: %s", SDL_GetError() );
-        err |= eError::SDL_Fatal;
+		err |= Error::Init_fail;
     }
 
 	//Initialise the SDL_image library
 	if (IMG_Init(IMG_INIT_JPG | IMG_INIT_TIF | IMG_INIT_PNG) < 0)
 	{
 		DEBUG_LOG("IMG could not initialize! Error: %s", IMG_GetError());
-		err |= eError::SDL_Fatal;
+		err |= Error::Img_init_fail;
 	}
 
     return err;
 }
 
 //========================================================
-eError SDLInterface::Quit()
+SDLInterface::Error SDLInterface::Quit()
 {
-	eError err = eError::NoErr;
+	Error err = Error::NoErr;
 
     SDL_Quit();
 

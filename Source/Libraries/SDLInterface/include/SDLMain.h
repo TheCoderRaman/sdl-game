@@ -8,7 +8,7 @@
 #ifndef _SDLMAIN_H_
 #define _SDLMAIN_H_
 
-#include "types.h"
+#include "SDLCommon.h"
 
 // Start the SDLInterface Namespace
 namespace SDLInterface
@@ -17,19 +17,19 @@ namespace SDLInterface
 	//!
 	//! Initialises the needed SDL subsystems
 	//!
-	//! \return Any eError produced
+	//! \return Any Error produced
 	//! \sa Quit() for the yang to this ying
 	//! \warning Do not call this twice
-	eError Init();
+	Error Init();
 
 	//! \brief Quit SDL
 	//!
 	//! Quits SDL
 	//!
-	//! \return Any eError produced
+	//! \return Any Error produced
 	//! \sa Init() for the ying to this yang
 	//! \warning Do not call this twice
-	eError Quit();
+	Error Quit();
 
 
 }

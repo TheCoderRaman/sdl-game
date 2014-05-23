@@ -16,20 +16,12 @@ enum class eError : int
 // 	eError name		  eError bit value for flags
 	NoErr			= 0x00000000,
 
-	// 	eError flags         First two bytes for erro types
+	// 	eError types         First two bytes for erro types
 	Type_Fatal		= 0x10000000, 	// Fatal flag
 	Type_Warning	= 0x20000000, 	// Warning flag
 
-	//  eError catagories    3rd and 4th bits for eError catagoreis
-	Catagory_SDL	= 0x00100000, 	// SDL flag
-	Catagory_Events = 0x00200000, 	// SDL flag
-
 	// 	Specific Errors     Last 4 bits for specific errors
 	QuitRequest		= 0x00000001,
-
-	//  Composite Errors (Errors produced as a composite of type, catagory and/or specifics)
-	SDL_Fatal		= 0x10100000,	// Contains Fatal eError AND SDL catagory
-	Event_Warning	= 0x20200000,	// Contains Fatal eError AND SDL catagory
 
 	// ALL errors
 	All = 0x11111111,
@@ -63,6 +55,13 @@ inline eError& operator |= (eError& lhs, eError rhs)
 	return lhs;
 }
 
+//! \brief bitwise | and assignement operator
+inline eError& operator += (eError& lhs, eError rhs)
+{
+	lhs = lhs | rhs;
+	return lhs;
+}
+
 //! \brief bitwise & and assignement operator
 inline eError& operator &= (eError& lhs, eError rhs)
 {
@@ -71,17 +70,13 @@ inline eError& operator &= (eError& lhs, eError rhs)
 }
 
 //! \brief Check if the error contains
-#define ERROR_HAS( err , contains ) \
-	( (err & (contains) ) == (contains) )
+#define ERROR_HAS( err , contains )				( (err & (contains) ) == (contains) )
 
 //! \brief Check if eError is fatal
 #define ERROR_HAS_TYPE_FATAL( err ) 			( ERROR_HAS( err , eError::Type_Fatal )			) 
 
 //! \brief Check if eError is warning
 #define ERROR_HAS_TYPE_WARNING( err ) 			( ERROR_HAS( err , eError::Type_Warning )		)
-
-//! \brief Check if eError is an SDL eError
-#define ERROR_HAS_CATAGORY_SDL( err )			( ERROR_HAS( err , eError::Catagory_SDL )		)
 
 //! \brief Check if eError is an SDL eError
 #define REMOVE_ERR( err , toremove )			( err &= ( ~(toremove) ) )

@@ -9,7 +9,8 @@
 
 #include "SDLTimer.h"
 
-#include "eError.h"
+#include "SDLError.h"
+#include "types.h"
 #include "debug.h"
 
 #include "SDL.h"
@@ -39,9 +40,9 @@ SDLInterface::Thread::~Thread()
 }
 
 //========================================================
-eError SDLInterface::Thread::Spawn(void* data)
+SDLInterface::Error SDLInterface::Thread::Spawn(void* data)
 {
-	eError err = eError::NoErr;
+	Error err = Error::NoErr;
 
 	// Sanity asserts
 	DEBUG_ASSERT(m_threadFunc != nullptr);
@@ -53,16 +54,16 @@ eError SDLInterface::Thread::Spawn(void* data)
 	// sanity check
 	if (m_threadFunc == nullptr)
 	{
-		err |= eError::SDL_Fatal;
+		err |= Error::Thread_func_null;
 	}
 
 	return err;
 }
 
 //========================================================
-eError SDLInterface::Thread::Wait()
+SDLInterface::Error SDLInterface::Thread::Wait()
 {
-	eError err = eError::NoErr;
+	Error err = Error::NoErr;
 
 	// Sanity check on this
 	DEBUG_ASSERT(m_sdl_thread != nullptr);
@@ -77,13 +78,13 @@ eError SDLInterface::Thread::Wait()
 	// Invalidate the thread pointer
 	m_sdl_thread = nullptr;
 
-	return (eError)returnVal;
+	return (Error)returnVal;
 }
 
 //========================================================
-eError SDLInterface::Thread::Detach()
+SDLInterface::Error SDLInterface::Thread::Detach()
 {
-	eError err = eError::NoErr;
+	Error err = Error::NoErr;
 
 
 	// Sanity check
@@ -105,18 +106,18 @@ eError SDLInterface::Thread::Detach()
 }
 
 //========================================================
-eError SDLInterface::Thread::Delay(ms time)
+SDLInterface::Error SDLInterface::Thread::Delay(ms time)
 {
 	// Call the SDL delay function
 	SDL_Delay(time);
 
-	return eError::NoErr;
+	return Error::NoErr;
 }
 
 //========================================================
-eError SDLInterface::Thread::DelayUntil(ms globaltime)
+SDLInterface::Error SDLInterface::Thread::DelayUntil(ms globaltime)
 {
-	eError err = eError::NoErr; 
+	Error err = Error::NoErr; 
 
 	// Grab the current time
 	ms currentTime = Timer::GetGlobalLifetime();

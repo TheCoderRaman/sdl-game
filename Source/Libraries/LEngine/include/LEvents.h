@@ -37,6 +37,7 @@
 
 // SDL functions needed 
 #include "SDLMutex.h"	// For the Mutexes to guard the events
+#include "SDLError.h"
 
 // A while load of STD library things used here
 // Sorry
@@ -180,30 +181,24 @@ LEventManager< TEventIdentifier, TEventData >::~LEventManager()
 template< typename TEventIdentifier, typename TEventData >
 eError LEventManager< TEventIdentifier, TEventData >::Create()
 {
-	eError err = eError::NoErr;
+	SDLInterface::Error err = SDLInterface::Error::NoErr;
 
-	if (!ERROR_HAS_TYPE_FATAL(err))
-		err |= m_QueueMutex.Create();
+	err |= m_QueueMutex.Create();
+	err |= m_ListenerMapMutex.Create();
 
-	if (!ERROR_HAS_TYPE_FATAL(err))
-		err |= m_ListenerMapMutex.Create();
-
-	return err;
+	return SDL_ERROR_HAS_TYPE_FATAL(err) ? eError::Type_Fatal : eError::NoErr;
 }
 
 //===============================================================
 template< typename TEventIdentifier, typename TEventData >
 eError LEventManager< TEventIdentifier, TEventData >::Destroy()
 {
-	eError err = eError::NoErr;
+	SDLInterface::Error err = SDLInterface::Error::NoErr;
 
-	if (!ERROR_HAS_TYPE_FATAL(err))
-		err |= m_ListenerMapMutex.Destroy();
+	err |= m_ListenerMapMutex.Destroy();
+	err |= m_QueueMutex.Destroy();
 
-	if (!ERROR_HAS_TYPE_FATAL(err))
-		err |= m_QueueMutex.Destroy();
-
-	return err;
+	return SDL_ERROR_HAS_TYPE_FATAL(err) ? eError::Type_Fatal : eError::NoErr;
 }
 
 //===============================================================
@@ -211,7 +206,7 @@ template< typename TEventIdentifier, typename TEventData >
 eError LEventManager< TEventIdentifier, TEventData >::AddEventToQueue(TEvent& event)
 {
 	eError err = eError::NoErr;
-	err |= m_QueueMutex.Lock();
+	m_QueueMutex.Lock();
 
 	if (m_Queue.size() <= eMaxEvents)
 	{
@@ -221,13 +216,12 @@ eError LEventManager< TEventIdentifier, TEventData >::AddEventToQueue(TEvent& ev
 	else
 	{
 		// We should never go over the max event limit
-		err |= eError::Type_Fatal | eError::Catagory_Events;
+		// TODO better and more descriptive error
+		err |= eError::Type_Fatal;
 		DEBUG_ASSERT(0);
 	}
 
-
-
-	err |= m_QueueMutex.Unlock();
+	m_QueueMutex.Unlock();
 	return err;
 }
 
@@ -235,27 +229,25 @@ eError LEventManager< TEventIdentifier, TEventData >::AddEventToQueue(TEvent& ev
 template< typename TEventIdentifier, typename TEventData >
 eError LEventManager< TEventIdentifier, TEventData >::AddHandler(TEventIdentifier type, THandler* listener)
 {
-	eError err = eError::NoErr;
-	err |= m_ListenerMapMutex.Lock();
+	m_ListenerMapMutex.Lock();
 
 	// TODO: Assert the listener map size
 	m_ListenerMap.insert(TTypeListenerPair(type, listener));
 
-	err |= m_ListenerMapMutex.Unlock();
-	return err;
+	m_ListenerMapMutex.Unlock();
+	return eError::NoErr;
 }
 
 //===============================================================
 template< typename TEventIdentifier, typename TEventData >
 eError LEventManager< TEventIdentifier, TEventData >::RemoveHandler(TEventIdentifier type, THandler* listener)
 {
-	eError err = eError::NoErr;
-	err |= m_ListenerMapMutex.Lock();
+	m_ListenerMapMutex.Lock();
 
 	multimap_remove_pair(m_ListenerMap, type, listener);
 
-	err |= m_ListenerMapMutex.Unlock();
-	return err;
+	m_ListenerMapMutex.Unlock();
+	return eError::NoErr;
 }
 
 //===============================================================
@@ -263,7 +255,7 @@ template< typename TEventIdentifier, typename TEventData >
 eError LEventManager< TEventIdentifier, TEventData >::PopEventOffQueue(TEvent& event)
 {
 	eError err = eError::NoErr;
-	err |= m_QueueMutex.Lock();
+	m_QueueMutex.Lock();
 
 	// If the queue does have an event to pop
 	if (m_Queue.size() != 0)
@@ -281,12 +273,13 @@ eError LEventManager< TEventIdentifier, TEventData >::PopEventOffQueue(TEvent& e
 	{
 		// Fire off a warning, or assert in debug
 		// We shouldn't be trying to pop an event if we have none left
-		err |= eError::Event_Warning;
+		// TODO better and more descriptive error
+		err |= eError::Type_Warning;
 		DEBUG_ASSERT(0);
 	}
 
 
-	err |= m_QueueMutex.Unlock();
+	m_QueueMutex.Unlock();
 	return err;
 }
 
@@ -295,7 +288,7 @@ template< typename TEventIdentifier, typename TEventData >
 eError LEventManager< TEventIdentifier, TEventData >::DelegateEvent(TEvent& event)
 {
 	eError err = eError::NoErr;
-	err |= m_ListenerMapMutex.Lock();
+	m_ListenerMapMutex.Lock();
 
 	// Construct the lambda for each event handler found
 	// This simply calls the event handlers function lamba
@@ -308,7 +301,7 @@ eError LEventManager< TEventIdentifier, TEventData >::DelegateEvent(TEvent& even
 	// Visit all the Handlers in the list and call their functions
 	err |= multimap_visit_all(m_ListenerMap, event.type, function);
 
-	err |= m_ListenerMapMutex.Unlock();
+	m_ListenerMapMutex.Unlock();
 	return err;
 }
 

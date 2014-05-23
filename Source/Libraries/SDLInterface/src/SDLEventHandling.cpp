@@ -10,7 +10,7 @@
 #include "SDL.h"
 
 #include "debug.h"
-#include "eError.h"
+#include "SDLError.h"
 
 #define INPUT_DEBUGGING 0
 
@@ -26,9 +26,9 @@
 SDLInterface::SDLKeyboardEvents SDLInterface::EventHandling::sm_KeyboardStruct;
 
 //========================================================
-eError SDLInterface::EventHandling::HandleEvent(SDL_Event *event)
+SDLInterface::Error SDLInterface::EventHandling::HandleEvent(SDL_Event *event)
 {
-	eError err = eError::NoErr;
+	Error err = Error::NoErr;
 
 	// switch through all the event types
 	switch (event->type)
@@ -94,9 +94,9 @@ eError SDLInterface::EventHandling::HandleEvent(SDL_Event *event)
 }
 
 //========================================================
-eError SDLInterface::EventHandling::HandleKeyboardEvent( SDL_Event *event )
+SDLInterface::Error SDLInterface::EventHandling::HandleKeyboardEvent( SDL_Event *event )
 {
-	eError err = eError::NoErr;
+	Error err = Error::NoErr;
 
 	eSDLKeyInterface eKeyPressed = eSDLKeyInterface::key_invalid;
 
@@ -190,9 +190,9 @@ eError SDLInterface::EventHandling::HandleKeyboardEvent( SDL_Event *event )
 }
 
 //========================================================
-eError SDLInterface::EventHandling::HandleMouseEvent(SDL_Event *event)
+SDLInterface::Error SDLInterface::EventHandling::HandleMouseEvent(SDL_Event *event)
 {
-	eError err = eError::NoErr;
+	Error err = Error::NoErr;
 	//	DEBUG_LOG("Unhandled Mouse Event");
 
 	/*
@@ -206,9 +206,9 @@ eError SDLInterface::EventHandling::HandleMouseEvent(SDL_Event *event)
 }
 
 //========================================================
-eError SDLInterface::EventHandling::HandleJoystickEvent(SDL_Event *event)
+SDLInterface::Error SDLInterface::EventHandling::HandleJoystickEvent(SDL_Event *event)
 {
-	eError err = eError::NoErr;
+	Error err = Error::NoErr;
 
 	/*
 	case SDL_JOYAXISMOTION:
@@ -224,9 +224,9 @@ eError SDLInterface::EventHandling::HandleJoystickEvent(SDL_Event *event)
 }
 
 //========================================================
-eError SDLInterface::EventHandling::HandleControllerEvent(SDL_Event *event)
+SDLInterface::Error SDLInterface::EventHandling::HandleControllerEvent(SDL_Event *event)
 {
-	eError err = eError::NoErr;
+	Error err = Error::NoErr;
 
 	/*
 	case SDL_CONTROLLERAXISMOTION:
@@ -240,9 +240,9 @@ eError SDLInterface::EventHandling::HandleControllerEvent(SDL_Event *event)
 }
 
 //========================================================
-eError SDLInterface::EventHandling::HandleWindowEvent(SDL_Event *event)
+SDLInterface::Error SDLInterface::EventHandling::HandleWindowEvent(SDL_Event *event)
 {
-	eError err = eError::NoErr;
+	Error err = Error::NoErr;
 
 	// Switch between the window events
 	switch (event->window.event)

@@ -9,7 +9,7 @@
 
 #include "SDL.h"
 
-#include "eError.h"
+#include "SDLError.h"
 #include "debug.h"
 
 #include "SDLSurface.h"
@@ -29,9 +29,9 @@ SDLInterface::Texture::~Texture()
 }
 
 //========================================================
-eError SDLInterface::Texture::Create()
+SDLInterface::Error SDLInterface::Texture::Create()
 {
-	eError err = eError::NoErr;
+	Error err = Error::NoErr;
 
 	DEBUG_LOG("NOT IMPLEMENTED");
 
@@ -39,9 +39,9 @@ eError SDLInterface::Texture::Create()
 }
 
 //========================================================
-eError SDLInterface::Texture::Create(Renderer* renderer, const char* file)
+SDLInterface::Error SDLInterface::Texture::Create(Renderer* renderer, const char* file)
 {
-	eError err = eError::NoErr;
+	Error err = Error::NoErr;
 
 	// Sanity checks
 	DEBUG_ASSERT(renderer != nullptr);
@@ -58,19 +58,19 @@ eError SDLInterface::Texture::Create(Renderer* renderer, const char* file)
 	DEBUG_ASSERT(sdlRenderer != nullptr);
 
 	EventLoop::RunOnMainThread_Sync(err,
-	[&]()->eError
+	[&]()->Error
 	{
 		// Create the texture
 		m_sdl_texture = SDL_CreateTextureFromSurface(sdlRenderer, Helper::GetSDL_Surface(&tempSurf));
 
-		return eError::NoErr;
+		return Error::NoErr;
 	});
 
 	// Error handling
 	if (m_sdl_texture == NULL)
 	{
 		DEBUG_LOG("Texture could not be created from surface! SDL_Error: %s", SDL_GetError());
-		err |= eError::SDL_Fatal;
+		err |= Error::Texture_create_fail;
 	}
 
 	tempSurf.Destroy();
@@ -79,16 +79,16 @@ eError SDLInterface::Texture::Create(Renderer* renderer, const char* file)
 }
 
 //========================================================
-eError SDLInterface::Texture::Create(Renderer* renderer,Surface* surface)
+SDLInterface::Error SDLInterface::Texture::Create(Renderer* renderer, Surface* surface)
 {
-	eError err = eError::NoErr;
+	Error err = Error::NoErr;
 
 	// Sanity checks
 	DEBUG_ASSERT(renderer != nullptr);
 	DEBUG_ASSERT(surface != nullptr);
 
 	EventLoop::RunOnMainThread_Sync(err,
-	[&]()->eError
+	[&]()->Error
 	{
 		// Grab the surface and renderer
 		SDL_Surface* sdlSurface = Helper::GetSDL_Surface(surface);
@@ -101,34 +101,34 @@ eError SDLInterface::Texture::Create(Renderer* renderer,Surface* surface)
 		// Create the texture
 		m_sdl_texture = SDL_CreateTextureFromSurface(sdlRenderer, sdlSurface);
 		
-		return eError::NoErr;
+		return Error::NoErr;
 	});
 
 	// Error handling
 	if (m_sdl_texture == NULL)
 	{
 		DEBUG_LOG("Texture could not be created from surface! SDL_Error: %s", SDL_GetError());
-		err |= eError::SDL_Fatal;
+		err |= Error::Texture_create_fail;
 	}
 
 	return err;
 }
 
 //========================================================
-eError SDLInterface::Texture::Destroy()
+SDLInterface::Error SDLInterface::Texture::Destroy()
 {
-	eError err = eError::NoErr;
+	Error err = Error::NoErr;
 
 	// Sanity check
 	DEBUG_ASSERT(m_sdl_texture != nullptr);
 
 	EventLoop::RunOnMainThread_Sync(err,
-	[&]()->eError
+	[&]()->Error
 	{
 		// Destroy the texture
 		SDL_DestroyTexture(m_sdl_texture);
 
-		return eError::NoErr;
+		return Error::NoErr;
 	});
 
 	m_sdl_texture = nullptr;

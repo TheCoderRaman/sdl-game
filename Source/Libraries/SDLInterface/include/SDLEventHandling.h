@@ -8,7 +8,7 @@
 #ifndef _SDLEVENTHANDLING_H_
 #define _SDLEVENTHANDLING_H_
 
-#include "types.h"
+#include "SDLCommon.h"
 #include "debug.h"
 
 // Forward declare SDL union
@@ -110,30 +110,30 @@ namespace SDLInterface
 	public:
 
 		//! \brief Handle any event
-		//! \return Any eError produced
-		static eError HandleEvent(SDL_Event *event);
+		//! \return Any Error produced
+		static Error HandleEvent(SDL_Event *event);
 
 		//! \brief Handle any keyboard related event
-		//! \return Any eError produced
-		static eError HandleKeyboardEvent(SDL_Event *event);
+		//! \return Any Error produced
+		static Error HandleKeyboardEvent(SDL_Event *event);
 
 		//! \brief Handle any Mouse related event
-		//! \return Any eError produced
-		static eError HandleMouseEvent(SDL_Event *event);
+		//! \return Any Error produced
+		static Error HandleMouseEvent(SDL_Event *event);
 
 		//! \brief Handle any Window related event
-		//! \return Any eError produced
-		static eError HandleWindowEvent(SDL_Event *event);
+		//! \return Any Error produced
+		static Error HandleWindowEvent(SDL_Event *event);
 
 		//! \brief Handle any Joystick related event
-		//! \return Any eError produced
+		//! \return Any Error produced
 		//! \sa HandleControllerEvent as these two are pretty related
-		static eError HandleJoystickEvent(SDL_Event *event);
+		static Error HandleJoystickEvent(SDL_Event *event);
 
 		//! \brief Handle any Controller related event
-		//! \return Any eError produced
+		//! \return Any Error produced
 		//! \sa HandleJoystickEvent as these two are pretty related
-		static eError HandleControllerEvent(SDL_Event *event);
+		static Error HandleControllerEvent(SDL_Event *event);
 
 
 

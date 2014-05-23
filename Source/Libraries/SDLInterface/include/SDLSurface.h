@@ -9,7 +9,7 @@
 #ifndef _SDLSURFACE_H_
 #define _SDLSURFACE_H_
 
-#include "types.h" // For eError
+#include "SDLCommon.h"
 
 #include "SDLHelper.h" // for friending
 
@@ -36,16 +36,16 @@ namespace SDLInterface
 		~Surface();
 
 		//! \brief Create the surface
-		eError CreateFromBMP(const char* bmpFile);
+		Error CreateFromBMP(const char* bmpFile);
 
 		//! \brief Create the surface
-		eError CreateFromFile(const char* file);
+		Error CreateFromFile(const char* file);
 
 		//! \brief Create the surface from a window
-		eError CreateFromWindow(Window* window);
+		Error CreateFromWindow(Window* window);
 
 		//! \brief destroy the surface
-		eError Destroy();
+		Error Destroy();
 
 	private:
 

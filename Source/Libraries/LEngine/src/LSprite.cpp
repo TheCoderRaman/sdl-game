@@ -5,6 +5,7 @@
 //!
 //!
 #include "LSprite.h"
+#include "SDLError.h"
 
 #include "eError.h"
 #include "debug.h"
@@ -25,8 +26,6 @@ LSprite::~LSprite()
 //===============================================================
 eError LSprite::Create(LRenderer2D& renderer, const char* file)
 {
-	eError err = eError::NoErr;
-
 	// Sanity check to make sure we don't create twice
 	DEBUG_ASSERT(m_pchFileName == nullptr);
 
@@ -34,9 +33,9 @@ eError LSprite::Create(LRenderer2D& renderer, const char* file)
 	m_pchFileName = file;
 
 	// Create the texture
-	err |= m_Texture.Create(&renderer.GetBaseRenderer(), file);
+	SDLInterface::Error sdlerr = m_Texture.Create(&renderer.GetBaseRenderer(), file);
 
-	return err;
+	return SDL_ERROR_HAS_TYPE_FATAL(sdlerr) ? eError::Type_Fatal : eError::NoErr;;
 }
 
 //===============================================================
@@ -106,21 +105,17 @@ eError LSprite::SetSize(int w, int h)
 //===============================================================
 eError LSprite::Render(LRenderer2D* renderer)
 {
-	eError err = eError::NoErr;
-
 	// Render the texture
-	err |= renderer->GetBaseRenderer().RenderTexture(&m_Texture, m_srcRect, m_destRect);
+	SDLInterface::Error err = renderer->GetBaseRenderer().RenderTexture(&m_Texture, m_srcRect, m_destRect);
 
-	return err;
+	return SDL_ERROR_HAS_TYPE_FATAL(err) ? eError::Type_Fatal : eError::NoErr;
 }
 
 //===============================================================
 eError LSprite::Destroy()
 {
-	eError err = eError::NoErr;
-
 	// Destroy the texture
-	err |= m_Texture.Destroy();
+	SDLInterface::Error err = m_Texture.Destroy();
 		
-	return err;
+	return SDL_ERROR_HAS_TYPE_FATAL(err) ? eError::Type_Fatal : eError::NoErr;
 }

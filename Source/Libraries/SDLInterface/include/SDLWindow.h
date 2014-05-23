@@ -8,9 +8,7 @@
 #ifndef _SDL_WINDOW_H
 #define _SDL_WINDOW_H
 
-// Includes
-#include "types.h"
-
+#include "SDLCommon.h"
 
 #include "SDLHelper.h" // for friending
 
@@ -33,10 +31,10 @@ namespace SDLInterface
 		~Window();
 
 		//! \brief create the window
-		eError Create( int w, int h );
+		Error Create( int w, int h );
 
 		//! \brief destroy the window
-		eError Destroy();
+		Error Destroy();
 
 	private:
 
