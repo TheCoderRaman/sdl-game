@@ -11,33 +11,32 @@
 //! Great explanation on how this can work is here 
 //! http://forum.codecall.net/topic/56591-bit-fields-flags-tutorial-with-example/
 
+#define _SDL_ERROR_WARNING		(SDLInterface::Error)0x10000000
+#define _SDL_ERROR_FATAL		(SDLInterface::Error)0x20000000
+
 namespace SDLInterface
 {
 
 //! \brief generic Error enum for Error handling
 enum class Error : int
 {
-	// 	Error name		  Error bit value for flags
-	NoErr				= 0x00000000,
+	// 	Error name				Error bit value for flags
+	None						= 0,
 
-	// 	Error types         First two bytes for erro types
-	Type_Fatal			= 0x10000000, 	// Fatal flag
-	Type_Warning		= 0x20000000, 	// Warning flag
+	// Harmless errors
+	QuitRequest					= 0x00000001,
 
-	// 	Specific Errors     Last 4 bits for specific errors
-	QuitRequest			= 0x00000001,
-	Init_fail			= 0x10000002,
-	Img_init_fail		= 0x10000004,
+	// Warning errors
+	Surface_create_fail			= 0x10000001,
+	Texture_create_fail			= 0x10000002,
 
-	Window_create_fail,
-	Eventloop_double_create,
-	Renderer_create_fail,
-	Thread_func_null,
-	Surface_create_fail,
-	Texture_create_fail,
-
-	// ALL errors
-	All					= 0x11111111,
+	// Fatal errors
+	Init_fail					= 0x20000002,
+	Img_init_fail				= 0x20000004,
+	Window_create_fail			= 0x20000008,
+	Eventloop_double_create		= 0x20000010,
+	Renderer_create_fail		= 0x20000011,
+	Thread_func_null			= 0x20000012,
 
 };
 
@@ -86,10 +85,10 @@ inline Error& operator &= (Error& lhs, Error rhs)
 #define SDL_ERROR_HAS( err , contains )				( (err & (contains) ) == (contains) )
 
 //! \brief Check if Error is fatal
-#define SDL_ERROR_HAS_TYPE_FATAL( err ) 			( SDL_ERROR_HAS( err , SDLInterface::Error::Type_Fatal )			) 
+#define SDL_ERROR_HAS_TYPE_FATAL( err ) 			( SDL_ERROR_HAS( err , _SDL_ERROR_FATAL )			) 
 
 //! \brief Check if Error is warning
-#define SDL_ERROR_HAS_TYPE_WARNING( err ) 			( SDL_ERROR_HAS( err , SDLInterface::Error::Type_Warning )		)
+#define SDL_ERROR_HAS_TYPE_WARNING( err ) 			( SDL_ERROR_HAS( err , _SDL_ERROR_WARNING )		)
 
 //! \brief Check if Error is an SDL Error
 #define SDL_REMOVE_ERR( err , toremove )			( err &= ( ~(toremove) ) )

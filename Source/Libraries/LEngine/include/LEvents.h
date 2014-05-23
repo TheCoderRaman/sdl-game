@@ -181,7 +181,7 @@ LEventManager< TEventIdentifier, TEventData >::~LEventManager()
 template< typename TEventIdentifier, typename TEventData >
 eError LEventManager< TEventIdentifier, TEventData >::Create()
 {
-	SDLInterface::Error err = SDLInterface::Error::NoErr;
+	SDLInterface::Error err = SDLInterface::Error::None;
 
 	err |= m_QueueMutex.Create();
 	err |= m_ListenerMapMutex.Create();
@@ -193,7 +193,7 @@ eError LEventManager< TEventIdentifier, TEventData >::Create()
 template< typename TEventIdentifier, typename TEventData >
 eError LEventManager< TEventIdentifier, TEventData >::Destroy()
 {
-	SDLInterface::Error err = SDLInterface::Error::NoErr;
+	SDLInterface::Error err = SDLInterface::Error::None;
 
 	err |= m_ListenerMapMutex.Destroy();
 	err |= m_QueueMutex.Destroy();

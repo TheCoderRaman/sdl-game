@@ -34,7 +34,7 @@ SDLInterface::Surface::~Surface()
 //========================================================
 SDLInterface::Error SDLInterface::Surface::CreateFromBMP(const char* bmpFile)
 {
-	Error err = Error::NoErr;
+	Error err = Error::None;
 
 	// Sanity check
 	DEBUG_ASSERT(m_sdl_surface == nullptr);
@@ -45,7 +45,7 @@ SDLInterface::Error SDLInterface::Surface::CreateFromBMP(const char* bmpFile)
 		// Get a surface from the BMP
 		m_sdl_surface = SDL_LoadBMP(bmpFile);
 
-		return Error::NoErr;
+		return Error::None;
 	});
 
 	// Error handling
@@ -61,7 +61,7 @@ SDLInterface::Error SDLInterface::Surface::CreateFromBMP(const char* bmpFile)
 //========================================================
 SDLInterface::Error SDLInterface::Surface::CreateFromFile(const char* file)
 {
-	Error err = Error::NoErr;
+	Error err = Error::None;
 
 	// Sanity check
 	DEBUG_ASSERT(m_sdl_surface == nullptr);
@@ -72,7 +72,7 @@ SDLInterface::Error SDLInterface::Surface::CreateFromFile(const char* file)
 		// Get a surface from the BMP
 		m_sdl_surface = IMG_Load(file);
 
-		return Error::NoErr;
+		return Error::None;
 	});
 
 	// Error handling
@@ -88,7 +88,7 @@ SDLInterface::Error SDLInterface::Surface::CreateFromFile(const char* file)
 //========================================================
 SDLInterface::Error SDLInterface::Surface::CreateFromWindow(Window* window)
 {
-	Error err = Error::NoErr;
+	Error err = Error::None;
 
 	// Sanity check
 	DEBUG_ASSERT(m_sdl_surface == nullptr);
@@ -105,7 +105,7 @@ SDLInterface::Error SDLInterface::Surface::CreateFromWindow(Window* window)
 		// Get the surface from the window
 		m_sdl_surface = SDL_GetWindowSurface(sdlwindow);
 
-		return Error::NoErr;
+		return Error::None;
 	});
 
 	// Error handling
@@ -121,7 +121,7 @@ SDLInterface::Error SDLInterface::Surface::CreateFromWindow(Window* window)
 //========================================================
 SDLInterface::Error SDLInterface::Surface::Destroy()
 {
-	Error err = Error::NoErr;
+	Error err = Error::None;
 
 	// Sanity check
 	DEBUG_ASSERT(m_sdl_surface != nullptr);
@@ -132,7 +132,7 @@ SDLInterface::Error SDLInterface::Surface::Destroy()
 		// Free the SDL surface
 		SDL_FreeSurface(m_sdl_surface);
 
-		return Error::NoErr;
+		return Error::None;
 	});
 
 	m_sdl_surface = nullptr;

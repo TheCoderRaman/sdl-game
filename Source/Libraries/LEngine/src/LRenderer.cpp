@@ -63,7 +63,7 @@ LRenderer2D::~LRenderer2D()
 //===============================================================
 eError LRenderer2D::Create(SDLInterface::Window &window)
 {
-	SDLInterface::Error err = SDLInterface::Error::NoErr;
+	SDLInterface::Error err = SDLInterface::Error::None;
 
 	// Create the renderer
 	err |= m_BaseSDLRenderer.Create(&window);
@@ -104,7 +104,7 @@ eError LRenderer2D::RemoveRenderable(LRendereable2D* toRemove)
 eError LRenderer2D::Render()
 {
 	eError err = eError::NoErr;
-	SDLInterface::Error sdlerr = SDLInterface::Error::NoErr;
+	SDLInterface::Error sdlerr = SDLInterface::Error::None;
 
 #if RENDER_TIMING_DEBUG
 	SDLInterface::Timer timer;

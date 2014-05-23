@@ -16,7 +16,7 @@
 //========================================================
 SDLInterface::Error SDLInterface::Init()
 {
-	Error err = Error::NoErr;
+	Error err = Error::None;
 
 	//Initialize SDL
     if( SDL_Init( SDL_INIT_EVERYTHING ) < 0 )
@@ -38,7 +38,7 @@ SDLInterface::Error SDLInterface::Init()
 //========================================================
 SDLInterface::Error SDLInterface::Quit()
 {
-	Error err = Error::NoErr;
+	Error err = Error::None;
 
     SDL_Quit();
 

@@ -32,7 +32,7 @@ SDLInterface::Window::~Window()
 //========================================================
 SDLInterface::Error SDLInterface::Window::Create(int w, int h)
 {
-	Error err = Error::NoErr;
+	Error err = Error::None;
 
     //Create window
 	EventLoop::RunOnMainThread_Sync(err,
@@ -43,7 +43,7 @@ SDLInterface::Error SDLInterface::Window::Create(int w, int h)
 			SDL_WINDOWPOS_UNDEFINED,
 			w,h,SDL_WINDOW_SHOWN);
 
-		return Error::NoErr;
+		return Error::None;
 	});
 
 
@@ -59,7 +59,7 @@ SDLInterface::Error SDLInterface::Window::Create(int w, int h)
 //========================================================
 SDLInterface::Error SDLInterface::Window::Destroy()
 {
-	Error err = Error::NoErr;
+	Error err = Error::None;
 
     //Destroy window
 	EventLoop::RunOnMainThread_Sync(err,
@@ -67,7 +67,7 @@ SDLInterface::Error SDLInterface::Window::Destroy()
 
 		SDL_DestroyWindow(m_SDL_Window);
 
-		return Error::NoErr;
+		return Error::None;
 	});
 
     m_SDL_Window = nullptr;

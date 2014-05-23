@@ -31,7 +31,7 @@ SDLInterface::Texture::~Texture()
 //========================================================
 SDLInterface::Error SDLInterface::Texture::Create()
 {
-	Error err = Error::NoErr;
+	Error err = Error::None;
 
 	DEBUG_LOG("NOT IMPLEMENTED");
 
@@ -41,7 +41,7 @@ SDLInterface::Error SDLInterface::Texture::Create()
 //========================================================
 SDLInterface::Error SDLInterface::Texture::Create(Renderer* renderer, const char* file)
 {
-	Error err = Error::NoErr;
+	Error err = Error::None;
 
 	// Sanity checks
 	DEBUG_ASSERT(renderer != nullptr);
@@ -63,7 +63,7 @@ SDLInterface::Error SDLInterface::Texture::Create(Renderer* renderer, const char
 		// Create the texture
 		m_sdl_texture = SDL_CreateTextureFromSurface(sdlRenderer, Helper::GetSDL_Surface(&tempSurf));
 
-		return Error::NoErr;
+		return Error::None;
 	});
 
 	// Error handling
@@ -81,7 +81,7 @@ SDLInterface::Error SDLInterface::Texture::Create(Renderer* renderer, const char
 //========================================================
 SDLInterface::Error SDLInterface::Texture::Create(Renderer* renderer, Surface* surface)
 {
-	Error err = Error::NoErr;
+	Error err = Error::None;
 
 	// Sanity checks
 	DEBUG_ASSERT(renderer != nullptr);
@@ -101,7 +101,7 @@ SDLInterface::Error SDLInterface::Texture::Create(Renderer* renderer, Surface* s
 		// Create the texture
 		m_sdl_texture = SDL_CreateTextureFromSurface(sdlRenderer, sdlSurface);
 		
-		return Error::NoErr;
+		return Error::None;
 	});
 
 	// Error handling
@@ -117,7 +117,7 @@ SDLInterface::Error SDLInterface::Texture::Create(Renderer* renderer, Surface* s
 //========================================================
 SDLInterface::Error SDLInterface::Texture::Destroy()
 {
-	Error err = Error::NoErr;
+	Error err = Error::None;
 
 	// Sanity check
 	DEBUG_ASSERT(m_sdl_texture != nullptr);
@@ -128,7 +128,7 @@ SDLInterface::Error SDLInterface::Texture::Destroy()
 		// Destroy the texture
 		SDL_DestroyTexture(m_sdl_texture);
 
-		return Error::NoErr;
+		return Error::None;
 	});
 
 	m_sdl_texture = nullptr;

@@ -28,7 +28,7 @@ SDLInterface::SDLKeyboardEvents SDLInterface::EventHandling::sm_KeyboardStruct;
 //========================================================
 SDLInterface::Error SDLInterface::EventHandling::HandleEvent(SDL_Event *event)
 {
-	Error err = Error::NoErr;
+	Error err = Error::None;
 
 	// switch through all the event types
 	switch (event->type)
@@ -96,7 +96,7 @@ SDLInterface::Error SDLInterface::EventHandling::HandleEvent(SDL_Event *event)
 //========================================================
 SDLInterface::Error SDLInterface::EventHandling::HandleKeyboardEvent( SDL_Event *event )
 {
-	Error err = Error::NoErr;
+	Error err = Error::None;
 
 	eSDLKeyInterface eKeyPressed = eSDLKeyInterface::key_invalid;
 
@@ -192,7 +192,7 @@ SDLInterface::Error SDLInterface::EventHandling::HandleKeyboardEvent( SDL_Event 
 //========================================================
 SDLInterface::Error SDLInterface::EventHandling::HandleMouseEvent(SDL_Event *event)
 {
-	Error err = Error::NoErr;
+	Error err = Error::None;
 	//	DEBUG_LOG("Unhandled Mouse Event");
 
 	/*
@@ -208,7 +208,7 @@ SDLInterface::Error SDLInterface::EventHandling::HandleMouseEvent(SDL_Event *eve
 //========================================================
 SDLInterface::Error SDLInterface::EventHandling::HandleJoystickEvent(SDL_Event *event)
 {
-	Error err = Error::NoErr;
+	Error err = Error::None;
 
 	/*
 	case SDL_JOYAXISMOTION:
@@ -226,7 +226,7 @@ SDLInterface::Error SDLInterface::EventHandling::HandleJoystickEvent(SDL_Event *
 //========================================================
 SDLInterface::Error SDLInterface::EventHandling::HandleControllerEvent(SDL_Event *event)
 {
-	Error err = Error::NoErr;
+	Error err = Error::None;
 
 	/*
 	case SDL_CONTROLLERAXISMOTION:
@@ -242,7 +242,7 @@ SDLInterface::Error SDLInterface::EventHandling::HandleControllerEvent(SDL_Event
 //========================================================
 SDLInterface::Error SDLInterface::EventHandling::HandleWindowEvent(SDL_Event *event)
 {
-	Error err = Error::NoErr;
+	Error err = Error::None;
 
 	// Switch between the window events
 	switch (event->window.event)

@@ -33,7 +33,7 @@ SDLInterface::Error SDLInterface::Mutex::Create()
 
 	my_sdl_mutex = SDL_CreateMutex();
 
-	return Error::NoErr;
+	return Error::None;
 }
 
 //========================================================
@@ -44,7 +44,7 @@ SDLInterface::Error SDLInterface::Mutex::Destroy()
 	SDL_DestroyMutex(my_sdl_mutex);
 	my_sdl_mutex = nullptr;
 
-	return Error::NoErr;
+	return Error::None;
 }
 
 //========================================================
@@ -54,7 +54,7 @@ SDLInterface::Error SDLInterface::Mutex::Lock()
 
 	SDL_LockMutex(my_sdl_mutex);
 
-	return Error::NoErr;
+	return Error::None;
 }
 
 //========================================================
@@ -64,7 +64,7 @@ SDLInterface::Error SDLInterface::Mutex::Unlock()
 
 	SDL_UnlockMutex(my_sdl_mutex);
 
-	return Error::NoErr;
+	return Error::None;
 }
 
 //========================================================
@@ -88,7 +88,7 @@ SDLInterface::Error SDLInterface::Semaphore::Create()
 
 	m_mySem = SDL_CreateSemaphore(0);
 
-	return Error::NoErr;
+	return Error::None;
 }
 
 //========================================================
@@ -99,7 +99,7 @@ SDLInterface::Error SDLInterface::Semaphore::Destroy()
 	SDL_DestroySemaphore(m_mySem);
 	m_mySem = nullptr;
 
-	return Error::NoErr;
+	return Error::None;
 }
 
 //========================================================
@@ -109,7 +109,7 @@ SDLInterface::Error SDLInterface::Semaphore::Post()
 
 	SDL_SemPost(m_mySem);
 
-	return Error::NoErr;
+	return Error::None;
 }
 
 //========================================================
@@ -119,5 +119,5 @@ SDLInterface::Error SDLInterface::Semaphore::Wait()
 
 	SDL_SemWait(m_mySem);
 
-	return Error::NoErr;
+	return Error::None;
 }

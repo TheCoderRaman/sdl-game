@@ -32,12 +32,12 @@ SDLInterface::Renderer::~Renderer()
 //========================================================
 SDLInterface::Error SDLInterface::Renderer::Create(Window* window)
 {
-	Error err = Error::NoErr;
+	Error err = Error::None;
 
 	EventLoop::RunOnMainThread_Sync(err,
 	[&]()->Error
 	{
-		Error err = Error::NoErr;
+		Error err = Error::None;
 
 		// Attempt to get the renderer from the window
 		m_SDL_Renderer = SDL_GetRenderer(Helper::GetSDL_Window(window));
@@ -71,7 +71,7 @@ SDLInterface::Error SDLInterface::Renderer::Create(Window* window)
 //========================================================
 SDLInterface::Error SDLInterface::Renderer::RenderStart()
 {
-	Error err = Error::NoErr;
+	Error err = Error::None;
 
 	// Sanity check
 	DEBUG_ASSERT(!m_bRendering);
@@ -85,7 +85,7 @@ SDLInterface::Error SDLInterface::Renderer::RenderStart()
 		// Start by clearing the render buffer
 		SDL_RenderClear(m_SDL_Renderer);
 
-		return Error::NoErr;
+		return Error::None;
 	});
 
 	// Set us to be rendering
@@ -97,7 +97,7 @@ SDLInterface::Error SDLInterface::Renderer::RenderStart()
 //========================================================
 SDLInterface::Error SDLInterface::Renderer::RenderRectangle(const Rect& src, int r, int g, int b, int a, bool fill  /* = true */)
 {
-	Error err = Error::NoErr;
+	Error err = Error::None;
 
 	// Sanity check
 	DEBUG_ASSERT(m_bRendering);
@@ -133,7 +133,7 @@ SDLInterface::Error SDLInterface::Renderer::RenderRectangle(const Rect& src, int
 		SDL_SetRenderDrawColor(m_SDL_Renderer, 255, 255, 255, 255);
 
 #ifndef WINDOWS_BUILD
-		return Error::NoErr;
+		return Error::None;
 	});
 #endif
 
@@ -143,7 +143,7 @@ SDLInterface::Error SDLInterface::Renderer::RenderRectangle(const Rect& src, int
 //========================================================
 SDLInterface::Error SDLInterface::Renderer::RenderTexture(Texture* tex, const Rect& src, const Rect& dest)
 {
-	Error err = Error::NoErr;
+	Error err = Error::None;
 
 	// Sanity check
 	DEBUG_ASSERT(m_bRendering);
@@ -167,7 +167,7 @@ SDLInterface::Error SDLInterface::Renderer::RenderTexture(Texture* tex, const Re
 		SDL_RenderCopy(m_SDL_Renderer, Helper::GetSDL_Texture(tex), &source, &destination);
 
 #ifndef WINDOWS_BUILD
-		return Error::NoErr
+		return Error::None
 	});
 #endif
 
@@ -177,7 +177,7 @@ SDLInterface::Error SDLInterface::Renderer::RenderTexture(Texture* tex, const Re
 //========================================================
 SDLInterface::Error SDLInterface::Renderer::RenderEnd()
 {
-	Error err = Error::NoErr;
+	Error err = Error::None;
 
 	// Sanity check
 	DEBUG_ASSERT(m_bRendering);
@@ -191,7 +191,7 @@ SDLInterface::Error SDLInterface::Renderer::RenderEnd()
 		//Present the rendered image
 		SDL_RenderPresent( m_SDL_Renderer );
 
-		return Error::NoErr;
+		return Error::None;
 	} );
 
 	// Set us to not be rendering
@@ -203,13 +203,13 @@ SDLInterface::Error SDLInterface::Renderer::RenderEnd()
 //========================================================
 SDLInterface::Error SDLInterface::Renderer::Destroy()
 {
-	Error err = Error::NoErr;
+	Error err = Error::None;
 
 
 	EventLoop::RunOnMainThread_Sync(err,
 	[&]()->Error
 	{
-		Error err = Error::NoErr;
+		Error err = Error::None;
 
 		SDL_DestroyRenderer(m_SDL_Renderer);
 

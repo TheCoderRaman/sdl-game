@@ -42,7 +42,7 @@ SDLInterface::Thread::~Thread()
 //========================================================
 SDLInterface::Error SDLInterface::Thread::Spawn(void* data)
 {
-	Error err = Error::NoErr;
+	Error err = Error::None;
 
 	// Sanity asserts
 	DEBUG_ASSERT(m_threadFunc != nullptr);
@@ -63,7 +63,7 @@ SDLInterface::Error SDLInterface::Thread::Spawn(void* data)
 //========================================================
 SDLInterface::Error SDLInterface::Thread::Wait()
 {
-	Error err = Error::NoErr;
+	Error err = Error::None;
 
 	// Sanity check on this
 	DEBUG_ASSERT(m_sdl_thread != nullptr);
@@ -84,7 +84,7 @@ SDLInterface::Error SDLInterface::Thread::Wait()
 //========================================================
 SDLInterface::Error SDLInterface::Thread::Detach()
 {
-	Error err = Error::NoErr;
+	Error err = Error::None;
 
 
 	// Sanity check
@@ -111,13 +111,13 @@ SDLInterface::Error SDLInterface::Thread::Delay(ms time)
 	// Call the SDL delay function
 	SDL_Delay(time);
 
-	return Error::NoErr;
+	return Error::None;
 }
 
 //========================================================
 SDLInterface::Error SDLInterface::Thread::DelayUntil(ms globaltime)
 {
-	Error err = Error::NoErr; 
+	Error err = Error::None; 
 
 	// Grab the current time
 	ms currentTime = Timer::GetGlobalLifetime();

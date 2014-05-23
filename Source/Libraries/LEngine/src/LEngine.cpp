@@ -58,7 +58,7 @@ void LEngine::RequestQuit()
 eError LEngine::Start()
 {
 	//Initialization flag
-	SDLInterface::Error err = SDLInterface::Error::NoErr;
+	SDLInterface::Error err = SDLInterface::Error::None;
 
 	// initialise SDL
 	if (!SDL_ERROR_HAS_TYPE_FATAL(err))
@@ -243,7 +243,7 @@ eError LEngine::Loop()
 	// Remove any quit request error
 	REMOVE_ERR(err, eError::QuitRequest);
 
-	sdlerr = SDLInterface::Error::NoErr;
+	sdlerr = SDLInterface::Error::None;
 
 	// Wait for all the threads to close off
 	// Do this regardless of Error state

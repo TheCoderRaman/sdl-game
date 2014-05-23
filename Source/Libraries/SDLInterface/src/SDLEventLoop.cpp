@@ -60,7 +60,7 @@ void SDLInterface::EventLoop::RequestQuit()
 //========================================================
 SDLInterface::Error SDLInterface::EventLoop::Create()
 {
-	Error err = Error::NoErr;
+	Error err = Error::None;
 
 	// Register the custom event
 	if (s_iCustomFunctionEventType == 0)
@@ -79,7 +79,7 @@ SDLInterface::Error SDLInterface::EventLoop::Create()
 //========================================================
 SDLInterface::Error SDLInterface::EventLoop::Destroy()
 {
-	Error err = Error::NoErr;
+	Error err = Error::None;
 
 	return err;
 }
@@ -87,7 +87,7 @@ SDLInterface::Error SDLInterface::EventLoop::Destroy()
 //========================================================
 SDLInterface::Error SDLInterface::EventLoop::DoLoop()
 {
-	Error err = Error::NoErr;
+	Error err = Error::None;
 
 	//Event handler
     SDL_Event event;
@@ -109,7 +109,7 @@ SDLInterface::Error SDLInterface::EventLoop::DoLoop()
 
 	SDL_REMOVE_ERR(err, Error::QuitRequest);
 
-    if ( err != Error::NoErr )
+    if ( err != Error::None )
     	DEBUG_LOG("DoLoop Dropped out with Error %i",err);
 
 	s_bEventLoopRunning = false;
@@ -120,7 +120,7 @@ SDLInterface::Error SDLInterface::EventLoop::DoLoop()
 //========================================================
 SDLInterface::Error SDLInterface::EventLoop::HandleEvent(SDL_Event *event)
 {
-	Error err = Error::NoErr;
+	Error err = Error::None;
 
 	// Set we're currently event handling
 	s_isCurrentlyEventHandling = true;
@@ -154,7 +154,7 @@ SDLInterface::Error SDLInterface::EventLoop::HandleEvent(SDL_Event *event)
 //========================================================
 SDLInterface::Error SDLInterface::EventLoop::HandleCustomFunctionEvent(SDL_Event *event)
 {
-	Error err = Error::NoErr;
+	Error err = Error::None;
 
 	// Grab  the function
 	TMainThreadFunction* function = static_cast<TMainThreadFunction*>(event->user.data1);
@@ -171,7 +171,7 @@ SDLInterface::Error SDLInterface::EventLoop::HandleCustomFunctionEvent(SDL_Event
 //========================================================
 SDLInterface::Error SDLInterface::EventLoop::PostCustomFunctionEvent(TMainThreadFunction& func)
 {
-	Error err = Error::NoErr;
+	Error err = Error::None;
 
 	// NEW the function, to be deleted after the function is called
 	// This is because whatever function was passed in may be out of scope by the time it gets called
@@ -196,7 +196,7 @@ SDLInterface::Error SDLInterface::EventLoop::PostCustomFunctionEvent(TMainThread
 //========================================================
 SDLInterface::Error SDLInterface::EventLoop::RunOnMainThread_Sync(Error& returnVal, TMainThreadFunction func)
 {
-	Error err = Error::NoErr;
+	Error err = Error::None;
 
 	// We must be running at this point
 	// Any functions that call into here before or after we're running the event loop
@@ -219,7 +219,7 @@ SDLInterface::Error SDLInterface::EventLoop::RunOnMainThread_Sync(Error& returnV
 		// Create a new temporary function that will post the semaphore and grab the return value
 		TMainThreadFunction newTempFunc = [&]()->Error {
 
-			Error err = Error::NoErr;
+			Error err = Error::None;
 
 			// Call the custom function and grab it's return value
 			returnVal |= func();
@@ -247,7 +247,7 @@ SDLInterface::Error SDLInterface::EventLoop::RunOnMainThread_Sync(Error& returnV
 //========================================================
 SDLInterface::Error SDLInterface::EventLoop::RunOnMainThread_ASync(TMainThreadFunction func)
 {
-	Error err = Error::NoErr;
+	Error err = Error::None;
 
 	// Post the custom function event
 	err |= PostCustomFunctionEvent(func);
