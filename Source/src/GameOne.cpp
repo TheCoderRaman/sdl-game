@@ -132,10 +132,6 @@ eError GameOne::Destroy()
 	if (!ERROR_HAS_TYPE_FATAL(err))
 		err |= GetRenderer()->RemoveRenderable(&m_banana);
 
-	// Destroy the banana
-	if (!ERROR_HAS_TYPE_FATAL(err))
-		err |= m_banana.Destroy();
-
 	if (!ERROR_HAS_TYPE_FATAL(err))
 		err |= m_myEventManager.Destroy();
 
