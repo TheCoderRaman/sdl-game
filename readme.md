@@ -1,4 +1,4 @@
-An SDL Game!
+An SDL Game! v0.1
 ==============
 Building a simple cross platform game and engine with SDL
 --------------
