@@ -9,6 +9,7 @@
 #define _LOBJECT_H_
 
 #include "types.h"
+#include "LError.h"
 
 //! \brief Base LObject interface type
 //! Designed as a base type for all LEngine parts

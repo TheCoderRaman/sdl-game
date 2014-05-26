@@ -8,7 +8,7 @@
 #ifndef _LRENDERER_H_
 #define _LRENDERER_H_
 
-#include "types.h"
+#include "LError.h"
 
 #include "SDLRenderer.h"
 #include "SDLWindow.h"

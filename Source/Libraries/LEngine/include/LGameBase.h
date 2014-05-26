@@ -13,6 +13,7 @@
 #include "LObjectManager.h"
 #include "LRenderer.h"
 #include "LInput.h"
+#include "LError.h"
 
 
 //! \brief Base class for the Game, to be overloaded by the game specific class
