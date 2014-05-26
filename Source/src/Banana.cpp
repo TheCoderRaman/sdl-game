@@ -7,14 +7,14 @@
 //!
 #include "Banana.h"
 
-#include "eError.h"
+#include "LError.h"
 #include "debug.h"
 
-eError Banana::Create( void )
+LError Banana::Create( void )
 {
 	RUNTIME_LOG( "Creating Banana..." );
 
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 
 	m_iTimeElapsed = 100;
 
@@ -29,11 +29,11 @@ eError Banana::Create( void )
 	return err;
 }
 
-eError Banana::Initialise( void )
+LError Banana::Initialise( void )
 { 
 	RUNTIME_LOG( "Initialising Banana..." );
 
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 
 	// Add said banana to the renderer
 	if( !ERROR_HAS_Fatal( err ) )
@@ -67,7 +67,7 @@ void Banana::MoveBananaRightAFrame( void )
 	m_banana.SetPos( m_banana.GetXPos() + 20, m_banana.GetYPos() );
 }
 
-eError Banana::Update( ms elapsed )
+LError Banana::Update( ms elapsed )
 {
 	m_iTimeElapsed += (int) elapsed / 1.5;
 
@@ -80,22 +80,22 @@ eError Banana::Update( ms elapsed )
 
 
 
-	return eError::NoErr;
+	return LError::NoErr;
 }
 
-eError Banana::Render( LRenderer2D* renderer )
+LError Banana::Render( LRenderer2D* renderer )
 {
-	return eError::NoErr;
+	return LError::NoErr;
 }
 
-eError Banana::Reset( void )
+LError Banana::Reset( void )
 { 
 	RUNTIME_LOG( "Resetting Banana..." );
 
-	return eError::NoErr;
+	return LError::NoErr;
 }
 
-eError Banana::Destroy( void )
+LError Banana::Destroy( void )
 {
 	RUNTIME_LOG( "Destroying Banana..." );
 
@@ -106,5 +106,5 @@ eError Banana::Destroy( void )
 	// Removing our reference to the renderer
 	SetRenderer( nullptr );
 
-	return eError::NoErr;
+	return LError::NoErr;
 }

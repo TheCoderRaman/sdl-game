@@ -48,22 +48,22 @@ public:
 	~LEngine();
 
 	//! \brief start the engine
-	eError Start();
+	LError Start();
 
 	//! \brief end the engine
-	eError End();
+	LError End();
 
 
 	// Thread loop functions
 
 	//! \brief the main engine thread loop
-	eError EngineThreadLoop();
+	LError EngineThreadLoop();
 
 	//! \brief the main render thread loop
-	eError RenderThreadLoop();
+	LError RenderThreadLoop();
 
 	//! \brief the main game thread loop
-	eError GameThreadLoop();
+	LError GameThreadLoop();
 
 
 	//! \brief get if the engine is quitting
@@ -80,28 +80,28 @@ private:
 	// main engine run cycle functions (managed by EngineThreadLoop)
 
 	//! \brief Init the engine
-	eError Init();
+	LError Init();
 
 	//! \brief Loads assets
-	eError Load();
+	LError Load();
 
 	//! \brief calls the event loop	
-	eError Loop();
+	LError Loop();
 
 		//! \brief Pre-Update
-		eError PreUpdate();
+		LError PreUpdate();
 
 		//! \brief update the engine
-		eError Update(ms elapsed);
+		LError Update(ms elapsed);
 
 		//! \brief post-update
-		eError PostUpdate();
+		LError PostUpdate();
 
 	//! \brief unloads the assets
-	eError Unload();
+	LError Unload();
 
 	//! \brief quit the engine
-	eError Quit();
+	LError Quit();
 	
 	// Various members for the Engine
 private:

@@ -24,20 +24,20 @@ public:
 	~LObjectManager( void );
 
 	//! \brief Register an object with this manager
-	eError RegisterObject( LObject* pObjectToRegister );
+	LError RegisterObject( LObject* pObjectToRegister );
 
-	eError Create( void );
+	LError Create( void );
 
-	eError Initialise( void );
+	LError Initialise( void );
 
 	//! \brief Update the LObject's state
 	//! To be used to update the object
 	//! Not nessasarily once per frame or on a timestamp
-	eError Update( ms frameTime );
+	LError Update( ms frameTime );
 
-	eError Reset( void );
+	LError Reset( void );
 
-	eError Destroy( void );
+	LError Destroy( void );
 
 private:
 

@@ -6,7 +6,7 @@
 //! various helpers for stl map and multimap containers
 //!
 
-#include "types.h" // For eError
+#include "types.h" // For LError
 
 #include <map>			// For the multimap and map
 #include <functional>	// For std::function used in visit functions
@@ -66,7 +66,7 @@ void multimap_remove_pair(std::multimap<TKey, TKeyVal>& tMap, const TKeyVal val,
 //========================================================
 //! \brief visit every pair in the whole multimap
 template< typename TKey, typename TKeyVal >
-void multimap_visit_all(std::multimap<TKey, TKeyVal>& tMap, std::function<eError(TKey, TKeyVal)> func)
+void multimap_visit_all(std::multimap<TKey, TKeyVal>& tMap, std::function<LError(TKey, TKeyVal)> func)
 {
 	typedef std::multimap<TKey, TKeyVal> TMap;
 
@@ -80,9 +80,9 @@ void multimap_visit_all(std::multimap<TKey, TKeyVal>& tMap, std::function<eError
 //========================================================
 //! \brief visit all elements of a key type is a multimap
 template< typename TKey, typename TKeyVal >
-eError multimap_visit_all(std::multimap<TKey, TKeyVal>& tMap, TKey key, std::function<eError(TKeyVal)> func)
+LError multimap_visit_all(std::multimap<TKey, TKeyVal>& tMap, TKey key, std::function<LError(TKeyVal)> func)
 {
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 
 	typedef std::multimap<TKey, TKeyVal> TMap;
 
@@ -102,7 +102,7 @@ eError multimap_visit_all(std::multimap<TKey, TKeyVal>& tMap, TKey key, std::fun
 //========================================================
 //! \brief visit all keys matching a value in a multimap (slow)
 template< typename TKey, typename TKeyVal >
-void multimap_visit_all_slow(std::multimap<TKey, TKeyVal>& tMap, int val, std::function<eError(TKey)> func)
+void multimap_visit_all_slow(std::multimap<TKey, TKeyVal>& tMap, int val, std::function<LError(TKey)> func)
 {
 	typedef std::multimap<TKey, TKeyVal> TMap;
 

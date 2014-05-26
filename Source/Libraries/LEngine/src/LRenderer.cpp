@@ -8,7 +8,7 @@
 #include "SDLTimer.h"
 #include "SDLError.h"
 
-#include "eError.h"
+#include "LError.h"
 #include "debug.h"
 
 #define MAX_NUM_RENDERABLES 256
@@ -32,15 +32,15 @@ LRendereable2D::~LRendereable2D()
 }
 
 //===============================================================
-eError LRendereable2D::SetRenderer(LRenderer2D* parent)
+LError LRendereable2D::SetRenderer(LRenderer2D* parent)
 {
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 	
 	// Throw an error if the renderer was already attached to another renderer
 	if (m_pRenderer != nullptr)
 	{
 		// TODO: use a more specific error code here
-		err |= eError::Warning;
+		err |= LError::Warning;
 	}
 
 	m_pRenderer = parent;
@@ -61,20 +61,20 @@ LRenderer2D::~LRenderer2D()
 }
 
 //===============================================================
-eError LRenderer2D::Create(SDLInterface::Window &window)
+LError LRenderer2D::Create(SDLInterface::Window &window)
 {
 	SDLInterface::Error err = SDLInterface::Error::None;
 
 	// Create the renderer
 	err |= m_BaseSDLRenderer.Create(&window);
 
-	return SDL_ERROR_HAS_Fatal(err) ? eError::Fatal : eError::NoErr;;
+	return SDL_ERROR_HAS_Fatal(err) ? LError::Fatal : LError::NoErr;;
 }
 
 //===============================================================
-eError LRenderer2D::AddRenderable(LRendereable2D* toAdd)
+LError LRenderer2D::AddRenderable(LRendereable2D* toAdd)
 {
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 
 	// Assert the max number of renderables
 	DEBUG_ASSERT(m_Renderables.size() <= MAX_NUM_RENDERABLES);
@@ -88,9 +88,9 @@ eError LRenderer2D::AddRenderable(LRendereable2D* toAdd)
 }
 
 //===============================================================
-eError LRenderer2D::RemoveRenderable(LRendereable2D* toRemove)
+LError LRenderer2D::RemoveRenderable(LRendereable2D* toRemove)
 {
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 
 	// Remove the renderable from the list
 	m_Renderables.remove(toRemove);
@@ -101,9 +101,9 @@ eError LRenderer2D::RemoveRenderable(LRendereable2D* toRemove)
 }
 
 //===============================================================
-eError LRenderer2D::Render()
+LError LRenderer2D::Render()
 {
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 	SDLInterface::Error sdlerr = SDLInterface::Error::None;
 
 #if RENDER_TIMING_DEBUG
@@ -129,16 +129,16 @@ eError LRenderer2D::Render()
 #endif
 
 	// Pull in the SDL error
-	err |= SDL_ERROR_HAS_Fatal(sdlerr) ? eError::Fatal : eError::NoErr;
+	err |= SDL_ERROR_HAS_Fatal(sdlerr) ? LError::Fatal : LError::NoErr;
 
 	return err;
 }
 
 
 //===============================================================
-eError LRenderer2D::RenderRenderables()
+LError LRenderer2D::RenderRenderables()
 {
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 
 	// Sort the renderables based on Z value
 	m_Renderables.sort(
@@ -165,9 +165,9 @@ eError LRenderer2D::RenderRenderables()
 }
 
 //===============================================================
-eError LRenderer2D::Destroy()
+LError LRenderer2D::Destroy()
 {
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 
 	// Destroy the renderer
 	m_BaseSDLRenderer.Destroy();

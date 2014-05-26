@@ -7,7 +7,7 @@
 //! 
 #include "LGameBase.h"
 
-#include "eError.h"
+#include "LError.h"
 
 //===============================================================
 LGameBase::LGameBase()
@@ -22,51 +22,51 @@ LGameBase::~LGameBase()
 }
 
 //===============================================================
-eError LGameBase::Create()
+LError LGameBase::Create()
 {
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 	return err;
 }
 
 //===============================================================
-eError LGameBase::Initialise()
+LError LGameBase::Initialise()
 {
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 	return err;
 }
 
 //===============================================================
-eError LGameBase::PreUpdate()
+LError LGameBase::PreUpdate()
 {
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 	return err;
 }
 
 //===============================================================
-eError LGameBase::Update(ms elapsed)
+LError LGameBase::Update(ms elapsed)
 {
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 	return err;
 }
 
 //===============================================================
-eError LGameBase::PostUpdate()
+LError LGameBase::PostUpdate()
 {
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 	return err;
 }
 
 //===============================================================
-eError LGameBase::Reset()
+LError LGameBase::Reset()
 {
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 	return err;
 }
 
 //===============================================================
-eError LGameBase::Destroy()
+LError LGameBase::Destroy()
 {
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 	return err;
 }
 

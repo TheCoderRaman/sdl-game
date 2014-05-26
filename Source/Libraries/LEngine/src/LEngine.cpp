@@ -16,7 +16,7 @@
 #include "LGameBase.h"
 
 #include "debug.h"
-#include "eError.h"
+#include "LError.h"
 
 #define DebugTimerUpdateRate_Sec 5.0f
 
@@ -55,7 +55,7 @@ void LEngine::RequestQuit()
 }
 
 //===============================================================
-eError LEngine::Start()
+LError LEngine::Start()
 {
 	//Initialization flag
 	SDLInterface::Error err = SDLInterface::Error::None;
@@ -88,14 +88,14 @@ eError LEngine::Start()
 	if (!SDL_ERROR_HAS_Fatal(err))
 		err |= engineThread.Wait();
 
-	return SDL_ERROR_HAS_Fatal(err) ? eError::Fatal : eError::NoErr;
+	return SDL_ERROR_HAS_Fatal(err) ? LError::Fatal : LError::NoErr;
 }
 
 //===============================================================
-eError LEngine::EngineThreadLoop()
+LError LEngine::EngineThreadLoop()
 {
 	//Initialization flag
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 
 	// Initialise the engine
 	if (!ERROR_HAS_Fatal(err))
@@ -125,14 +125,14 @@ eError LEngine::EngineThreadLoop()
 }
 
 //===============================================================
-eError LEngine::Init()
+LError LEngine::Init()
 {
 	RUNTIME_LOG("Initialising...")
 
 	// Create the window
 	SDLInterface::Error sdlerr = m_MainWindow.Create(WINDOW_WIDTH, WINDOW_HEIGHT);
 
-	eError err = SDL_ERROR_HAS_Fatal(sdlerr) ? eError::Fatal : eError::NoErr;
+	LError err = SDL_ERROR_HAS_Fatal(sdlerr) ? LError::Fatal : LError::NoErr;
 
 	// Create the renderer
 	if (!ERROR_HAS_Fatal(err))
@@ -150,11 +150,11 @@ eError LEngine::Init()
 }
 
 //===============================================================
-eError LEngine::Quit()
+LError LEngine::Quit()
 {
 	RUNTIME_LOG("Quiting...")
 
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 
 	// create the event manager for the engine events
 	err |= m_engineEventManager.Destroy();
@@ -164,27 +164,27 @@ eError LEngine::Quit()
 
 	SDLInterface::Error sdlerr = m_MainWindow.Destroy();
 
-	err |= SDL_ERROR_HAS_Fatal(sdlerr) ? eError::Fatal : eError::NoErr;
+	err |= SDL_ERROR_HAS_Fatal(sdlerr) ? LError::Fatal : LError::NoErr;
 	
     return err;
 }
 
 //===============================================================
-eError LEngine::End()
+LError LEngine::End()
 {
 	//Quit SDL subsystems
 	SDLInterface::Error sdlerr = SDLInterface::Quit();
 
-	return SDL_ERROR_HAS_Fatal(sdlerr) ? eError::Fatal : eError::NoErr;
+	return SDL_ERROR_HAS_Fatal(sdlerr) ? LError::Fatal : LError::NoErr;
 }
 
 //===============================================================
-eError LEngine::Load()
+LError LEngine::Load()
 {
 	RUNTIME_LOG("Loading...")
     
 	//Loading err flag
-    eError err = eError::NoErr;
+    LError err = LError::NoErr;
 
 	// Set the game's renderer
 	m_myGame.SetRenderer( &m_Renderer );
@@ -212,9 +212,9 @@ eError LEngine::Load()
 }
 
 //===============================================================
-eError LEngine::Loop()
+LError LEngine::Loop()
 {
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 	RUNTIME_LOG("Looping...");
 
 	// Spawn both the threads
@@ -227,7 +227,7 @@ eError LEngine::Loop()
 		sdlerr |= renderThread.Spawn(this);
 
 	// pull the sdl error in
-	err |= SDL_ERROR_HAS_Fatal(sdlerr) ? eError::Fatal : eError::NoErr;
+	err |= SDL_ERROR_HAS_Fatal(sdlerr) ? LError::Fatal : LError::NoErr;
 
 	// Spin while not quitting
 	while ( !QuitHasBeenRequested() 
@@ -241,7 +241,7 @@ eError LEngine::Loop()
 	RequestQuit();
 
 	// Remove any quit request error
-	REMOVE_ERR(err, eError::QuitRequest);
+	REMOVE_ERR(err, LError::QuitRequest);
 
 	sdlerr = SDLInterface::Error::None;
 
@@ -251,15 +251,15 @@ eError LEngine::Loop()
 	sdlerr |= gameThread.Wait();
 
 	// pull the sdl error in
-	err |= SDL_ERROR_HAS_Fatal(sdlerr) ? eError::Fatal : eError::NoErr;
+	err |= SDL_ERROR_HAS_Fatal(sdlerr) ? LError::Fatal : LError::NoErr;
 
     return err;
 }
 
 //===============================================================
-eError LEngine::Unload()
+LError LEngine::Unload()
 {
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 
 	// Destroy the objects
 	if( !ERROR_HAS_Fatal( err ) )
@@ -276,9 +276,9 @@ eError LEngine::Unload()
 }
 
 //===============================================================
-eError LEngine::PreUpdate( void )
+LError LEngine::PreUpdate( void )
 {
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 
 	// Push the current frame's inputs to last frame's and clear this frame's key buffer
 	// Poll the keyboard now for the current frame's inputs
@@ -290,9 +290,9 @@ eError LEngine::PreUpdate( void )
 }
 
 //===============================================================
-eError LEngine::Update(ms elapsed)
+LError LEngine::Update(ms elapsed)
 {
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 
 	// We need to decide when this happens
 	err |=  m_ObjectManager.Update( elapsed );
@@ -304,9 +304,9 @@ eError LEngine::Update(ms elapsed)
 }
 
 //===============================================================
-eError LEngine::PostUpdate( void )
+LError LEngine::PostUpdate( void )
 {
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 
 	// Reset the Engine level keyboard polling
 	m_InputManager.EndKeyboardUpdate();
@@ -317,9 +317,9 @@ eError LEngine::PostUpdate( void )
 }
 
 //===============================================================
-eError LEngine::RenderThreadLoop()
+LError LEngine::RenderThreadLoop()
 {
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 
 	// the current frame time
 	ms frameTime = SDLInterface::Timer::GetGlobalLifetime();
@@ -333,7 +333,7 @@ eError LEngine::RenderThreadLoop()
 
 
 	while (!ERROR_HAS_Fatal(err)
-		&& !ERROR_HAS(err, eError::QuitRequest))
+		&& !ERROR_HAS(err, LError::QuitRequest))
 	{
 		// Delay until the end of the desired frame time
 		SDLInterface::Thread::DelayUntil(frameTime + DESIRED_FRAMETIME_MS);
@@ -346,7 +346,7 @@ eError LEngine::RenderThreadLoop()
 
 		// get if the engine has finished
 		if (QuitHasBeenRequested())
-			err |= eError::QuitRequest;
+			err |= LError::QuitRequest;
 
 		// Increment the framecounter
 		frameCounter++;
@@ -365,15 +365,15 @@ eError LEngine::RenderThreadLoop()
 	}
 
 	// remove any quit request error
-	REMOVE_ERR(err, eError::QuitRequest);
+	REMOVE_ERR(err, LError::QuitRequest);
 
 	return err;
 }
 
 //===============================================================
-eError LEngine::GameThreadLoop()
+LError LEngine::GameThreadLoop()
 {
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 
 	// the current frame time
 	ms frameTime = SDLInterface::Timer::GetGlobalLifetime();
@@ -387,7 +387,7 @@ eError LEngine::GameThreadLoop()
 
 	// The main loop
 	while ( !ERROR_HAS_Fatal( err )
-		&& !ERROR_HAS( err, eError::QuitRequest ) )
+		&& !ERROR_HAS( err, LError::QuitRequest ) )
 	{
 		// Delay until the end of the desired frame time
 		SDLInterface::Thread::DelayUntil(frameTime + DESIRED_FRAMETIME_MS);
@@ -406,7 +406,7 @@ eError LEngine::GameThreadLoop()
 
 		// get if the engine has finished
 		if (QuitHasBeenRequested())
-			err |= eError::QuitRequest;
+			err |= LError::QuitRequest;
 
 		// Increment the framecounter
 		frameCounter++;
@@ -425,7 +425,7 @@ eError LEngine::GameThreadLoop()
 	}
 
 	// remove any quit request error
-	REMOVE_ERR(err, eError::QuitRequest);
+	REMOVE_ERR(err, LError::QuitRequest);
 
 	return err;
 }
@@ -436,7 +436,7 @@ eError LEngine::GameThreadLoop()
 int EngineThreadStart(void* data)
 {
 	DEBUG_LOG("EngineThread Starting");
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 
 	// Grab the engine from the thread data
 	LEngine* thisEngine = (LEngine*)data;
@@ -452,7 +452,7 @@ int EngineThreadStart(void* data)
 int GameThreadStart(void* data)
 {
 	DEBUG_LOG("GameThread Starting");
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 
 	// Grab the engine from the thread data
 	LEngine* thisEngine = (LEngine*)data;
@@ -468,7 +468,7 @@ int GameThreadStart(void* data)
 int RenderThreadStart(void* data)
 {
 	DEBUG_LOG("RenderThread Starting");
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 
 	// Grab the engine from the thread data
 	LEngine* thisEngine = (LEngine*)data;

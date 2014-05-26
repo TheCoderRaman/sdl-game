@@ -9,7 +9,7 @@
 #include "LObjectManager.h"
 #include "LObject.h"
 
-#include "eError.h"
+#include "LError.h"
 #include "debug.h"
 
 LObjectManager::LObjectManager( void )
@@ -29,9 +29,9 @@ LObjectManager::~LObjectManager( void )
 
 }
 
-eError LObjectManager::RegisterObject( LObject* pObjectToRegister )
+LError LObjectManager::RegisterObject( LObject* pObjectToRegister )
 {
-	eError toReturn = eError::NoErr;
+	LError toReturn = LError::NoErr;
 
 	if( m_vecObjects.size() <= m_vecObjects.capacity() )
 	{
@@ -40,13 +40,13 @@ eError LObjectManager::RegisterObject( LObject* pObjectToRegister )
 	else
 	{
 		DEBUG_ASSERT( "Trying to add an object into the object manager when it is full" );
-		toReturn = eError::Fatal;
+		toReturn = LError::Fatal;
 	}
 
 	return toReturn;
 }
 
-eError LObjectManager::Create( void )
+LError LObjectManager::Create( void )
 {
 	for( LObject* pObj : m_vecObjects )
 	{
@@ -56,10 +56,10 @@ eError LObjectManager::Create( void )
 		}
 	}
 
-	return eError::NoErr;
+	return LError::NoErr;
 }
 
-eError LObjectManager::Initialise( void )
+LError LObjectManager::Initialise( void )
 {
 	for( LObject* pObj : m_vecObjects )
 	{
@@ -69,10 +69,10 @@ eError LObjectManager::Initialise( void )
 		}
 	}
 
-	return eError::NoErr;
+	return LError::NoErr;
 }
 
-eError LObjectManager::Update( ms frameTime )
+LError LObjectManager::Update( ms frameTime )
 {
 	for( LObject* pObj : m_vecObjects )
 	{
@@ -82,10 +82,10 @@ eError LObjectManager::Update( ms frameTime )
 		}
 	}
 
-	return eError::NoErr;
+	return LError::NoErr;
 }
 
-eError LObjectManager::Reset( void )
+LError LObjectManager::Reset( void )
 {
 	for( LObject* pObj : m_vecObjects )
 	{
@@ -95,10 +95,10 @@ eError LObjectManager::Reset( void )
 		}
 	}
 
-	return eError::NoErr;
+	return LError::NoErr;
 }
 
-eError LObjectManager::Destroy( void )
+LError LObjectManager::Destroy( void )
 {
 	for( LObject* pObj : m_vecObjects )
 	{
@@ -108,6 +108,6 @@ eError LObjectManager::Destroy( void )
 		}
 	}
 
-	return eError::NoErr;
+	return LError::NoErr;
 }
 

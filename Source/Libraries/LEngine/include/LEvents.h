@@ -14,10 +14,10 @@
 //!	
 //!	The user can then add "Handlers" to this system
 //!	TMyEventSystem::THandler m_EventHandler;
-//! m_EventHandler.callbackFunction = [](TMyEventSystem::TEvent*)->eError 
+//! m_EventHandler.callbackFunction = [](TMyEventSystem::TEvent*)->LError 
 //! {
 //!		// DO STUFF
-//!		return eError::Error_Val;
+//!		return LError::Error_Val;
 //! };
 //!
 //! m_EventSystem.AddHandler(typeEnum::Event_Basic,&m_EventHandler);
@@ -31,7 +31,7 @@
 #define _LEVENTS_H_
 
 #include "types.h"		// For basic types
-#include "eError.h"		// For eError types
+#include "LError.h"		// For LError types
 #include "debug.h"		// For Debug Asserts
 #include "map_helpers.h"// For multimap helper functions
 
@@ -49,7 +49,7 @@
 
 #include <string.h> 	// For memset APPARENTLY!?
 
-#define LEVENTHANDLER_CALLBACK_FUNCTION(ManagerType) [&](const ManagerType::TEvent* event)->eError
+#define LEVENTHANDLER_CALLBACK_FUNCTION(ManagerType) [&](const ManagerType::TEvent* event)->LError
 
 // Maximum numbers here
 // Lowball for now to help debug
@@ -81,8 +81,8 @@ public:
 	struct THandler
 	{
 		//! \brief internal function that will be called on event handling
-		// This can be set by using the "[&](const TGameEventManager::TEvent* event)->eError{ do stuff; }" signature
-		std::function< eError(const TEvent*) >	callbackFunction;
+		// This can be set by using the "[&](const TGameEventManager::TEvent* event)->LError{ do stuff; }" signature
+		std::function< LError(const TEvent*) >	callbackFunction;
 	};
 
 
@@ -102,10 +102,10 @@ public:
 	LEventManager();
 
 	//! \brief Create the Event Manager
-	eError Create();
+	LError Create();
 
 	//! \brief Destroy the Event Manager
-	eError Destroy();
+	LError Destroy();
 
 	//! \brief Default destructor
 	~LEventManager();
@@ -115,35 +115,35 @@ public:
 
 	//! \brief Flush the events
 	//! will delegate all events down to thier listeners
-	eError FlushEvents();
+	LError FlushEvents();
 
 
 // Event Sending methods
 
 	//! \brief Send an event by type and data
-	eError SendEvent(TEventIdentifier type, TEventData& data);
+	LError SendEvent(TEventIdentifier type, TEventData& data);
 
 
 // Event Listening methods
 
 	//! \brief Add a listener to an event type
-	eError AddHandler(TEventIdentifier type, THandler* listener);
+	LError AddHandler(TEventIdentifier type, THandler* listener);
 
 	//! \brief Remove a listener from an event type
-	eError RemoveHandler(TEventIdentifier type, THandler* listener);
+	LError RemoveHandler(TEventIdentifier type, THandler* listener);
 
 private:
 
 // Private methods
 
 	//! \brief Add an event to the event queue
-	eError AddEventToQueue(TEvent& event);
+	LError AddEventToQueue(TEvent& event);
 
 	//! \brief Pop an event off the queue
-	eError PopEventOffQueue(TEvent& event);
+	LError PopEventOffQueue(TEvent& event);
 
 	//! \brief Delegate an event to it's listeners
-	eError DelegateEvent(TEvent& event);
+	LError DelegateEvent(TEvent& event);
 
 
 // Private members
@@ -179,33 +179,33 @@ LEventManager< TEventIdentifier, TEventData >::~LEventManager()
 
 //===============================================================
 template< typename TEventIdentifier, typename TEventData >
-eError LEventManager< TEventIdentifier, TEventData >::Create()
+LError LEventManager< TEventIdentifier, TEventData >::Create()
 {
 	SDLInterface::Error err = SDLInterface::Error::None;
 
 	err |= m_QueueMutex.Create();
 	err |= m_ListenerMapMutex.Create();
 
-	return SDL_ERROR_HAS_Fatal(err) ? eError::Fatal : eError::NoErr;
+	return SDL_ERROR_HAS_Fatal(err) ? LError::Fatal : LError::NoErr;
 }
 
 //===============================================================
 template< typename TEventIdentifier, typename TEventData >
-eError LEventManager< TEventIdentifier, TEventData >::Destroy()
+LError LEventManager< TEventIdentifier, TEventData >::Destroy()
 {
 	SDLInterface::Error err = SDLInterface::Error::None;
 
 	err |= m_ListenerMapMutex.Destroy();
 	err |= m_QueueMutex.Destroy();
 
-	return SDL_ERROR_HAS_Fatal(err) ? eError::Fatal : eError::NoErr;
+	return SDL_ERROR_HAS_Fatal(err) ? LError::Fatal : LError::NoErr;
 }
 
 //===============================================================
 template< typename TEventIdentifier, typename TEventData >
-eError LEventManager< TEventIdentifier, TEventData >::AddEventToQueue(TEvent& event)
+LError LEventManager< TEventIdentifier, TEventData >::AddEventToQueue(TEvent& event)
 {
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 	m_QueueMutex.Lock();
 
 	if (m_Queue.size() <= eMaxEvents)
@@ -217,7 +217,7 @@ eError LEventManager< TEventIdentifier, TEventData >::AddEventToQueue(TEvent& ev
 	{
 		// We should never go over the max event limit
 		// TODO better and more descriptive error
-		err |= eError::Fatal;
+		err |= LError::Fatal;
 		DEBUG_ASSERT(0);
 	}
 
@@ -227,7 +227,7 @@ eError LEventManager< TEventIdentifier, TEventData >::AddEventToQueue(TEvent& ev
 
 //===============================================================
 template< typename TEventIdentifier, typename TEventData >
-eError LEventManager< TEventIdentifier, TEventData >::AddHandler(TEventIdentifier type, THandler* listener)
+LError LEventManager< TEventIdentifier, TEventData >::AddHandler(TEventIdentifier type, THandler* listener)
 {
 	m_ListenerMapMutex.Lock();
 
@@ -235,26 +235,26 @@ eError LEventManager< TEventIdentifier, TEventData >::AddHandler(TEventIdentifie
 	m_ListenerMap.insert(TTypeListenerPair(type, listener));
 
 	m_ListenerMapMutex.Unlock();
-	return eError::NoErr;
+	return LError::NoErr;
 }
 
 //===============================================================
 template< typename TEventIdentifier, typename TEventData >
-eError LEventManager< TEventIdentifier, TEventData >::RemoveHandler(TEventIdentifier type, THandler* listener)
+LError LEventManager< TEventIdentifier, TEventData >::RemoveHandler(TEventIdentifier type, THandler* listener)
 {
 	m_ListenerMapMutex.Lock();
 
 	multimap_remove_pair(m_ListenerMap, type, listener);
 
 	m_ListenerMapMutex.Unlock();
-	return eError::NoErr;
+	return LError::NoErr;
 }
 
 //===============================================================
 template< typename TEventIdentifier, typename TEventData >
-eError LEventManager< TEventIdentifier, TEventData >::PopEventOffQueue(TEvent& event)
+LError LEventManager< TEventIdentifier, TEventData >::PopEventOffQueue(TEvent& event)
 {
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 	m_QueueMutex.Lock();
 
 	// If the queue does have an event to pop
@@ -274,7 +274,7 @@ eError LEventManager< TEventIdentifier, TEventData >::PopEventOffQueue(TEvent& e
 		// Fire off a warning, or assert in debug
 		// We shouldn't be trying to pop an event if we have none left
 		// TODO better and more descriptive error
-		err |= eError::Warning;
+		err |= LError::Warning;
 		DEBUG_ASSERT(0);
 	}
 
@@ -285,15 +285,15 @@ eError LEventManager< TEventIdentifier, TEventData >::PopEventOffQueue(TEvent& e
 
 //===============================================================
 template< typename TEventIdentifier, typename TEventData >
-eError LEventManager< TEventIdentifier, TEventData >::DelegateEvent(TEvent& event)
+LError LEventManager< TEventIdentifier, TEventData >::DelegateEvent(TEvent& event)
 {
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 	m_ListenerMapMutex.Lock();
 
 	// Construct the lambda for each event handler found
 	// This simply calls the event handlers function lamba
-	std::function<eError(THandler*)> function = 
-	[&](THandler* handler)->eError
+	std::function<LError(THandler*)> function = 
+	[&](THandler* handler)->LError
 	{
 		return handler->callbackFunction(&event);
 	};
@@ -307,9 +307,9 @@ eError LEventManager< TEventIdentifier, TEventData >::DelegateEvent(TEvent& even
 
 //===============================================================
 template< typename TEventIdentifier, typename TEventData >
-eError LEventManager< TEventIdentifier, TEventData >::SendEvent(TEventIdentifier type, TEventData& data)
+LError LEventManager< TEventIdentifier, TEventData >::SendEvent(TEventIdentifier type, TEventData& data)
 {
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 
 	// Construct a new event
 	TEvent event;
@@ -324,9 +324,9 @@ eError LEventManager< TEventIdentifier, TEventData >::SendEvent(TEventIdentifier
 
 //===============================================================
 template< typename TEventIdentifier, typename TEventData >
-eError LEventManager< TEventIdentifier, TEventData >::FlushEvents()
+LError LEventManager< TEventIdentifier, TEventData >::FlushEvents()
 {
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 
 	// event storage
 	TEvent event;

@@ -7,7 +7,7 @@
 #include "LSprite.h"
 #include "SDLError.h"
 
-#include "eError.h"
+#include "LError.h"
 #include "debug.h"
 
 //===============================================================
@@ -24,7 +24,7 @@ LSprite::~LSprite()
 }
 
 //===============================================================
-eError LSprite::Create(LRenderer2D& renderer, const char* file)
+LError LSprite::Create(LRenderer2D& renderer, const char* file)
 {
 	// Sanity check to make sure we don't create twice
 	DEBUG_ASSERT(m_pchFileName == nullptr);
@@ -35,13 +35,13 @@ eError LSprite::Create(LRenderer2D& renderer, const char* file)
 	// Create the texture
 	SDLInterface::Error sdlerr = m_Texture.Create(&renderer.GetBaseRenderer(), file);
 
-	return SDL_ERROR_HAS_Fatal(sdlerr) ? eError::Fatal : eError::NoErr;;
+	return SDL_ERROR_HAS_Fatal(sdlerr) ? LError::Fatal : LError::NoErr;;
 }
 
 //===============================================================
-eError LSprite::SetSourceRect(const SDLInterface::Rect& rect)
+LError LSprite::SetSourceRect(const SDLInterface::Rect& rect)
 {
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 
 	// Set the internal rectangle
 	m_srcRect = rect;
@@ -52,9 +52,9 @@ eError LSprite::SetSourceRect(const SDLInterface::Rect& rect)
 
 
 //===============================================================
-eError LSprite::SetPos(int x, int y)
+LError LSprite::SetPos(int x, int y)
 {
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 
 	// set the destination position
 	m_destRect.x = x;
@@ -65,9 +65,9 @@ eError LSprite::SetPos(int x, int y)
 
 
 //===============================================================
-eError LSprite::SetResetPos( int x, int y )
+LError LSprite::SetResetPos( int x, int y )
 {
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 
 	startX = x;
 	startY = y;
@@ -91,9 +91,9 @@ int LSprite::GetYPos()
 }
 
 //===============================================================
-eError LSprite::SetSize(int w, int h)
+LError LSprite::SetSize(int w, int h)
 {
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 
 	// Set the destination sizes
 	m_destRect.w = w;
@@ -103,19 +103,19 @@ eError LSprite::SetSize(int w, int h)
 }
 
 //===============================================================
-eError LSprite::Render(LRenderer2D* renderer)
+LError LSprite::Render(LRenderer2D* renderer)
 {
 	// Render the texture
 	SDLInterface::Error err = renderer->GetBaseRenderer().RenderTexture(&m_Texture, m_srcRect, m_destRect);
 
-	return SDL_ERROR_HAS_Fatal(err) ? eError::Fatal : eError::NoErr;
+	return SDL_ERROR_HAS_Fatal(err) ? LError::Fatal : LError::NoErr;
 }
 
 //===============================================================
-eError LSprite::Destroy()
+LError LSprite::Destroy()
 {
 	// Destroy the texture
 	SDLInterface::Error err = m_Texture.Destroy();
 		
-	return SDL_ERROR_HAS_Fatal(err) ? eError::Fatal : eError::NoErr;
+	return SDL_ERROR_HAS_Fatal(err) ? LError::Fatal : LError::NoErr;
 }

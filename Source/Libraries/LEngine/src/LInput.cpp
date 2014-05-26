@@ -6,7 +6,7 @@
 //!
 #include "LInput.h"
 
-#include "eError.h"
+#include "LError.h"
 #include "debug.h"
 
 #include "SDLEventHandling.h"

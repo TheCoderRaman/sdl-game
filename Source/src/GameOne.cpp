@@ -10,7 +10,7 @@
 #include "LObjectManager.h"
 #include "LInput.h"
 
-#include "eError.h"
+#include "LError.h"
 
 //========================================================
 GameOne::GameOne()
@@ -25,9 +25,9 @@ GameOne::~GameOne()
 }
 
 //========================================================
-eError GameOne::Create()
+LError GameOne::Create()
 {
- 	eError err = eError::NoErr;
+ 	LError err = LError::NoErr;
 
 	err |= LGameBase::Create();
 
@@ -50,9 +50,9 @@ eError GameOne::Create()
 }
 
 //========================================================
-eError GameOne::Initialise()
+LError GameOne::Initialise()
 {
- 	eError err = eError::NoErr;
+ 	LError err = LError::NoErr;
 
 	err |= LGameBase::Initialise();
 
@@ -60,9 +60,9 @@ eError GameOne::Initialise()
 }
 
 //========================================================
-eError GameOne::PreUpdate()
+LError GameOne::PreUpdate()
 {
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 
 	err |= LGameBase::PreUpdate();
 
@@ -70,9 +70,9 @@ eError GameOne::PreUpdate()
 }
 
 //========================================================
-eError GameOne::Update(ms elapsed)
+LError GameOne::Update(ms elapsed)
 {
- 	eError err = eError::NoErr;
+ 	LError err = LError::NoErr;
 
 	err |= LGameBase::Update(elapsed);
 
@@ -100,9 +100,9 @@ eError GameOne::Update(ms elapsed)
 }
 
 //========================================================
-eError GameOne::PostUpdate()
+LError GameOne::PostUpdate()
 {
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 
 	err |= LGameBase::PostUpdate();
 
@@ -110,9 +110,9 @@ eError GameOne::PostUpdate()
 }
 
 //========================================================
-eError GameOne::Reset()
+LError GameOne::Reset()
 {
- 	eError err = eError::NoErr;
+ 	LError err = LError::NoErr;
 
 	err |= LGameBase::Reset();
 
@@ -120,9 +120,9 @@ eError GameOne::Reset()
 }
 
 //========================================================
-eError GameOne::Destroy()
+LError GameOne::Destroy()
 {
- 	eError err = eError::NoErr;
+ 	LError err = LError::NoErr;
 
 	// Remove the event handler
 	if (!ERROR_HAS_Fatal(err))
@@ -141,9 +141,9 @@ eError GameOne::Destroy()
 }
 
 //========================================================
-eError GameOne::HandleEvent(const TGameEventManager::TEvent* event)
+LError GameOne::HandleEvent(const TGameEventManager::TEvent* event)
 {
 	// do stuff to handle the events
 
-	return eError::NoErr;
+	return LError::NoErr;
 }

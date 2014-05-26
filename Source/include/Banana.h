@@ -9,24 +9,24 @@
 #include "LRenderer.h"
 #include "LSprite.h"
 
-#include "eError.h"
+#include "LError.h"
 
 class Banana : public LObject, public LRendereable2D
 {
 
 public:
 
-	virtual eError Create( void );
+	virtual LError Create( void );
 
-	virtual eError Initialise( void );
+	virtual LError Initialise( void );
 
-	virtual eError Update( ms elapsed );
+	virtual LError Update( ms elapsed );
 
-	virtual eError Reset( void );
+	virtual LError Reset( void );
 
-	virtual eError Destroy( void );
+	virtual LError Destroy( void );
 
-	virtual eError Render( LRenderer2D* renderer );
+	virtual LError Render( LRenderer2D* renderer );
 
 	void MoveBananaUpAFrame();
 	void MoveBananaLeftAFrame();

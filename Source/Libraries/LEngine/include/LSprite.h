@@ -29,29 +29,29 @@ public:
 	~LSprite();
 
 	//! \brief create the sprite from the file
-	eError Create(LRenderer2D& renderer, const char* file);
+	LError Create(LRenderer2D& renderer, const char* file);
 
 	//! \brief set the source rectangle from the texture
-	eError SetSourceRect(const SDLInterface::Rect& rect);
+	LError SetSourceRect(const SDLInterface::Rect& rect);
 
 	//! \brief set this as the reset location eventually
-	eError SetResetPos( int x, int y );
+	LError SetResetPos( int x, int y );
 
 	//! \brief set the sprite position
-	eError SetPos(int x, int y);
+	LError SetPos(int x, int y);
 
 	int GetXPos();
 
 	int GetYPos();
 
 	//! \brief set the sprite size
-	eError SetSize(int w, int h);
+	LError SetSize(int w, int h);
 
 	//! \brief Overload for the base type render function
-	virtual eError Render(LRenderer2D* renderer);
+	virtual LError Render(LRenderer2D* renderer);
 
 	//! \brief create the sprite from the file
-	eError Destroy();
+	LError Destroy();
 
 private:
 

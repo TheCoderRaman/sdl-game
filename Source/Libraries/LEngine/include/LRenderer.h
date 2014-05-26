@@ -30,7 +30,7 @@ public:
 
 	//! \brief the pure virtual render method
 	//! Overload this to perform the render
-	virtual eError Render(LRenderer2D* renderer) = 0;
+	virtual LError Render(LRenderer2D* renderer) = 0;
 
 	//! \brief inline set for the Z value
 	inline void SetZ( int Z ) { m_zValue = Z; }
@@ -46,7 +46,7 @@ public:
 
 	//! \brief set the internal renderer parent
 	//! useful for debugging and sanity checks
-	eError SetRenderer(LRenderer2D* parent);
+	LError SetRenderer(LRenderer2D* parent);
 
 protected:
 
@@ -80,19 +80,19 @@ public:
 	~LRenderer2D();
 
 	//! \brief create the renderer
-	eError Create(SDLInterface::Window &window);
+	LError Create(SDLInterface::Window &window);
 
 	//! \brief Add a renderable
-	eError AddRenderable(LRendereable2D* toAdd);
+	LError AddRenderable(LRendereable2D* toAdd);
 
 	//! \brief Remove a renderable
-	eError RemoveRenderable(LRendereable2D* toRemove);
+	LError RemoveRenderable(LRendereable2D* toRemove);
 
 	//! \brief perform the render
-	eError Render();
+	LError Render();
 
 	//! \brief destroy the renderer
-	eError Destroy();
+	LError Destroy();
 
 	//! \brief the base renderer get method
 	inline SDLInterface::Renderer& GetBaseRenderer()
@@ -103,7 +103,7 @@ public:
 private:
 
 	//! \brief call render on all renderables
-	eError RenderRenderables();
+	LError RenderRenderables();
 
 	//! \brief the full list of renderables
 	std::list<LRendereable2D*> m_Renderables;

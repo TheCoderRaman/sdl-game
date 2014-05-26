@@ -26,13 +26,13 @@ public:
 	~LGameBase();
 
 	//! \brief Virtual methods, all BASE methods must call down into these
-	virtual eError Create();
-	virtual eError Initialise();
-	virtual eError PreUpdate();
-	virtual eError Update(ms elapsed);
-	virtual eError PostUpdate();
-	virtual eError Reset();
-	virtual eError Destroy();
+	virtual LError Create();
+	virtual LError Initialise();
+	virtual LError PreUpdate();
+	virtual LError Update(ms elapsed);
+	virtual LError PostUpdate();
+	virtual LError Reset();
+	virtual LError Destroy();
 
 	//! \brief get the renderer
 	inline LRenderer2D*		GetRenderer();

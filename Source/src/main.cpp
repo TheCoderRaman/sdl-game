@@ -8,7 +8,7 @@
 
 //includes
 #include "debug.h"		//! for logging
-#include "eError.h"		//! for error handling
+#include "LError.h"		//! for error handling
 
 #include "LEngine.h"	//! for the engine itself
 
@@ -25,7 +25,7 @@ int main( int argc, char* args[] )
 	// log the program start
 	RUNTIME_LOG("Program Starting...");
 
-	eError err = eError::NoErr;
+	LError err = LError::NoErr;
 	
 #ifdef WINDOWS_BUILD
 	// Removes the default VS output window
@@ -48,7 +48,7 @@ int main( int argc, char* args[] )
 	RUNTIME_LOG("Program Exiting with error value 0x%08X", err);
 
 	// Assert here if we've had an error
-	DEBUG_ASSERT(err == eError::NoErr);
+	DEBUG_ASSERT(err == LError::NoErr);
 
 	// Return -1 as a failure
     return ERROR_HAS_Fatal(err) ? -1 : 0 ;    
