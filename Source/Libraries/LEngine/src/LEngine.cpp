@@ -61,23 +61,23 @@ eError LEngine::Start()
 	SDLInterface::Error err = SDLInterface::Error::None;
 
 	// initialise SDL
-	if (!SDL_ERROR_HAS_TYPE_FATAL(err))
+	if (!SDL_ERROR_HAS_Fatal(err))
 		err |= SDLInterface::Init();
 
 	// create the sdl event loop
-	if (!SDL_ERROR_HAS_TYPE_FATAL(err))
+	if (!SDL_ERROR_HAS_Fatal(err))
 		err |= SDLInterface::EventLoop::Create();
 
 	// the engine thread
 	SDLInterface::Thread engineThread("LEngine", EngineThreadStart);
 
 	// Spawn the engine thread
-	if (!SDL_ERROR_HAS_TYPE_FATAL(err))
+	if (!SDL_ERROR_HAS_Fatal(err))
 		err |= engineThread.Spawn(this);
 
 	// Do the main SDL event loop
 	// This won't return until requested
-	if (!SDL_ERROR_HAS_TYPE_FATAL(err))
+	if (!SDL_ERROR_HAS_Fatal(err))
 		err |= SDLInterface::EventLoop::DoLoop();
 
 	// If the event loop has quit here without the engine requesting it we need to request one
@@ -85,10 +85,10 @@ eError LEngine::Start()
 	RequestQuit();
 
 	// Wait for the engine thread
-	if (!SDL_ERROR_HAS_TYPE_FATAL(err))
+	if (!SDL_ERROR_HAS_Fatal(err))
 		err |= engineThread.Wait();
 
-	return SDL_ERROR_HAS_TYPE_FATAL(err) ? eError::Type_Fatal : eError::NoErr;
+	return SDL_ERROR_HAS_Fatal(err) ? eError::Fatal : eError::NoErr;
 }
 
 //===============================================================
@@ -98,23 +98,23 @@ eError LEngine::EngineThreadLoop()
 	eError err = eError::NoErr;
 
 	// Initialise the engine
-	if (!ERROR_HAS_TYPE_FATAL(err))
+	if (!ERROR_HAS_Fatal(err))
 		err |= Init();
 
 	// Load up
-	if (!ERROR_HAS_TYPE_FATAL(err))
+	if (!ERROR_HAS_Fatal(err))
 		err |= Load();
 
 	// do the full engine loop
-	if (!ERROR_HAS_TYPE_FATAL(err))
+	if (!ERROR_HAS_Fatal(err))
 		err |= Loop();
 
 	// unload
-	if (!ERROR_HAS_TYPE_FATAL(err))
+	if (!ERROR_HAS_Fatal(err))
 		err |= Unload();
 
 	// Quit the engine
-	if (!ERROR_HAS_TYPE_FATAL(err))
+	if (!ERROR_HAS_Fatal(err))
 		err |= Quit();
 
 	// Request the quit for the SDLEventLoop
@@ -132,18 +132,18 @@ eError LEngine::Init()
 	// Create the window
 	SDLInterface::Error sdlerr = m_MainWindow.Create(WINDOW_WIDTH, WINDOW_HEIGHT);
 
-	eError err = SDL_ERROR_HAS_TYPE_FATAL(sdlerr) ? eError::Type_Fatal : eError::NoErr;
+	eError err = SDL_ERROR_HAS_Fatal(sdlerr) ? eError::Fatal : eError::NoErr;
 
 	// Create the renderer
-	if (!ERROR_HAS_TYPE_FATAL(err))
+	if (!ERROR_HAS_Fatal(err))
 		err |= m_Renderer.Create(m_MainWindow);
 
 	// Create the objects
-	if (!ERROR_HAS_TYPE_FATAL(err))
+	if (!ERROR_HAS_Fatal(err))
 		err |= m_ObjectManager.Create();
 
 	// create the event manager for the engine events
-	if (!ERROR_HAS_TYPE_FATAL(err))
+	if (!ERROR_HAS_Fatal(err))
 		err |= m_engineEventManager.Create();
 
     return err;
@@ -164,7 +164,7 @@ eError LEngine::Quit()
 
 	SDLInterface::Error sdlerr = m_MainWindow.Destroy();
 
-	err |= SDL_ERROR_HAS_TYPE_FATAL(sdlerr) ? eError::Type_Fatal : eError::NoErr;
+	err |= SDL_ERROR_HAS_Fatal(sdlerr) ? eError::Fatal : eError::NoErr;
 	
     return err;
 }
@@ -175,7 +175,7 @@ eError LEngine::End()
 	//Quit SDL subsystems
 	SDLInterface::Error sdlerr = SDLInterface::Quit();
 
-	return SDL_ERROR_HAS_TYPE_FATAL(sdlerr) ? eError::Type_Fatal : eError::NoErr;
+	return SDL_ERROR_HAS_Fatal(sdlerr) ? eError::Fatal : eError::NoErr;
 }
 
 //===============================================================
@@ -197,15 +197,15 @@ eError LEngine::Load()
 	err |= m_myGame.Create();
 
 	// Initialise the objects
-	if( !ERROR_HAS_TYPE_FATAL( err ) )
+	if( !ERROR_HAS_Fatal( err ) )
 		err |= m_ObjectManager.Create();
 
 	// Initialse the game
-	if (!ERROR_HAS_TYPE_FATAL(err))
+	if (!ERROR_HAS_Fatal(err))
 		err |= m_myGame.Initialise();
 
 	// Initialise the objects
-	if( !ERROR_HAS_TYPE_FATAL( err ) )
+	if( !ERROR_HAS_Fatal( err ) )
 		err |= m_ObjectManager.Initialise();
 
     return err;
@@ -223,11 +223,11 @@ eError LEngine::Loop()
 
 	SDLInterface::Error sdlerr = gameThread.Spawn(this);
 
-	if (!SDL_ERROR_HAS_TYPE_FATAL(sdlerr))
+	if (!SDL_ERROR_HAS_Fatal(sdlerr))
 		sdlerr |= renderThread.Spawn(this);
 
 	// pull the sdl error in
-	err |= SDL_ERROR_HAS_TYPE_FATAL(sdlerr) ? eError::Type_Fatal : eError::NoErr;
+	err |= SDL_ERROR_HAS_Fatal(sdlerr) ? eError::Fatal : eError::NoErr;
 
 	// Spin while not quitting
 	while ( !QuitHasBeenRequested() 
@@ -251,7 +251,7 @@ eError LEngine::Loop()
 	sdlerr |= gameThread.Wait();
 
 	// pull the sdl error in
-	err |= SDL_ERROR_HAS_TYPE_FATAL(sdlerr) ? eError::Type_Fatal : eError::NoErr;
+	err |= SDL_ERROR_HAS_Fatal(sdlerr) ? eError::Fatal : eError::NoErr;
 
     return err;
 }
@@ -262,11 +262,11 @@ eError LEngine::Unload()
 	eError err = eError::NoErr;
 
 	// Destroy the objects
-	if( !ERROR_HAS_TYPE_FATAL( err ) )
+	if( !ERROR_HAS_Fatal( err ) )
 		err |= m_ObjectManager.Destroy();
 
 	// Destroy the game
-	if ( !ERROR_HAS_TYPE_FATAL( err ) )
+	if ( !ERROR_HAS_Fatal( err ) )
 		err |= m_myGame.Destroy();
 
 	// Set the games renderer back to null
@@ -332,7 +332,7 @@ eError LEngine::RenderThreadLoop()
 	unsigned int frameCounter = 0;
 
 
-	while (!ERROR_HAS_TYPE_FATAL(err)
+	while (!ERROR_HAS_Fatal(err)
 		&& !ERROR_HAS(err, eError::QuitRequest))
 	{
 		// Delay until the end of the desired frame time
@@ -386,7 +386,7 @@ eError LEngine::GameThreadLoop()
 	unsigned int frameCounter = 0;
 
 	// The main loop
-	while ( !ERROR_HAS_TYPE_FATAL( err )
+	while ( !ERROR_HAS_Fatal( err )
 		&& !ERROR_HAS( err, eError::QuitRequest ) )
 	{
 		// Delay until the end of the desired frame time

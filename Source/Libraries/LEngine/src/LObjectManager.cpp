@@ -40,7 +40,7 @@ eError LObjectManager::RegisterObject( LObject* pObjectToRegister )
 	else
 	{
 		DEBUG_ASSERT( "Trying to add an object into the object manager when it is full" );
-		toReturn = eError::Type_Fatal;
+		toReturn = eError::Fatal;
 	}
 
 	return toReturn;

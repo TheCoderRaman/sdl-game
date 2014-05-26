@@ -51,5 +51,5 @@ int main( int argc, char* args[] )
 	DEBUG_ASSERT(err == eError::NoErr);
 
 	// Return -1 as a failure
-    return ERROR_HAS_TYPE_FATAL(err) ? -1 : 0 ;    
+    return ERROR_HAS_Fatal(err) ? -1 : 0 ;    
 };

@@ -11,8 +11,8 @@
 //! Great explanation on how this can work is here 
 //! http://forum.codecall.net/topic/56591-bit-fields-flags-tutorial-with-example/
 
-#define _SDL_ERROR_WARNING		(SDLInterface::Error)0x10000000
-#define _SDL_ERROR_FATAL		(SDLInterface::Error)0x20000000
+#define _SDL_ERROR_WARNING		0x10000000
+#define _SDL_ERROR_FATAL		0x20000000
 
 namespace SDLInterface
 {
@@ -27,16 +27,16 @@ enum class Error : int
 	QuitRequest					= 0x00000001,
 
 	// Warning errors
-	Surface_create_fail			= 0x10000001,
-	Texture_create_fail			= 0x10000002,
+	Surface_create_fail			= 0x00000002 | _SDL_ERROR_WARNING,
+	Texture_create_fail			= 0x00000004 | _SDL_ERROR_WARNING,
 
 	// Fatal errors
-	Init_fail					= 0x20000002,
-	Img_init_fail				= 0x20000004,
-	Window_create_fail			= 0x20000008,
-	Eventloop_double_create		= 0x20000010,
-	Renderer_create_fail		= 0x20000011,
-	Thread_func_null			= 0x20000012,
+	Init_fail					= 0x00000008 | _SDL_ERROR_FATAL,
+	Img_init_fail				= 0x00000010 | _SDL_ERROR_FATAL,
+	Window_create_fail			= 0x00000011 | _SDL_ERROR_FATAL,
+	Eventloop_double_create		= 0x00000012 | _SDL_ERROR_FATAL,
+	Renderer_create_fail		= 0x00000014 | _SDL_ERROR_FATAL,
+	Thread_func_null			= 0x00000018 | _SDL_ERROR_FATAL,
 
 };
 
@@ -85,10 +85,10 @@ inline Error& operator &= (Error& lhs, Error rhs)
 #define SDL_ERROR_HAS( err , contains )				( (err & (contains) ) == (contains) )
 
 //! \brief Check if Error is fatal
-#define SDL_ERROR_HAS_TYPE_FATAL( err ) 			( SDL_ERROR_HAS( err , _SDL_ERROR_FATAL )			) 
+#define SDL_ERROR_HAS_Fatal( err ) 			( SDL_ERROR_HAS( err , (SDLInterface::Error)_SDL_ERROR_FATAL )			) 
 
 //! \brief Check if Error is warning
-#define SDL_ERROR_HAS_TYPE_WARNING( err ) 			( SDL_ERROR_HAS( err , _SDL_ERROR_WARNING )		)
+#define SDL_ERROR_HAS_Warning( err ) 			( SDL_ERROR_HAS( err , (SDLInterface::Error)_SDL_ERROR_WARNING )		)
 
 //! \brief Check if Error is an SDL Error
 #define SDL_REMOVE_ERR( err , toremove )			( err &= ( ~(toremove) ) )

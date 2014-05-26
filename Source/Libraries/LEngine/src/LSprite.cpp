@@ -35,7 +35,7 @@ eError LSprite::Create(LRenderer2D& renderer, const char* file)
 	// Create the texture
 	SDLInterface::Error sdlerr = m_Texture.Create(&renderer.GetBaseRenderer(), file);
 
-	return SDL_ERROR_HAS_TYPE_FATAL(sdlerr) ? eError::Type_Fatal : eError::NoErr;;
+	return SDL_ERROR_HAS_Fatal(sdlerr) ? eError::Fatal : eError::NoErr;;
 }
 
 //===============================================================
@@ -108,7 +108,7 @@ eError LSprite::Render(LRenderer2D* renderer)
 	// Render the texture
 	SDLInterface::Error err = renderer->GetBaseRenderer().RenderTexture(&m_Texture, m_srcRect, m_destRect);
 
-	return SDL_ERROR_HAS_TYPE_FATAL(err) ? eError::Type_Fatal : eError::NoErr;
+	return SDL_ERROR_HAS_Fatal(err) ? eError::Fatal : eError::NoErr;
 }
 
 //===============================================================
@@ -117,5 +117,5 @@ eError LSprite::Destroy()
 	// Destroy the texture
 	SDLInterface::Error err = m_Texture.Destroy();
 		
-	return SDL_ERROR_HAS_TYPE_FATAL(err) ? eError::Type_Fatal : eError::NoErr;
+	return SDL_ERROR_HAS_Fatal(err) ? eError::Fatal : eError::NoErr;
 }

@@ -186,7 +186,7 @@ eError LEventManager< TEventIdentifier, TEventData >::Create()
 	err |= m_QueueMutex.Create();
 	err |= m_ListenerMapMutex.Create();
 
-	return SDL_ERROR_HAS_TYPE_FATAL(err) ? eError::Type_Fatal : eError::NoErr;
+	return SDL_ERROR_HAS_Fatal(err) ? eError::Fatal : eError::NoErr;
 }
 
 //===============================================================
@@ -198,7 +198,7 @@ eError LEventManager< TEventIdentifier, TEventData >::Destroy()
 	err |= m_ListenerMapMutex.Destroy();
 	err |= m_QueueMutex.Destroy();
 
-	return SDL_ERROR_HAS_TYPE_FATAL(err) ? eError::Type_Fatal : eError::NoErr;
+	return SDL_ERROR_HAS_Fatal(err) ? eError::Fatal : eError::NoErr;
 }
 
 //===============================================================
@@ -217,7 +217,7 @@ eError LEventManager< TEventIdentifier, TEventData >::AddEventToQueue(TEvent& ev
 	{
 		// We should never go over the max event limit
 		// TODO better and more descriptive error
-		err |= eError::Type_Fatal;
+		err |= eError::Fatal;
 		DEBUG_ASSERT(0);
 	}
 
@@ -274,7 +274,7 @@ eError LEventManager< TEventIdentifier, TEventData >::PopEventOffQueue(TEvent& e
 		// Fire off a warning, or assert in debug
 		// We shouldn't be trying to pop an event if we have none left
 		// TODO better and more descriptive error
-		err |= eError::Type_Warning;
+		err |= eError::Warning;
 		DEBUG_ASSERT(0);
 	}
 
@@ -335,7 +335,7 @@ eError LEventManager< TEventIdentifier, TEventData >::FlushEvents()
 	// other possibility here would be to do a foreach on every event
 	// But that would probably need either a full lock around it, or a full copy of the queue
 	while ( ( m_Queue.size() > 0 )
-		&&	!ERROR_HAS_TYPE_FATAL(err) )
+		&&	!ERROR_HAS_Fatal(err) )
 	{
 		// Pop the event off the top of the queue
 		err |= PopEventOffQueue(event);

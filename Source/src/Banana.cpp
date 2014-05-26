@@ -36,7 +36,7 @@ eError Banana::Initialise( void )
 	eError err = eError::NoErr;
 
 	// Add said banana to the renderer
-	if( !ERROR_HAS_TYPE_FATAL( err ) )
+	if( !ERROR_HAS_Fatal( err ) )
 		err |= GetRenderer()->AddRenderable( &m_banana );
 
 	return err;

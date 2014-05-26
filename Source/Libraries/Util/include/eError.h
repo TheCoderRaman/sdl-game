@@ -10,18 +10,22 @@
 //! Great explanation on how this can work is here 
 //! http://forum.codecall.net/topic/56591-bit-fields-flags-tutorial-with-example/
 
+
+#define _ERROR_WARNING		(eError)0x10000000
+#define _ERROR_FATAL		(eError)0x20000000
+
+
 //! \brief generic eError enum for eError handling
 enum class eError : int
 {
 // 	eError name		  eError bit value for flags
 	NoErr			= 0x00000000,
 
-	// 	eError types         First two bytes for erro types
-	Type_Fatal		= 0x10000000, 	// Fatal flag
-	Type_Warning	= 0x20000000, 	// Warning flag
-
 	// 	Specific Errors     Last 4 bits for specific errors
 	QuitRequest		= 0x00000001,
+
+	Fatal			= 0x00000002,
+	Warning			= 0x00000004,
 
 	// ALL errors
 	All = 0x11111111,
@@ -73,10 +77,10 @@ inline eError& operator &= (eError& lhs, eError rhs)
 #define ERROR_HAS( err , contains )				( (err & (contains) ) == (contains) )
 
 //! \brief Check if eError is fatal
-#define ERROR_HAS_TYPE_FATAL( err ) 			( ERROR_HAS( err , eError::Type_Fatal )			) 
+#define ERROR_HAS_Fatal( err ) 			( ERROR_HAS( err , (eError)_ERROR_FATAL)			) 
 
 //! \brief Check if eError is warning
-#define ERROR_HAS_TYPE_WARNING( err ) 			( ERROR_HAS( err , eError::Type_Warning )		)
+#define ERROR_HAS_Warning( err ) 			( ERROR_HAS( err , (eError)_ERROR_WARNING )		)
 
 //! \brief Check if eError is an SDL eError
 #define REMOVE_ERR( err , toremove )			( err &= ( ~(toremove) ) )

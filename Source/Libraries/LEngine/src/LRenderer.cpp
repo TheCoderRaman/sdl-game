@@ -40,7 +40,7 @@ eError LRendereable2D::SetRenderer(LRenderer2D* parent)
 	if (m_pRenderer != nullptr)
 	{
 		// TODO: use a more specific error code here
-		err |= eError::Type_Warning;
+		err |= eError::Warning;
 	}
 
 	m_pRenderer = parent;
@@ -68,7 +68,7 @@ eError LRenderer2D::Create(SDLInterface::Window &window)
 	// Create the renderer
 	err |= m_BaseSDLRenderer.Create(&window);
 
-	return SDL_ERROR_HAS_TYPE_FATAL(err) ? eError::Type_Fatal : eError::NoErr;;
+	return SDL_ERROR_HAS_Fatal(err) ? eError::Fatal : eError::NoErr;;
 }
 
 //===============================================================
@@ -112,15 +112,15 @@ eError LRenderer2D::Render()
 #endif
 
 	// Start the render
-	if (!ERROR_HAS_TYPE_FATAL(err))
+	if (!ERROR_HAS_Fatal(err))
 		sdlerr |= m_BaseSDLRenderer.RenderStart();
 
 	// Render all the renderables
-	if (!SDL_ERROR_HAS_TYPE_FATAL(sdlerr))
+	if (!SDL_ERROR_HAS_Fatal(sdlerr))
 		err |= RenderRenderables();
 
 	// End the render
-	if (!ERROR_HAS_TYPE_FATAL(err))
+	if (!ERROR_HAS_Fatal(err))
 		sdlerr |= m_BaseSDLRenderer.RenderEnd();
 
 #if RENDER_TIMING_DEBUG
@@ -129,7 +129,7 @@ eError LRenderer2D::Render()
 #endif
 
 	// Pull in the SDL error
-	err |= SDL_ERROR_HAS_TYPE_FATAL(sdlerr) ? eError::Type_Fatal : eError::NoErr;
+	err |= SDL_ERROR_HAS_Fatal(sdlerr) ? eError::Fatal : eError::NoErr;
 
 	return err;
 }
