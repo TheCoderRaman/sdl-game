@@ -31,7 +31,7 @@ LError GameOne::Create()
 
 	err |= LGameBase::Create();
 
-	if( !ERROR_HAS_Fatal( err ) )
+	if( !LERROR_HAS_FATAL( err ) )
 		err |= m_myEventManager.Create();
 
 	// Setting up the banana object
@@ -125,14 +125,14 @@ LError GameOne::Destroy()
  	LError err = LError::NoErr;
 
 	// Remove the event handler
-	if (!ERROR_HAS_Fatal(err))
+	if (!LERROR_HAS_FATAL(err))
 		err |= m_myEventManager.RemoveHandler(eGameEventType::GameEvent_pause, &m_myEventHandler);
 
 	// Remove the banana from the renderer
-	if (!ERROR_HAS_Fatal(err))
+	if (!LERROR_HAS_FATAL(err))
 		err |= GetRenderer()->RemoveRenderable(&m_banana);
 
-	if (!ERROR_HAS_Fatal(err))
+	if (!LERROR_HAS_FATAL(err))
 		err |= m_myEventManager.Destroy();
 
 	err |= LGameBase::Destroy();

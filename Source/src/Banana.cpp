@@ -36,7 +36,7 @@ LError Banana::Initialise( void )
 	LError err = LError::NoErr;
 
 	// Add said banana to the renderer
-	if( !ERROR_HAS_Fatal( err ) )
+	if( !LERROR_HAS_FATAL( err ) )
 		err |= GetRenderer()->AddRenderable( &m_banana );
 
 	return err;

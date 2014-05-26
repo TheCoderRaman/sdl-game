@@ -75,13 +75,13 @@ inline LError& operator &= (LError& lhs, LError rhs)
 }
 
 //! \brief Check if the error contains
-#define ERROR_HAS( err , contains )				( (err & (contains) ) == (contains) )
+#define LERROR_HAS( err , contains )				( (err & (contains) ) == (contains) )
 
 //! \brief Check if LError is fatal
-#define ERROR_HAS_Fatal( err ) 			( ERROR_HAS( err , (LError)_ERROR_FATAL)			) 
+#define LERROR_HAS_FATAL( err ) 			( LERROR_HAS( err , (LError)_ERROR_FATAL)			) 
 
 //! \brief Check if LError is warning
-#define ERROR_HAS_Warning( err ) 			( ERROR_HAS( err , (LError)_ERROR_WARNING )		)
+#define LERROR_HAS_WARNING( err ) 			( LERROR_HAS( err , (LError)_ERROR_WARNING )		)
 
 //! \brief Check if LError is an SDL LError
 #define REMOVE_ERR( err , toremove )			( err &= ( ~(toremove) ) )

@@ -186,7 +186,7 @@ LError LEventManager< TEventIdentifier, TEventData >::Create()
 	err |= m_QueueMutex.Create();
 	err |= m_ListenerMapMutex.Create();
 
-	return SDL_ERROR_HAS_Fatal(err) ? LError::Fatal : LError::NoErr;
+	return SDL_ERROR_HAS_FATAL(err) ? LError::Fatal : LError::NoErr;
 }
 
 //===============================================================
@@ -198,7 +198,7 @@ LError LEventManager< TEventIdentifier, TEventData >::Destroy()
 	err |= m_ListenerMapMutex.Destroy();
 	err |= m_QueueMutex.Destroy();
 
-	return SDL_ERROR_HAS_Fatal(err) ? LError::Fatal : LError::NoErr;
+	return SDL_ERROR_HAS_FATAL(err) ? LError::Fatal : LError::NoErr;
 }
 
 //===============================================================
@@ -335,7 +335,7 @@ LError LEventManager< TEventIdentifier, TEventData >::FlushEvents()
 	// other possibility here would be to do a foreach on every event
 	// But that would probably need either a full lock around it, or a full copy of the queue
 	while ( ( m_Queue.size() > 0 )
-		&&	!ERROR_HAS_Fatal(err) )
+		&&	!LERROR_HAS_FATAL(err) )
 	{
 		// Pop the event off the top of the queue
 		err |= PopEventOffQueue(event);

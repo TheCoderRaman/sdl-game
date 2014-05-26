@@ -96,7 +96,7 @@ SDLInterface::Error SDLInterface::EventLoop::DoLoop()
 
 	// Handle events on queue
 	// End if there's a fatal error, or we've been told it's safe to quit
-	while (!(SDL_ERROR_HAS_Fatal(err) || IsLoopEnding()))
+	while (!(SDL_ERROR_HAS_FATAL(err) || IsLoopEnding()))
     {
 		// Wait for an event with a timout of 10
 		// timeout ensures we can quit

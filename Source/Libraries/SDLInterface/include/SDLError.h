@@ -85,10 +85,10 @@ inline Error& operator &= (Error& lhs, Error rhs)
 #define SDL_ERROR_HAS( err , contains )				( (err & (contains) ) == (contains) )
 
 //! \brief Check if Error is fatal
-#define SDL_ERROR_HAS_Fatal( err ) 			( SDL_ERROR_HAS( err , (SDLInterface::Error)_SDL_ERROR_FATAL )			) 
+#define SDL_ERROR_HAS_FATAL( err ) 			( SDL_ERROR_HAS( err , (SDLInterface::Error)_SDL_ERROR_FATAL )			) 
 
 //! \brief Check if Error is warning
-#define SDL_ERROR_HAS_Warning( err ) 			( SDL_ERROR_HAS( err , (SDLInterface::Error)_SDL_ERROR_WARNING )		)
+#define SDL_ERROR_HAS_WARNING( err ) 			( SDL_ERROR_HAS( err , (SDLInterface::Error)_SDL_ERROR_WARNING )		)
 
 //! \brief Check if Error is an SDL Error
 #define SDL_REMOVE_ERR( err , toremove )			( err &= ( ~(toremove) ) )
