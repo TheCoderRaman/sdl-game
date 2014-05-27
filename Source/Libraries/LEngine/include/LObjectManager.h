@@ -26,18 +26,12 @@ public:
 	//! \brief Register an object with this manager
 	LError RegisterObject( LObject* pObjectToRegister );
 
-	LError Create( void );
-
-	LError Initialise( void );
-
 	//! \brief Update the LObject's state
 	//! To be used to update the object
 	//! Not nessasarily once per frame or on a timestamp
 	LError Update( ms frameTime );
 
 	LError Reset( void );
-
-	LError Destroy( void );
 
 private:
 

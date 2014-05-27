@@ -26,18 +26,9 @@ LError Banana::Create( void )
 	m_banana.SetSize( 400, 300 );
 	m_banana.SetPos( 100, 100 );
 
-	return err;
-}
-
-LError Banana::Initialise( void )
-{ 
-	RUNTIME_LOG( "Initialising Banana..." );
-
-	LError err = LError::NoErr;
-
 	// Add said banana to the renderer
-	if( !LERROR_HAS_FATAL( err ) )
-		err |= GetRenderer()->AddRenderable( &m_banana );
+	if (!LERROR_HAS_FATAL(err))
+		err |= GetRenderer()->AddRenderable(&m_banana);
 
 	return err;
 }

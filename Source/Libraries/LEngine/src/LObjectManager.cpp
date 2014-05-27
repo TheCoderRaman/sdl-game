@@ -46,32 +46,6 @@ LError LObjectManager::RegisterObject( LObject* pObjectToRegister )
 	return toReturn;
 }
 
-LError LObjectManager::Create( void )
-{
-	for( LObject* pObj : m_vecObjects )
-	{
-		if( pObj != nullptr )
-		{
-			pObj->Create();
-		}
-	}
-
-	return LError::NoErr;
-}
-
-LError LObjectManager::Initialise( void )
-{
-	for( LObject* pObj : m_vecObjects )
-	{
-		if( pObj != nullptr )
-		{
-			pObj->Initialise();
-		}
-	}
-
-	return LError::NoErr;
-}
-
 LError LObjectManager::Update( ms frameTime )
 {
 	for( LObject* pObj : m_vecObjects )
@@ -97,17 +71,3 @@ LError LObjectManager::Reset( void )
 
 	return LError::NoErr;
 }
-
-LError LObjectManager::Destroy( void )
-{
-	for( LObject* pObj : m_vecObjects )
-	{
-		if( pObj != nullptr )
-		{
-			pObj->Destroy();
-		}
-	}
-
-	return LError::NoErr;
-}
-

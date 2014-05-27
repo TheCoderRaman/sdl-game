@@ -18,28 +18,33 @@ class LObject
 {
 public:
 
-	//! \brief Create the LObject
-	//! Memory should be allocated here 
-	//! Contructor simply for POD
-	virtual LError Create() = 0;
+	LError Update(ms elapsed);
 
-	//! \brief Initialise the LObject
-	//! Set object into it's initial state
-	virtual LError Initialise() = 0;
+	LError Reset();
 
-	//! \brief Update the LObject's state
-	//! To be used to update the object
-	//! Not nessasarily once per frame or on a timestamp
-	virtual LError Update(ms elapsed) = 0;
+	LError Activate();
 
-	//! \brief Reset the object
-	//! Should the LObject back in it's original state
-	virtual LError Reset() = 0;
+	LError Deactivate();
 
-	//! \brief Destroy the object 
-	//! Should de-allocate all memory
-	//! And perform needed LError checking
-	virtual LError Destroy() = 0;
+	inline bool IsActive();
+
+private:
+
+	virtual LError VOnUpdate(ms elapsed);
+
+	virtual LError VOnReset();
+
+	virtual LError VOnActivate();
+
+	virtual LError VOnDeactivate();
+
+	bool m_bIsActive;
 };
+
+//===============================================================
+bool LObject::IsActive()
+{
+	return m_bIsActive;
+}
 
 #endif //_LOBJECT_H_

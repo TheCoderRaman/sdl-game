@@ -138,10 +138,6 @@ LError LEngine::Init()
 	if (!LERROR_HAS_FATAL(err))
 		err |= m_Renderer.Create(m_MainWindow);
 
-	// Create the objects
-	if (!LERROR_HAS_FATAL(err))
-		err |= m_ObjectManager.Create();
-
 	// create the event manager for the engine events
 	if (!LERROR_HAS_FATAL(err))
 		err |= m_engineEventManager.Create();
@@ -196,17 +192,9 @@ LError LEngine::Load()
 	// Create the game
 	err |= m_myGame.Create();
 
-	// Initialise the objects
-	if( !LERROR_HAS_FATAL( err ) )
-		err |= m_ObjectManager.Create();
-
 	// Initialse the game
 	if (!LERROR_HAS_FATAL(err))
 		err |= m_myGame.Initialise();
-
-	// Initialise the objects
-	if( !LERROR_HAS_FATAL( err ) )
-		err |= m_ObjectManager.Initialise();
 
     return err;
 }
@@ -260,10 +248,6 @@ LError LEngine::Loop()
 LError LEngine::Unload()
 {
 	LError err = LError::NoErr;
-
-	// Destroy the objects
-	if( !LERROR_HAS_FATAL( err ) )
-		err |= m_ObjectManager.Destroy();
 
 	// Destroy the game
 	if ( !LERROR_HAS_FATAL( err ) )

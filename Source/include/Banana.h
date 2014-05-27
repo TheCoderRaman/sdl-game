@@ -18,8 +18,6 @@ public:
 
 	virtual LError Create( void );
 
-	virtual LError Initialise( void );
-
 	virtual LError Update( ms elapsed );
 
 	virtual LError Reset( void );
