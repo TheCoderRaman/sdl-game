@@ -56,6 +56,7 @@ SET(PROJECT_HEADERS
 	${CMAKE_CURRENT_SOURCE_DIR}/include/SDLRect.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/SDLError.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/SDLCommon.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/SDLAudio.h
 )
 
 set(PROJECT_SRCS 
@@ -70,6 +71,7 @@ set(PROJECT_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/src/SDLMutex.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/SDLSurface.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/SDLTexture.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/SDLAudio.cpp
 )
 
 #-----------------------------------------------------------------
