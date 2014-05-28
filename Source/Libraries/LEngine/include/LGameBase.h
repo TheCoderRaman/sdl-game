@@ -35,16 +35,6 @@ public:
 
 	LError Destroy();
 
-	//! \brief get the renderer
-	inline LRenderer2D*		GetRenderer();
-	inline LUpdateLoop*		GetObjectManager();
-	inline LInput*			GetInputManager();
-
-	//! \brief set the renderer
-	inline void SetRenderer( LRenderer2D* renderer );
-	inline void SetObjectManager( LUpdateLoop* pObjMan );
-	inline void SetInputManager( LInput* pInputManager );
-
 protected:
 
 
@@ -63,36 +53,5 @@ private:
 	LInput*			m_InputManager;
 
 };
-
-// Inline functions
-inline LRenderer2D* LGameBase::GetRenderer()
-{
-	return m_Renderer;
-}
-
-inline LUpdateLoop* LGameBase::GetObjectManager()
-{
-	return m_ObjectManager;
-}
-
-inline LInput* LGameBase::GetInputManager()
-{
-	return m_InputManager;
-}
-
-void LGameBase::SetRenderer(LRenderer2D* renderer)
-{
-	m_Renderer = renderer;
-}
-
-void LGameBase::SetObjectManager( LUpdateLoop* pObjMan )
-{
-	m_ObjectManager = pObjMan;
-}
-
-void LGameBase::SetInputManager( LInput* pInputManager )
-{
-	m_InputManager = pInputManager;
-}
 
 #endif //_LGAMEBASE_H_

@@ -38,9 +38,28 @@ union UEngineEventData
 	} pause;
 };
 
+// These functions must be anonymous to be called by a starting thread
+
+//! \brief start point for the engine thread
+int EngineThreadStart(void* data);
+
+//! \brief start point for the game thread
+int GameThreadStart(void* data);
+
+//! \brief start point for the render thread
+int RenderThreadStart(void* data);
+
 //! \brief LEngine delegate class
 class LEngine
 {
+private:
+	
+	static LEngine* s_currentEngine;
+
+public:
+
+	static LEngine& GetCurrentEngine();
+
 public:
 
 	//! \brief Constructor and destructor
@@ -71,6 +90,11 @@ public:
 
 	//! \brief request an engine quit
 	void RequestQuit();
+
+	//! \brief get the renderer
+	inline LRenderer2D&		GetRenderer();
+	inline LUpdateLoop&		GetEventLoop();
+	inline LInput&			GetInputManager();
 
 private:
 
@@ -112,8 +136,8 @@ private:
 	//! \brief The Renderer
 	LRenderer2D				m_Renderer;
 
-	//! \brief The Object Manager
-	LUpdateLoop			m_ObjectManager;
+	//! \brief The UpdateLoop
+	LUpdateLoop				m_UpdateLoop;
 
 	//! \brief The InputManager
 	LInput					m_InputManager;
@@ -128,15 +152,20 @@ private:
 	LGameBase&	m_myGame;
 };
 
-// These functions must be anonymous to be called by a starting thread
+// Inline functions
+inline LRenderer2D& LEngine::GetRenderer()
+{
+	return m_Renderer;
+}
 
-//! \brief start point for the engine thread
-int EngineThreadStart(void* data);
+inline LUpdateLoop& LEngine::GetEventLoop()
+{
+	return m_UpdateLoop;
+}
 
-//! \brief start point for the game thread
-int GameThreadStart(void* data);
-
-//! \brief start point for the render thread
-int RenderThreadStart(void* data);
+inline LInput& LEngine::GetInputManager()
+{
+	return m_InputManager;
+}
 
 #endif //_LENGINE_H_

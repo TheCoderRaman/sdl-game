@@ -29,6 +29,15 @@
 #define DESIRED_FRAMETIME_MS	ms_60FPS
 
 //===============================================================
+LEngine* LEngine::s_currentEngine = nullptr;
+
+//===============================================================
+LEngine& LEngine::GetCurrentEngine()
+{
+	return *s_currentEngine;
+}
+
+//===============================================================
 LEngine::LEngine(LGameBase& game)
 : m_bQuitting				( false )
 , m_myGame					( game )
@@ -182,13 +191,6 @@ LError LEngine::Load()
 	//Loading err flag
     LError err = LError::NoErr;
 
-	// Set the game's renderer
-	m_myGame.SetRenderer( &m_Renderer );
-	// Set the game's object manager
-	m_myGame.SetObjectManager( &m_ObjectManager );
-	// Set the game's input manager
-	m_myGame.SetInputManager( &m_InputManager );
-
 	// Create the game
 	err |= m_myGame.Create();
 
@@ -249,9 +251,6 @@ LError LEngine::Unload()
 	if ( !LERROR_HAS_FATAL( err ) )
 		err |= m_myGame.Destroy();
 
-	// Set the games renderer back to null
-	m_myGame.SetRenderer(nullptr);
-
 	return err;
 }
 
@@ -275,7 +274,7 @@ LError LEngine::Update(ms elapsed)
 	LError err = LError::NoErr;
 
 	// We need to decide when this happens
-	err |=  m_ObjectManager.Update( elapsed );
+	err |=  m_UpdateLoop.Update( elapsed );
 
 	// Update the game
 	err |= m_myGame.Update(elapsed);
