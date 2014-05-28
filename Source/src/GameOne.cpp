@@ -43,9 +43,9 @@ LError GameOne::VOnCreate()
 	m_myEventManager.AddHandler( eGameEventType::GameEvent_pause, &m_myEventHandler );
 
 	// Set up the banana
-	m_banana.SetRenderer(&LEngine::GetCurrentEngine().GetRenderer());
+	m_banana.SetRenderer(&LEngine::GetRenderer());
 	m_banana.Create();
-	LEngine::GetCurrentEngine().GetEventLoop().Register(&m_banana);
+	LEngine::GetEventLoop().Register(&m_banana);
 
  	return err;
 }
@@ -63,11 +63,11 @@ LError GameOne::VOnUpdate(ms elapsed)
 {
  	LError err = LError::NoErr;
 
-	if (LEngine::GetCurrentEngine().GetInputManager().GetButtonHeldDown(LInput::eInputType::up))
+	if (LEngine::GetInputManager().GetButtonHeldDown(LInput::eInputType::up))
 	{
 		m_banana.MoveBananaUpAFrame();
 	}
-	if (LEngine::GetCurrentEngine().GetInputManager().GetButtonJustPressed(LInput::eInputType::down))
+	if (LEngine::GetInputManager().GetButtonJustPressed(LInput::eInputType::down))
 	{
 		m_banana.MoveBananaDownAFrame();
 	}
@@ -112,7 +112,7 @@ LError GameOne::VOnDestroy()
 
 	// Remove the banana from the renderer
 	if (!LERROR_HAS_FATAL(err))
-		err |= LEngine::GetCurrentEngine().GetRenderer().RemoveRenderable(&m_banana);
+		err |= LEngine::GetRenderer().RemoveRenderable(&m_banana);
 
 	if (!LERROR_HAS_FATAL(err))
 		err |= m_myEventManager.Destroy();

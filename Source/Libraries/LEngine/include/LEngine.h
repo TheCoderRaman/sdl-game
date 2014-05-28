@@ -55,9 +55,6 @@ class LEngine
 private:
 	
 	static LEngine* s_currentEngine;
-
-public:
-
 	static LEngine& GetCurrentEngine();
 
 public:
@@ -92,9 +89,9 @@ public:
 	void RequestQuit();
 
 	//! \brief get the renderer
-	inline LRenderer2D&		GetRenderer();
-	inline LUpdateLoop&		GetEventLoop();
-	inline LInput&			GetInputManager();
+	static inline LRenderer2D&		GetRenderer();
+	static inline LUpdateLoop&		GetEventLoop();
+	static inline LInput&			GetInputManager();
 
 private:
 
@@ -155,17 +152,17 @@ private:
 // Inline functions
 inline LRenderer2D& LEngine::GetRenderer()
 {
-	return m_Renderer;
+	return GetCurrentEngine().m_Renderer;
 }
 
 inline LUpdateLoop& LEngine::GetEventLoop()
 {
-	return m_UpdateLoop;
+	return GetCurrentEngine().m_UpdateLoop;
 }
 
 inline LInput& LEngine::GetInputManager()
 {
-	return m_InputManager;
+	return GetCurrentEngine().m_InputManager;
 }
 
 #endif //_LENGINE_H_

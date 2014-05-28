@@ -48,7 +48,8 @@ LEngine::LEngine(LGameBase& game)
 //===============================================================
 LEngine::~LEngine()
 {
-
+	// stop the current engine pointing to this one
+	s_currentEngine = nullptr;
 }
 
 //===============================================================
@@ -66,6 +67,9 @@ void LEngine::RequestQuit()
 //===============================================================
 LError LEngine::Start()
 {
+	// Set the current engine to this one
+	s_currentEngine = this;
+
 	//Initialization flag
 	SDLInterface::Error err = SDLInterface::Error::None;
 
