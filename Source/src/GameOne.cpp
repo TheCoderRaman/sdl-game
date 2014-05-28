@@ -29,12 +29,9 @@ LError GameOne::VOnCreate()
 {
  	LError err = LError::NoErr;
 
+	// Set up the event handler
 	if( !LERROR_HAS_FATAL( err ) )
 		err |= m_myEventManager.Create();
-
-	// Setting up the banana object
-	m_banana.SetRenderer( GetRenderer() );
-	GetObjectManager()->Register( &m_banana );
 
 	m_myEventHandler.callbackFunction =
 		LEVENTHANDLER_CALLBACK_FUNCTION( TGameEventManager )
@@ -43,6 +40,11 @@ LError GameOne::VOnCreate()
 	};
 
 	m_myEventManager.AddHandler( eGameEventType::GameEvent_pause, &m_myEventHandler );
+
+	// Set up the banana
+	m_banana.Create();
+	m_banana.SetRenderer(GetRenderer());
+	GetObjectManager()->Register(&m_banana);
 
  	return err;
 }
@@ -103,6 +105,8 @@ LError GameOne::VOnReset()
 LError GameOne::VOnDestroy()
 {
  	LError err = LError::NoErr;
+
+	m_banana.Destroy();
 
 	// Remove the event handler
 	if (!LERROR_HAS_FATAL(err))
