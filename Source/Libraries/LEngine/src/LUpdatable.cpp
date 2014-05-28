@@ -56,12 +56,6 @@ LError LUpdatable::Deactivate()
 }
 
 //===============================================================
-LError LUpdatable::VOnUpdate(ms elapsed)
-{
-	return LError::NoErr;
-}
-
-//===============================================================
 LError LUpdatable::VOnReset()
 {
 	return LError::NoErr;
