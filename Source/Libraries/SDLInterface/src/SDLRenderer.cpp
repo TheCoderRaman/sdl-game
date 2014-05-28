@@ -167,7 +167,7 @@ SDLInterface::Error SDLInterface::Renderer::RenderTexture(Texture* tex, const Re
 		SDL_RenderCopy(m_SDL_Renderer, Helper::GetSDL_Texture(tex), &source, &destination);
 
 #ifndef WINDOWS_BUILD
-		return Error::None
+		return Error::None;
 	});
 #endif
 
