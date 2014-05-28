@@ -7,6 +7,23 @@
 #include "LObject.h"
 
 //===============================================================
+ObjectID LObject::s_currentObjectID = 0;
+
+//===============================================================
+LObject::LObject()
+: m_bIsActive ( false )
+, m_ID ( s_currentObjectID++ )
+{
+
+}
+
+//===============================================================
+LObject::~LObject()
+{
+	
+}
+
+//===============================================================
 LError LObject::Update(ms elapsed)
 {
 	// Update if we're active
