@@ -58,7 +58,7 @@ void Banana::MoveBananaRightAFrame( void )
 	m_banana.SetPos( m_banana.GetXPos() + 20, m_banana.GetYPos() );
 }
 
-LError Banana::Update( ms elapsed )
+LError Banana::VOnUpdate( ms elapsed )
 {
 	m_iTimeElapsed += (int) elapsed / 1.5;
 
@@ -79,7 +79,7 @@ LError Banana::Render( LRenderer2D* renderer )
 	return LError::NoErr;
 }
 
-LError Banana::Reset( void )
+LError Banana::VOnReset(void)
 { 
 	RUNTIME_LOG( "Resetting Banana..." );
 

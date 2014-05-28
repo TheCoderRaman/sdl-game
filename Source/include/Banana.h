@@ -16,15 +16,10 @@ class Banana : public LUpdatable, public LRendereable2D
 
 public:
 
-	virtual LError Create( void );
+	LError Create(void);
+	LError Destroy(void);
 
-	virtual LError Update( ms elapsed );
-
-	virtual LError Reset( void );
-
-	virtual LError Destroy( void );
-
-	virtual LError Render( LRenderer2D* renderer );
+	virtual LError Render(LRenderer2D* renderer);
 
 	void MoveBananaUpAFrame();
 	void MoveBananaLeftAFrame();
@@ -34,6 +29,13 @@ public:
 	void SetPos( int x, int y );
 
 private:
+
+
+	virtual LError VOnUpdate(ms elapsed);
+
+	virtual LError VOnReset(void);
+
+
 
 	//! \brief The Banana
 	LSprite		m_banana;

@@ -9,7 +9,6 @@
 #define _LGAMEBASE_H_
 
 #include "types.h"
-#include "LUpdatable.h"
 #include "LUpdateLoop.h"
 #include "LRenderer.h"
 #include "LInput.h"
