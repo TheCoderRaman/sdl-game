@@ -42,8 +42,8 @@ LError GameOne::VOnCreate()
 	m_myEventManager.AddHandler( eGameEventType::GameEvent_pause, &m_myEventHandler );
 
 	// Set up the banana
-	m_banana.Create();
 	m_banana.SetRenderer(GetRenderer());
+	m_banana.Create();
 	GetObjectManager()->Register(&m_banana);
 
  	return err;
