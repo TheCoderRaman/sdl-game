@@ -36,7 +36,7 @@ LError GameOne::Create()
 
 	// Setting up the banana object
 	m_banana.SetRenderer( GetRenderer() );
-	GetObjectManager()->RegisterObject( &m_banana );
+	GetObjectManager()->Register( &m_banana );
 
 	m_myEventHandler.callbackFunction =
 		LEVENTHANDLER_CALLBACK_FUNCTION( TGameEventManager )
@@ -45,16 +45,6 @@ LError GameOne::Create()
 	};
 
 	m_myEventManager.AddHandler( eGameEventType::GameEvent_pause, &m_myEventHandler );
-
- 	return err;
-}
-
-//========================================================
-LError GameOne::Initialise()
-{
- 	LError err = LError::NoErr;
-
-	err |= LGameBase::Initialise();
 
  	return err;
 }

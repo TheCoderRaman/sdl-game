@@ -5,8 +5,8 @@
 //!
 //! Header for LUpdatable.cpp
 //!
-#ifndef _LOBJECT_H_
-#define _LOBJECT_H_
+#ifndef _LUPDATABLE_H_
+#define _LUPDATABLE_H_
 
 #include "types.h"
 #include "LError.h"
@@ -80,4 +80,4 @@ ObjectID LUpdatable::GetID()
 	return m_ID;
 }
 
-#endif //_LOBJECT_H_
+#endif //_LUPDATABLE_H_

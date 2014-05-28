@@ -28,11 +28,10 @@ public:
 
 	//! \brief Virtual methods, all BASE methods must call down into these
 	virtual LError Create();
-	virtual LError Initialise();
+	virtual LError Reset();
 	virtual LError PreUpdate();
 	virtual LError Update(ms elapsed);
 	virtual LError PostUpdate();
-	virtual LError Reset();
 	virtual LError Destroy();
 
 	//! \brief get the renderer

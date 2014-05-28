@@ -45,14 +45,14 @@ public:
 	~GameOne();
 
 	// Inherited methods as defined in LUpdatable.h
-	virtual LError Create();
-	virtual LError Initialise();
-	virtual LError PreUpdate();
-	virtual LError Update(ms elapsed);
-	virtual LError PostUpdate();
-	virtual LError Reset();
-	virtual LError Destroy();
+	virtual LError Create			(void) override;
+	virtual LError PreUpdate		(void) override;
+	virtual LError Update			(ms elapsed) override;
+	virtual LError PostUpdate		(void) override;
+	virtual LError Reset			(void) override;
+	virtual LError Destroy			(void) override;
 
+	//! \brief internal event handler
 	LError HandleEvent( const TGameEventManager::TEvent* event );
 
 private:

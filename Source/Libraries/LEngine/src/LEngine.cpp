@@ -192,10 +192,6 @@ LError LEngine::Load()
 	// Create the game
 	err |= m_myGame.Create();
 
-	// Initialse the game
-	if (!LERROR_HAS_FATAL(err))
-		err |= m_myGame.Initialise();
-
     return err;
 }
 

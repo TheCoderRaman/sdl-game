@@ -29,13 +29,6 @@ LError LGameBase::Create()
 }
 
 //===============================================================
-LError LGameBase::Initialise()
-{
-	LError err = LError::NoErr;
-	return err;
-}
-
-//===============================================================
 LError LGameBase::PreUpdate()
 {
 	LError err = LError::NoErr;
