@@ -1,16 +1,16 @@
-//! \file LObject.cpp
+//! \file LUpdatable.cpp
 //!
 //! \author  Marc Di luzio
 //! \date    May 2014
 //!
 //!
-#include "LObject.h"
+#include "LUpdatable.h"
 
 //===============================================================
-ObjectID LObject::s_currentObjectID = 0;
+ObjectID LUpdatable::s_currentObjectID = 0;
 
 //===============================================================
-LObject::LObject()
+LUpdatable::LUpdatable()
 : m_bIsActive ( false )
 , m_ID ( s_currentObjectID++ )
 {
@@ -18,13 +18,13 @@ LObject::LObject()
 }
 
 //===============================================================
-LObject::~LObject()
+LUpdatable::~LUpdatable()
 {
 	
 }
 
 //===============================================================
-LError LObject::Update(ms elapsed)
+LError LUpdatable::Update(ms elapsed)
 {
 	// Update if we're active
 	if (IsActive())
@@ -38,43 +38,43 @@ LError LObject::Update(ms elapsed)
 }
 
 //===============================================================
-LError LObject::Reset()
+LError LUpdatable::Reset()
 {
 	return VOnReset();
 }
 
 //===============================================================
-LError LObject::Activate()
+LError LUpdatable::Activate()
 {
 	return VOnActivate();
 }
 
 //===============================================================
-LError LObject::Deactivate()
+LError LUpdatable::Deactivate()
 {
 	return VOnDeactivate();
 }
 
 //===============================================================
-LError LObject::VOnUpdate(ms elapsed)
+LError LUpdatable::VOnUpdate(ms elapsed)
 {
 	return LError::NoErr;
 }
 
 //===============================================================
-LError LObject::VOnReset()
+LError LUpdatable::VOnReset()
 {
 	return LError::NoErr;
 }
 
 //===============================================================
-LError LObject::VOnActivate()
+LError LUpdatable::VOnActivate()
 {
 	return LError::NoErr;
 }
 
 //===============================================================
-LError LObject::VOnDeactivate()
+LError LUpdatable::VOnDeactivate()
 {
 	return LError::NoErr;
 }

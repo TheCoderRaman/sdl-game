@@ -1,9 +1,9 @@
-//! \file LObject.h
+//! \file LUpdatable.h
 //!
 //! \author  Marc Di luzio
 //! \date    April 2014
 //!
-//! Header for LObject.cpp
+//! Header for LUpdatable.cpp
 //!
 #ifndef _LOBJECT_H_
 #define _LOBJECT_H_
@@ -14,17 +14,17 @@
 //! \brief type to identify objects by ID
 typedef int ObjectID;
 
-//! \brief Base LObject interface type
+//! \brief Base LUpdatable interface type
 //! Not currently thread-safe at all
-class LObject 
+class LUpdatable 
 {
 public:
 
 	//! \brief Default contructor
-	LObject();
+	LUpdatable();
 
 	//! \brief Default destructor
-	virtual ~LObject();
+	virtual ~LUpdatable();
 
 	//! \brief Update the object to a new state based on a timestamp
 	LError Update(ms elapsed);
@@ -69,13 +69,13 @@ private:
 };
 
 //===============================================================
-bool LObject::IsActive()
+bool LUpdatable::IsActive()
 {
 	return m_bIsActive;
 }
 
 //===============================================================
-ObjectID LObject::GetID()
+ObjectID LUpdatable::GetID()
 {
 	return m_ID;
 }

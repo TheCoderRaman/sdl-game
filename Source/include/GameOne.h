@@ -9,7 +9,7 @@
 #define _GAMEONE_H_
 
 #include "LGameBase.h"
-#include "LObject.h"
+#include "LUpdatable.h"
 #include "LSprite.h"
 
 #include "Banana.h"
@@ -44,7 +44,7 @@ public:
 	GameOne();
 	~GameOne();
 
-	// Inherited methods as defined in LObject.h
+	// Inherited methods as defined in LUpdatable.h
 	virtual LError Create();
 	virtual LError Initialise();
 	virtual LError PreUpdate();

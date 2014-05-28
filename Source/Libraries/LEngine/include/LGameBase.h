@@ -9,8 +9,8 @@
 #define _LGAMEBASE_H_
 
 #include "types.h"
-#include "LObject.h"
-#include "LObjectManager.h"
+#include "LUpdatable.h"
+#include "LUpdateLoop.h"
 #include "LRenderer.h"
 #include "LInput.h"
 #include "LError.h"
@@ -37,12 +37,12 @@ public:
 
 	//! \brief get the renderer
 	inline LRenderer2D*		GetRenderer();
-	inline LObjectManager*	GetObjectManager();
+	inline LUpdateLoop*	GetObjectManager();
 	inline LInput*			GetInputManager();
 
 	//! \brief set the renderer
 	inline void SetRenderer( LRenderer2D* renderer );
-	inline void SetObjectManager( LObjectManager* pObjMan );
+	inline void SetObjectManager( LUpdateLoop* pObjMan );
 	inline void SetInputManager( LInput* pInputManager );
 
 protected:
@@ -52,7 +52,7 @@ private:
 
 	//! \brief pointer to the renderer
 	LRenderer2D*	m_Renderer;
-	LObjectManager* m_ObjectManager;
+	LUpdateLoop* m_ObjectManager;
 	LInput*			m_InputManager;
 
 };
@@ -63,7 +63,7 @@ inline LRenderer2D* LGameBase::GetRenderer()
 	return m_Renderer;
 }
 
-inline LObjectManager* LGameBase::GetObjectManager()
+inline LUpdateLoop* LGameBase::GetObjectManager()
 {
 	return m_ObjectManager;
 }
@@ -78,7 +78,7 @@ void LGameBase::SetRenderer(LRenderer2D* renderer)
 	m_Renderer = renderer;
 }
 
-void LGameBase::SetObjectManager( LObjectManager* pObjMan )
+void LGameBase::SetObjectManager( LUpdateLoop* pObjMan )
 {
 	m_ObjectManager = pObjMan;
 }

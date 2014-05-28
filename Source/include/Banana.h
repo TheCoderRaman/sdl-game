@@ -5,13 +5,13 @@
 //!
 //! Main game class, responsible for managing all game specific stuff
 //!
-#include "LObject.h"
+#include "LUpdatable.h"
 #include "LRenderer.h"
 #include "LSprite.h"
 
 #include "LError.h"
 
-class Banana : public LObject, public LRendereable2D
+class Banana : public LUpdatable, public LRendereable2D
 {
 
 public:

@@ -13,7 +13,7 @@
 #include "SDLWindow.h"
 #include "SDLThread.h"
 
-#include "LObjectManager.h"
+#include "LUpdateLoop.h"
 #include "LInput.h"
 #include "LRenderer.h"
 #include "LGameBase.h"
@@ -113,7 +113,7 @@ private:
 	LRenderer2D				m_Renderer;
 
 	//! \brief The Object Manager
-	LObjectManager			m_ObjectManager;
+	LUpdateLoop			m_ObjectManager;
 
 	//! \brief The InputManager
 	LInput					m_InputManager;

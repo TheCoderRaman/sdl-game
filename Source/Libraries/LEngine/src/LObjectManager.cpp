@@ -1,35 +1,35 @@
-//! \file LObjectManager.cpp
+//! \file LUpdateLoop.cpp
 //!
 //! \author Owain Davies
 //! \date    May 2014
 //!
-//! Stub for LObjectManager.cpp
+//! Stub for LUpdateLoop.cpp
 //!
 
-#include "LObjectManager.h"
-#include "LObject.h"
+#include "LUpdateLoop.h"
+#include "LUpdatable.h"
 
 #include "LError.h"
 #include "debug.h"
 
-LObjectManager::LObjectManager( void )
+LUpdateLoop::LUpdateLoop( void )
 {
 	// Ensure that this vector is reserved
 	m_vecObjects.reserve( mk_iMaxObjects );
 
 	// Setting all pointers to be null
-	for( LObject* pObj : m_vecObjects )
+	for( LUpdatable* pObj : m_vecObjects )
 	{
 		pObj = nullptr;
 	}
 }
 
-LObjectManager::~LObjectManager( void )
+LUpdateLoop::~LUpdateLoop( void )
 {
 
 }
 
-LError LObjectManager::RegisterObject( LObject* pObjectToRegister )
+LError LUpdateLoop::RegisterObject( LUpdatable* pObjectToRegister )
 {
 	LError toReturn = LError::NoErr;
 
@@ -46,9 +46,9 @@ LError LObjectManager::RegisterObject( LObject* pObjectToRegister )
 	return toReturn;
 }
 
-LError LObjectManager::Update( ms frameTime )
+LError LUpdateLoop::Update( ms frameTime )
 {
-	for( LObject* pObj : m_vecObjects )
+	for( LUpdatable* pObj : m_vecObjects )
 	{
 		if( pObj != nullptr )
 		{
@@ -59,9 +59,9 @@ LError LObjectManager::Update( ms frameTime )
 	return LError::NoErr;
 }
 
-LError LObjectManager::Reset( void )
+LError LUpdateLoop::Reset( void )
 {
-	for( LObject* pObj : m_vecObjects )
+	for( LUpdatable* pObj : m_vecObjects )
 	{
 		if( pObj != nullptr )
 		{

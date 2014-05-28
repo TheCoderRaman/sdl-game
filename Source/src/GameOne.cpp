@@ -7,7 +7,7 @@
 //!
 #include "GameOne.h"
 
-#include "LObjectManager.h"
+#include "LUpdateLoop.h"
 #include "LInput.h"
 
 #include "LError.h"
