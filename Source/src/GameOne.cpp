@@ -119,8 +119,6 @@ LError GameOne::VOnDestroy()
 	if (!LERROR_HAS_FATAL(err))
 		err |= m_myEventManager.Destroy();
 
-	err |= LGameBase::Destroy();
-
  	return err;
 }
 
