@@ -18,6 +18,9 @@ LError Banana::Create( void )
 
 	m_iTimeElapsed = 100;
 
+	// Must have renderer before creating the sprite
+	DEBUG_ASSERT(GetRenderer());
+
 	// Create the banana
 	err |= m_banana.Create( *GetRenderer(), "Media/banana.png" );
 
