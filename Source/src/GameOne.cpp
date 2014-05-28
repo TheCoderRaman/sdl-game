@@ -29,8 +29,6 @@ LError GameOne::VOnCreate()
 {
  	LError err = LError::NoErr;
 
-	err |= LGameBase::Create();
-
 	if( !LERROR_HAS_FATAL( err ) )
 		err |= m_myEventManager.Create();
 
@@ -54,8 +52,6 @@ LError GameOne::VOnPreUpdate()
 {
 	LError err = LError::NoErr;
 
-	err |= LGameBase::PreUpdate();
-
 	return err;
 }
 
@@ -63,8 +59,6 @@ LError GameOne::VOnPreUpdate()
 LError GameOne::VOnUpdate(ms elapsed)
 {
  	LError err = LError::NoErr;
-
-	err |= LGameBase::Update(elapsed);
 
 	if( LGameBase::GetInputManager() )
 	{
@@ -94,8 +88,6 @@ LError GameOne::VOnPostUpdate()
 {
 	LError err = LError::NoErr;
 
-	err |= LGameBase::PostUpdate();
-
 	return err;
 }
 
@@ -103,8 +95,6 @@ LError GameOne::VOnPostUpdate()
 LError GameOne::VOnReset()
 {
  	LError err = LError::NoErr;
-
-	err |= LGameBase::Reset();
 
  	return err;
 }
