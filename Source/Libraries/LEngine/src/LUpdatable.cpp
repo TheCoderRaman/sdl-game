@@ -7,12 +7,12 @@
 #include "LUpdatable.h"
 
 //===============================================================
-ObjectID LUpdatable::s_currentObjectID = 0;
+ObjectID LUpdatable::s_updatableID = 0;
 
 //===============================================================
 LUpdatable::LUpdatable()
 : m_bIsActive ( false )
-, m_ID ( s_currentObjectID++ )
+, m_ID ( s_updatableID++ )
 {
 
 }

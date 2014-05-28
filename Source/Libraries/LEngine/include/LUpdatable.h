@@ -62,7 +62,7 @@ private:
 	bool m_bIsActive;
 
 	//! \brief static variable for current object ID
-	static ObjectID s_currentObjectID;
+	static ObjectID s_updatableID;
 
 	//! \brief the object's unique ID
 	ObjectID m_ID;
