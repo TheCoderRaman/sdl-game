@@ -24,8 +24,8 @@
 //! \brief type define for engine events
 enum class EEngineEventType
 {
-	EEngineEvent_pause,
-	EEngineEvent_num
+	Pause,
+	Num
 };
 
 //! \brief typpe define for the data in engine events
