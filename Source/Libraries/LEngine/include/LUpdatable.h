@@ -47,7 +47,7 @@ public:
 private:
 
 	//! \brief virtual update delegate method to be overloaded
-	virtual LError VOnUpdate(ms elapsed);
+	virtual LError VOnUpdate(ms elapsed) = 0;
 
 	//! \brief virtual reset delegate method to be overloaded
 	virtual LError VOnReset();
