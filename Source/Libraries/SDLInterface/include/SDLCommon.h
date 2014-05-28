@@ -24,6 +24,7 @@ namespace SDLInterface
 	class	Thread;
 	class	Timer;
 	class	Window;
+	class   Audio;
 
 }
 

@@ -10,6 +10,7 @@
 
 #include "SDLCommon.h"
 
+
 // Forward declare SDL structs
 struct SDL_AudioSpec;
 
@@ -25,7 +26,6 @@ namespace SDLInterface
 		// Constructor and destructor
 		Audio();
 		~Audio();
-
 
 	private:
 

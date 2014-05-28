@@ -12,6 +12,7 @@
 
 #include "SDLWindow.h"
 #include "SDLThread.h"
+#include "SDLAudio.h"
 
 #include "LObjectManager.h"
 #include "LInput.h"
@@ -108,6 +109,8 @@ private:
 
 	//! \brief The main window
 	SDLInterface::Window	m_MainWindow;
+
+	SDLInterface::Audio		m_butts;
 
 	//! \brief The Renderer
 	LRenderer2D				m_Renderer;
