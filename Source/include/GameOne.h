@@ -44,19 +44,20 @@ public:
 	GameOne();
 	~GameOne();
 
-	// Inherited methods as defined in LUpdatable.h
-	virtual LError Create			(void) override;
-	virtual LError PreUpdate		(void) override;
-	virtual LError Update			(ms elapsed) override;
-	virtual LError PostUpdate		(void) override;
-	virtual LError Reset			(void) override;
-	virtual LError Destroy			(void) override;
-
-	//! \brief internal event handler
-	LError HandleEvent( const TGameEventManager::TEvent* event );
-
 private:
 
+	// Inherited methods as defined in LUpdatable.h
+	virtual LError VOnCreate(void) override;
+	virtual LError VOnPreUpdate(void) override;
+	virtual LError VOnUpdate(ms elapsed) override;
+	virtual LError VOnPostUpdate(void) override;
+	virtual LError VOnReset(void) override;
+	virtual LError VOnDestroy(void) override;
+
+	//! \brief internal event handler
+	LError HandleEvent(const TGameEventManager::TEvent* event);
+
+	//! \brief the Banana
 	Banana m_banana;
 
 	//! \brief The Game Event Manager

@@ -26,17 +26,19 @@ public:
 	//! \brief destructor
 	~LGameBase();
 
-	//! \brief Virtual methods, all BASE methods must call down into these
-	virtual LError Create();
-	virtual LError Reset();
-	virtual LError PreUpdate();
-	virtual LError Update(ms elapsed);
-	virtual LError PostUpdate();
-	virtual LError Destroy();
+	//! public interfact methods
+	LError Create();
+	LError Reset();
+
+	LError PreUpdate();
+	LError Update(ms elapsed);
+	LError PostUpdate();
+
+	LError Destroy();
 
 	//! \brief get the renderer
 	inline LRenderer2D*		GetRenderer();
-	inline LUpdateLoop*	GetObjectManager();
+	inline LUpdateLoop*		GetObjectManager();
 	inline LInput*			GetInputManager();
 
 	//! \brief set the renderer
@@ -49,9 +51,16 @@ protected:
 
 private:
 
+	virtual LError VOnCreate() = 0;
+	virtual LError VOnReset() = 0;
+	virtual LError VOnPreUpdate() = 0;
+	virtual LError VOnUpdate(ms elapsed) = 0;
+	virtual LError VOnPostUpdate() = 0;
+	virtual LError VOnDestroy() = 0;
+
 	//! \brief pointer to the renderer
 	LRenderer2D*	m_Renderer;
-	LUpdateLoop* m_ObjectManager;
+	LUpdateLoop*	m_ObjectManager;
 	LInput*			m_InputManager;
 
 };

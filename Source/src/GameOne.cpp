@@ -25,7 +25,7 @@ GameOne::~GameOne()
 }
 
 //========================================================
-LError GameOne::Create()
+LError GameOne::VOnCreate()
 {
  	LError err = LError::NoErr;
 
@@ -50,7 +50,7 @@ LError GameOne::Create()
 }
 
 //========================================================
-LError GameOne::PreUpdate()
+LError GameOne::VOnPreUpdate()
 {
 	LError err = LError::NoErr;
 
@@ -60,7 +60,7 @@ LError GameOne::PreUpdate()
 }
 
 //========================================================
-LError GameOne::Update(ms elapsed)
+LError GameOne::VOnUpdate(ms elapsed)
 {
  	LError err = LError::NoErr;
 
@@ -90,7 +90,7 @@ LError GameOne::Update(ms elapsed)
 }
 
 //========================================================
-LError GameOne::PostUpdate()
+LError GameOne::VOnPostUpdate()
 {
 	LError err = LError::NoErr;
 
@@ -100,7 +100,7 @@ LError GameOne::PostUpdate()
 }
 
 //========================================================
-LError GameOne::Reset()
+LError GameOne::VOnReset()
 {
  	LError err = LError::NoErr;
 
@@ -110,7 +110,7 @@ LError GameOne::Reset()
 }
 
 //========================================================
-LError GameOne::Destroy()
+LError GameOne::VOnDestroy()
 {
  	LError err = LError::NoErr;
 
