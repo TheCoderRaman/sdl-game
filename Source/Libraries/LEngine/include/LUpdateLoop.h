@@ -16,6 +16,7 @@
 //! \brief Manages all LUpdatable types
 //! Designed as a base type for all LEngine parts
 //! Is a subclass of LUpdatable to gain its interface.
+//! \Warning Adding and Removing objects WHILE updating them is not currently thread safe
 class LUpdateLoop 
 	: public LUpdatable
 {

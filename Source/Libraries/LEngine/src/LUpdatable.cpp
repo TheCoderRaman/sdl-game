@@ -11,8 +11,9 @@ ObjectID LUpdatable::s_updatableID = 0;
 
 //===============================================================
 LUpdatable::LUpdatable()
-: m_bIsActive ( false )
-, m_ID ( s_updatableID++ )
+	: m_uCurrentStatus(LUpdateableStatus::Inactive)
+	, m_uNextStatus(LUpdateableStatus::Active)
+	, m_ID(s_updatableID++)
 {
 
 }
@@ -26,8 +27,10 @@ LUpdatable::~LUpdatable()
 //===============================================================
 LError LUpdatable::Update(ms elapsed)
 {
+	ProgressStatus();
+
 	// Update if we're active
-	if (IsActive())
+	if (GetCurrentStatus() == LUpdateableStatus::Active)
 	{
 		return VOnUpdate(elapsed);
 	}
@@ -46,12 +49,14 @@ LError LUpdatable::Reset()
 //===============================================================
 LError LUpdatable::Activate()
 {
+	m_uCurrentStatus = LUpdateableStatus::Active;
 	return VOnActivate();
 }
 
 //===============================================================
 LError LUpdatable::Deactivate()
 {
+	m_uCurrentStatus = LUpdateableStatus::Inactive;
 	return VOnDeactivate();
 }
 
@@ -71,4 +76,21 @@ LError LUpdatable::VOnActivate()
 LError LUpdatable::VOnDeactivate()
 {
 	return LError::NoErr;
+}
+
+//===============================================================
+void LUpdatable::ProgressStatus()
+{
+	if (m_uCurrentStatus != m_uNextStatus)
+	{
+		switch (m_uNextStatus)
+		{
+		case LUpdateableStatus::Active:
+			Activate();
+			break;
+		case LUpdateableStatus::Inactive:
+			Deactivate();
+			break;
+		}
+	}
 }

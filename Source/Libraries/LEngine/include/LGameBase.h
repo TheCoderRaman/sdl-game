@@ -22,35 +22,50 @@ public:
 
 	//! \brief Constructor
 	LGameBase();
-	//! \brief destructor
-	~LGameBase();
 
-	//! public interfact methods
+	//! \brief Create the game
 	LError Create();
+
+	//! \brief Reset the game to initial state
 	LError Reset();
 
-	LError PreUpdate();
-	LError Update(ms elapsed);
-	LError PostUpdate();
+		//! \brief called just before updating
+		LError PreUpdate();
 
+		//! \brief update the game state
+		LError Update(ms elapsed);
+
+		//! \brief called immediately after updating
+		LError PostUpdate();
+
+	//! \brief destroy the game
 	LError Destroy();
+
+	//! \brief Destructor
+	~LGameBase();
 
 protected:
 
 
 private:
 
+	//! \brief Method called on creation of the game
 	virtual LError VOnCreate() = 0;
-	virtual LError VOnReset() = 0;
-	virtual LError VOnPreUpdate() = 0;
-	virtual LError VOnUpdate(ms elapsed) = 0;
-	virtual LError VOnPostUpdate() = 0;
-	virtual LError VOnDestroy() = 0;
 
-	//! \brief pointer to the renderer
-	LRenderer2D*	m_Renderer;
-	LUpdateLoop*	m_ObjectManager;
-	LInput*			m_InputManager;
+	//! \brief Method called upon reseting the game
+	virtual LError VOnReset() = 0;
+
+		//! \brief Method called just before an update
+		virtual LError VOnPreUpdate() = 0;
+
+		//! \brief Method called to update game state
+		virtual LError VOnUpdate(ms elapsed) = 0;
+
+		//! \brief Method called just after game update
+		virtual LError VOnPostUpdate() = 0;
+
+	//! \brief Method called on unloading the game
+	virtual LError VOnDestroy() = 0;
 
 };
 

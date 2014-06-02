@@ -12,7 +12,10 @@
 //! http://forum.codecall.net/topic/56591-bit-fields-flags-tutorial-with-example/
 
 
+//! Warning flag
 #define _ERROR_WARNING		(LError)0x10000000
+
+//! Fatal flag
 #define _ERROR_FATAL		(LError)0x20000000
 
 

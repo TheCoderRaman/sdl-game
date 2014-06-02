@@ -14,6 +14,14 @@
 //! \brief type to identify objects by ID
 typedef int ObjectID;
 
+//! \brief enum to track current state
+enum class LUpdateableStatus
+	: char
+{
+	Active,
+	Inactive
+};
+
 //! \brief Base LUpdatable interface type
 //! Not currently thread-safe at all
 class LUpdatable 
@@ -32,19 +40,23 @@ public:
 	//! \brief Reset the object to it's initial state
 	LError Reset();
 
-	//! \brief Activate the object
-	LError Activate();
+	//! \brief Check if the updatable is currently active
+	inline LUpdateableStatus GetCurrentStatus() const;
 
-	//! \brief De-activate the object
-	LError Deactivate();
-
-	//! \brief Check if the object is currently active
-	inline bool IsActive();
+	//! \brief set the new status of the updatable
+	//! \return returns the current state of the object
+	inline LUpdateableStatus SetNextStatus(LUpdateableStatus stat);
 
 		//! \brief Check if the object is currently active
 	inline ObjectID GetID();
 
 private:
+
+	//! \brief Activate the object
+	LError Activate();
+
+	//! \brief De-activate the object
+	LError Deactivate();
 
 	//! \brief virtual update delegate method to be overloaded
 	virtual LError VOnUpdate(ms elapsed) = 0;
@@ -58,8 +70,14 @@ private:
 	//! \brief virtual deactivate delegate method to be overloaded
 	virtual LError VOnDeactivate();
 
-	//! \brief if the object is currently active
-	bool m_bIsActive;
+	//! \brief progress the objects status based on requested state
+	void ProgressStatus();
+
+	//! \brief if the updatable is currently active
+	LUpdateableStatus m_uCurrentStatus;
+
+	//! \brief the status for the updatable to reach
+	LUpdateableStatus m_uNextStatus;
 
 	//! \brief static variable for current object ID
 	static ObjectID s_updatableID;
@@ -69,10 +87,18 @@ private:
 };
 
 //===============================================================
-bool LUpdatable::IsActive()
+LUpdateableStatus LUpdatable::GetCurrentStatus() const
 {
-	return m_bIsActive;
+	return m_uCurrentStatus;
 }
+
+//===============================================================
+LUpdateableStatus LUpdatable::SetNextStatus(LUpdateableStatus stat)
+{
+	m_uNextStatus = stat;
+	return m_uCurrentStatus;
+}
+
 
 //===============================================================
 ObjectID LUpdatable::GetID()

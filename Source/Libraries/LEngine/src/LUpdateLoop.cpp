@@ -27,14 +27,19 @@ LUpdateLoop::~LUpdateLoop( void )
 //===============================================================
 LError LUpdateLoop::Register(LUpdatable* pToRegister)
 {
-	m_vecObjects.push_back(pToRegister);
+	// Ensure we're not Registering a null object
+	DEBUG_ASSERT(pToRegister != nullptr);
 
+	m_vecObjects.push_back(pToRegister);
 	return LError::NoErr;
 }
 
 //===============================================================
 LError LUpdateLoop::UnRegister(LUpdatable* pToRegister)
 {
+	// Ensure we're not UnRegistering a null object
+	DEBUG_ASSERT(pToRegister != nullptr);
+
 	m_vecObjects.remove(pToRegister);
 	return LError::NoErr;
 }
@@ -46,7 +51,6 @@ LError LUpdateLoop::VOnUpdate(ms frameTime)
 	{
 		// Ensure we're not updating a null object
 		DEBUG_ASSERT(pObj != nullptr);
-
 		pObj->Update( frameTime );
 	}
 

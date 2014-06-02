@@ -54,7 +54,10 @@ class LEngine
 {
 private:
 	
+	//! \brief pointer to the current LEngine
 	static LEngine* s_currentEngine;
+
+	//! \brief accessor for the current LEngine
 	static LEngine& GetCurrentEngine();
 
 public:
@@ -149,17 +152,22 @@ private:
 	LGameBase&	m_myGame;
 };
 
+//===============================================================
 // Inline functions
+
+//===============================================================
 inline LRenderer2D& LEngine::GetRenderer()
 {
 	return GetCurrentEngine().m_Renderer;
 }
 
+//===============================================================
 inline LUpdateLoop& LEngine::GetEventLoop()
 {
 	return GetCurrentEngine().m_UpdateLoop;
 }
 
+//===============================================================
 inline LInput& LEngine::GetInputManager()
 {
 	return GetCurrentEngine().m_InputManager;
