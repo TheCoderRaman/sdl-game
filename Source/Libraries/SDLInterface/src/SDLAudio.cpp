@@ -6,38 +6,39 @@
 //! This holds the interface between SDL Audio and LEngine audio systems
 //!	
 
+#include "SDL_mixer.h"
+#include <stdint.h>
+
 #include "SDLAudio.h"
 #include "debug.h"
 
-#include "SDL.h"
-
-void fill_audio( void* userData, Uint8* stream, int length );
-
-void fill_audio( void* userData, Uint8* stream, int length )
-{
-
-}
 
 SDLInterface::Audio::Audio()
 {
-	my_sdl_audiospec = new SDL_AudioSpec();
-
-	my_sdl_audiospec->freq		= 22050;
-	my_sdl_audiospec->format	= AUDIO_S16;
-	my_sdl_audiospec->channels	= 2;    /* 1 = mono, 2 = stereo */
-	my_sdl_audiospec->samples	= 1024;  /* Good low-latency value for callback */
-	my_sdl_audiospec->callback	= fill_audio;
-	my_sdl_audiospec->userdata	= NULL;
-
-	if( SDL_OpenAudio( my_sdl_audiospec, NULL ) < 0 )
+	if( -1 == Mix_OpenAudio( MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024 ) )
 	{
-		DEBUG_LOG( "Gah!" );
-	}
-	else
-	{
-		DEBUG_LOG( "Whee!" );
+		DEBUG_LOG( "Errors: %s", Mix_GetError() );
 	}
 
+	Mix_Init( MIX_INIT_FLAC | MIX_INIT_MP3 | MIX_INIT_OGG );
+
+	Mix_Music* music;
+
+	music = Mix_LoadMUS( "Media/music.mp3" );
+
+	if( music == NULL )
+	{
+		DEBUG_LOG( "butts\n" );
+	}
+
+	if( Mix_PlayingMusic() == 0 )
+	{
+		//Play the music
+		if( -1 == Mix_PlayMusic( music, -1 ) )
+		{
+			DEBUG_LOG( "Errors: %s", Mix_GetError() );
+		}
+	}
 }
 
 SDLInterface::Audio::~Audio()

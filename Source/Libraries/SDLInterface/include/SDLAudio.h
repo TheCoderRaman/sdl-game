@@ -8,11 +8,8 @@
 #ifndef _SDLAUDIO_H_
 #define _SDLAUDIO_H_
 
+
 #include "SDLCommon.h"
-
-
-// Forward declare SDL structs
-struct SDL_AudioSpec;
 
 // Start the SDLInterface Namespace
 namespace SDLInterface
@@ -27,10 +24,6 @@ namespace SDLInterface
 		Audio();
 		~Audio();
 
-	private:
-
-		//! \brief a test sound
-		SDL_AudioSpec* my_sdl_audiospec;
 	};
 }
 
