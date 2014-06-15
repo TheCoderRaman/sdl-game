@@ -93,7 +93,7 @@ public:
 
 	//! \brief get the renderer
 	static inline LRenderer2D&		GetRenderer();
-	static inline LUpdatingList&		GetEventLoop();
+	static inline LUpdatingList&	GetEventLoop();
 	static inline LInput&			GetInputManager();
 
 private:
@@ -137,7 +137,7 @@ private:
 	LRenderer2D				m_Renderer;
 
 	//! \brief The UpdateLoop
-	LUpdatingList				m_UpdateLoop;
+	LUpdatingList			m_UpdateLoop;
 
 	//! \brief The InputManager
 	LInput					m_InputManager;
