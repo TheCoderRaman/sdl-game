@@ -7,8 +7,9 @@
 //!
 #include "GameOne.h"
 
-#include "LObjectManager.h"
+#include "LUpdatingList.h"
 #include "LInput.h"
+#include "LEngine.h"
 
 #include "LError.h"
 
@@ -25,18 +26,13 @@ GameOne::~GameOne()
 }
 
 //========================================================
-LError GameOne::Create()
+LError GameOne::VOnCreate()
 {
  	LError err = LError::NoErr;
 
-	err |= LGameBase::Create();
-
+	// Set up the event handler
 	if( !LERROR_HAS_FATAL( err ) )
 		err |= m_myEventManager.Create();
-
-	// Setting up the banana object
-	m_banana.SetRenderer( GetRenderer() );
-	GetObjectManager()->RegisterObject( &m_banana );
 
 	m_myEventHandler.callbackFunction =
 		LEVENTHANDLER_CALLBACK_FUNCTION( TGameEventManager )
@@ -46,46 +42,34 @@ LError GameOne::Create()
 
 	m_myEventManager.AddHandler( eGameEventType::GameEvent_pause, &m_myEventHandler );
 
- 	return err;
-}
-
-//========================================================
-LError GameOne::Initialise()
-{
- 	LError err = LError::NoErr;
-
-	err |= LGameBase::Initialise();
+	// Set up the banana
+	m_banana.SetRenderer(&LEngine::GetRenderer());
+	m_banana.Create();
+	LEngine::GetEventLoop().Register(&m_banana);
 
  	return err;
 }
 
 //========================================================
-LError GameOne::PreUpdate()
+LError GameOne::VOnPreUpdate()
 {
 	LError err = LError::NoErr;
-
-	err |= LGameBase::PreUpdate();
 
 	return err;
 }
 
 //========================================================
-LError GameOne::Update(ms elapsed)
+LError GameOne::VOnUpdate(ms elapsed)
 {
  	LError err = LError::NoErr;
 
-	err |= LGameBase::Update(elapsed);
-
-	if( LGameBase::GetInputManager() )
+	if (LEngine::GetInputManager().GetButtonHeldDown(LInput::eInputType::up))
 	{
-		if( LGameBase::GetInputManager()->GetButtonHeldDown( LInput::eInputType::up ) )
-		{
-			m_banana.MoveBananaUpAFrame();
-		}
-		if (LGameBase::GetInputManager()->GetButtonJustPressed(LInput::eInputType::down))
-		{
-			m_banana.MoveBananaDownAFrame();
-		}
+		m_banana.MoveBananaUpAFrame();
+	}
+	if (LEngine::GetInputManager().GetButtonJustPressed(LInput::eInputType::down))
+	{
+		m_banana.MoveBananaDownAFrame();
 	}
 
 	// Send a pause event FOR SOME REASON I DON'T KNOW MAN
@@ -100,29 +84,27 @@ LError GameOne::Update(ms elapsed)
 }
 
 //========================================================
-LError GameOne::PostUpdate()
+LError GameOne::VOnPostUpdate()
 {
 	LError err = LError::NoErr;
-
-	err |= LGameBase::PostUpdate();
 
 	return err;
 }
 
 //========================================================
-LError GameOne::Reset()
+LError GameOne::VOnReset()
 {
  	LError err = LError::NoErr;
-
-	err |= LGameBase::Reset();
 
  	return err;
 }
 
 //========================================================
-LError GameOne::Destroy()
+LError GameOne::VOnDestroy()
 {
  	LError err = LError::NoErr;
+
+	m_banana.Destroy();
 
 	// Remove the event handler
 	if (!LERROR_HAS_FATAL(err))
@@ -130,12 +112,10 @@ LError GameOne::Destroy()
 
 	// Remove the banana from the renderer
 	if (!LERROR_HAS_FATAL(err))
-		err |= GetRenderer()->RemoveRenderable(&m_banana);
+		err |= LEngine::GetRenderer().RemoveRenderable(&m_banana);
 
 	if (!LERROR_HAS_FATAL(err))
 		err |= m_myEventManager.Destroy();
-
-	err |= LGameBase::Destroy();
 
  	return err;
 }

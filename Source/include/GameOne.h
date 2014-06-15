@@ -9,7 +9,7 @@
 #define _GAMEONE_H_
 
 #include "LGameBase.h"
-#include "LObject.h"
+#include "LUpdatable.h"
 #include "LSprite.h"
 
 #include "Banana.h"
@@ -44,19 +44,20 @@ public:
 	GameOne();
 	~GameOne();
 
-	// Inherited methods as defined in LObject.h
-	virtual LError Create();
-	virtual LError Initialise();
-	virtual LError PreUpdate();
-	virtual LError Update(ms elapsed);
-	virtual LError PostUpdate();
-	virtual LError Reset();
-	virtual LError Destroy();
-
-	LError HandleEvent( const TGameEventManager::TEvent* event );
-
 private:
 
+	// Inherited methods as defined in LUpdatable.h
+	virtual LError VOnCreate(void) override;
+	virtual LError VOnPreUpdate(void) override;
+	virtual LError VOnUpdate(ms elapsed) override;
+	virtual LError VOnPostUpdate(void) override;
+	virtual LError VOnReset(void) override;
+	virtual LError VOnDestroy(void) override;
+
+	//! \brief internal event handler
+	LError HandleEvent(const TGameEventManager::TEvent* event);
+
+	//! \brief the Banana
 	Banana m_banana;
 
 	//! \brief The Game Event Manager

@@ -18,6 +18,9 @@ LError Banana::Create( void )
 
 	m_iTimeElapsed = 100;
 
+	// Must have renderer before creating the sprite
+	DEBUG_ASSERT(GetRenderer());
+
 	// Create the banana
 	err |= m_banana.Create( *GetRenderer(), "Media/banana.png" );
 
@@ -26,18 +29,9 @@ LError Banana::Create( void )
 	m_banana.SetSize( 400, 300 );
 	m_banana.SetPos( 100, 100 );
 
-	return err;
-}
-
-LError Banana::Initialise( void )
-{ 
-	RUNTIME_LOG( "Initialising Banana..." );
-
-	LError err = LError::NoErr;
-
 	// Add said banana to the renderer
-	if( !LERROR_HAS_FATAL( err ) )
-		err |= GetRenderer()->AddRenderable( &m_banana );
+	if (!LERROR_HAS_FATAL(err))
+		err |= GetRenderer()->AddRenderable(&m_banana);
 
 	return err;
 }
@@ -67,7 +61,7 @@ void Banana::MoveBananaRightAFrame( void )
 	m_banana.SetPos( m_banana.GetXPos() + 20, m_banana.GetYPos() );
 }
 
-LError Banana::Update( ms elapsed )
+LError Banana::VOnUpdate( ms elapsed )
 {
 	m_iTimeElapsed += (int) elapsed / 1.5;
 
@@ -88,7 +82,7 @@ LError Banana::Render( LRenderer2D* renderer )
 	return LError::NoErr;
 }
 
-LError Banana::Reset( void )
+LError Banana::VOnReset(void)
 { 
 	RUNTIME_LOG( "Resetting Banana..." );
 

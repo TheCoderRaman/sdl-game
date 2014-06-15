@@ -29,6 +29,15 @@
 #define DESIRED_FRAMETIME_MS	ms_60FPS
 
 //===============================================================
+LEngine* LEngine::s_currentEngine = nullptr;
+
+//===============================================================
+LEngine& LEngine::GetCurrentEngine()
+{
+	return *s_currentEngine;
+}
+
+//===============================================================
 LEngine::LEngine(LGameBase& game)
 : m_bQuitting				( false )
 , m_myGame					( game )
@@ -39,7 +48,8 @@ LEngine::LEngine(LGameBase& game)
 //===============================================================
 LEngine::~LEngine()
 {
-
+	// stop the current engine pointing to this one
+	s_currentEngine = nullptr;
 }
 
 //===============================================================
@@ -57,6 +67,9 @@ void LEngine::RequestQuit()
 //===============================================================
 LError LEngine::Start()
 {
+	// Set the current engine to this one
+	s_currentEngine = this;
+
 	//Initialization flag
 	SDLInterface::Error err = SDLInterface::Error::None;
 
@@ -138,10 +151,6 @@ LError LEngine::Init()
 	if (!LERROR_HAS_FATAL(err))
 		err |= m_Renderer.Create(m_MainWindow);
 
-	// Create the objects
-	if (!LERROR_HAS_FATAL(err))
-		err |= m_ObjectManager.Create();
-
 	// create the event manager for the engine events
 	if (!LERROR_HAS_FATAL(err))
 		err |= m_engineEventManager.Create();
@@ -186,27 +195,8 @@ LError LEngine::Load()
 	//Loading err flag
     LError err = LError::NoErr;
 
-	// Set the game's renderer
-	m_myGame.SetRenderer( &m_Renderer );
-	// Set the game's object manager
-	m_myGame.SetObjectManager( &m_ObjectManager );
-	// Set the game's input manager
-	m_myGame.SetInputManager( &m_InputManager );
-
 	// Create the game
 	err |= m_myGame.Create();
-
-	// Initialise the objects
-	if( !LERROR_HAS_FATAL( err ) )
-		err |= m_ObjectManager.Create();
-
-	// Initialse the game
-	if (!LERROR_HAS_FATAL(err))
-		err |= m_myGame.Initialise();
-
-	// Initialise the objects
-	if( !LERROR_HAS_FATAL( err ) )
-		err |= m_ObjectManager.Initialise();
 
     return err;
 }
@@ -261,16 +251,9 @@ LError LEngine::Unload()
 {
 	LError err = LError::NoErr;
 
-	// Destroy the objects
-	if( !LERROR_HAS_FATAL( err ) )
-		err |= m_ObjectManager.Destroy();
-
 	// Destroy the game
 	if ( !LERROR_HAS_FATAL( err ) )
 		err |= m_myGame.Destroy();
-
-	// Set the games renderer back to null
-	m_myGame.SetRenderer(nullptr);
 
 	return err;
 }
@@ -286,6 +269,8 @@ LError LEngine::PreUpdate( void )
 
 	err |= m_myGame.PreUpdate();
 
+	err |= m_UpdateLoop.PreUpdate();
+
 	return err;
 }
 
@@ -295,9 +280,8 @@ LError LEngine::Update(ms elapsed)
 	LError err = LError::NoErr;
 
 	// We need to decide when this happens
-	err |=  m_ObjectManager.Update( elapsed );
+	err |=  m_UpdateLoop.Update( elapsed );
 
-	// Update the game
 	err |= m_myGame.Update(elapsed);
 
 	return err;
@@ -308,10 +292,12 @@ LError LEngine::PostUpdate( void )
 {
 	LError err = LError::NoErr;
 
-	// Reset the Engine level keyboard polling
-	m_InputManager.EndKeyboardUpdate();
+	err |= m_UpdateLoop.PostUpdate();
 
 	err |= m_myGame.PostUpdate();
+
+	// Reset the Engine level keyboard polling
+	m_InputManager.EndKeyboardUpdate();
 
 	return err;
 }

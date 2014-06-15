@@ -14,7 +14,7 @@
 #include "SDLThread.h"
 #include "SDLAudio.h"
 
-#include "LObjectManager.h"
+#include "LUpdatingList.h"
 #include "LInput.h"
 #include "LRenderer.h"
 #include "LGameBase.h"
@@ -26,8 +26,8 @@
 //! \brief type define for engine events
 enum class EEngineEventType
 {
-	EEngineEvent_pause,
-	EEngineEvent_num
+	Pause,
+	Num
 };
 
 //! \brief typpe define for the data in engine events
@@ -40,9 +40,28 @@ union UEngineEventData
 	} pause;
 };
 
+// These functions must be anonymous to be called by a starting thread
+
+//! \brief start point for the engine thread
+int EngineThreadStart(void* data);
+
+//! \brief start point for the game thread
+int GameThreadStart(void* data);
+
+//! \brief start point for the render thread
+int RenderThreadStart(void* data);
+
 //! \brief LEngine delegate class
 class LEngine
 {
+private:
+	
+	//! \brief pointer to the current LEngine
+	static LEngine* s_currentEngine;
+
+	//! \brief accessor for the current LEngine
+	static LEngine& GetCurrentEngine();
+
 public:
 
 	//! \brief Constructor and destructor
@@ -73,6 +92,11 @@ public:
 
 	//! \brief request an engine quit
 	void RequestQuit();
+
+	//! \brief get the renderer
+	static inline LRenderer2D&		GetRenderer();
+	static inline LUpdatingList&		GetEventLoop();
+	static inline LInput&			GetInputManager();
 
 private:
 
@@ -117,8 +141,8 @@ private:
 	//! \brief The Renderer
 	LRenderer2D				m_Renderer;
 
-	//! \brief The Object Manager
-	LObjectManager			m_ObjectManager;
+	//! \brief The UpdateLoop
+	LUpdatingList				m_UpdateLoop;
 
 	//! \brief The InputManager
 	LInput					m_InputManager;
@@ -133,15 +157,25 @@ private:
 	LGameBase&	m_myGame;
 };
 
-// These functions must be anonymous to be called by a starting thread
+//===============================================================
+// Inline functions
 
-//! \brief start point for the engine thread
-int EngineThreadStart(void* data);
+//===============================================================
+inline LRenderer2D& LEngine::GetRenderer()
+{
+	return GetCurrentEngine().m_Renderer;
+}
 
-//! \brief start point for the game thread
-int GameThreadStart(void* data);
+//===============================================================
+inline LUpdatingList& LEngine::GetEventLoop()
+{
+	return GetCurrentEngine().m_UpdateLoop;
+}
 
-//! \brief start point for the render thread
-int RenderThreadStart(void* data);
+//===============================================================
+inline LInput& LEngine::GetInputManager()
+{
+	return GetCurrentEngine().m_InputManager;
+}
 
 #endif //_LENGINE_H_

@@ -24,49 +24,36 @@ LGameBase::~LGameBase()
 //===============================================================
 LError LGameBase::Create()
 {
-	LError err = LError::NoErr;
-	return err;
-}
-
-//===============================================================
-LError LGameBase::Initialise()
-{
-	LError err = LError::NoErr;
-	return err;
+	return VOnCreate();
 }
 
 //===============================================================
 LError LGameBase::PreUpdate()
 {
-	LError err = LError::NoErr;
-	return err;
+	return VOnPreUpdate();
 }
 
 //===============================================================
 LError LGameBase::Update(ms elapsed)
 {
-	LError err = LError::NoErr;
-	return err;
+	return VOnUpdate(elapsed);
 }
 
 //===============================================================
 LError LGameBase::PostUpdate()
 {
-	LError err = LError::NoErr;
-	return err;
+	return VOnPostUpdate();
 }
 
 //===============================================================
 LError LGameBase::Reset()
 {
-	LError err = LError::NoErr;
-	return err;
+	return VOnReset();
 }
 
 //===============================================================
 LError LGameBase::Destroy()
 {
-	LError err = LError::NoErr;
-	return err;
+	return VOnDestroy();
 }
 
