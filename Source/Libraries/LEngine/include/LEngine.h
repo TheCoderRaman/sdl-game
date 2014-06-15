@@ -19,6 +19,7 @@
 #include "LRenderer.h"
 #include "LGameBase.h"
 #include "LEvents.h"
+#include "LAudio.h"
 
 #include <atomic>
 
@@ -110,7 +111,8 @@ private:
 	//! \brief The main window
 	SDLInterface::Window	m_MainWindow;
 
-	SDLInterface::Audio		m_butts;
+	//! \brief The audio system
+	LAudio					m_AudioSystem;
 
 	//! \brief The Renderer
 	LRenderer2D				m_Renderer;
