@@ -45,13 +45,39 @@ LError LUpdateLoop::UnRegister(LUpdatable* pToRegister)
 }
 
 //===============================================================
-LError LUpdateLoop::VOnUpdate(ms frameTime)
+LError LUpdateLoop::VOnPreUpdate()
 {
 	for( LUpdatable* pObj : m_vecObjects )
 	{
 		// Ensure we're not updating a null object
 		DEBUG_ASSERT(pObj != nullptr);
-		pObj->Update( frameTime );
+		pObj->PreUpdate();
+	}
+
+	return LError::NoErr;
+}
+
+//===============================================================
+LError LUpdateLoop::VOnUpdate(ms frameTime)
+{
+	for (LUpdatable* pObj : m_vecObjects)
+	{
+		// Ensure we're not updating a null object
+		DEBUG_ASSERT(pObj != nullptr);
+		pObj->Update(frameTime);
+	}
+
+	return LError::NoErr;
+}
+
+//===============================================================
+LError LUpdateLoop::VOnPostUpdate()
+{
+	for (LUpdatable* pObj : m_vecObjects)
+	{
+		// Ensure we're not updating a null object
+		DEBUG_ASSERT(pObj != nullptr);
+		pObj->PostUpdate();
 	}
 
 	return LError::NoErr;

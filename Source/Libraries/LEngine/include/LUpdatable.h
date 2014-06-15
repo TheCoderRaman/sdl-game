@@ -34,8 +34,14 @@ public:
 	//! \brief Default destructor
 	virtual ~LUpdatable();
 
+	//! \brief Prepare the update
+	LError PreUpdate();
+
 	//! \brief Update the object to a new state based on a timestamp
 	LError Update(ms elapsed);
+
+	//! \brief Finish the update the update
+	LError PostUpdate();
 
 	//! \brief Reset the object to it's initial state
 	LError Reset();
@@ -59,7 +65,13 @@ private:
 	LError Deactivate();
 
 	//! \brief virtual update delegate method to be overloaded
+	virtual LError VOnPreUpdate();
+
+	//! \brief virtual update delegate method to be overloaded
 	virtual LError VOnUpdate(ms elapsed) = 0;
+
+	//! \brief virtual update delegate method to be overloaded
+	virtual LError VOnPostUpdate();
 
 	//! \brief virtual reset delegate method to be overloaded
 	virtual LError VOnReset();

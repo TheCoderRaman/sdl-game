@@ -25,10 +25,25 @@ LUpdatable::~LUpdatable()
 }
 
 //===============================================================
-LError LUpdatable::Update(ms elapsed)
+LError LUpdatable::PreUpdate()
 {
+	// Progress the status now, ready for the loop
 	ProgressStatus();
 
+	// Update if we're active
+	if (GetCurrentStatus() == LUpdateableStatus::Active)
+	{
+		return VOnPreUpdate();
+	}
+	else
+	{
+		return LError::NoErr;
+	}
+}
+
+//===============================================================
+LError LUpdatable::Update(ms elapsed)
+{
 	// Update if we're active
 	if (GetCurrentStatus() == LUpdateableStatus::Active)
 	{
@@ -38,6 +53,20 @@ LError LUpdatable::Update(ms elapsed)
 	{
 		return LError::NoErr;
 	}
+}
+
+//===============================================================
+LError LUpdatable::PostUpdate()
+{
+	LError err = LError::NoErr;
+
+	// Update if we're active
+	if (GetCurrentStatus() == LUpdateableStatus::Active)
+	{
+		err = VOnPostUpdate();
+	}
+
+	return err;
 }
 
 //===============================================================
@@ -74,6 +103,18 @@ LError LUpdatable::VOnActivate()
 
 //===============================================================
 LError LUpdatable::VOnDeactivate()
+{
+	return LError::NoErr;
+}
+
+//===============================================================
+LError LUpdatable::VOnPreUpdate()
+{
+	return LError::NoErr;
+}
+
+//===============================================================
+LError LUpdatable::VOnPostUpdate()
 {
 	return LError::NoErr;
 }

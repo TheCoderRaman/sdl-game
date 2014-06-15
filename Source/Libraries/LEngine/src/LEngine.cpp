@@ -269,6 +269,8 @@ LError LEngine::PreUpdate( void )
 
 	err |= m_myGame.PreUpdate();
 
+	err |= m_UpdateLoop.PreUpdate();
+
 	return err;
 }
 
@@ -280,7 +282,6 @@ LError LEngine::Update(ms elapsed)
 	// We need to decide when this happens
 	err |=  m_UpdateLoop.Update( elapsed );
 
-	// Update the game
 	err |= m_myGame.Update(elapsed);
 
 	return err;
@@ -291,10 +292,12 @@ LError LEngine::PostUpdate( void )
 {
 	LError err = LError::NoErr;
 
-	// Reset the Engine level keyboard polling
-	m_InputManager.EndKeyboardUpdate();
+	err |= m_UpdateLoop.PostUpdate();
 
 	err |= m_myGame.PostUpdate();
+
+	// Reset the Engine level keyboard polling
+	m_InputManager.EndKeyboardUpdate();
 
 	return err;
 }
