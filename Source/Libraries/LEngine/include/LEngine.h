@@ -18,6 +18,7 @@
 #include "LRenderer.h"
 #include "LGameBase.h"
 #include "LEvents.h"
+#include "LPauseSystem.h"
 
 #include <atomic>
 
@@ -149,7 +150,10 @@ private:
 	std::atomic<bool>		m_bQuitting;
 
 	//! \brief The game the engine will be using
-	LGameBase&	m_myGame;
+	LGameBase&				m_myGame;
+
+	//! Engine pause flags
+	LPauseSystem			m_pauseFlags;
 };
 
 //===============================================================
