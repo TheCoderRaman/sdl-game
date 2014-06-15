@@ -37,7 +37,19 @@ public:
 	void SetNextFlags(int flags);
 
 	//! \brief Get the current pause flags
-	int GetCurrentFlags() const; 
+	void AddNextFlag(int flag);
+
+	//! \brief Get the current pause flags
+	void AddNextFlags(int flags);
+
+	//! \brief Get the current pause flags
+	void RemoveNextFlags(int flags);
+
+	//! \brief Get the current pause flags
+	int GetCurrentFlags() const;
+
+	//! \brief Get the current pause flags
+	bool GetCurrentFlag(int flag) const;
 
 	//! \brief flush the flags
 	void FlushNextFlags();

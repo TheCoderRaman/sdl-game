@@ -263,6 +263,8 @@ LError LEngine::PreUpdate( void )
 {
 	LError err = LError::NoErr;
 
+	m_pauseFlags.FlushNextFlags();
+
 	// Push the current frame's inputs to last frame's and clear this frame's key buffer
 	// Poll the keyboard now for the current frame's inputs
 	m_InputManager.StartKeyboardUpdate();

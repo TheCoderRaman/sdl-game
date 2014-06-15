@@ -85,6 +85,8 @@ public:
 	//! \brief the main game thread loop
 	LError GameThreadLoop();
 
+	//! \brief Pause or un pause a specific part of the engine
+	inline void PauseSubSystem(EPauseFlag system, bool pause);
 
 	//! \brief get if the engine is quitting
 	bool QuitHasBeenRequested();
@@ -131,6 +133,9 @@ private:
 	// Various members for the Engine
 private:
 
+	//! \brief Pause or un pause a specific part of the engine
+	inline bool GetIsPaused( EPauseFlag system );
+
 	//! \brief The main window
 	SDLInterface::Window	m_MainWindow;
 
@@ -175,6 +180,21 @@ inline LUpdatingList& LEngine::GetEventLoop()
 inline LInput& LEngine::GetInputManager()
 {
 	return GetCurrentEngine().m_InputManager;
+}
+
+//===============================================================
+inline void LEngine::PauseSubSystem(EPauseFlag system, bool pause)
+{
+	if (pause)
+		m_pauseFlags.AddNextFlag(system);
+	else
+		m_pauseFlags.RemoveNextFlags(system);
+}
+
+//===============================================================
+inline bool LEngine::GetIsPaused(EPauseFlag system)
+{
+	m_pauseFlags.GetCurrentFlag(system);
 }
 
 #endif //_LENGINE_H_
