@@ -24,7 +24,7 @@ SET(PROJECT_HEADERS
 	${CMAKE_CURRENT_SOURCE_DIR}/include/LEngine.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/LGameBase.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/LUpdatable.h
-	${CMAKE_CURRENT_SOURCE_DIR}/include/LUpdateLoop.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/LUpdatingList.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/LRenderer.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/LSprite.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/LEvents.h
@@ -35,7 +35,7 @@ SET(PROJECT_HEADERS
 SET(PROJECT_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/src/LEngine.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/LGameBase.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/src/LUpdateLoop.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/LUpdatingList.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/LRenderer.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/LSprite.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/LInput.cpp

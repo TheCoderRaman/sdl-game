@@ -13,7 +13,7 @@
 #include "SDLWindow.h"
 #include "SDLThread.h"
 
-#include "LUpdateLoop.h"
+#include "LUpdatingList.h"
 #include "LInput.h"
 #include "LRenderer.h"
 #include "LGameBase.h"
@@ -93,7 +93,7 @@ public:
 
 	//! \brief get the renderer
 	static inline LRenderer2D&		GetRenderer();
-	static inline LUpdateLoop&		GetEventLoop();
+	static inline LUpdatingList&		GetEventLoop();
 	static inline LInput&			GetInputManager();
 
 private:
@@ -137,7 +137,7 @@ private:
 	LRenderer2D				m_Renderer;
 
 	//! \brief The UpdateLoop
-	LUpdateLoop				m_UpdateLoop;
+	LUpdatingList				m_UpdateLoop;
 
 	//! \brief The InputManager
 	LInput					m_InputManager;
@@ -162,7 +162,7 @@ inline LRenderer2D& LEngine::GetRenderer()
 }
 
 //===============================================================
-inline LUpdateLoop& LEngine::GetEventLoop()
+inline LUpdatingList& LEngine::GetEventLoop()
 {
 	return GetCurrentEngine().m_UpdateLoop;
 }
