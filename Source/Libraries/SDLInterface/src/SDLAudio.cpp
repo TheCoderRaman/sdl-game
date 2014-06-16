@@ -12,9 +12,6 @@
 #include "SDLAudio.h"
 #include "debug.h"
 
-
-
-
 SDLInterface::Audio::Audio()
 {
 	if( -1 == Mix_OpenAudio( MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024 ) )
@@ -36,7 +33,7 @@ SDLInterface::SDLMusicFile SDLInterface::Audio::LoadMusic( const char* filename 
 
 	if( toReturn.GetMusic() == NULL )
 	{
-		DEBUG_LOG( "butts\n" );
+		DEBUG_LOG( "Can't load that music because: %s", Mix_GetError() );
 	}
 
 	return toReturn;
@@ -67,11 +64,19 @@ SDLInterface::Audio::~Audio()
 }
 
 SDLInterface::SDLMusicFile::SDLMusicFile( void )
+: thisMusic( nullptr )
 {
 }
 
 SDLInterface::SDLMusicFile::~SDLMusicFile( void )
 {
+
+}
+
+void SDLInterface::SDLMusicFile::FreeMusic( void )
+{
+	Mix_FreeMusic( thisMusic );
+	thisMusic = nullptr;
 }
 
 void SDLInterface::SDLMusicFile::SetMusic( Mix_Music* file )

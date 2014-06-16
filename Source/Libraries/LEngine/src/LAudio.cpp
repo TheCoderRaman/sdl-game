@@ -9,17 +9,33 @@
 
 LAudio::LAudio()
 {
+	m_musicTracks.reserve( iMAX_MUSIC_TRACKS );
 }
 
 LAudio::~LAudio()
 {
+	for( auto track : m_musicTracks )
+	{
+		std::get< 0 >( track ).FreeMusic();
+	}
 }
 
-void LAudio::PlayMusic( const char* filename, bool bShouldLoop )
+void LAudio::LoadMusic( const char* filename, const char* name )
 {
 	SDLInterface::SDLMusicFile thisMusic = m_AudioClass.LoadMusic( filename );
 
-	m_AudioClass.PlayMusic( thisMusic, bShouldLoop );
+	m_musicTracks.push_back( std::make_tuple( thisMusic, name ) );
+}
+
+void LAudio::PlayMusic( const char* name, bool bShouldLoop )
+{
+	for( auto track : m_musicTracks )
+	{
+		if( 0 == strcmp( std::get< 1 >( track ), name ) )
+		{
+			m_AudioClass.PlayMusic( std::get< 0 >( track ), bShouldLoop );
+		}
+	}
 }
 
 void LAudio::PauseMusic( void )

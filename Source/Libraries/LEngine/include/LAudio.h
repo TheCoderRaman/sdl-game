@@ -9,6 +9,8 @@
 #define _LAUDIO_H_
 
 #include "SDLAudio.h"
+#include <vector>
+#include <tuple>
 
 class LAudio
 {
@@ -16,12 +18,16 @@ public:
 	LAudio();
 	~LAudio();
 
-	void PlayMusic( const char* filename, bool bShouldLoop );
+	void LoadMusic( const char* filename, const char* name );
+	void PlayMusic( const char* name, bool bShouldLoop );
 	void PauseMusic( void );
 	void ChangeVolume( int newVolume );
 
 private:
 
+	const int iMAX_MUSIC_TRACKS = 1;
+
+	std::vector< std::tuple< SDLInterface::SDLMusicFile, const char* > > m_musicTracks;
 	SDLInterface::Audio m_AudioClass;
 };
 

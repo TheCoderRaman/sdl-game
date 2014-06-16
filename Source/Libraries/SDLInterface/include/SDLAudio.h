@@ -23,6 +23,7 @@ namespace SDLInterface
 		SDLMusicFile();
 		~SDLMusicFile();
 
+		void FreeMusic( void );
 		void SetMusic( Mix_Music* file );
 		Mix_Music* GetMusic( void );
 
