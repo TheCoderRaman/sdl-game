@@ -16,7 +16,7 @@ public:
 	LAudio();
 	~LAudio();
 
-	void PlayMusic( const char* filename );
+	void PlayMusic( const char* filename, bool bShouldLoop );
 	void PauseMusic( void );
 	void ChangeVolume( int newVolume );
 

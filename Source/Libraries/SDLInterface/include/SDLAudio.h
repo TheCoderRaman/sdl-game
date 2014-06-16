@@ -11,10 +11,25 @@
 
 #include "SDLCommon.h"
 
+struct _Mix_Music;
+typedef _Mix_Music Mix_Music;
+
 // Start the SDLInterface Namespace
 namespace SDLInterface
 {
+	class SDLMusicFile
+	{
+	public:
+		SDLMusicFile();
+		~SDLMusicFile();
 
+		void SetMusic( Mix_Music* file );
+		Mix_Music* GetMusic( void );
+
+	private:
+		Mix_Music* thisMusic;
+	};
+	
 	//! \brief an Audio class
 	class Audio
 	{
@@ -24,6 +39,9 @@ namespace SDLInterface
 		Audio();
 		~Audio();
 
+		SDLMusicFile LoadMusic( const char* filename );
+
+		void PlayMusic( SDLMusicFile, bool bLoops );
 	};
 }
 

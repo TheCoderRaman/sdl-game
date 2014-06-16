@@ -15,11 +15,11 @@ LAudio::~LAudio()
 {
 }
 
-void LAudio::PlayMusic( const char* filename )
+void LAudio::PlayMusic( const char* filename, bool bShouldLoop )
 {
-//	SDLInterface::SDLMusicFile thisMusic = m_AudioClass.LoadMusic( filename );
+	SDLInterface::SDLMusicFile thisMusic = m_AudioClass.LoadMusic( filename );
 
-//	m_AudioClass.PlayMusic( thisMusic, true );
+	m_AudioClass.PlayMusic( thisMusic, bShouldLoop );
 }
 
 void LAudio::PauseMusic( void )

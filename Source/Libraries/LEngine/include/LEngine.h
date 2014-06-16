@@ -95,8 +95,9 @@ public:
 
 	//! \brief get the renderer
 	static inline LRenderer2D&		GetRenderer();
-	static inline LUpdatingList&		GetEventLoop();
+	static inline LUpdatingList&	GetEventLoop();
 	static inline LInput&			GetInputManager();
+	static inline LAudio&			GetAudioManager();
 
 private:
 
@@ -135,8 +136,8 @@ private:
 	//! \brief The main window
 	SDLInterface::Window	m_MainWindow;
 
-	//! \brief The audio system
-	LAudio					m_AudioSystem;
+	//! \brief The audio manager
+	LAudio					m_AudioManager;
 
 	//! \brief The Renderer
 	LRenderer2D				m_Renderer;
@@ -176,6 +177,12 @@ inline LUpdatingList& LEngine::GetEventLoop()
 inline LInput& LEngine::GetInputManager()
 {
 	return GetCurrentEngine().m_InputManager;
+}
+
+//===============================================================
+inline LAudio& LEngine::GetAudioManager()
+{
+	return GetCurrentEngine().m_AudioManager;
 }
 
 #endif //_LENGINE_H_
