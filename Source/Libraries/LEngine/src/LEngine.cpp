@@ -65,6 +65,16 @@ void LEngine::RequestQuit()
 }
 
 //===============================================================
+void LEngine::WaitIfPaused(LEnginePauseSystem::TFlags system)
+{
+	while (GetIsPaused(system))
+	{
+		// Delay for 10ms and check again
+		SDLInterface::Thread::Delay(10);
+	}
+}
+
+//===============================================================
 LError LEngine::Start()
 {
 	// Set the current engine to this one
@@ -323,6 +333,9 @@ LError LEngine::RenderThreadLoop()
 	while (!LERROR_HAS_FATAL(err)
 		&& !LERROR_HAS(err, LError::QuitRequest))
 	{
+		// Wait if we're paused
+		WaitIfPaused(EEnginePauseFlag::Render);
+
 		// Delay until the end of the desired frame time
 		SDLInterface::Thread::DelayUntil(frameTime + DESIRED_FRAMETIME_MS);
 		
@@ -377,6 +390,9 @@ LError LEngine::GameThreadLoop()
 	while ( !LERROR_HAS_FATAL( err )
 		&& !LERROR_HAS( err, LError::QuitRequest ) )
 	{
+		// Wait if we're paused
+		WaitIfPaused(EEnginePauseFlag::Game);
+
 		// Delay until the end of the desired frame time
 		SDLInterface::Thread::DelayUntil(frameTime + DESIRED_FRAMETIME_MS);
 

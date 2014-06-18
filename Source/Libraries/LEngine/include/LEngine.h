@@ -39,6 +39,19 @@ union UEngineEventData
 	} pause;
 };
 
+//! Enum for pause flags
+// Not strongly typed as it's just a flag
+enum EEnginePauseFlag
+{
+	Game = 0x0001,
+	Render = 0x0002,
+	Physics = 0x0004,
+	Audio = 0x0008,
+	Controls = 0x0010,
+
+	Global = 0xFFFF
+};
+
 // These functions must be anonymous to be called by a starting thread
 
 //! \brief start point for the engine thread
@@ -63,6 +76,9 @@ private:
 
 public:
 
+	//! \brief typedef the templated pause system
+	typedef LPauseSystem<EEnginePauseFlag> LEnginePauseSystem;
+
 	//! \brief Constructor and destructor
 	LEngine(LGameBase& game);
 	~LEngine();
@@ -86,7 +102,7 @@ public:
 	LError GameThreadLoop();
 
 	//! \brief Pause or un pause a specific part of the engine
-	inline void PauseSubSystem(EPauseFlag system, bool pause);
+	inline bool GetIsPaused(LEnginePauseSystem::TFlags system);
 
 	//! \brief get if the engine is quitting
 	bool QuitHasBeenRequested();
@@ -134,7 +150,9 @@ private:
 private:
 
 	//! \brief Pause or un pause a specific part of the engine
-	inline bool GetIsPaused( EPauseFlag system );
+	inline void PauseSubSystem(LEnginePauseSystem::TFlags system, bool pause);
+
+	void WaitIfPaused(LEnginePauseSystem::TFlags system);
 
 	//! \brief The main window
 	SDLInterface::Window	m_MainWindow;
@@ -158,7 +176,7 @@ private:
 	LGameBase&				m_myGame;
 
 	//! Engine pause flags
-	LPauseSystem			m_pauseFlags;
+	LEnginePauseSystem		m_pauseFlags;
 };
 
 //===============================================================
@@ -183,7 +201,7 @@ inline LInput& LEngine::GetInputManager()
 }
 
 //===============================================================
-inline void LEngine::PauseSubSystem(EPauseFlag system, bool pause)
+inline void LEngine::PauseSubSystem(LEnginePauseSystem::TFlags system, bool pause)
 {
 	if (pause)
 		m_pauseFlags.AddNextFlag(system);
@@ -192,9 +210,9 @@ inline void LEngine::PauseSubSystem(EPauseFlag system, bool pause)
 }
 
 //===============================================================
-inline bool LEngine::GetIsPaused(EPauseFlag system)
+inline bool LEngine::GetIsPaused(LEnginePauseSystem::TFlags system)
 {
-	m_pauseFlags.GetCurrentFlag(system);
+	return m_pauseFlags.GetCurrentFlag(system);
 }
 
 #endif //_LENGINE_H_

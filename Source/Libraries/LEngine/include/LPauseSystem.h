@@ -10,22 +10,12 @@
 
 #include <atomic>
 
-//! Enum for pause flags
-// Not strongly typed as it's just a flag
-enum EPauseFlag
-{
-	Game		= 0x0001,
-	Render		= 0x0002,
-	Physics		= 0x0004,
-	Audio		= 0x0008,
-	Controls	= 0x0010,
-
-	Global		= 0xFFFF
-};
-
+template < typename T > 
 class LPauseSystem
 {
 public:
+
+	typedef T TFlags;
 
 	//! \brief default constructor
 	LPauseSystem();
@@ -63,5 +53,73 @@ private:
 	std::atomic<int>	m_nextFlags;
 
 };
+
+
+//===============================================================
+template < typename T >
+LPauseSystem< typename T >::LPauseSystem()
+	: m_currentFlags(0)
+	, m_nextFlags(0)
+{
+
+}
+
+//===============================================================
+template < typename T >
+LPauseSystem< typename T >::~LPauseSystem()
+{
+
+}
+
+//===============================================================
+template < typename T >
+int LPauseSystem< typename T >::GetCurrentFlags() const
+{
+	return m_currentFlags;
+}
+
+//===============================================================
+template < typename T >
+void LPauseSystem< typename T >::AddNextFlag(int flag)
+{
+	m_nextFlags |= flag;
+}
+
+//===============================================================
+template < typename T >
+void LPauseSystem< typename T >::AddNextFlags(int flags)
+{
+	m_nextFlags |= flags;
+}
+
+//===============================================================
+template < typename T >
+void LPauseSystem< typename T >::RemoveNextFlags(int flags)
+{
+	m_nextFlags &= ~flags;
+}
+
+//===============================================================
+template < typename T >
+bool LPauseSystem< typename T >::GetCurrentFlag(int flag) const
+{
+	return (m_currentFlags & flag) != 0;
+}
+
+//===============================================================
+template < typename T >
+void LPauseSystem< typename T >::SetNextFlags(int flags)
+{
+	m_nextFlags = flags;
+}
+
+//===============================================================
+template < typename T >
+void LPauseSystem< typename T >::FlushNextFlags()
+{
+	int flags = m_nextFlags;
+	m_currentFlags = flags;
+}
+
 
 #endif //_LPAUSESYSTEM_H_

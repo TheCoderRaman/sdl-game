@@ -41,7 +41,6 @@ SET(PROJECT_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/src/LSprite.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/LInput.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/LUpdatable.cpp
-	${CMAKE_CURRENT_SOURCE_DIR}/src/LPauseSystem.cpp
 )
 
 #-----------------------------------------------------------------
