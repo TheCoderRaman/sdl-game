@@ -34,6 +34,15 @@ namespace SDLInterface
 		int w; //! Width of the rectangle
 		int h; //! Height of the rectangle
 	};
+	//! \brief the Rect class
+	//! functions as a replacement for SDL_Rect, wrapping one would be unneeded and would complicate the interface somewhat
+	struct Point
+	{
+		// Member variables to immitate SDL_Rect
+		int x; //! Upper left x coord
+		int y; //! Upper left y coord
+	};
+
 }
 
 #endif //_SDLRECT_H_

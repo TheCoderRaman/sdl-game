@@ -13,6 +13,7 @@
 //===============================================================
 LSprite::LSprite()
 : m_pchFileName( nullptr )
+, m_rotation( 0.0f )
 {
 
 }
@@ -46,6 +47,9 @@ LError LSprite::SetSourceRect(const SDLInterface::Rect& rect)
 	// Set the internal rectangle
 	m_srcRect = rect;
 
+	// Set the internal rotational centre
+	m_rotCentre = { rect.w, rect.h };
+
 	return err;
 }
 
@@ -59,6 +63,17 @@ LError LSprite::SetPos(int x, int y)
 	// set the destination position
 	m_destRect.x = x;
 	m_destRect.y = y;
+
+	return err;
+}
+
+//===============================================================
+LError LSprite::SetRotation(float f)
+{
+	LError err = LError::NoErr;
+
+	// set the destination position
+	m_rotation = f;
 
 	return err;
 }
@@ -106,7 +121,7 @@ LError LSprite::SetSize(int w, int h)
 LError LSprite::Render(LRenderer2D* renderer)
 {
 	// Render the texture
-	SDLInterface::Error err = renderer->GetBaseRenderer().RenderTexture(&m_Texture, m_srcRect, m_destRect);
+	SDLInterface::Error err = renderer->GetBaseRenderer().RenderTexture(&m_Texture, m_srcRect, m_destRect, m_rotation, m_rotCentre, 0);
 
 	return SDL_ERROR_HAS_FATAL(err) ? LError::Fatal : LError::NoErr;
 }

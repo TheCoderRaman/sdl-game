@@ -72,7 +72,9 @@ LError Banana::VOnUpdate( ms elapsed )
 
 //	m_banana.SetPos( m_iTimeElapsed, 100 );
 
-
+	static int f = 0.0f;
+	f += 1.0f;
+	m_banana.SetRotation(f);
 
 	return LError::NoErr;
 }
