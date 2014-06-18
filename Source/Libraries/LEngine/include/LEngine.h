@@ -112,7 +112,6 @@ public:
 
 	//! \brief get the renderer
 	static inline LRenderer2D&		GetRenderer();
-	static inline LUpdatingList&	GetEventLoop();
 	static inline LInput&			GetInputManager();
 
 private:
@@ -160,8 +159,10 @@ private:
 	//! \brief The Renderer
 	LRenderer2D				m_Renderer;
 
-	//! \brief The UpdateLoop
-	LUpdatingList			m_UpdateLoop;
+	//! \brief The UpdatingList
+	LUpdatingList			m_UpdatingList;
+
+	static inline LUpdatingList&	GetUpdatingList();
 
 	//! \brief The InputManager
 	LInput					m_InputManager;
@@ -189,9 +190,9 @@ inline LRenderer2D& LEngine::GetRenderer()
 }
 
 //===============================================================
-inline LUpdatingList& LEngine::GetEventLoop()
+inline LUpdatingList& LEngine::GetUpdatingList()
 {
-	return GetCurrentEngine().m_UpdateLoop;
+	return GetCurrentEngine().m_UpdatingList;
 }
 
 //===============================================================

@@ -30,18 +30,24 @@ LError LGameBase::Create()
 //===============================================================
 LError LGameBase::PreUpdate()
 {
+	m_UpdatingList.PreUpdate();
+
 	return VOnPreUpdate();
 }
 
 //===============================================================
 LError LGameBase::Update(ms elapsed)
 {
+	m_UpdatingList.Update(elapsed);
+
 	return VOnUpdate(elapsed);
 }
 
 //===============================================================
 LError LGameBase::PostUpdate()
 {
+	m_UpdatingList.PostUpdate();
+
 	return VOnPostUpdate();
 }
 

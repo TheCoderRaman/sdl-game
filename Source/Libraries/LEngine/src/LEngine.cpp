@@ -279,9 +279,9 @@ LError LEngine::PreUpdate( void )
 	// Poll the keyboard now for the current frame's inputs
 	m_InputManager.StartKeyboardUpdate();
 
-	err |= m_myGame.PreUpdate();
+	err |= m_UpdatingList.PreUpdate();
 
-	err |= m_UpdateLoop.PreUpdate();
+	err |= m_myGame.PreUpdate();
 
 	return err;
 }
@@ -292,7 +292,7 @@ LError LEngine::Update(ms elapsed)
 	LError err = LError::NoErr;
 
 	// We need to decide when this happens
-	err |=  m_UpdateLoop.Update( elapsed );
+	err |= m_UpdatingList.Update(elapsed);
 
 	err |= m_myGame.Update(elapsed);
 
@@ -304,7 +304,7 @@ LError LEngine::PostUpdate( void )
 {
 	LError err = LError::NoErr;
 
-	err |= m_UpdateLoop.PostUpdate();
+	err |= m_UpdatingList.PostUpdate();
 
 	err |= m_myGame.PostUpdate();
 

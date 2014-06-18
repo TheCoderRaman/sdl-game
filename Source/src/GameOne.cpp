@@ -45,7 +45,7 @@ LError GameOne::VOnCreate()
 	// Set up the banana
 	m_banana.SetRenderer(&LEngine::GetRenderer());
 	m_banana.Create();
-	LEngine::GetEventLoop().Register(&m_banana);
+	GetUpdatingList().Register(&m_banana);
 
  	return err;
 }
