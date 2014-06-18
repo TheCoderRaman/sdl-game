@@ -47,6 +47,9 @@ public:
 	//! \brief set the sprite size
 	LError SetSize(int w, int h);
 
+	//! \brief set the sprite size
+	LError SetRotation(float f);
+
 	//! \brief Overload for the base type render function
 	virtual LError Render(LRenderer2D* renderer);
 
@@ -63,6 +66,12 @@ private:
 
 	//! \brief the destination rectangle on screen
 	SDLInterface::Rect m_destRect;
+
+	//! \brief the rotational centre
+	SDLInterface::Point m_rotCentre;
+
+	//! \brief the sprite rotation
+	float m_rotation;
 
 	//! \brief the filename
 	const char* m_pchFileName;
