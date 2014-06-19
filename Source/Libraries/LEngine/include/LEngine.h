@@ -102,7 +102,10 @@ public:
 	LError GameThreadLoop();
 
 	//! \brief Pause or un pause a specific part of the engine
-	inline bool GetIsPaused(LEnginePauseSystem::TFlags system);
+	static inline bool GetIsPaused(LEnginePauseSystem::TFlags system);
+
+	//! \brief Pause or un pause a specific part of the engine
+	static inline void PauseSubSystem(LEnginePauseSystem::TFlags system, bool pause);
 
 	//! \brief get if the engine is quitting
 	bool QuitHasBeenRequested();
@@ -148,9 +151,7 @@ private:
 	// Various members for the Engine
 private:
 
-	//! \brief Pause or un pause a specific part of the engine
-	inline void PauseSubSystem(LEnginePauseSystem::TFlags system, bool pause);
-
+	//! Wait until a particular subsystem is unpaused
 	void WaitIfPaused(LEnginePauseSystem::TFlags system);
 
 	//! \brief The main window
@@ -205,15 +206,15 @@ inline LInput& LEngine::GetInputManager()
 inline void LEngine::PauseSubSystem(LEnginePauseSystem::TFlags system, bool pause)
 {
 	if (pause)
-		m_pauseFlags.AddNextFlag(system);
+		GetCurrentEngine().m_pauseFlags.AddNextFlag(system);
 	else
-		m_pauseFlags.RemoveNextFlags(system);
+		GetCurrentEngine().m_pauseFlags.RemoveNextFlags(system);
 }
 
 //===============================================================
 inline bool LEngine::GetIsPaused(LEnginePauseSystem::TFlags system)
 {
-	return m_pauseFlags.GetCurrentFlag(system);
+	return GetCurrentEngine().m_pauseFlags.GetCurrentFlag(system);
 }
 
 #endif //_LENGINE_H_

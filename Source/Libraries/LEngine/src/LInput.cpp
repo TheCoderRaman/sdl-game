@@ -51,6 +51,10 @@ void LInput::StartKeyboardUpdate( void )
 	{
 		m_abButtonsPressedThisFrame[ ( int ) eInputType::right ] = true;
 	}
+	if (SDLInterface::EventHandling::GetKeyPressed(SDLInterface::eSDLKeyInterface::key_p))
+	{
+		m_abButtonsPressedThisFrame[(int)eInputType::pause] = true;
+	}
 }
 
 void LInput::EndKeyboardUpdate( void )

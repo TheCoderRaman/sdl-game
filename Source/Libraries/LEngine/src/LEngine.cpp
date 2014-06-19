@@ -67,7 +67,8 @@ void LEngine::RequestQuit()
 //===============================================================
 void LEngine::WaitIfPaused(LEnginePauseSystem::TFlags system)
 {
-	while (GetIsPaused(system))
+	while (GetIsPaused(system) 
+		&& !SDLInterface::EventLoop::QuitHasBeenRequested())
 	{
 		// Delay for 10ms and check again
 		SDLInterface::Thread::Delay(10);
@@ -296,6 +297,15 @@ LError LEngine::Update(ms elapsed)
 
 	err |= m_myGame.Update(elapsed);
 
+	// Pause or unpause the game
+	if (LEngine::GetInputManager().GetButtonJustPressed(LInput::eInputType::pause))
+	{
+		bool paused = !LEngine::GetIsPaused(EEnginePauseFlag::Game);
+		LEngine::PauseSubSystem(EEnginePauseFlag::Game, paused);
+
+
+	}
+
 	return err;
 }
 
@@ -390,9 +400,6 @@ LError LEngine::GameThreadLoop()
 	while ( !LERROR_HAS_FATAL( err )
 		&& !LERROR_HAS( err, LError::QuitRequest ) )
 	{
-		// Wait if we're paused
-		WaitIfPaused(EEnginePauseFlag::Game);
-
 		// Delay until the end of the desired frame time
 		SDLInterface::Thread::DelayUntil(frameTime + DESIRED_FRAMETIME_MS);
 
