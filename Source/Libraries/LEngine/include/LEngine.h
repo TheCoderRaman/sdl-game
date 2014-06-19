@@ -20,6 +20,7 @@
 #include "LGameBase.h"
 #include "LEvents.h"
 #include "LAudio.h"
+#include "LPauseSystem.h"
 
 #include <atomic>
 
@@ -38,6 +39,19 @@ union UEngineEventData
 	{
 		int pause_level;
 	} pause;
+};
+
+//! Enum for pause flags
+// Not strongly typed as it's just a flag
+enum EEnginePauseFlag
+{
+	Game = 0x0001,
+	Render = 0x0002,
+	Physics = 0x0004,
+	Audio = 0x0008,
+	Controls = 0x0010,
+
+	Global = 0xFFFF
 };
 
 // These functions must be anonymous to be called by a starting thread
@@ -64,6 +78,9 @@ private:
 
 public:
 
+	//! \brief typedef the templated pause system
+	typedef LPauseSystem<EEnginePauseFlag> LEnginePauseSystem;
+
 	//! \brief Constructor and destructor
 	LEngine(LGameBase& game);
 	~LEngine();
@@ -86,6 +103,11 @@ public:
 	//! \brief the main game thread loop
 	LError GameThreadLoop();
 
+	//! \brief Pause or un pause a specific part of the engine
+	static inline bool GetIsPaused(LEnginePauseSystem::TFlags system);
+
+	//! \brief Pause or un pause a specific part of the engine
+	static inline void PauseSubSystem(LEnginePauseSystem::TFlags system, bool pause);
 
 	//! \brief get if the engine is quitting
 	bool QuitHasBeenRequested();
@@ -95,7 +117,7 @@ public:
 
 	//! \brief get the renderer
 	static inline LRenderer2D&		GetRenderer();
-	static inline LUpdatingList&	GetEventLoop();
+	static inline LUpdatingList&		GetEventLoop();
 	static inline LInput&			GetInputManager();
 	static inline LAudio&			GetAudioManager();
 
@@ -133,6 +155,9 @@ private:
 	// Various members for the Engine
 private:
 
+	//! Wait until a particular subsystem is unpaused
+	void WaitIfPaused(LEnginePauseSystem::TFlags system);
+
 	//! \brief The main window
 	SDLInterface::Window	m_MainWindow;
 
@@ -142,8 +167,10 @@ private:
 	//! \brief The Renderer
 	LRenderer2D				m_Renderer;
 
-	//! \brief The UpdateLoop
-	LUpdatingList				m_UpdateLoop;
+	//! \brief The UpdatingList
+	LUpdatingList			m_UpdatingList;
+
+	static inline LUpdatingList&	GetUpdatingList();
 
 	//! \brief The InputManager
 	LInput					m_InputManager;
@@ -155,7 +182,10 @@ private:
 	std::atomic<bool>		m_bQuitting;
 
 	//! \brief The game the engine will be using
-	LGameBase&	m_myGame;
+	LGameBase&				m_myGame;
+
+	//! Engine pause flags
+	LEnginePauseSystem		m_pauseFlags;
 };
 
 //===============================================================
@@ -168,9 +198,9 @@ inline LRenderer2D& LEngine::GetRenderer()
 }
 
 //===============================================================
-inline LUpdatingList& LEngine::GetEventLoop()
+inline LUpdatingList& LEngine::GetUpdatingList()
 {
-	return GetCurrentEngine().m_UpdateLoop;
+	return GetCurrentEngine().m_UpdatingList;
 }
 
 //===============================================================
@@ -183,6 +213,21 @@ inline LInput& LEngine::GetInputManager()
 inline LAudio& LEngine::GetAudioManager()
 {
 	return GetCurrentEngine().m_AudioManager;
+}
+
+//===============================================================
+inline void LEngine::PauseSubSystem(LEnginePauseSystem::TFlags system, bool pause)
+{
+	if (pause)
+		GetCurrentEngine().m_pauseFlags.AddNextFlag(system);
+	else
+		GetCurrentEngine().m_pauseFlags.RemoveNextFlags(system);
+}
+
+//===============================================================
+inline bool LEngine::GetIsPaused(LEnginePauseSystem::TFlags system)
+{
+	return GetCurrentEngine().m_pauseFlags.GetCurrentFlag(system);
 }
 
 #endif //_LENGINE_H_

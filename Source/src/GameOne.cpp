@@ -45,7 +45,7 @@ LError GameOne::VOnCreate()
 	// Set up the banana
 	m_banana.SetRenderer(&LEngine::GetRenderer());
 	m_banana.Create();
-	LEngine::GetEventLoop().Register(&m_banana);
+	GetUpdatingList().Register(&m_banana);
 
 	LEngine::GetAudioManager().LoadMusic( "Media/music.mp3", "song1" );
 	LEngine::GetAudioManager().PlayMusic( "song1", true );

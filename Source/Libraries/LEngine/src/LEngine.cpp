@@ -65,6 +65,17 @@ void LEngine::RequestQuit()
 }
 
 //===============================================================
+void LEngine::WaitIfPaused(LEnginePauseSystem::TFlags system)
+{
+	while (GetIsPaused(system) 
+		&& !SDLInterface::EventLoop::QuitHasBeenRequested())
+	{
+		// Delay for 10ms and check again
+		SDLInterface::Thread::Delay(10);
+	}
+}
+
+//===============================================================
 LError LEngine::Start()
 {
 	// Set the current engine to this one
@@ -263,13 +274,15 @@ LError LEngine::PreUpdate( void )
 {
 	LError err = LError::NoErr;
 
+	m_pauseFlags.FlushNextFlags();
+
 	// Push the current frame's inputs to last frame's and clear this frame's key buffer
 	// Poll the keyboard now for the current frame's inputs
 	m_InputManager.StartKeyboardUpdate();
 
-	err |= m_myGame.PreUpdate();
+	err |= m_UpdatingList.PreUpdate();
 
-	err |= m_UpdateLoop.PreUpdate();
+	err |= m_myGame.PreUpdate();
 
 	return err;
 }
@@ -280,9 +293,18 @@ LError LEngine::Update(ms elapsed)
 	LError err = LError::NoErr;
 
 	// We need to decide when this happens
-	err |=  m_UpdateLoop.Update( elapsed );
+	err |= m_UpdatingList.Update(elapsed);
 
 	err |= m_myGame.Update(elapsed);
+
+	// Pause or unpause the game
+	if (LEngine::GetInputManager().GetButtonJustPressed(LInput::eInputType::pause))
+	{
+		bool paused = !LEngine::GetIsPaused(EEnginePauseFlag::Game);
+		LEngine::PauseSubSystem(EEnginePauseFlag::Game, paused);
+
+
+	}
 
 	return err;
 }
@@ -292,7 +314,7 @@ LError LEngine::PostUpdate( void )
 {
 	LError err = LError::NoErr;
 
-	err |= m_UpdateLoop.PostUpdate();
+	err |= m_UpdatingList.PostUpdate();
 
 	err |= m_myGame.PostUpdate();
 
@@ -321,6 +343,9 @@ LError LEngine::RenderThreadLoop()
 	while (!LERROR_HAS_FATAL(err)
 		&& !LERROR_HAS(err, LError::QuitRequest))
 	{
+		// Wait if we're paused
+		WaitIfPaused(EEnginePauseFlag::Render);
+
 		// Delay until the end of the desired frame time
 		SDLInterface::Thread::DelayUntil(frameTime + DESIRED_FRAMETIME_MS);
 		

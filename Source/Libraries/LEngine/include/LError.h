@@ -13,26 +13,26 @@
 
 
 //! Warning flag
-#define _ERROR_WARNING		(LError)0x10000000
+#define _ERROR_WARNING		(LError)0x1000
 
 //! Fatal flag
-#define _ERROR_FATAL		(LError)0x20000000
+#define _ERROR_FATAL		(LError)0x2000
 
 
 //! \brief generic LError enum for LError handling
 enum class LError : int
 {
 	// 	LError name		  LError bit value for flags
-	NoErr = 0x00000000,
+	NoErr		= 0x0000,
 
 	// 	Specific Errors     Last 4 bits for specific errors
-	QuitRequest = 0x00000001,
+	QuitRequest = 0x0001,
 
-	Fatal = 0x00000002,
-	Warning = 0x00000004,
+	Fatal		= 0x0002,
+	Warning		= 0x0004,
 
 	// ALL errors
-	All = 0x11111111,
+	All			= 0xFFFF,
 
 };
 

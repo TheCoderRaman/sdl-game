@@ -141,7 +141,7 @@ SDLInterface::Error SDLInterface::Renderer::RenderRectangle(const Rect& src, int
 }
 
 //========================================================
-SDLInterface::Error SDLInterface::Renderer::RenderTexture(Texture* tex, const Rect& src, const Rect& dest)
+SDLInterface::Error SDLInterface::Renderer::RenderTexture(Texture* tex, const Rect& src, const Rect& dest, float rotation /*= 0.0f*/, const Point& centerRot /*= Rect()*/, int flipValue /*= SDL_FLIP_NONE*/)
 {
 	Error err = Error::None;
 
@@ -154,6 +154,8 @@ SDLInterface::Error SDLInterface::Renderer::RenderTexture(Texture* tex, const Re
 	// Create the two SDL_Rects
 	SDL_Rect source			= RECT_TO_SDL_RECT(src);
 	SDL_Rect destination	= RECT_TO_SDL_RECT(dest);
+	SDL_Point rot			= { centerRot.x / 2, centerRot.y / 2 };
+	SDL_RendererFlip  flip	= SDL_FLIP_NONE;
 
 #ifndef WINDOWS_BUILD
 	// On Linux and OSX we have to render this on the main thread
@@ -164,7 +166,13 @@ SDLInterface::Error SDLInterface::Renderer::RenderTexture(Texture* tex, const Re
 	{
 #endif
 		// Copy the texture over to the renderer
-		SDL_RenderCopy(m_SDL_Renderer, Helper::GetSDL_Texture(tex), &source, &destination);
+		SDL_RenderCopyEx(m_SDL_Renderer, 
+						Helper::GetSDL_Texture(tex), 
+						&source, 
+						&destination,
+						rotation,
+						&rot,
+						flip);
 
 #ifndef WINDOWS_BUILD
 		return Error::None;

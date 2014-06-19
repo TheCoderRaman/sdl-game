@@ -162,6 +162,10 @@ SDLInterface::Error SDLInterface::EventHandling::HandleKeyboardEvent( SDL_Event 
 		case SDLK_RIGHT:
 			eKeyPressed = eSDLKeyInterface::key_right;
 			break;
+
+		case SDLK_p:
+			eKeyPressed = eSDLKeyInterface::key_p;
+			break;
 	}
 
 	eKeyState& state = sm_KeyboardStruct.m_abKeyboardEvents[(unsigned)eKeyPressed];

@@ -11,8 +11,8 @@
 //! Great explanation on how this can work is here 
 //! http://forum.codecall.net/topic/56591-bit-fields-flags-tutorial-with-example/
 
-#define _SDL_ERROR_WARNING		0x10000000
-#define _SDL_ERROR_FATAL		0x20000000
+#define _SDL_ERROR_WARNING		0x1000
+#define _SDL_ERROR_FATAL		0x2000
 
 namespace SDLInterface
 {
@@ -24,19 +24,19 @@ enum class Error : int
 	None						= 0,
 
 	// Harmless errors
-	QuitRequest					= 0x00000001,
+	QuitRequest					= 0x0001,
 
 	// Warning errors
-	Surface_create_fail			= 0x00000002 | _SDL_ERROR_WARNING,
-	Texture_create_fail			= 0x00000004 | _SDL_ERROR_WARNING,
+	Surface_create_fail			= 0x0002 | _SDL_ERROR_WARNING,
+	Texture_create_fail			= 0x0004 | _SDL_ERROR_WARNING,
 
 	// Fatal errors
-	Init_fail					= 0x00000008 | _SDL_ERROR_FATAL,
-	Img_init_fail				= 0x00000010 | _SDL_ERROR_FATAL,
-	Window_create_fail			= 0x00000011 | _SDL_ERROR_FATAL,
-	Eventloop_double_create		= 0x00000012 | _SDL_ERROR_FATAL,
-	Renderer_create_fail		= 0x00000014 | _SDL_ERROR_FATAL,
-	Thread_func_null			= 0x00000018 | _SDL_ERROR_FATAL,
+	Init_fail					= 0x0008 | _SDL_ERROR_FATAL,
+	Img_init_fail				= 0x0010 | _SDL_ERROR_FATAL,
+	Window_create_fail			= 0x0011 | _SDL_ERROR_FATAL,
+	Eventloop_double_create		= 0x0012 | _SDL_ERROR_FATAL,
+	Renderer_create_fail		= 0x0014 | _SDL_ERROR_FATAL,
+	Thread_func_null			= 0x0018 | _SDL_ERROR_FATAL,
 
 };
 

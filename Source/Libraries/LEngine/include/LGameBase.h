@@ -46,6 +46,8 @@ public:
 
 protected:
 
+	//! \brief Get the updatable list
+	inline LUpdatingList&	GetUpdatingList();
 
 private:
 
@@ -67,6 +69,15 @@ private:
 	//! \brief Method called on unloading the game
 	virtual LError VOnDestroy() = 0;
 
+	//! \brief the game's updating list
+	LUpdatingList	m_UpdatingList;
+
 };
+
+//===============================================================
+inline LUpdatingList& LGameBase::GetUpdatingList()
+{
+	return m_UpdatingList;
+}
 
 #endif //_LGAMEBASE_H_

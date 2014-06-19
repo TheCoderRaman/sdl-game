@@ -6,7 +6,7 @@
 //! Description
 //! 
 #include "LGameBase.h"
-
+#include "LEngine.h"
 #include "LError.h"
 
 //===============================================================
@@ -30,19 +30,46 @@ LError LGameBase::Create()
 //===============================================================
 LError LGameBase::PreUpdate()
 {
-	return VOnPreUpdate();
+	if (!LEngine::GetIsPaused(EEnginePauseFlag::Game) )
+	{
+		m_UpdatingList.PreUpdate();
+
+		return VOnPreUpdate();
+	}
+	else
+	{
+		return LError::NoErr;
+	}
 }
 
 //===============================================================
 LError LGameBase::Update(ms elapsed)
 {
-	return VOnUpdate(elapsed);
+	if (!LEngine::GetIsPaused(EEnginePauseFlag::Game))
+	{
+		m_UpdatingList.Update(elapsed);
+
+		return VOnUpdate(elapsed);
+	}
+	else
+	{
+		return LError::NoErr;
+	}
 }
 
 //===============================================================
 LError LGameBase::PostUpdate()
 {
-	return VOnPostUpdate();
+	if (!LEngine::GetIsPaused(EEnginePauseFlag::Game))
+	{
+		m_UpdatingList.PostUpdate();
+
+		return VOnPostUpdate();
+	}
+	else
+	{
+		return LError::NoErr;
+	}
 }
 
 //===============================================================
