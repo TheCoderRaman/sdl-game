@@ -46,6 +46,9 @@ endif()
 if (NOT TARGET Util)
 	add_subdirectory(Libraries/Util)
 endif() 
+if (NOT TARGET Box2D)
+	add_subdirectory(../Box2D build)
+endif() 
 
 #-----------------------------------------------------------------
 # COMPILER FLAGS 
