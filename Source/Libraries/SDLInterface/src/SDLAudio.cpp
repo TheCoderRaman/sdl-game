@@ -25,6 +25,12 @@ SDLInterface::Audio::Audio()
 	}
 }
 
+SDLInterface::Audio::~Audio()
+{
+	Mix_CloseAudio();
+}
+
+
 SDLInterface::SDLMusicFile SDLInterface::Audio::LoadMusic( const char* filename )
 {
 	SDLInterface::SDLMusicFile toReturn;
@@ -58,21 +64,37 @@ void SDLInterface::Audio::PlayMusic( SDLInterface::SDLMusicFile music, bool bLoo
 	}
 }
 
-SDLInterface::Audio::~Audio()
+SDLInterface::SDLSoundFile SDLInterface::Audio::LoadSound( const char* filename )
 {
+	SDLInterface::SDLSoundFile toReturn;
 
+	toReturn.AddSound( Mix_LoadWAV( filename ) );
+
+	if( toReturn.GetSound() == NULL )
+	{
+		DEBUG_LOG( "Can't load that sound because: %s", Mix_GetError() );
+	}
+
+	return toReturn;
 }
 
-SDLInterface::SDLMusicFile::SDLMusicFile( void )
-: thisMusic( nullptr )
+void SDLInterface::Audio::PlaySound( SDLInterface::SDLSoundFile sound )
 {
+	int channel = 1;
+
+	if( Mix_Playing( channel ) == 0 )
+	{
+		//Play the music
+		if( -1 == Mix_PlayChannel( channel, sound.GetSound(), 0 ) )
+		{
+			DEBUG_LOG( "Playing music error: %s", Mix_GetError() );
+		}
+	}
 }
 
-SDLInterface::SDLMusicFile::~SDLMusicFile( void )
-{
 
-}
-
+//====================================================
+// Music
 void SDLInterface::SDLMusicFile::FreeMusic( void )
 {
 	Mix_FreeMusic( thisMusic );
@@ -89,3 +111,20 @@ Mix_Music* SDLInterface::SDLMusicFile::GetMusic( void )
 	return thisMusic;
 }
 
+//====================================================
+// Sound
+void SDLInterface::SDLSoundFile::FreeSound( void )
+{
+	Mix_FreeChunk( thisSound );
+	thisSound = nullptr;
+}
+
+void SDLInterface::SDLSoundFile::AddSound( Mix_Chunk* file )
+{
+	thisSound = file;
+}
+
+Mix_Chunk* SDLInterface::SDLSoundFile::GetSound( void )
+{
+	return thisSound;
+}

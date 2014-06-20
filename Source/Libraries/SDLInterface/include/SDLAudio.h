@@ -14,21 +14,31 @@
 struct _Mix_Music;
 typedef _Mix_Music Mix_Music;
 
+struct Mix_Chunk;
+
 // Start the SDLInterface Namespace
 namespace SDLInterface
 {
 	class SDLMusicFile
 	{
 	public:
-		SDLMusicFile();
-		~SDLMusicFile();
-
 		void FreeMusic( void );
 		void SetMusic( Mix_Music* file );
 		Mix_Music* GetMusic( void );
 
 	private:
 		Mix_Music* thisMusic;
+	};
+
+	class SDLSoundFile
+	{
+	public:
+		void FreeSound( void );
+		void AddSound( Mix_Chunk* file );
+		Mix_Chunk* GetSound( void );
+
+	private:
+		Mix_Chunk* thisSound;
 	};
 	
 	//! \brief an Audio class
@@ -41,8 +51,10 @@ namespace SDLInterface
 		~Audio();
 
 		SDLMusicFile LoadMusic( const char* filename );
+		void PlayMusic( SDLMusicFile music, bool bLoops );
 
-		void PlayMusic( SDLMusicFile, bool bLoops );
+		SDLSoundFile LoadSound( const char* filename );
+		void PlaySound( SDLSoundFile sound );
 	};
 }
 
