@@ -55,6 +55,10 @@ void LInput::StartKeyboardUpdate( void )
 	{
 		m_abButtonsPressedThisFrame[(int)eInputType::pause] = true;
 	}
+	if( SDLInterface::EventHandling::GetKeyPressed( SDLInterface::eSDLKeyInterface::key_space ) )
+	{
+		m_abButtonsPressedThisFrame[ ( int ) eInputType::jump ] = true;
+	}
 }
 
 void LInput::EndKeyboardUpdate( void )

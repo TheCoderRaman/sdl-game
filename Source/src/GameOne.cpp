@@ -43,12 +43,21 @@ LError GameOne::VOnCreate()
 	m_myEventManager.AddHandler( eGameEventType::GameEvent_pause, &m_myEventHandler );
 
 	// Set up the banana
-	m_banana.SetRenderer(&LEngine::GetRenderer());
+	m_banana.SetRenderer( &LEngine::GetRenderer() );
 	m_banana.Create();
 	GetUpdatingList().Register(&m_banana);
 
+	// Set up the paddle
+	m_paddle.SetRenderer( &LEngine::GetRenderer() );
+	m_paddle.Create();
+	m_paddle.SetPos( 100, 400 );
+
+	GetUpdatingList().Register( &m_paddle );
+
 	LEngine::GetAudioManager().LoadMusic( "Media/music.mp3", "song1" );
 	LEngine::GetAudioManager().PlayMusic( "song1", true );
+
+	LEngine::GetAudioManager().LoadSound( "Media/hit.wav", "hit" );
 
  	return err;
 }
@@ -66,13 +75,27 @@ LError GameOne::VOnUpdate(ms elapsed)
 {
  	LError err = LError::NoErr;
 
-	if (LEngine::GetInputManager().GetButtonHeldDown(LInput::eInputType::up))
+	if (LEngine::GetInputManager().GetButtonHeldDown( LInput::eInputType::up ) )
 	{
 		m_banana.MoveBananaUpAFrame();
 	}
-	if (LEngine::GetInputManager().GetButtonJustPressed(LInput::eInputType::down))
+	if (LEngine::GetInputManager().GetButtonJustPressed( LInput::eInputType::down ) )
 	{
 		m_banana.MoveBananaDownAFrame();
+	}
+
+	if( LEngine::GetInputManager().GetButtonHeldDown( LInput::eInputType::left ) )
+	{
+		m_paddle.MoveLeft();
+	}
+	if( LEngine::GetInputManager().GetButtonHeldDown( LInput::eInputType::right ) )
+	{
+		m_paddle.MoveRight();
+	}
+
+	if( LEngine::GetInputManager().GetButtonJustPressed( LInput::eInputType::jump ) )
+	{
+ 		LEngine::GetAudioManager().PlaySound( "hit" );
 	}
 
 	// Send a pause event FOR SOME REASON I DON'T KNOW MAN
@@ -108,6 +131,7 @@ LError GameOne::VOnDestroy()
  	LError err = LError::NoErr;
 
 	m_banana.Destroy();
+	m_paddle.Destroy();
 
 	// Remove the event handler
 	if (!LERROR_HAS_FATAL(err))

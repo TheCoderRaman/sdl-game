@@ -16,65 +16,49 @@ LError Banana::Create( void )
 
 	LError err = LError::NoErr;
 
-	m_iTimeElapsed = 100;
-
 	// Must have renderer before creating the sprite
 	DEBUG_ASSERT(GetRenderer());
 
 	// Create the banana
-	err |= m_banana.Create( *GetRenderer(), "Media/banana.png" );
+	err |= GetSprite()->Create( *GetRenderer(), "Media/banana.png" );
 
 	// Set up the banana
-	m_banana.SetSourceRect( { 0, 0, 400, 300 } );
-	m_banana.SetSize( 400, 300 );
-	m_banana.SetPos( 100, 100 );
+	GetSprite()->SetSourceRect( { 0, 0, 400, 300 } );
+	GetSprite()->SetSize( 400, 300 );
+	GetSprite()->SetPos( 100, 100 );
 
-	// Add said banana to the renderer
-	if (!LERROR_HAS_FATAL(err))
-		err |= GetRenderer()->AddRenderable(&m_banana);
+	GameSprite::Create(); // Adds it to the renderer
 
 	return err;
 }
 
-void Banana::SetPos( int x, int y )
-{
-	m_banana.SetPos( x, y );
-}
-
 void Banana::MoveBananaDownAFrame( void )
 {
-	m_banana.SetPos( m_banana.GetXPos(), m_banana.GetYPos() + 20 );
+	GetSprite()->SetPos( GetSprite()->GetXPos(), GetSprite()->GetYPos() + 20 );
 }
 
 void Banana::MoveBananaUpAFrame( void )
 {
-	m_banana.SetPos( m_banana.GetXPos(), m_banana.GetYPos() - 20 );
+	GetSprite()->SetPos( GetSprite()->GetXPos(), GetSprite()->GetYPos() - 20 );
 }
 
 void Banana::MoveBananaLeftAFrame( void )
 {
-	m_banana.SetPos( m_banana.GetXPos() - 20, m_banana.GetYPos() );
+	GetSprite()->SetPos( GetSprite()->GetXPos() - 20, GetSprite()->GetYPos() );
 }
 
 void Banana::MoveBananaRightAFrame( void )
 {
-	m_banana.SetPos( m_banana.GetXPos() + 20, m_banana.GetYPos() );
+	GetSprite()->SetPos( GetSprite()->GetXPos() + 20, GetSprite()->GetYPos() );
 }
 
 LError Banana::VOnUpdate( ms elapsed )
 {
-	m_iTimeElapsed += (int) elapsed / 1.5;
-
-	if( m_iTimeElapsed > 700 )
-	{
-		m_iTimeElapsed = -450;
-	}
-
-//	m_banana.SetPos( m_iTimeElapsed, 100 );
+	//	m_banana.SetPos( m_iTimeElapsed, 100 );
 
 	static int f = 0.0f;
 	f += 1.0f;
-	m_banana.SetRotation(f);
+	GetSprite()->SetRotation( f );
 
 	return LError::NoErr;
 }
@@ -95,12 +79,7 @@ LError Banana::Destroy( void )
 {
 	RUNTIME_LOG( "Destroying Banana..." );
 
-	GetRenderer()->RemoveRenderable( &m_banana );
-
-	m_banana.Destroy();
-
-	// Removing our reference to the renderer
-	SetRenderer( nullptr );
+	GameSprite::Destroy();
 
 	return LError::NoErr;
 }

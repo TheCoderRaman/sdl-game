@@ -13,6 +13,7 @@
 #include "LSprite.h"
 
 #include "Banana.h"
+#include "Paddle.h"
 
 #include "types.h"
 
@@ -59,6 +60,7 @@ private:
 
 	//! \brief the Banana
 	Banana m_banana;
+	Paddle m_paddle;
 
 	//! \brief The Game Event Manager
 	TGameEventManager m_myEventManager;

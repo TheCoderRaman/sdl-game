@@ -25,13 +25,17 @@ set (PROJECT_SOURCE_DIR
 # HEADER AND SOURCE FILES
 SET(PROJECT_HEADERS
 	${CMAKE_CURRENT_SOURCE_DIR}/include/GameOne.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/GameSprite.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/Banana.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/Paddle.h
 )
 
 set(PROJECT_SRCS 
 	${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/GameOne.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/GameSprite.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/Banana.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/Paddle.cpp
 )
 
 #-----------------------------------------------------------------
