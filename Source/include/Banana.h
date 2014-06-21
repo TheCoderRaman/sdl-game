@@ -1,44 +1,33 @@
-//! \file GameOne.cpp
+//! \file 
 //!
-//! \author  Marc Di luzio
-//! \date    April 2014
+//! \author  
+//! \date    
 //!
-//! Main game class, responsible for managing all game specific stuff
+//! blarg
 //!
-#include "LUpdatable.h"
-#include "LRenderer.h"
-#include "LSprite.h"
+
+#ifndef _BANANA_H_
+#define _BANANA_H_
+
+#include "GameSprite.h"
 
 #include "LError.h"
 
-class Banana : public LUpdatable, public LRendereable2D
+class Banana : public GameSprite
 {
 
 public:
 
-	LError Create(void);
-	LError Destroy(void);
+	LError Create( void );
+	LError Destroy( void );
 
-	virtual LError Render(LRenderer2D* renderer);
-
-	void MoveBananaUpAFrame();
-	void MoveBananaLeftAFrame();
-	void MoveBananaRightAFrame();
-	void MoveBananaDownAFrame();
-
-	void SetPos( int x, int y );
+	virtual LError Render( LRenderer2D* renderer );
 
 private:
-
 
 	virtual LError VOnUpdate(ms elapsed);
 
 	virtual LError VOnReset(void);
-
-
-
-	//! \brief The Banana
-	LSprite		m_banana;
-
-	int			m_iTimeElapsed;
 };
+
+#endif

@@ -20,7 +20,7 @@ public:
 
 	void LoadMusic( const char* filename, const char* name );
 	void PlayMusic( const char* name, bool bShouldLoop );
-	void PauseMusic( void );
+	void TogglePauseMusic( void );
 
 	void LoadSound( const char* filename, const char* name );
 	void PlaySound( const char* name );

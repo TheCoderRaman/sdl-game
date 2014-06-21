@@ -12,6 +12,9 @@
 #include "SDLAudio.h"
 #include "debug.h"
 
+//====================================================
+//   Audio Interface
+//====================================================
 SDLInterface::Audio::Audio()
 {
 	if( -1 == Mix_OpenAudio( MIX_DEFAULT_FREQUENCY, MIX_DEFAULT_FORMAT, MIX_DEFAULT_CHANNELS, 1024 ) )
@@ -25,12 +28,13 @@ SDLInterface::Audio::Audio()
 	}
 }
 
+//====================================================
 SDLInterface::Audio::~Audio()
 {
 	Mix_CloseAudio();
 }
 
-
+//====================================================
 SDLInterface::SDLMusicFile SDLInterface::Audio::LoadMusic( const char* filename )
 {
 	SDLInterface::SDLMusicFile toReturn;
@@ -45,6 +49,7 @@ SDLInterface::SDLMusicFile SDLInterface::Audio::LoadMusic( const char* filename 
 	return toReturn;
 }
 
+//====================================================
 void SDLInterface::Audio::PlayMusic( SDLInterface::SDLMusicFile music, bool bLoops )
 {
 	int loops = 0;
@@ -64,6 +69,7 @@ void SDLInterface::Audio::PlayMusic( SDLInterface::SDLMusicFile music, bool bLoo
 	}
 }
 
+//====================================================
 SDLInterface::SDLSoundFile SDLInterface::Audio::LoadSound( const char* filename )
 {
 	SDLInterface::SDLSoundFile toReturn;
@@ -78,6 +84,7 @@ SDLInterface::SDLSoundFile SDLInterface::Audio::LoadSound( const char* filename 
 	return toReturn;
 }
 
+//====================================================
 void SDLInterface::Audio::PlaySound( SDLInterface::SDLSoundFile sound )
 {
 	int channel = 1;
@@ -92,38 +99,58 @@ void SDLInterface::Audio::PlaySound( SDLInterface::SDLSoundFile sound )
 	}
 }
 
+//====================================================
+void SDLInterface::Audio::ToggleMusicPause( void )
+{
+	// If we're unpaused
+	if( Mix_PausedMusic() == 0 )
+	{
+		Mix_PauseMusic(); 
+	}
+	else // we're paused
+	{
+		Mix_ResumeMusic();
+	}
+}
 
 //====================================================
-// Music
+//    Music
+//====================================================
+
 void SDLInterface::SDLMusicFile::FreeMusic( void )
 {
 	Mix_FreeMusic( thisMusic );
 	thisMusic = nullptr;
 }
 
+//====================================================
 void SDLInterface::SDLMusicFile::SetMusic( Mix_Music* file )
 {
 	thisMusic = file;
 }
 
+//====================================================
 Mix_Music* SDLInterface::SDLMusicFile::GetMusic( void )
 {
 	return thisMusic;
 }
 
 //====================================================
-// Sound
+//    Sound
+//====================================================
 void SDLInterface::SDLSoundFile::FreeSound( void )
 {
 	Mix_FreeChunk( thisSound );
 	thisSound = nullptr;
 }
 
+//====================================================
 void SDLInterface::SDLSoundFile::AddSound( Mix_Chunk* file )
 {
 	thisSound = file;
 }
 
+//====================================================
 Mix_Chunk* SDLInterface::SDLSoundFile::GetSound( void )
 {
 	return thisSound;
