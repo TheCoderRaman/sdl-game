@@ -117,9 +117,12 @@ public:
 
 	//! \brief get the renderer
 	static inline LRenderer2D&		GetRenderer();
-	static inline LUpdatingList&		GetEventLoop();
+	static inline LUpdatingList&	GetEventLoop();
 	static inline LInput&			GetInputManager();
 	static inline LAudio&			GetAudioManager();
+
+	static inline int				GetWindowWidth( void );
+	static inline int				GetWindowHeight( void );
 
 private:
 
@@ -228,6 +231,18 @@ inline void LEngine::PauseSubSystem(LEnginePauseSystem::TFlags system, bool paus
 inline bool LEngine::GetIsPaused(LEnginePauseSystem::TFlags system)
 {
 	return GetCurrentEngine().m_pauseFlags.GetCurrentFlag(system);
+}
+
+//===============================================================
+inline int LEngine::GetWindowWidth( void )
+{
+	return GetCurrentEngine().m_MainWindow.GetWindowWidth();
+}
+
+//===============================================================
+inline int LEngine::GetWindowHeight( void )
+{
+	return GetCurrentEngine().m_MainWindow.GetWindowHeight();
 }
 
 #endif //_LENGINE_H_

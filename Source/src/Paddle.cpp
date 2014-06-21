@@ -7,6 +7,7 @@
 //!
 #include "Paddle.h"
 
+#include "LEngine.h"
 #include "LError.h"
 #include "debug.h"
 
@@ -26,9 +27,12 @@ LError Paddle::Create( void )
 	// Set up the paddle
 	GetSprite()->SetSourceRect( { 0, 0, 255, 42 } );
 	GetSprite()->SetSize( 255, 42 );
-	GetSprite()->SetPos( 100, 100 );
+	GetSprite()->SetPos( ( LEngine::GetWindowWidth() / 2 ) - ( GetSprite()->GetWidth() / 2 ), 400 );
 
 	GameSprite::Create(); // Adds it to the renderer
+
+	iDistToMove				= 8;
+	iBorderAtEdgeOfScreen	= 50;
 
 	return err;
 }
@@ -36,13 +40,51 @@ LError Paddle::Create( void )
 //====================================================
 void Paddle::MoveLeft( void )
 {
-	GetSprite()->SetPos( GetSprite()->GetXPos() - 8, GetSprite()->GetYPos() );
+	if( CanMoveLeft() )
+	{
+		GetSprite()->SetPos( GetSprite()->GetXPos() - iDistToMove, GetSprite()->GetYPos() );
+	}
 }
 
 //====================================================
 void Paddle::MoveRight( void )
 {
-	GetSprite()->SetPos( GetSprite()->GetXPos() + 8, GetSprite()->GetYPos() );
+	if( CanMoveRight() )
+	{
+		GetSprite()->SetPos( GetSprite()->GetXPos() + iDistToMove, GetSprite()->GetYPos() );
+	}
+}
+
+//====================================================
+bool Paddle::CanMoveLeft( void )
+{
+	bool bReturn = false;
+
+	int x		= GetSprite()->GetXPos();
+	int minXVal = iBorderAtEdgeOfScreen;
+
+	if( x > minXVal )
+	{
+		bReturn = true;
+	}
+
+	return bReturn;
+}
+
+//====================================================
+bool Paddle::CanMoveRight( void )
+{
+	bool bReturn = false;
+
+	int x		= GetSprite()->GetXPos() + GetSprite()->GetWidth();
+	int maxXVal = LEngine::GetWindowWidth() - iBorderAtEdgeOfScreen;
+
+	if( x < maxXVal )
+	{
+		bReturn = true;
+	}
+
+	return bReturn;
 }
 
 //====================================================
