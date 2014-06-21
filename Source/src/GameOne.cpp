@@ -75,15 +75,6 @@ LError GameOne::VOnUpdate(ms elapsed)
 {
  	LError err = LError::NoErr;
 
-	if (LEngine::GetInputManager().GetButtonHeldDown( LInput::eInputType::up ) )
-	{
-		m_banana.MoveBananaUpAFrame();
-	}
-	if (LEngine::GetInputManager().GetButtonJustPressed( LInput::eInputType::down ) )
-	{
-		m_banana.MoveBananaDownAFrame();
-	}
-
 	if( LEngine::GetInputManager().GetButtonHeldDown( LInput::eInputType::left ) )
 	{
 		m_paddle.MoveLeft();

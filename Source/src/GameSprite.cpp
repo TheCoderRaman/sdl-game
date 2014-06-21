@@ -10,34 +10,39 @@
 #include "LError.h"
 #include "debug.h"
 
+//====================================================
 LError GameSprite::Create( void )
 {
 	RUNTIME_LOG( "Creating GameSprite..." );
 
 	LError err = LError::NoErr;
 
-	// Add said banana to the renderer
+	// Adds the sprite to the render loop
 	if( !LERROR_HAS_FATAL( err ) )
 		err |= GetRenderer()->AddRenderable( GetSprite() );
 
 	return err;
 }
 
+//====================================================
 void GameSprite::SetPos( int x, int y )
 {
 	m_sprite.SetPos( x, y );
 }
 
+//====================================================
 LError GameSprite::VOnUpdate( ms elapsed )
 {
 	return LError::NoErr;
 }
 
+//====================================================
 LError GameSprite::Render( LRenderer2D* renderer )
 {
 	return LError::NoErr;
 }
 
+//====================================================
 LError GameSprite::VOnReset( void )
 { 
 	RUNTIME_LOG( "Resetting GameSprite..." );
@@ -45,6 +50,7 @@ LError GameSprite::VOnReset( void )
 	return LError::NoErr;
 }
 
+//====================================================
 LError GameSprite::Destroy( void )
 {
 	RUNTIME_LOG( "Destroying GameSprite..." );

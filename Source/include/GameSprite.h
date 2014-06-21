@@ -1,9 +1,10 @@
-//! \file GameOne.cpp
+//! \file GameSprite.h
 //!
-//! \author  Marc Di luzio
-//! \date    April 2014
+//! \author  Owain Davies
+//! \date    June 2014
 //!
-//! Main game class, responsible for managing all game specific stuff
+//! This class is the basetype for all updating and rendering sprite objects that might
+//! be used in the game
 //!
 
 #ifndef _GAMESPRITE_H_

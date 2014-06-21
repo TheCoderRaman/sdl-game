@@ -5,6 +5,10 @@
 //!
 //! blarg
 //!
+
+#ifndef _BANANA_H_
+#define _BANANA_H_
+
 #include "GameSprite.h"
 
 #include "LError.h"
@@ -19,14 +23,11 @@ public:
 
 	virtual LError Render( LRenderer2D* renderer );
 
-	void MoveBananaUpAFrame();
-	void MoveBananaLeftAFrame();
-	void MoveBananaRightAFrame();
-	void MoveBananaDownAFrame();
-
 private:
 
 	virtual LError VOnUpdate(ms elapsed);
 
 	virtual LError VOnReset(void);
 };
+
+#endif
