@@ -27,7 +27,7 @@ LError Paddle::Create( void )
 	// Set up the paddle
 	GetSprite()->SetSourceRect( { 0, 0, 255, 42 } );
 	GetSprite()->SetSize( 255, 42 );
-	GetSprite()->SetPos( ( LEngine::GetWindowWidth() / 2 ) - ( GetSprite()->GetWidth() / 2 ), 400 );
+	GetSprite()->SetPos( ( LEngine::GetWindowWidth() / 2 ) - ( GetWidth() / 2 ), 400 );
 
 	GameSprite::Create(); // Adds it to the renderer
 
@@ -42,7 +42,7 @@ void Paddle::MoveLeft( void )
 {
 	if( CanMoveLeft() )
 	{
-		GetSprite()->SetPos( GetSprite()->GetXPos() - iDistToMove, GetSprite()->GetYPos() );
+		SetPos( GetXPos() - iDistToMove, GetYPos() );
 	}
 }
 
@@ -51,7 +51,7 @@ void Paddle::MoveRight( void )
 {
 	if( CanMoveRight() )
 	{
-		GetSprite()->SetPos( GetSprite()->GetXPos() + iDistToMove, GetSprite()->GetYPos() );
+		SetPos( GetXPos() + iDistToMove, GetYPos() );
 	}
 }
 
@@ -60,7 +60,7 @@ bool Paddle::CanMoveLeft( void )
 {
 	bool bReturn = false;
 
-	int x		= GetSprite()->GetXPos();
+	int x		= GetXPos();
 	int minXVal = iBorderAtEdgeOfScreen;
 
 	if( x > minXVal )
@@ -76,7 +76,7 @@ bool Paddle::CanMoveRight( void )
 {
 	bool bReturn = false;
 
-	int x		= GetSprite()->GetXPos() + GetSprite()->GetWidth();
+	int x		= GetXPos() + GetWidth();
 	int maxXVal = LEngine::GetWindowWidth() - iBorderAtEdgeOfScreen;
 
 	if( x < maxXVal )

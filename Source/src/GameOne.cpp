@@ -15,6 +15,7 @@
 
 //========================================================
 GameOne::GameOne()
+: iBananaDirection( 1 )
 {
 
 }
@@ -69,6 +70,41 @@ LError GameOne::VOnPreUpdate()
 	return err;
 }
 
+bool GameOne::ShouldBananaSwitchDirections( void )
+{
+	bool bReturn = false;
+
+	int iBananaY		= m_banana.GetYPos();
+	int iBananaHeight	= m_banana.GetHeight();
+
+	int iBananaX		= m_banana.GetXPos();
+	int iBananaWidth	= m_banana.GetWidth();
+
+	int iWindowHeight = LEngine::GetWindowHeight(); // bottom of the screen
+
+	int iPaddleY = m_paddle.GetYPos();
+	int iPaddleX = m_paddle.GetXPos();
+
+	int iPaddleWidth = m_paddle.GetWidth();
+
+	if( ( iBananaY + iBananaHeight > iPaddleY )
+		&& ( iBananaX + iBananaWidth > iPaddleX ) )
+	{
+		bReturn = true;
+	}
+	else if( iBananaY + iBananaHeight > iWindowHeight )
+	{
+		bReturn = true;
+	}
+	else if( iBananaY < 0 )
+	{
+		bReturn = true;
+	}
+
+
+	return bReturn;
+}
+
 //========================================================
 LError GameOne::VOnUpdate(ms elapsed)
 {
@@ -83,10 +119,18 @@ LError GameOne::VOnUpdate(ms elapsed)
 		m_paddle.MoveRight();
 	}
 
-	if( LEngine::GetInputManager().GetButtonJustPressed( LInput::eInputType::jump ) )
+
+	if( ShouldBananaSwitchDirections() )
 	{
- 		LEngine::GetAudioManager().PlaySound( "hit" );
+		iBananaDirection *= -1; // Reverse the banana
+		LEngine::GetAudioManager().PlaySound( "hit" );
 	}
+
+	int iDistToMoveBanana = 5 * iBananaDirection;
+
+	int iBananaY		= m_banana.GetYPos();
+
+	m_banana.SetPos( m_banana.GetXPos(), iBananaY + iDistToMoveBanana );
 
 	// Send a pause event FOR SOME REASON I DON'T KNOW MAN
 	uGameEventData data;

@@ -26,6 +26,11 @@ public:
 	virtual LError Render( LRenderer2D* renderer );
 
 	void SetPos( int x, int y );
+	int  GetXPos( void ) { return m_sprite.GetXPos(); }
+	int	 GetYPos( void ) { return m_sprite.GetYPos(); }
+
+	int GetHeight( void ) { return m_sprite.GetHeight(); }
+	int GetWidth( void ) { return m_sprite.GetWidth(); }
 
 protected:
 
