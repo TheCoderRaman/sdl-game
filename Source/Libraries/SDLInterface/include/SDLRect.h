@@ -28,6 +28,14 @@ namespace SDLInterface
 	//! functions as a replacement for SDL_Rect, wrapping one would be unneeded and would complicate the interface somewhat
 	struct Rect
 	{
+		Rect(){}
+
+		Rect(int X, int Y, int W, int H)
+			: x(X), y(Y), w(W), h(H)
+		{
+
+		}
+
 		// Member variables to immitate SDL_Rect
 		int x; //! Upper left x coord
 		int y; //! Upper left y coord

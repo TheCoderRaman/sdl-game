@@ -15,6 +15,32 @@
 #include "SDLEventLoop.h"
 #include "SDLTexture.h"
 
+//! \brief convert to an SDL_Rect
+SDL_Rect convertToSDLRect(const SDLInterface::Rect& r, const SDLInterface::RenderScale& s)
+{	
+	SDL_Rect out;
+
+	out.x = (s.offset.x + (s.factor.x*r.x));
+	out.y = (s.offset.y + (-s.factor.y*r.y));
+	out.w = r.w*s.factor.x;
+	out.h = r.h*s.factor.y;
+
+	return out;
+}
+
+SDL_Point convertToSDLPoint(const SDLInterface::Point& p, const SDLInterface::RenderScale& s)
+{
+	SDL_Point out;
+
+	out.x = (s.offset.x + (-s.factor.x*p.x));
+	out.y = (s.offset.y + (-s.factor.y*p.y));
+
+	return out;
+}
+
+#define toSDLX ( x ) ( m_renderScale.offset.x + (-m_renderScale.factor.x*x) )
+#define toSDLY ( y ) ( m_renderScale.offset.y + (-m_renderScale.factor.y*y) )
+
 //========================================================
 SDLInterface::Renderer::Renderer()
 : m_SDL_Renderer(nullptr)
@@ -105,8 +131,7 @@ SDLInterface::Error SDLInterface::Renderer::RenderRectangle(const Rect& src, int
 	// Sanity check to see if renderer has been created
 	DEBUG_ASSERT(nullptr != m_SDL_Renderer);
 
-	SDL_Rect myRect = RECT_TO_SDL_RECT(src);
-	
+	SDL_Rect myRect = convertToSDLRect(src, m_renderScale);
 	
 #ifndef WINDOWS_BUILD
 	// On Linux and OSX we have to render this on the main thread
@@ -192,8 +217,8 @@ SDLInterface::Error SDLInterface::Renderer::RenderTexture(Texture* tex, const Re
 
 	// Create the two SDL_Rects
 	SDL_Rect source			= RECT_TO_SDL_RECT(src);
-	SDL_Rect destination	= RECT_TO_SDL_RECT(dest);
-	SDL_Point rot			= { centerRot.x / 2, centerRot.y / 2 };
+	SDL_Rect destination	= convertToSDLRect(dest, m_renderScale);
+	SDL_Point rot			= convertToSDLPoint({ centerRot.x / 2, centerRot.y / 2 }, m_renderScale);
 	SDL_RendererFlip  flip	= SDL_FLIP_NONE;
 
 #ifndef WINDOWS_BUILD

@@ -31,6 +31,28 @@ namespace SDLInterface
 	// Forward declare the Texture
 	class Texture;
 
+	//! \brief Render scale struct to describe engine -> SDL position translations
+	struct RenderScale
+	{
+		//! \brief default constuctor
+		RenderScale()
+		{
+			factor.x = 1.0f;
+			factor.y = 1.0f;
+			offset.x = 0.0f;
+			offset.y = 0.0f;
+		}
+
+		struct
+		{	
+			float x, y;
+		} factor;
+
+		struct
+		{
+			float x, y;
+		} offset;
+	};
 
 	//! \brief the Renderer class
 	//! functions as a wrapper for SDL_Renderer
@@ -65,6 +87,12 @@ namespace SDLInterface
 
 		//! \brief destroy the renderer
 		Error Destroy();
+		
+		//! \brief Set the render factor 
+		inline void SetRenderFactors(RenderScale factors)
+		{
+			m_renderScale = factors;
+		}
 
 	private:
 
@@ -73,6 +101,9 @@ namespace SDLInterface
 
 		//! \brief boolean to check if we're rendering
 		bool m_bRendering;
+
+		//! \brief the renderer scale and offset 
+		RenderScale m_renderScale;
 	};
 
 }
