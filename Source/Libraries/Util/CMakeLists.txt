@@ -21,6 +21,7 @@ set (PROJECT_SOURCE_DIR
 SET(PROJECT_HEADERS
 	${CMAKE_CURRENT_SOURCE_DIR}/include/debug.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/types.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/math_types.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/map_helpers.h
 )
 
