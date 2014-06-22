@@ -37,6 +37,8 @@ LError Banana::Create(Ffiseg::FWorld* world /* = nullptr */)
 	if (world)
 	{
 		FBodyDef bdef = FBodyDef();
+		bdef.type = FBodyType::Dynamic;
+		bdef.allowSleep = false;
 		FFixtureDef fdef = FFixtureDef();
 		FPolygonShape shape;
 		fdef.shape = &shape;
@@ -51,7 +53,8 @@ LError Banana::Create(Ffiseg::FWorld* world /* = nullptr */)
 //====================================================
 LError Banana::VOnUpdate( ms elapsed )
 {
-
+	Vector2f pos = GetBody()->GetPos();
+	GetSprite()->SetPos(pos.x, pos.y);
 	return LError::NoErr;
 }
 

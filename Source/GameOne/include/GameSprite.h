@@ -35,6 +35,8 @@ protected:
 
 	LSprite*	GetSprite( void ) { return &m_sprite; }
 
+	Ffiseg::FRigidBody*	GetBody(void) { return &m_rigidBody; }
+
 private:
 
 	virtual LError VOnUpdate( ms elapsed );
