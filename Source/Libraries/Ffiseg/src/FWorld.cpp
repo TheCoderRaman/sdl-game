@@ -6,7 +6,7 @@
 //! Implementation for the b2World wrapper
 //!
 #include "FWorld.h"
-#include "FCommon.h"
+#include "FInternal.h"
 #include "Box2D/Box2D.h"
 
 namespace Ffiseg

@@ -21,7 +21,9 @@ public:
 	FRigidBody();
 	~FRigidBody();
 
-	int Create(FWorld* world);
+	int Create(FWorld* world, const FBodyDef& def);
+
+	int CreateFixture(const FFixtureDef& def);
 
 	int Destroy();
 

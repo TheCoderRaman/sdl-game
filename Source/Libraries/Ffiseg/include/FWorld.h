@@ -28,6 +28,12 @@ public:
 	//! \return returns posetive on success
 	int Destroy();
 
+	//! \brief get the box2d world
+	inline b2World* GetBaseWorldPtr()
+	{
+		return m_myWorld;
+	}
+
 private:
 
 	b2World* m_myWorld;

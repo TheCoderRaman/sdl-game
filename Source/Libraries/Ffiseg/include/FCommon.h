@@ -21,6 +21,7 @@ class b2World;
 class b2Shape;
 
 #define FfVecToB2Vec(vec) b2Vec2(vec.x, vec.y)
+#define B2VecToFfVec(vec) Vector2f(vec.x, vec.y)
 
 #define Ffiseg_namespace_start namespace Ffiseg {
 #define Ffiseg_namespace_end }
@@ -28,6 +29,8 @@ class b2Shape;
 
 //! \brief Ffiseg namespace
 Ffiseg_namespace_start
+
+class FShape;
 
 //! \brief Immitation enum for b2BodyType
 enum FBodyType
@@ -40,7 +43,7 @@ enum FBodyType
 //! \brief Immitation struct for b2BodyDef
 //! \note all comments prepended with a - are taken from Box2D
 struct FBodyDef
-{
+{							
 	//! - This constructor sets the body definition default values.
 	FBodyDef()
 	{
@@ -153,9 +156,8 @@ struct FFixtureDef
 		isSensor = false;
 	}
 
-	//! - The shape, this must be set. The shape will be cloned, so you
-	//! - can create the shape on the stack.
-	const b2Shape* shape;
+	//! - The shape, this must be set. 
+	const FShape* shape;
 
 	//! - Use this to store application specific fixture data.
 	void* userData;
