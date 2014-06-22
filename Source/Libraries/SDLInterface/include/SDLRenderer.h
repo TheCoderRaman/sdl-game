@@ -54,8 +54,11 @@ namespace SDLInterface
 		//! \brief render a texture
 		Error RenderTexture(Texture* tex, const Rect& src, const Rect& dest, float rotation = 0.0f, const Point& centerRot = Point(), int flipValue = 0);
 
-		//! \brief render a texture
+		//! \brief render a Rectangle
 		Error RenderRectangle(const Rect& src, int r, int g, int b, int a, bool fill = true);
+
+		//! \brief render a line
+		Error RenderLine(const Point& start, const Point& end, int r, int g, int b, int a);
 
 		//! \brief render using the renderer
 		Error RenderEnd();

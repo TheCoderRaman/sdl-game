@@ -14,6 +14,7 @@
 #include "SDLWindow.h"
 
 #include <list>
+#include <functional>
 
 class LRenderer2D;
 
@@ -88,6 +89,9 @@ public:
 
 	//! \brief perform the render
 	LError Render();
+
+	//! \brief perform the render
+	LError RenderWithCustomStep( std::function<int()> func);
 
 	//! \brief destroy the renderer
 	LError Destroy();

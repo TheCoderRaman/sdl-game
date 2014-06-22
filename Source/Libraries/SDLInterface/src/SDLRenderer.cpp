@@ -141,6 +141,45 @@ SDLInterface::Error SDLInterface::Renderer::RenderRectangle(const Rect& src, int
 }
 
 //========================================================
+SDLInterface::Error SDLInterface::Renderer::RenderLine(const SDLInterface::Point& start, const SDLInterface::Point& end, int r, int g, int b, int a)
+{
+	Error err = Error::None;
+
+	// Sanity check
+	DEBUG_ASSERT(m_bRendering);
+
+	// Sanity check to see if renderer has been created
+	DEBUG_ASSERT(nullptr != m_SDL_Renderer);
+
+#ifndef WINDOWS_BUILD
+	// On Linux and OSX we have to render this on the main thread
+	// TODO: Work out how to ensure we don't need to do this
+	// I _think_ it would be a case of binding the context
+	EventLoop::RunOnMainThread_Sync(err,
+		[&]()->Error
+	{
+#endif
+
+		// Set the draw colour
+		SDL_SetRenderDrawColor(m_SDL_Renderer, r, g, b, a);
+
+
+		// Draw the rectangle
+		SDL_RenderDrawLine(m_SDL_Renderer, start.x, start.y, end.x, end.y);
+
+
+		// Reset the draw colour
+		SDL_SetRenderDrawColor(m_SDL_Renderer, 255, 255, 255, 255);
+
+#ifndef WINDOWS_BUILD
+		return Error::None;
+	});
+#endif
+
+	return err;
+}
+
+//========================================================
 SDLInterface::Error SDLInterface::Renderer::RenderTexture(Texture* tex, const Rect& src, const Rect& dest, float rotation /*= 0.0f*/, const Point& centerRot /*= Rect()*/, int flipValue /*= SDL_FLIP_NONE*/)
 {
 	Error err = Error::None;

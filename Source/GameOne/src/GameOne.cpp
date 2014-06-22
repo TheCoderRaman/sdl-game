@@ -57,7 +57,7 @@ LError GameOne::VOnCreate()
 	GetUpdatingList().Register( &m_paddle );
 
 	LEngine::GetAudioManager().LoadMusic( "Media/music.mp3", "song1" );
-	LEngine::GetAudioManager().PlayMusic( "song1", true );
+	//LEngine::GetAudioManager().PlayMusic( "song1", true );
 
 	LEngine::GetAudioManager().LoadSound( "Media/hit.wav", "hit" );
 

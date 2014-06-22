@@ -355,12 +355,16 @@ LError LEngine::RenderThreadLoop()
 		// Delay until the end of the desired frame time
 		SDLInterface::Thread::DelayUntil(frameTime + DESIRED_FRAMETIME_MS);
 		
+#if DEBUG_RENDER_PHSYICS // Render the physics world as it currently is
+		err |= m_Renderer.RenderWithCustomStep( [&]() -> int {
+			Ffiseg::FDebugDraw::DebugDraw(&m_Renderer.GetBaseRenderer());
+			return 1;
+		});
+#else
 		// Update the engine window
 		err |= m_Renderer.Render();
-
-#if DEBUG_RENDER_PHSYICS // Render the physics world as it currently is
-		Ffiseg::FDebugDraw::DebugDraw(&m_Renderer.GetBaseRenderer());
 #endif
+
 
 		// grab the current time
 		frameTime = SDLInterface::Timer::GetGlobalLifetime();
