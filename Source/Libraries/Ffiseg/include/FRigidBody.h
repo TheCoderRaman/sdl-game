@@ -25,6 +25,10 @@ public:
 
 	int CreateFixture(const FFixtureDef& def);
 
+	void SetPos(Vector2f vec);
+
+	Vector2f GetPos();
+
 	int Destroy();
 
 private:

@@ -81,5 +81,17 @@ int FRigidBody::Destroy()
 	return 1;
 }
 
+//========================================================
+void FRigidBody::SetPos(Vector2f vec)
+{
+	m_myBody->SetTransform(FfVecToB2Vec(vec), 0.0f);
+}
+
+//========================================================
+Vector2f FRigidBody::GetPos()
+{
+	return B2VecToFfVec( m_myBody->GetPosition() );
+}
+
 
 Ffiseg_namespace_end
