@@ -303,7 +303,7 @@ LError LEngine::Update(ms elapsed)
 		bool paused = !LEngine::GetIsPaused(EEnginePauseFlag::Game);
 		LEngine::PauseSubSystem(EEnginePauseFlag::Game, paused);
 
-
+		LEngine::GetAudioManager().TogglePauseMusic();
 	}
 
 	return err;

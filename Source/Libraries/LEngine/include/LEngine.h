@@ -12,12 +12,14 @@
 
 #include "SDLWindow.h"
 #include "SDLThread.h"
+#include "SDLAudio.h"
 
 #include "LUpdatingList.h"
 #include "LInput.h"
 #include "LRenderer.h"
 #include "LGameBase.h"
 #include "LEvents.h"
+#include "LAudio.h"
 #include "LPauseSystem.h"
 
 #include <atomic>
@@ -115,7 +117,9 @@ public:
 
 	//! \brief get the renderer
 	static inline LRenderer2D&		GetRenderer();
+	static inline LUpdatingList&		GetEventLoop();
 	static inline LInput&			GetInputManager();
+	static inline LAudio&			GetAudioManager();
 
 private:
 
@@ -156,6 +160,9 @@ private:
 
 	//! \brief The main window
 	SDLInterface::Window	m_MainWindow;
+
+	//! \brief The audio manager
+	LAudio					m_AudioManager;
 
 	//! \brief The Renderer
 	LRenderer2D				m_Renderer;
@@ -200,6 +207,12 @@ inline LUpdatingList& LEngine::GetUpdatingList()
 inline LInput& LEngine::GetInputManager()
 {
 	return GetCurrentEngine().m_InputManager;
+}
+
+//===============================================================
+inline LAudio& LEngine::GetAudioManager()
+{
+	return GetCurrentEngine().m_AudioManager;
 }
 
 //===============================================================

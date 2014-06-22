@@ -10,27 +10,58 @@
 
 #include "SDLCommon.h"
 
-// Forward declare SDL structs
-struct SDL_AudioSpec;
+// Forward Declaring the structs
+struct _Mix_Music;
+struct Mix_Chunk;
+
+// Ensuring Mix_Music has the right symbol
+typedef _Mix_Music Mix_Music;
 
 // Start the SDLInterface Namespace
 namespace SDLInterface
 {
+	//=====================================
+	//! \brief a storage container for a music track
+	class SDLMusicFile
+	{
+	public:
+		void FreeMusic( void );
+		void SetMusic( Mix_Music* file );
+		Mix_Music* GetMusic( void );
 
+	private:
+		Mix_Music* thisMusic;
+	};
+
+	//=====================================
+	//! \brief a storage container for a non-music sound
+	class SDLSoundFile
+	{
+	public:
+		void FreeSound( void );
+		void AddSound( Mix_Chunk* file );
+		Mix_Chunk* GetSound( void );
+
+	private:
+		Mix_Chunk* thisSound;
+	};
+	
+	//=====================================
 	//! \brief an Audio class
 	class Audio
 	{
 	public:
 
-		// Constructor and destructor
-		Audio();
-		~Audio();
+		Audio( void );
+		~Audio( void );
 
+		SDLMusicFile LoadMusic( const char* filename );
+		void PlayMusic( SDLMusicFile music, bool bLoops );
 
-	private:
+		SDLSoundFile LoadSound( const char* filename );
+		void PlaySound( SDLSoundFile sound );
 
-		//! \brief a test sound
-		SDL_AudioSpec* my_sdl_audiospec;
+		void ToggleMusicPause( void );
 	};
 }
 

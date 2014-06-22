@@ -39,8 +39,8 @@ namespace SDLInterface
 	struct Point
 	{
 		// Member variables to immitate SDL_Rect
-		int x; //! Upper left x coord
-		int y; //! Upper left y coord
+		int x; //! 
+		int y; //! 
 	};
 
 }
