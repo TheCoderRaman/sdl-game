@@ -28,6 +28,9 @@ public:
 	//! \return returns posetive on success
 	int Destroy();
 
+	//! \brief set the simulation
+	int Step(float timestep,int velocityIterations,int positionIterations);
+
 	//! \brief get the box2d world
 	inline b2World* GetBaseWorldPtr()
 	{

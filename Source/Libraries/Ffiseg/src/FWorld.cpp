@@ -32,6 +32,14 @@ int FWorld::Create(Vector2f grav)
 }
 
 //========================================================
+int FWorld::Step(float timestep, int velocityIterations, int positionIterations)
+{
+	m_myWorld->Step(timestep, velocityIterations, positionIterations);
+
+	return 1;
+}
+
+//========================================================
 int FWorld::Destroy()
 {
 	delete m_myWorld;
