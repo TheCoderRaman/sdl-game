@@ -13,6 +13,7 @@ if ( NOT MSVC )
 	pkg_search_module( SDL2 REQUIRED sdl2 )
 	pkg_search_module( SDL2_IMAGE REQUIRED SDL2_image )
 	pkg_search_module( SDL2_MIXER REQUIRED SDL2_mixer )
+	pkg_search_module( SDL2_TTF REQUIRED SDL2_ttf )
 endif() 
 
 # Set the include directories
@@ -33,6 +34,8 @@ else()
 		${PROJECT_INCLUDE_DIR}
 		${SDL2_INCLUDE_DIRS}
 		${SDL2_IMAGE_INCLUDE_DIRS}
+		${SDL2_MIXER_INCLUDE_DIRS}
+		${SDL2_TTF_INCLUDE_DIRS}
 	)
 endif()
 
@@ -58,6 +61,7 @@ SET(PROJECT_HEADERS
 	${CMAKE_CURRENT_SOURCE_DIR}/include/SDLError.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/SDLCommon.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/SDLAudio.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/SDLText.h
 )
 
 set(PROJECT_SRCS 
@@ -73,6 +77,7 @@ set(PROJECT_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/src/SDLSurface.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/SDLTexture.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/SDLAudio.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/SDLText.cpp
 )
 
 #-----------------------------------------------------------------
@@ -89,6 +94,10 @@ if ( MSVC )
 	set(SDL2_MIXER_LIBRARIES ${CMAKE_CURRENT_SOURCE_DIR}/../../../SDL2/lib/x86/SDL2_mixer.lib)
 	add_library(SDL2_MIXER SHARED IMPORTED)
 	set_property(TARGET SDL2 PROPERTY IMPORTED_LOCATION ${SDL2_MIXER_LIBRARIES})
+
+	set(SDL2_TTF_LIBRARIES ${CMAKE_CURRENT_SOURCE_DIR}/../../../SDL2/lib/x86/SDL2_ttf.lib)
+	add_library(SDL2_TTF SHARED IMPORTED)
+	set_property(TARGET SDL2 PROPERTY IMPORTED_LOCATION ${SDL2_TTF_LIBRARIES})
 endif()
 
 #-----------------------------------------------------------------
@@ -99,6 +108,7 @@ include(../../cmake/library.cmake)
 if( NOT MSVC )
 	set( SDL2_IMAGE_LIBRARIES SDL2_image )
 	set( SDL2_MIXER_LIBRARIES SDL2_mixer )
+	set( SDL2_TTF_LIBRARIES SDL2_ttf )
 endif()
 
 # Link project with SDL
@@ -106,5 +116,6 @@ target_link_libraries(${PROJECT_NAME}
 	${SDL2_LIBRARIES}
 	${SDL2_IMAGE_LIBRARIES}
 	${SDL2_MIXER_LIBRARIES}
+	${SDL2_TTF_LIBRARIES}
 	Util 
 )
