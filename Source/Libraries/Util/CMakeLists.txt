@@ -29,5 +29,5 @@ SET(PROJECT_SRCS
 )
 
 #-----------------------------------------------------------------
-include(../../../cmake/config.cmake)
-include(../../../cmake/library.cmake)
+include(../../cmake/config.cmake)
+include(../../cmake/library.cmake)

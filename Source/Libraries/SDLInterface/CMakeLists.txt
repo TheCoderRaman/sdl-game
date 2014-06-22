@@ -96,8 +96,8 @@ if (NOT TARGET Util)
 endif()
 
 #-----------------------------------------------------------------
-include(../../../cmake/config.cmake)
-include(../../../cmake/library.cmake)
+include(../../cmake/config.cmake)
+include(../../cmake/library.cmake)
 
 #-----------------------------------------------------------------
 if( NOT MSVC )

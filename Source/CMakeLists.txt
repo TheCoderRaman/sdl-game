@@ -52,32 +52,14 @@ if (NOT TARGET Util)
 endif() 
 
 #-----------------------------------------------------------------
-# COMPILER FLAGS 
-if ( NOT MSVC ) # Not needed with vc++
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-endif()
-
-# flags for release and debug builds
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG_BUILD")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DRELEASE_BUILD")
-
-# flags for windows builds
-if ( MSVC )
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DWINDOWS_BUILD")
-else ()
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DUNIX_BUILD")
-endif()
-
-#-----------------------------------------------------------------
 set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/build/)
 set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
 
 #-----------------------------------------------------------------
-# INCLUDES AND COMPILE
-include_directories( ${PROJECT_INCLUDE_DIR} )
+include(cmake/config.cmake)
+include(cmake/game.cmake)
 
-add_executable( ${PROJECT_NAME} ${PROJECT_SRCS} ${PROJECT_HEADERS} )
 
 #-----------------------------------------------------------------
 # LINKING
