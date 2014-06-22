@@ -14,6 +14,7 @@ set (PROJECT_INCLUDE_DIR
 	${CMAKE_CURRENT_SOURCE_DIR}/Libraries/Util/include
 	${CMAKE_CURRENT_SOURCE_DIR}/Libraries/SDLInterface/include
 	${CMAKE_CURRENT_SOURCE_DIR}/Libraries/LEngine/include
+	${CMAKE_CURRENT_SOURCE_DIR}/Libraries/Ffiseg/include
 
 )
 
@@ -45,6 +46,9 @@ if (NOT TARGET SDLInterface)
 endif() 
 if (NOT TARGET Util)
 	add_subdirectory(Libraries/Util)
+endif() 
+if (NOT TARGET Ffiseg)
+	add_subdirectory(Libraries/Ffiseg)
 endif() 
 if (NOT TARGET Box2D)
 	add_subdirectory(../Box2D build)
@@ -85,6 +89,7 @@ target_link_libraries(
 	LEngine
 	SDLInterface
 	Util
+	Ffiseg
 )
 
 #-----------------------------------------------------------------
