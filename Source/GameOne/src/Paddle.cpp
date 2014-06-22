@@ -38,11 +38,12 @@ LError Paddle::Create(Ffiseg::FWorld* world /*= nullptr*/)
 	{
 		FBodyDef bdef = FBodyDef();
 		bdef.type = FBodyType::Static;
-		bdef.allowSleep = false;
 		FFixtureDef fdef = FFixtureDef();
+		fdef.restitution = 0.1f;
+		fdef.density = 1000.0f;
 		FPolygonShape shape;
 		fdef.shape = &shape;
-		shape.SetAsBox(3.0f, 0.5f);
+		shape.SetAsBox(3.0f, 1.0f);
 
 		CreateBody(*world, bdef, fdef);
 		GetBody()->SetPos(FFISEG_PIX_TO_WORLD(Vector2f(100, 200)));

@@ -30,7 +30,7 @@ LError GameOne::VOnCreate()
 {
  	LError err = LError::NoErr;
 
-	m_myWorld.Create({ 0.0f, -9.81f });
+	m_myWorld.Create(Vector2f( 0.0f, -9.81f ));
 
 	// Set up the event handler
 	if( !LERROR_HAS_FATAL( err ) )
@@ -77,7 +77,7 @@ LError GameOne::VOnUpdate(ms elapsed)
 {
  	LError err = LError::NoErr;
 
-	m_myWorld.Step(elapsed, 8, 3);
+	m_myWorld.Step(elapsed/1000.0f, 8, 3);
 
 	if( LEngine::GetInputManager().GetButtonHeldDown( LInput::eInputType::left ) )
 	{

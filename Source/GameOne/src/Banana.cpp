@@ -37,9 +37,11 @@ LError Banana::Create(Ffiseg::FWorld* world /* = nullptr */)
 	if (world)
 	{
 		FBodyDef bdef = FBodyDef();
+		bdef.linearVelocity.x = 1.0f;
 		bdef.type = FBodyType::Dynamic;
-		bdef.allowSleep = false;
 		FFixtureDef fdef = FFixtureDef();
+		fdef.restitution = 0.1f;
+		fdef.density = 1000.0f;
 		FPolygonShape shape;
 		fdef.shape = &shape;
 		shape.SetAsBox(2.0f, 1.5f);
