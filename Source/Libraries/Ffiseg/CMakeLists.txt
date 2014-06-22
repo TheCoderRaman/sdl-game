@@ -15,7 +15,6 @@ set (PROJECT_INCLUDE_DIR
 
 # Set the include directories for SDL
 set (PROJECT_INCLUDE_DIR ${PROJECT_INCLUDE_DIR}
-		${CMAKE_CURRENT_SOURCE_DIR}/../../../Box2D/Box2D/
 		${CMAKE_CURRENT_SOURCE_DIR}/../../../Box2D/
 	)
 
@@ -28,10 +27,12 @@ set (PROJECT_SOURCE_DIR
 SET(PROJECT_HEADERS
 	${CMAKE_CURRENT_SOURCE_DIR}/include/FCommon.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/FWorld.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/FRigidBody.h
 )
 
 set(PROJECT_SRCS 
 	${CMAKE_CURRENT_SOURCE_DIR}/src/FWorld.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/FRigidBody.cpp
 )
 
 
