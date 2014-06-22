@@ -45,6 +45,7 @@ LError Banana::Create(Ffiseg::FWorld* world /* = nullptr */)
 		shape.SetAsBox(2.0f, 1.5f);
 
 		CreateBody(*world, bdef, fdef);
+		GetBody()->SetPos(FFISEG_PIX_TO_WORLD(Vector2f(100, 100)));
 	}
 
 	return err;
@@ -54,6 +55,7 @@ LError Banana::Create(Ffiseg::FWorld* world /* = nullptr */)
 LError Banana::VOnUpdate( ms elapsed )
 {
 	Vector2f pos = GetBody()->GetPos();
+	pos = FFISEG_WORLD_TO_PIX(pos);
 	GetSprite()->SetPos(pos.x, pos.y);
 	return LError::NoErr;
 }
