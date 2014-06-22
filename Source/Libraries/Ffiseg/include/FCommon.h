@@ -11,11 +11,14 @@
 //! Pull in the common math
 #include "math_types.h"
 
+#include "stdint.h"
+
 // Forward declares of the box2D types
 class b2Body;
 class b2Joint;
 class b2Fixture;
 class b2World;
+class b2Shape;
 
 #define FfVecToB2Vec(vec) b2Vec2(vec.x, vec.y)
 
@@ -104,6 +107,70 @@ namespace Ffiseg
 
 		//! - Scale the gravity applied to this body.
 		float gravityScale;
+	};
+
+
+	//! \brief Immitation struct for b2Filter
+	//! \note all comments prepended with a - are taken from Box2D
+	struct FFilter
+	{
+		FFilter()
+		{
+			categoryBits = 0x0001;
+			maskBits = 0xFFFF;
+			groupIndex = 0;
+		}
+
+		//! - The collision category bits. Normally you would just set one bit.
+		uint16_t categoryBits;
+
+		//! - The collision mask bits. This states the categories that this
+		//! - shape would accept for collision.
+		uint16_t maskBits;
+
+		//! - Collision groups allow a certain group of objects to never collide (negative)
+		//! - or always collide (positive). Zero means no collision group. Non-zero group
+		//! - filtering always wins against the mask bits.
+		uint16_t groupIndex;
+	};
+
+	//! \brief Immitation struct for b2FixtureDef
+	//! \note all comments prepended with a - are taken from Box2D
+	struct FFixtureDef
+	{
+		//! - The constructor sets the default fixture definition values.
+		FFixtureDef()
+		{
+			shape = nullptr;
+			userData = nullptr;
+			friction = 0.2f;
+			restitution = 0.0f;
+			density = 0.0f;
+			isSensor = false;
+		}
+
+		//! - The shape, this must be set. The shape will be cloned, so you
+		//! - can create the shape on the stack.
+		const b2Shape* shape;
+
+		//! - Use this to store application specific fixture data.
+		void* userData;
+
+		//! - The friction coefficient, usually in the range [0,1].
+		float friction;
+
+		//! - The restitution (elasticity) usually in the range [0,1].
+		float restitution;
+
+		//! - The density, usually in kg/m^2.
+		float density;
+
+		//! - A sensor shape collects contact information but never generates a collision
+		//! - response.
+		bool isSensor;
+
+		//! - Contact filtering data.
+		FFilter filter;
 	};
 }
 
