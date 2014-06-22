@@ -16,6 +16,7 @@ set (PROJECT_INCLUDE_DIR
 # Set the include directories for SDL
 set (PROJECT_INCLUDE_DIR ${PROJECT_INCLUDE_DIR}
 		${CMAKE_CURRENT_SOURCE_DIR}/../../../Box2D/Box2D/
+		${CMAKE_CURRENT_SOURCE_DIR}/../../../Box2D/
 	)
 
 set (PROJECT_SOURCE_DIR 
@@ -53,8 +54,6 @@ endif()
 #-----------------------------------------------------------------
 # PULL IN DEPENDENCIES
 
-# Box2D here as well
-
 if (NOT TARGET Util)
 	add_subdirectory(../Util "Util")
 endif()
@@ -63,7 +62,10 @@ endif()
 # INCLUDES AND COMPILE
 include_directories(${PROJECT_INCLUDE_DIR})
 
+
 add_library(${PROJECT_NAME} ${PROJECT_SRCS} ${PROJECT_HEADERS})
+
+add_dependencies(${PROJECT_NAME} Box2D)
 
 #-----------------------------------------------------------------
 # SET THE PROPERTIES
