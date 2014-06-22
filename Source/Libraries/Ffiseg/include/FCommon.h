@@ -27,8 +27,8 @@ class b2Shape;
 #define Ffiseg_namespace_end }
 
 #define FFISEG_WORLD_TO_PIX_FACTOR 10.0f
-#define FFISEG_WORLD_TO_PIX(vec) Vector2f(vec.x*FFISEG_WORLD_TO_PIX_FACTOR,vec.y*-FFISEG_WORLD_TO_PIX_FACTOR)
-#define FFISEG_PIX_TO_WORLD(vec) Vector2f(vec.x/FFISEG_WORLD_TO_PIX_FACTOR,vec.y/-FFISEG_WORLD_TO_PIX_FACTOR)
+#define FFISEG_WORLD_TO_PIX(vec) Vector2f(vec.x*FFISEG_WORLD_TO_PIX_FACTOR,vec.y*FFISEG_WORLD_TO_PIX_FACTOR)
+#define FFISEG_PIX_TO_WORLD(vec) Vector2f(vec.x/FFISEG_WORLD_TO_PIX_FACTOR,vec.y/FFISEG_WORLD_TO_PIX_FACTOR)
 
 //! \brief Ffiseg namespace
 Ffiseg_namespace_start

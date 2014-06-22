@@ -32,7 +32,7 @@ SDL_Point convertToSDLPoint(const SDLInterface::Point& p, const SDLInterface::Re
 {
 	SDL_Point out;
 
-	out.x = (s.offset.x + (-s.factor.x*p.x));
+	out.x = (s.offset.x + (s.factor.x*p.x));
 	out.y = (s.offset.y + (-s.factor.y*p.y));
 
 	return out;
@@ -173,6 +173,9 @@ SDLInterface::Error SDLInterface::Renderer::RenderLine(const SDLInterface::Point
 	// Sanity check
 	DEBUG_ASSERT(m_bRendering);
 
+	SDL_Point p1 = convertToSDLPoint(start, m_renderScale);
+	SDL_Point p2 = convertToSDLPoint(end, m_renderScale);
+
 	// Sanity check to see if renderer has been created
 	DEBUG_ASSERT(nullptr != m_SDL_Renderer);
 
@@ -190,7 +193,7 @@ SDLInterface::Error SDLInterface::Renderer::RenderLine(const SDLInterface::Point
 
 
 		// Draw the rectangle
-		SDL_RenderDrawLine(m_SDL_Renderer, start.x, start.y, end.x, end.y);
+		SDL_RenderDrawLine(m_SDL_Renderer, p1.x, p1.y, p2.x, p2.y);
 
 
 		// Reset the draw colour

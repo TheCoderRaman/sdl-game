@@ -114,6 +114,9 @@ LError LSprite::SetSize(int w, int h)
 	m_destRect.w = w;
 	m_destRect.h = h;
 
+	// Set the centre
+	m_centre = { m_destRect.w / 2.0f, m_destRect.h / 2.0f };
+
 	return err;
 }
 

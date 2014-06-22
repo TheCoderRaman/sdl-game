@@ -35,7 +35,9 @@ LError GameSprite::VOnUpdate( ms elapsed )
 {
 	Vector2f pos = GetBody()->GetPos();
 	pos = FFISEG_WORLD_TO_PIX(pos);
-	GetSprite()->SetPos(pos.x, pos.y);
+
+	Vector2f centre = GetSprite()->GetCentre();
+	GetSprite()->SetPos(pos.x - centre.x, pos.y + centre.y);
 
 	return LError::NoErr;
 }

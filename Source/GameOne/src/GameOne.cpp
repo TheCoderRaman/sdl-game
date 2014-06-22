@@ -45,15 +45,12 @@ LError GameOne::VOnCreate()
 	m_myEventManager.AddHandler( eGameEventType::GameEvent_pause, &m_myEventHandler );
 
 	// Set up the banana
-	m_banana.SetRenderer( &LEngine::GetRenderer() );
+	m_banana.SetRenderer(&LEngine::GetRenderer());
 	m_banana.Create(&m_myWorld);
 	GetUpdatingList().Register(&m_banana);
-
 	// Set up the paddle
 	m_paddle.SetRenderer( &LEngine::GetRenderer() );
-	m_paddle.Create();
-	m_paddle.SetPos( 100, 100 );
-
+	m_paddle.Create(&m_myWorld);
 	GetUpdatingList().Register( &m_paddle );
 
 	LEngine::GetAudioManager().LoadMusic( "Media/music.mp3", "song1" );

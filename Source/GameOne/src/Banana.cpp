@@ -38,7 +38,7 @@ LError Banana::Create(Ffiseg::FWorld* world /* = nullptr */)
 	{
 		FBodyDef bdef = FBodyDef();
 		bdef.type = FBodyType::Dynamic;
-		Vector2f pos = FFISEG_PIX_TO_WORLD(Vector2f(100, 100));
+		Vector2f pos = FFISEG_PIX_TO_WORLD(Vector2f(200, 200));
 		bdef.position = pos;
 
 		FFixtureDef fdef = FFixtureDef();

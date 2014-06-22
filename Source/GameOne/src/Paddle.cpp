@@ -29,7 +29,9 @@ LError Paddle::Create(Ffiseg::FWorld* world /*= nullptr*/)
 
 	// Set up the paddle
 	GetSprite()->SetSourceRect( { 0, 0, 255, 42 } );
-	GetSprite()->SetSize( 255, 42 );
+	GetSprite()->SetSize(200, 30);
+
+	Vector2f centre = GetSprite()->GetCentre();
 
 	GameSprite::Create(); // Adds it to the renderer
 
@@ -37,7 +39,7 @@ LError Paddle::Create(Ffiseg::FWorld* world /*= nullptr*/)
 	{
 		FBodyDef bdef = FBodyDef();
 		bdef.type = FBodyType::Static;
-		Vector2f pos = FFISEG_PIX_TO_WORLD(Vector2f(100, 200));
+		Vector2f pos = FFISEG_PIX_TO_WORLD(Vector2f(300, 100));
 		bdef.position = pos;
 
 		FFixtureDef fdef = FFixtureDef();
@@ -45,7 +47,7 @@ LError Paddle::Create(Ffiseg::FWorld* world /*= nullptr*/)
 		fdef.density = 1000.0f;
 
 		FPolygonShape shape;
-		Vector2f box = Vector2f(255.0f / FFISEG_WORLD_TO_PIX_FACTOR, 42.0f / FFISEG_WORLD_TO_PIX_FACTOR);
+		Vector2f box = Vector2f(200.0f*0.5f / FFISEG_WORLD_TO_PIX_FACTOR, 30.0f*0.5f / FFISEG_WORLD_TO_PIX_FACTOR);
 		shape.SetAsBox(box.x, box.y);
 
 		fdef.shape = &shape;
