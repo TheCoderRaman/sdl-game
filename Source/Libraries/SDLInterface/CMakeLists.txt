@@ -76,23 +76,6 @@ set(PROJECT_SRCS
 )
 
 #-----------------------------------------------------------------
-# COMPILER FLAGS 
-if ( NOT MSVC ) # Not needed with vc++
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-endif()
- 
- # flags for release and debug builds
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG_BUILD")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DRELEASE_BUILD")
-
-# flags for windows builds
-if ( MSVC )
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DWINDOWS_BUILD")
-else ()
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DUNIX_BUILD")
-endif()
-
-#-----------------------------------------------------------------
 # PULL IN DEPENDENCIES
 if ( MSVC )
 	set(SDL2_LIBRARIES ${CMAKE_CURRENT_SOURCE_DIR}/../../../SDL2/lib/x86/SDL2.lib)
@@ -113,16 +96,10 @@ if (NOT TARGET Util)
 endif()
 
 #-----------------------------------------------------------------
-# INCLUDES AND COMPILE
-include_directories(${PROJECT_INCLUDE_DIR})
-
-add_library(${PROJECT_NAME} ${PROJECT_SRCS} ${PROJECT_HEADERS})
+include(../../../cmake/config.cmake)
+include(../../../cmake/library.cmake)
 
 #-----------------------------------------------------------------
-# SET THE PROPERTIES
-set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
-
-
 if( NOT MSVC )
 	set( SDL2_IMAGE_LIBRARIES SDL2_image )
 	set( SDL2_MIXER_LIBRARIES SDL2_mixer )
