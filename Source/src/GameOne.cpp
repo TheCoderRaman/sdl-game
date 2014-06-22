@@ -47,6 +47,8 @@ LError GameOne::VOnCreate()
 	m_banana.Create();
 	GetUpdatingList().Register(&m_banana);
 
+	m_myWorld.Create({ 0.0f, -9.81f });
+
  	return err;
 }
 
@@ -103,6 +105,8 @@ LError GameOne::VOnReset()
 LError GameOne::VOnDestroy()
 {
  	LError err = LError::NoErr;
+
+	m_myWorld.Destroy();
 
 	m_banana.Destroy();
 

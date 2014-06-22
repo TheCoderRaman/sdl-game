@@ -18,6 +18,8 @@
 
 #include "LEvents.h"
 
+#include "FWorld.h"
+
 enum class eGameEventType
 {
 	GameEvent_pause,
@@ -65,6 +67,8 @@ private:
 
 	//! \brief the event handler for the main game class
 	TGameEventManager::THandler m_myEventHandler;
+
+	Ffiseg::FWorld m_myWorld;
 };
 
 
