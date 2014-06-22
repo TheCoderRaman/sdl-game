@@ -33,6 +33,10 @@ void GameSprite::SetPos( int x, int y )
 //====================================================
 LError GameSprite::VOnUpdate( ms elapsed )
 {
+	Vector2f pos = GetBody()->GetPos();
+	pos = FFISEG_WORLD_TO_PIX(pos);
+	GetSprite()->SetPos(pos.x, pos.y);
+
 	return LError::NoErr;
 }
 

@@ -37,11 +37,11 @@ protected:
 
 	Ffiseg::FRigidBody*	GetBody(void) { return &m_rigidBody; }
 
+	virtual LError VOnUpdate(ms elapsed);
+
+	virtual LError VOnReset(void);
+
 private:
-
-	virtual LError VOnUpdate( ms elapsed );
-
-	virtual LError VOnReset( void );
 
 	//! \brief The Sprite
 	LSprite		m_sprite;

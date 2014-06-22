@@ -37,12 +37,15 @@ LError Paddle::Create(Ffiseg::FWorld* world /*= nullptr*/)
 	if (world)
 	{
 		FBodyDef bdef = FBodyDef();
+		bdef.type = FBodyType::Static;
+		bdef.allowSleep = false;
 		FFixtureDef fdef = FFixtureDef();
 		FPolygonShape shape;
 		fdef.shape = &shape;
 		shape.SetAsBox(3.0f, 0.5f);
 
 		CreateBody(*world, bdef, fdef);
+		GetBody()->SetPos(FFISEG_PIX_TO_WORLD(Vector2f(100, 200)));
 	}
 
 	return err;
@@ -63,7 +66,7 @@ void Paddle::MoveRight( void )
 //====================================================
 LError Paddle::VOnUpdate( ms elapsed )
 {
-	return LError::NoErr;
+	return GameSprite::VOnUpdate(elapsed);
 }
 
 //====================================================
@@ -77,7 +80,7 @@ LError Paddle::VOnReset( void )
 { 
 	RUNTIME_LOG( "Resetting Paddle..." );
 
-	return LError::NoErr;
+	return GameSprite::VOnReset();
 }
 
 //====================================================

@@ -51,7 +51,7 @@ LError GameOne::VOnCreate()
 
 	// Set up the paddle
 	m_paddle.SetRenderer( &LEngine::GetRenderer() );
-	m_paddle.Create();//(&m_myWorld);
+	m_paddle.Create(&m_myWorld);
 	m_paddle.SetPos( 100, 400 );
 
 	GetUpdatingList().Register( &m_paddle );

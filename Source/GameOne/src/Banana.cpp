@@ -54,10 +54,8 @@ LError Banana::Create(Ffiseg::FWorld* world /* = nullptr */)
 //====================================================
 LError Banana::VOnUpdate( ms elapsed )
 {
-	Vector2f pos = GetBody()->GetPos();
-	pos = FFISEG_WORLD_TO_PIX(pos);
-	GetSprite()->SetPos(pos.x, pos.y);
-	return LError::NoErr;
+	return GameSprite::VOnUpdate(elapsed);
+;
 }
 
 //====================================================
@@ -71,7 +69,7 @@ LError Banana::VOnReset(void)
 { 
 	RUNTIME_LOG( "Resetting Banana..." );
 
-	return LError::NoErr;
+	return GameSprite::VOnReset();
 }
 
 //====================================================
