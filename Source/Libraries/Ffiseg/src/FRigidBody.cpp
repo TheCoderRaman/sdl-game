@@ -47,6 +47,8 @@ int FRigidBody::CreateFixture(const FFixtureDef& def)
 {
 	b2FixtureDef b2def = getb2FixtureDef(def);
 
+	// ENSURE SHAPE SIZES ARE POSETIVE
+
 	switch (def.shape->m_type)
 	{
 	case FShape::Polygon:

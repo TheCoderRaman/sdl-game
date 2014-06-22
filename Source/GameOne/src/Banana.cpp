@@ -37,17 +37,21 @@ LError Banana::Create(Ffiseg::FWorld* world /* = nullptr */)
 	if (world)
 	{
 		FBodyDef bdef = FBodyDef();
-		bdef.linearVelocity.x = 1.0f;
 		bdef.type = FBodyType::Dynamic;
+		Vector2f pos = FFISEG_PIX_TO_WORLD(Vector2f(100, 100));
+		bdef.position = pos;
+
 		FFixtureDef fdef = FFixtureDef();
 		fdef.restitution = 0.1f;
 		fdef.density = 1000.0f;
+
 		FPolygonShape shape;
+		Vector2f box = Vector2f(200.0f / FFISEG_WORLD_TO_PIX_FACTOR, 150.0f / FFISEG_WORLD_TO_PIX_FACTOR);
+		shape.SetAsBox(box.x, box.y);
+
 		fdef.shape = &shape;
-		shape.SetAsBox(2.0f, 1.5f);
 
 		CreateBody(*world, bdef, fdef);
-		GetBody()->SetPos(FFISEG_PIX_TO_WORLD(Vector2f(100, 100)));
 	}
 
 	return err;
