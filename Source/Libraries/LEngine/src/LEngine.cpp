@@ -162,6 +162,11 @@ LError LEngine::Init()
 	if (!LERROR_HAS_FATAL(err))
 		err |= m_Renderer.Create(m_MainWindow);
 
+	SDLInterface::RenderScale scaling = SDLInterface::RenderScale();
+	scaling.offset.y = WINDOW_HEIGHT;
+	scaling.factor.y = 1.0f;
+	m_Renderer.GetBaseRenderer().SetRenderFactors(scaling);
+
 	// create the event manager for the engine events
 	if (!LERROR_HAS_FATAL(err))
 		err |= m_engineEventManager.Create();

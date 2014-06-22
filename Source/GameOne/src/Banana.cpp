@@ -26,7 +26,7 @@ LError Banana::Create( void )
 	// Set up the banana
 	GetSprite()->SetSourceRect( { 0, 0, 400, 300 } );
 	GetSprite()->SetSize( 400, 300 );
-	GetSprite()->SetPos( 100, 100 );
+	GetSprite()->SetPos( 200, 200 );
 
 	GameSprite::Create(); // Adds it to the renderer
 
@@ -37,9 +37,9 @@ LError Banana::Create( void )
 LError Banana::VOnUpdate( ms elapsed )
 {
 
-	static float f = 0.0f;
-	f += 1.0f;
-	GetSprite()->SetRotation( f );
+	//static float f = 0.0f;
+	//f += 1.0f;
+	//GetSprite()->SetRotation( f );
 
 	return LError::NoErr;
 }

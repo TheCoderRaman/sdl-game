@@ -68,7 +68,7 @@ LError LRenderer2D::Create(SDLInterface::Window &window)
 	// Create the renderer
 	err |= m_BaseSDLRenderer.Create(&window);
 
-	return SDL_ERROR_HAS_FATAL(err) ? LError::Fatal : LError::NoErr;;
+	return SDL_ERROR_HAS_FATAL(err) ? LError::Fatal : LError::NoErr;
 }
 
 //===============================================================
