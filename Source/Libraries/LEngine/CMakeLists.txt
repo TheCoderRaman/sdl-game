@@ -45,16 +45,6 @@ SET(PROJECT_SRCS
 )
 
 #-----------------------------------------------------------------
-# PULL IN DEPENDENCIES
-if (NOT TARGET SDLInterface)
-	add_subdirectory(../SDLInterface "SDLInterface")
-endif()
-
-if (NOT TARGET Util)
-	add_subdirectory(../Util)
-endif()
-
-#-----------------------------------------------------------------
 include(../../cmake/config.cmake)
 include(../../cmake/library.cmake)
 

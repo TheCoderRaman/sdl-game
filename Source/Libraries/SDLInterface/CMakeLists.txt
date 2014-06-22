@@ -91,10 +91,6 @@ if ( MSVC )
 	set_property(TARGET SDL2 PROPERTY IMPORTED_LOCATION ${SDL2_MIXER_LIBRARIES})
 endif()
 
-if (NOT TARGET Util)
-	add_subdirectory(../Util "Util")
-endif()
-
 #-----------------------------------------------------------------
 include(../../cmake/config.cmake)
 include(../../cmake/library.cmake)
