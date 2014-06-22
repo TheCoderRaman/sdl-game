@@ -12,6 +12,7 @@ set (PROJECT_INCLUDE_DIR
 	${CMAKE_CURRENT_SOURCE_DIR}/include
 	${CMAKE_CURRENT_SOURCE_DIR}/../Util/include
 	${CMAKE_CURRENT_SOURCE_DIR}/../SDLInterface/include
+	${CMAKE_CURRENT_SOURCE_DIR}/../Ffiseg/include
 )	
 
 set (PROJECT_SOURCE_DIR
@@ -52,4 +53,5 @@ include(../../cmake/library.cmake)
 # LINKING
 target_link_libraries( ${PROJECT_NAME} 
 	SDLInterface
-	Util )
+	Util
+	Ffiseg )

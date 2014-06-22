@@ -9,6 +9,8 @@
 #include "FInternal.h"
 #include "Box2D/Box2D.h"
 
+#include "FDebugDraw.h"
+
 namespace Ffiseg
 {
 
@@ -29,6 +31,8 @@ int FWorld::Create(Vector2f grav)
 {
 	m_myWorld = new b2World(FfVecToB2Vec(grav));
 
+	FDebugDraw::Register(this);
+
 	return 1;
 }
 
@@ -43,6 +47,8 @@ int FWorld::Step(float timestep, int velocityIterations, int positionIterations)
 //========================================================
 int FWorld::Destroy()
 {
+	FDebugDraw::UnRegister();
+
 	delete m_myWorld;
 	m_myWorld = nullptr;
 

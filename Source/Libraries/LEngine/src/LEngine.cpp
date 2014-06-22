@@ -18,6 +18,12 @@
 #include "debug.h"
 #include "LError.h"
 
+#define DEBUG_RENDER_PHSYICS 1
+
+#if DEBUG_RENDER_PHSYICS
+#include "FDebugDraw.h"
+#endif
+
 #define DebugTimerUpdateRate_Sec 5.0f
 
 #define ms_30FPS 33
@@ -351,6 +357,10 @@ LError LEngine::RenderThreadLoop()
 		
 		// Update the engine window
 		err |= m_Renderer.Render();
+
+#if DEBUG_RENDER_PHSYICS // Render the physics world as it currently is
+		Ffiseg::FDebugDraw::DebugDraw(&m_Renderer.GetBaseRenderer());
+#endif
 
 		// grab the current time
 		frameTime = SDLInterface::Timer::GetGlobalLifetime();

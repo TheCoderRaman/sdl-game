@@ -11,6 +11,8 @@ project( Ffiseg )
 set (PROJECT_INCLUDE_DIR 
 	${CMAKE_CURRENT_SOURCE_DIR}/include
 	${CMAKE_CURRENT_SOURCE_DIR}/../Util/include
+	${CMAKE_CURRENT_SOURCE_DIR}/../SDLInterface/include
+
 )	
 
 # Set the include directories for SDL
@@ -30,12 +32,14 @@ SET(PROJECT_HEADERS
 	${CMAKE_CURRENT_SOURCE_DIR}/include/FWorld.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/FRigidBody.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/FShape.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/FDebugDraw.h
 )
 
 set(PROJECT_SRCS 
 	${CMAKE_CURRENT_SOURCE_DIR}/src/FWorld.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/FRigidBody.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/FInternal.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/FDebugDraw.cpp
 )
 
 
@@ -48,5 +52,6 @@ include(../../cmake/library.cmake)
 target_link_libraries(${PROJECT_NAME} 
 	Util 
 	Box2D
+	SDLInterface
 )
 

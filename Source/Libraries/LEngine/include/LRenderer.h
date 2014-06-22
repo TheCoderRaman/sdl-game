@@ -48,8 +48,6 @@ public:
 	//! useful for debugging and sanity checks
 	LError SetRenderer(LRenderer2D* parent);
 
-protected:
-
 	inline LRenderer2D* GetRenderer( void ) const { return m_pRenderer; }
 
 private:
