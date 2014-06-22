@@ -14,6 +14,7 @@ set (PROJECT_INCLUDE_DIR
 	${CMAKE_CURRENT_SOURCE_DIR}/../Libraries/Util/include
 	${CMAKE_CURRENT_SOURCE_DIR}/../Libraries/SDLInterface/include
 	${CMAKE_CURRENT_SOURCE_DIR}/../Libraries/LEngine/include
+	${CMAKE_CURRENT_SOURCE_DIR}/../Libraries/Ffiseg/include
 
 )
 
@@ -57,6 +58,7 @@ target_link_libraries(
 	LEngine
 	SDLInterface
 	Util
+	Ffiseg
 )
 
 #-----------------------------------------------------------------
