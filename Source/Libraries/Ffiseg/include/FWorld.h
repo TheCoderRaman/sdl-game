@@ -10,29 +10,30 @@
 
 #include "FCommon.h"
 
-namespace Ffiseg
+Ffiseg_namespace_start
+
+//! \brief Wrapper for the box 2D world
+class FWorld
 {
-	//! \brief Wrapper for the box 2D world
-	class FWorld
-	{
-	public:
+public:
 
-		FWorld();
-		~FWorld();
+	FWorld();
+	~FWorld();
 
-		//! \brief Create the world
-		//! \return returns posetive on success
-		int Create( Vector2f grav );
+	//! \brief Create the world
+	//! \return returns posetive on success
+	int Create( Vector2f grav );
 
-		//! \brief Destroy the world
-		//! \return returns posetive on success
-		int Destroy();
+	//! \brief Destroy the world
+	//! \return returns posetive on success
+	int Destroy();
 
-	private:
+private:
 
-		b2World* m_myWorld;
+	b2World* m_myWorld;
 
-	};
-}
+};
+
+Ffiseg_namespace_end
 
 #endif //_FWORLD_H_
