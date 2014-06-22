@@ -61,13 +61,17 @@ LError Paddle::Create(Ffiseg::FWorld* world /*= nullptr*/)
 //====================================================
 void Paddle::MoveLeft( void )
 {
-	GetSprite()->SetPos( GetSprite()->GetXPos() - 8, GetSprite()->GetYPos() );
+	Vector2f p = GetBody()->GetPos();
+	p.x -= 1;
+	GetBody()->SetPos(p);
 }
 
 //====================================================
 void Paddle::MoveRight( void )
 {
-	GetSprite()->SetPos( GetSprite()->GetXPos() + 8, GetSprite()->GetYPos() );
+	Vector2f p = GetBody()->GetPos();
+	p.x += 1;
+	GetBody()->SetPos(p);
 }
 
 //====================================================
