@@ -30,6 +30,8 @@ LError GameOne::VOnCreate()
 {
  	LError err = LError::NoErr;
 
+	m_myWorld.Create({ 0.0f, -9.81f });
+
 	// Set up the event handler
 	if( !LERROR_HAS_FATAL( err ) )
 		err |= m_myEventManager.Create();
@@ -44,12 +46,12 @@ LError GameOne::VOnCreate()
 
 	// Set up the banana
 	m_banana.SetRenderer( &LEngine::GetRenderer() );
-	m_banana.Create();
+	m_banana.Create(&m_myWorld);
 	GetUpdatingList().Register(&m_banana);
 
 	// Set up the paddle
 	m_paddle.SetRenderer( &LEngine::GetRenderer() );
-	m_paddle.Create();
+	m_paddle.Create(&m_myWorld);
 	m_paddle.SetPos( 100, 400 );
 
 	GetUpdatingList().Register( &m_paddle );
@@ -58,8 +60,6 @@ LError GameOne::VOnCreate()
 	LEngine::GetAudioManager().PlayMusic( "song1", true );
 
 	LEngine::GetAudioManager().LoadSound( "Media/hit.wav", "hit" );
-
-	m_myWorld.Create({ 0.0f, -9.81f });
 
  	return err;
 }
@@ -76,6 +76,8 @@ LError GameOne::VOnPreUpdate()
 LError GameOne::VOnUpdate(ms elapsed)
 {
  	LError err = LError::NoErr;
+
+	m_myWorld.Step(elapsed, 8, 3);
 
 	if( LEngine::GetInputManager().GetButtonHeldDown( LInput::eInputType::left ) )
 	{
@@ -123,8 +125,6 @@ LError GameOne::VOnDestroy()
 {
  	LError err = LError::NoErr;
 
-	m_myWorld.Destroy();
-
 	m_banana.Destroy();
 	m_paddle.Destroy();
 
@@ -138,6 +138,8 @@ LError GameOne::VOnDestroy()
 
 	if (!LERROR_HAS_FATAL(err))
 		err |= m_myEventManager.Destroy();
+
+	m_myWorld.Destroy();
 
  	return err;
 }

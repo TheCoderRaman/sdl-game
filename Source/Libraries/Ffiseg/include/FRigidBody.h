@@ -31,6 +31,8 @@ private:
 
 	//! \brief the internal box2d body
 	b2Body* m_myBody;
+
+	FWorld* m_myWorld;
 };
 
 

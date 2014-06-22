@@ -10,8 +10,12 @@
 #include "LError.h"
 #include "debug.h"
 
+#include "FShape.h"
+
+using namespace Ffiseg;
+
 //====================================================
-LError Banana::Create( void )
+LError Banana::Create(Ffiseg::FWorld* world /* = nullptr */)
 {
 	RUNTIME_LOG( "Creating Banana..." );
 
@@ -25,10 +29,21 @@ LError Banana::Create( void )
 
 	// Set up the banana
 	GetSprite()->SetSourceRect( { 0, 0, 400, 300 } );
-	GetSprite()->SetSize( 400, 300 );
+	GetSprite()->SetSize( 200, 150 );
 	GetSprite()->SetPos( 100, 100 );
 
 	GameSprite::Create(); // Adds it to the renderer
+
+	if (world)
+	{
+		FBodyDef bdef = FBodyDef();
+		FFixtureDef fdef = FFixtureDef();
+		FPolygonShape shape;
+		fdef.shape = &shape;
+		shape.SetAsBox(2.0f, 1.5f);
+
+		CreateBody(*world, bdef, fdef);
+	}
 
 	return err;
 }
@@ -36,10 +51,6 @@ LError Banana::Create( void )
 //====================================================
 LError Banana::VOnUpdate( ms elapsed )
 {
-
-	static float f = 0.0f;
-	f += 1.0f;
-	GetSprite()->SetRotation( f );
 
 	return LError::NoErr;
 }

@@ -10,8 +10,12 @@
 #include "LError.h"
 #include "debug.h"
 
+#include "FShape.h"
+
+using namespace Ffiseg;
+
 //====================================================
-LError Paddle::Create( void )
+LError Paddle::Create(Ffiseg::FWorld* world /*= nullptr*/)
 {
 	RUNTIME_LOG( "Creating Paddle..." );
 
@@ -29,6 +33,17 @@ LError Paddle::Create( void )
 	GetSprite()->SetPos( 100, 100 );
 
 	GameSprite::Create(); // Adds it to the renderer
+
+	if (world)
+	{
+		FBodyDef bdef = FBodyDef();
+		FFixtureDef fdef = FFixtureDef();
+		FPolygonShape shape;
+		fdef.shape = &shape;
+		shape.SetAsBox(3.0f, 0.5f);
+
+		CreateBody(*world, bdef, fdef);
+	}
 
 	return err;
 }

@@ -17,7 +17,7 @@ class Paddle : public GameSprite
 {
 public:
 
-	LError Create( void );
+	LError Create(Ffiseg::FWorld* world = nullptr);
 	LError Destroy( void );
 
 	virtual LError Render( LRenderer2D* renderer );

@@ -59,8 +59,17 @@ LError GameSprite::Destroy( void )
 
 	m_sprite.Destroy();
 
+	m_rigidBody.Destroy();
+
 	// Removing our reference to the renderer
 	SetRenderer( nullptr );
 
 	return LError::NoErr;
+}
+
+//====================================================
+void GameSprite::CreateBody(Ffiseg::FWorld& world, Ffiseg::FBodyDef &bdef, Ffiseg::FFixtureDef& fdef)
+{
+	m_rigidBody.Create(&world, bdef);
+	m_rigidBody.CreateFixture(fdef);
 }

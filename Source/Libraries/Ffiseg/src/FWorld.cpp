@@ -28,6 +28,7 @@ FWorld::~FWorld()
 int FWorld::Create(Vector2f grav)
 {
 	m_myWorld = new b2World(FfVecToB2Vec(grav));
+
 	return 1;
 }
 

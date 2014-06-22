@@ -14,6 +14,8 @@
 #include "LRenderer.h"
 #include "LSprite.h"
 
+#include "FRigidBody.h"
+
 #include "LError.h"
 
 class GameSprite : public LUpdatable, public LRendereable2D
@@ -27,6 +29,8 @@ public:
 
 	void SetPos( int x, int y );
 
+	void CreateBody(Ffiseg::FWorld& world, Ffiseg::FBodyDef &bdef, Ffiseg::FFixtureDef& fdef);
+
 protected:
 
 	LSprite*	GetSprite( void ) { return &m_sprite; }
@@ -39,6 +43,8 @@ private:
 
 	//! \brief The Sprite
 	LSprite		m_sprite;
+
+	Ffiseg::FRigidBody m_rigidBody;
 };
 
 #endif
