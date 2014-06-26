@@ -1,13 +1,12 @@
 Link Engine v0.1
 ==============
-A cross platform 2D game engine built using SDL, Box2D and other open source libraries.
+A cross platform 2D game engine built using SDL2 and Box2D.
 --------------
 
 Primarily 2D, hopefully to make something cool with in the end.
 
 Code is built using cmake, a cross platform make tool.
 
-It's organised into the main game source, and Libraries.
 
 Current libraries are
 
@@ -15,6 +14,10 @@ Current libraries are
 - SDLInterface, An OO wrapper for SDL2
 - Ffiseg, a physics wrapper/ helper library for Box2D
 - Util, General purpose library
+
+Current projects are
+
+- GameOne, a simple testbed for testing engine features
 
 
 Development
