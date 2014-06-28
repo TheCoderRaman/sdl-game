@@ -39,7 +39,7 @@ LError Paddle::Create(Ffiseg::FWorld* world /*= nullptr*/)
 	{
 		FBodyDef bdef = FBodyDef();
 		bdef.type = FBodyType::Static;
-		Vector2f pos = FFISEG_PIX_TO_WORLD(Vector2f(300, 100));
+		Point2f pos = FFISEG_PIX_TO_WORLD(Point2f(300, 100));
 		bdef.position = pos;
 
 		FFixtureDef fdef = FFixtureDef();
