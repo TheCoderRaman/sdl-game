@@ -13,6 +13,13 @@
 
 #include "stdint.h"
 
+// MSVC Does not support constexpr yet...
+#if WINDOWS_BUILD
+#define CONSTEXPR
+#else
+#define CONSTEXPR constexpr
+#endif
+
 // Forward declares of the box2D types
 class b2Body;
 class b2Joint;
@@ -48,23 +55,22 @@ enum FBodyType
 struct FBodyDef
 {							
 	//! - This constructor sets the body definition default values.
-	FBodyDef()
-	{
-		userData = nullptr;
-		position = { 0.0f, 0.0f };
-		angle = 0.0f;
-		linearVelocity = { 0.0f, 0.0f };
-		angularVelocity = 0.0f;
-		linearDamping = 0.0f;
-		angularDamping = 0.0f;
-		allowSleep = true;
-		awake = true;
-		fixedRotation = false;
-		bullet = false;
-		type = Static;
-		active = true;
-		gravityScale = 1.0f;
-	}
+	CONSTEXPR FBodyDef()
+		: userData (nullptr)
+		,	position ({ 0.0f, 0.0f })
+		,	angle ( 0.0f )
+		,	linearVelocity ({ 0.0f, 0.0f })
+		,	angularVelocity (0.0f)
+		,	linearDamping (0.0f)
+		,	angularDamping (0.0f)
+		,	allowSleep (true)
+		,	awake (true)
+		,	fixedRotation (false)
+		,	bullet (false)
+		,	type (Static)
+		,	active (true)
+		,	gravityScale (1.0f)
+	{}
 
 	//! - The body type: static, kinematic, or dynamic.
 	//! - Note: if a dynamic body would have zero mass, the mass is set to one.
@@ -124,11 +130,12 @@ struct FBodyDef
 //! \note all comments prepended with a - are taken from Box2D
 struct FFilter
 {
-	FFilter()
+	CONSTEXPR FFilter()
+		:	categoryBits (0x0001)
+		,	maskBits (0xFFFF)
+		,	groupIndex (0)
 	{
-		categoryBits = 0x0001;
-		maskBits = 0xFFFF;
-		groupIndex = 0;
+
 	}
 
 	//! - The collision category bits. Normally you would just set one bit.
@@ -149,14 +156,14 @@ struct FFilter
 struct FFixtureDef
 {
 	//! - The constructor sets the default fixture definition values.
-	FFixtureDef()
+	CONSTEXPR FFixtureDef()
+		:	shape (nullptr)
+		,	userData (nullptr)
+		,	friction (0.2f)
+		,	restitution (0.0f)
+		,	density (0.0f)
+		,	isSensor (false)
 	{
-		shape = nullptr;
-		userData = nullptr;
-		friction = 0.2f;
-		restitution = 0.0f;
-		density = 0.0f;
-		isSensor = false;
 	}
 
 	//! - The shape, this must be set. 
