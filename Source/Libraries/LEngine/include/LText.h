@@ -9,10 +9,13 @@
 #define _LTEXT_H_
 
 #include "SDLText.h"
+#include "LRenderer.h"
+#include "SDLTexture.h"
+#include "LError.h"
 #include <vector>
 #include <tuple>
 
-class LText
+class LText : LRendereable2D
 {
 public:
 	LText( void );
@@ -20,16 +23,23 @@ public:
 	
 	void LoadFont( const char* filename, const char* name, int size );
 	void DrawText( const char* name, int size, const char* text );
+	
+	//! Implemented from LRenderable2D
+	LError Render( LRenderer2D* renderer );
 
 private:
 
+	SDLInterface::SDL_Font* FindFont( const char* name, int size );
+
 	const int iMAX_FONTS= 1;
 
-	std::vector< std::tuple< SDLInterface::SDL_Font, const char*, int > > m_fonts;
+	std::vector< std::tuple< SDLInterface::SDL_Font, const char*, int > >	m_fonts;
+	SDLInterface::SDLText													m_SDLTextLibrary;
 
-	SDLInterface::SDL_Font* FindFont( const char* name, int size );
-	
-	SDLInterface::SDLText m_SDLTextLibrary;
+	SDLInterface::Surface* m_surface;
+	SDLInterface::Texture* butts;
+
+	bool bCreated;
 
 };
 

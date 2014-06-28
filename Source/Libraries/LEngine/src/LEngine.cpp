@@ -352,6 +352,8 @@ LError LEngine::RenderThreadLoop()
 		// Update the engine window
 		err |= m_Renderer.Render();
 
+		m_TextManager.Render( &m_Renderer );
+
 		// grab the current time
 		frameTime = SDLInterface::Timer::GetGlobalLifetime();
 

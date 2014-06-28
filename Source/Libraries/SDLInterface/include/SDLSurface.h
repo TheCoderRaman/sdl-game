@@ -44,6 +44,9 @@ namespace SDLInterface
 		//! \brief Create the surface from a window
 		Error CreateFromWindow(Window* window);
 
+		//! \brief Create the surface from another SDL surface
+		Error CreateFromSurface( SDL_Surface* surface );
+
 		//! \brief destroy the surface
 		Error Destroy();
 

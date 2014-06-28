@@ -21,10 +21,18 @@ SDLInterface::Audio::Audio()
 	{
 		DEBUG_LOG( "Opening audio channel errors: %s", Mix_GetError() );
 	}
+	else
+	{
+		DEBUG_LOG( "Opened an audio channel correctly" );
+	}
 
 	if( -1 == Mix_Init( MIX_INIT_FLAC | MIX_INIT_MP3 | MIX_INIT_OGG ) )
 	{
 		DEBUG_LOG( "Initialising errors: %s", Mix_GetError() );
+	}
+	else
+	{
+		DEBUG_LOG( "Initialised mixer correctly" );
 	}
 }
 

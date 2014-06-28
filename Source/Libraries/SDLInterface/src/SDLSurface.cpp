@@ -119,6 +119,27 @@ SDLInterface::Error SDLInterface::Surface::CreateFromWindow(Window* window)
 }
 
 //========================================================
+SDLInterface::Error SDLInterface::Surface::CreateFromSurface( SDL_Surface* surface )
+{
+	Error err = Error::None;
+
+	// Sanity check
+	DEBUG_ASSERT( m_sdl_surface == nullptr );
+
+	m_sdl_surface = surface;
+
+	// Error handling
+	if( m_sdl_surface == NULL )
+	{
+		DEBUG_LOG( "The inputted surface is null! SDL_Error: %s", SDL_GetError() );
+		err |= Error::Surface_create_fail;
+	}
+
+	return err;
+}
+
+
+//========================================================
 SDLInterface::Error SDLInterface::Surface::Destroy()
 {
 	Error err = Error::None;

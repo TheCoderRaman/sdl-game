@@ -9,9 +9,12 @@
 #define _SDLTTF_H_
 
 #include "SDLCommon.h"
+#include "SDLSurface.h"
 
 struct _TTF_Font;
 typedef _TTF_Font TTF_Font;
+
+struct SDL_Surface;
 
 // Start the SDLInterface Namespace
 namespace SDLInterface
@@ -21,10 +24,10 @@ namespace SDLInterface
 	class SDL_Font
 	{
 	public:
-		SDL_Font( TTF_Font* font ) { myFont = font; }
+		SDL_Font( TTF_Font* font ) : myFont ( nullptr ) { myFont = font; }
 
-		void SetFont( TTF_Font* font );
-		TTF_Font* GetFont( void );
+		void SetFont( TTF_Font* font ) { myFont = font; }
+		TTF_Font* GetFont( void ) { return myFont; }
 	private:
 		TTF_Font* myFont;
 	};
@@ -38,8 +41,11 @@ namespace SDLInterface
 		SDLText( void );
 		~SDLText( void );
 
-		SDL_Font OpenFont( const char* filename, int size );
+		SDL_Font		OpenFont( const char* filename, int size );
+		Surface*		RenderTextSolid( SDL_Font* font, const char* text );
 
+	private:
+		Surface*		mySurface;
 	};
 }
 

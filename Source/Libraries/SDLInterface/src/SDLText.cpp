@@ -9,23 +9,35 @@
 #include "SDL_TTF.h"
 #include <stdint.h>
 
+#include "SDLTexture.h"
+
 #include "SDLText.h"
 #include "debug.h"
 
 //====================================================
-//   Audio Interface
+//   Text Interface
 //====================================================
 SDLInterface::SDLText::SDLText()
+: mySurface( nullptr )
 {
 	if( -1 == TTF_Init() )
 	{
-		DEBUG_LOG( "Opening audio channel errors: %s", TTF_GetError() );
+		DEBUG_LOG( "Can't initialise text: %s", TTF_GetError() );
 	}
+	else
+	{
+		DEBUG_LOG( "Initialised text correctly" );
+	}
+
+	mySurface = new Surface();
 }
 
 //====================================================
 SDLInterface::SDLText::~SDLText()
 {
+	delete mySurface;
+	mySurface = nullptr;
+
 	TTF_Quit();
 }
 
@@ -34,5 +46,20 @@ SDLInterface::SDL_Font SDLInterface::SDLText::OpenFont( const char* filename, in
 {
 	SDLInterface::SDL_Font toReturn = SDL_Font( TTF_OpenFont( filename, size ) );
 
+	if( toReturn.GetFont() == NULL )
+	{
+		DEBUG_LOG( "Can't load font: %s", TTF_GetError() );
+	}
+
 	return toReturn;
+}
+
+//====================================================
+SDLInterface::Surface* SDLInterface::SDLText::RenderTextSolid( SDL_Font* font, const char* text )
+{
+	SDL_Color colour = { 0, 0, 0, 0 };
+
+	mySurface->CreateFromSurface( TTF_RenderText_Solid( font->GetFont(), text, colour ) );
+
+	return mySurface;
 }
