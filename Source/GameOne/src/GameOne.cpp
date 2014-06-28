@@ -51,7 +51,6 @@ LError GameOne::VOnCreate()
 	m_paddle.SetRenderer( &LEngine::GetRenderer() );
 	m_paddle.Create();
 	m_paddle.SetPos( 100, 400 );
-
 	GetUpdatingList().Register( &m_paddle );
 
 	LEngine::GetAudioManager().LoadMusic( "Media/music.mp3", "song1" );
@@ -61,7 +60,11 @@ LError GameOne::VOnCreate()
 
 	LEngine::GetTextManager().LoadFont( "Media/font.ttf", "font1", 16 );
 
-	LEngine::GetTextManager().DrawText( "font1", 16, "test" );
+	m_text.SetRenderer( &LEngine::GetRenderer() );
+	m_text.Create( LEngine::GetRenderer(), "font1", 16, "test" );
+	m_text.SetPos( 50, 50 );
+	
+	LEngine::GetRenderer().AddRenderable( &m_text );
 
  	return err;
 }
@@ -127,6 +130,7 @@ LError GameOne::VOnDestroy()
 
 	m_banana.Destroy();
 	m_paddle.Destroy();
+	m_text.Destroy();
 
 	// Remove the event handler
 	if (!LERROR_HAS_FATAL(err))
@@ -135,6 +139,12 @@ LError GameOne::VOnDestroy()
 	// Remove the banana from the renderer
 	if (!LERROR_HAS_FATAL(err))
 		err |= LEngine::GetRenderer().RemoveRenderable(&m_banana);
+
+	if( !LERROR_HAS_FATAL( err ) )
+		err |= LEngine::GetRenderer().RemoveRenderable( &m_paddle );
+
+	if( !LERROR_HAS_FATAL( err ) )
+		err |= LEngine::GetRenderer().RemoveRenderable( &m_text );
 
 	if (!LERROR_HAS_FATAL(err))
 		err |= m_myEventManager.Destroy();

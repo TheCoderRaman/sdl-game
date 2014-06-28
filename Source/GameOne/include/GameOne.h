@@ -11,6 +11,7 @@
 #include "LGameBase.h"
 #include "LUpdatable.h"
 #include "LSprite.h"
+#include "LTextSprite.h"
 
 #include "Banana.h"
 #include "Paddle.h"
@@ -61,6 +62,7 @@ private:
 	//! \brief the Banana
 	Banana m_banana;
 	Paddle m_paddle;
+	LTextSprite m_text;
 
 	//! \brief The Game Event Manager
 	TGameEventManager m_myEventManager;

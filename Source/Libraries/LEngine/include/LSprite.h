@@ -31,6 +31,9 @@ public:
 	//! \brief create the sprite from the file
 	LError Create(LRenderer2D& renderer, const char* file);
 
+	//! \brief create the sprite from a surface
+	LError Create( LRenderer2D& renderer, SDLInterface::Surface* surface );
+
 	//! \brief set the source rectangle from the texture
 	LError SetSourceRect(const SDLInterface::Rect& rect);
 

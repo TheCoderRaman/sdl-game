@@ -36,7 +36,15 @@ LError LSprite::Create(LRenderer2D& renderer, const char* file)
 	// Create the texture
 	SDLInterface::Error sdlerr = m_Texture.Create(&renderer.GetBaseRenderer(), file);
 
-	return SDL_ERROR_HAS_FATAL(sdlerr) ? LError::Fatal : LError::NoErr;;
+	return SDL_ERROR_HAS_FATAL(sdlerr) ? LError::Fatal : LError::NoErr;
+}
+
+//===============================================================
+LError LSprite::Create( LRenderer2D& renderer, SDLInterface::Surface* surface )
+{
+	SDLInterface::Error sdlerr = m_Texture.Create( &renderer.GetBaseRenderer(), surface );
+
+	return SDL_ERROR_HAS_FATAL( sdlerr ) ? LError::Fatal : LError::NoErr;
 }
 
 //===============================================================

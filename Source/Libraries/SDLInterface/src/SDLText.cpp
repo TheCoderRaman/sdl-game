@@ -35,6 +35,8 @@ SDLInterface::SDLText::SDLText()
 //====================================================
 SDLInterface::SDLText::~SDLText()
 {
+	mySurface->Destroy();
+
 	delete mySurface;
 	mySurface = nullptr;
 
@@ -57,7 +59,7 @@ SDLInterface::SDL_Font SDLInterface::SDLText::OpenFont( const char* filename, in
 //====================================================
 SDLInterface::Surface* SDLInterface::SDLText::RenderTextSolid( SDL_Font* font, const char* text )
 {
-	SDL_Color colour = { 0, 0, 0, 0 };
+	SDL_Color colour = { 255, 255, 0, 255 };
 
 	mySurface->CreateFromSurface( TTF_RenderText_Solid( font->GetFont(), text, colour ) );
 

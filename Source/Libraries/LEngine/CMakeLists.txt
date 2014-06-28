@@ -32,6 +32,7 @@ SET(PROJECT_HEADERS
 	${CMAKE_CURRENT_SOURCE_DIR}/include/LError.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/LAudio.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/LText.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/LTextSprite.h
 )
 
 SET(PROJECT_SRCS
@@ -44,6 +45,7 @@ SET(PROJECT_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/src/LAudio.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/LText.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/LUpdatable.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/LTextSprite.cpp
 )
 
 #-----------------------------------------------------------------

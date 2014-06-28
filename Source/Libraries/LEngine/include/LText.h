@@ -15,17 +15,14 @@
 #include <vector>
 #include <tuple>
 
-class LText : LRendereable2D
+class LText
 {
 public:
 	LText( void );
 	~LText( void );
 	
-	void LoadFont( const char* filename, const char* name, int size );
-	void DrawText( const char* name, int size, const char* text );
-	
-	//! Implemented from LRenderable2D
-	LError Render( LRenderer2D* renderer );
+	void					LoadFont( const char* filename, const char* name, int size );
+	SDLInterface::Surface*	DrawText( const char* name, int size, const char* text );
 
 private:
 
@@ -35,11 +32,6 @@ private:
 
 	std::vector< std::tuple< SDLInterface::SDL_Font, const char*, int > >	m_fonts;
 	SDLInterface::SDLText													m_SDLTextLibrary;
-
-	SDLInterface::Surface* m_surface;
-	SDLInterface::Texture* butts;
-
-	bool bCreated;
 
 };
 
