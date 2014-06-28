@@ -13,13 +13,6 @@
 
 #include "stdint.h"
 
-// MSVC Does not support constexpr yet...
-#if WINDOWS_BUILD
-#define CONSTEXPR
-#else
-#define CONSTEXPR constexpr
-#endif
-
 // Forward declares of the box2D types
 class b2Body;
 class b2Joint;
