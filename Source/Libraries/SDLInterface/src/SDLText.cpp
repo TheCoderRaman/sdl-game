@@ -35,12 +35,15 @@ SDLInterface::SDLText::SDLText()
 //====================================================
 SDLInterface::SDLText::~SDLText()
 {
-	mySurface->Destroy();
-
 	delete mySurface;
 	mySurface = nullptr;
 
 	TTF_Quit();
+}
+
+void SDLInterface::SDLText::Destroy()
+{
+	mySurface->Destroy();
 }
 
 //====================================================
@@ -54,6 +57,11 @@ SDLInterface::SDL_Font SDLInterface::SDLText::OpenFont( const char* filename, in
 	}
 
 	return toReturn;
+}
+
+void SDLInterface::SDLText::CloseFont( SDLInterface::SDL_Font* font )
+{
+	TTF_CloseFont( font->GetFont() );
 }
 
 //====================================================

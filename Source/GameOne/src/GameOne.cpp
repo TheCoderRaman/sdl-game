@@ -58,10 +58,10 @@ LError GameOne::VOnCreate()
 
 	LEngine::GetAudioManager().LoadSound( "Media/hit.wav", "hit" );
 
-	LEngine::GetTextManager().LoadFont( "Media/font.ttf", "font1", 16 );
+	LEngine::GetTextManager().LoadFont( "Media/font.ttf", "font1", 72 );
 
 	m_text.SetRenderer( &LEngine::GetRenderer() );
-	m_text.Create( LEngine::GetRenderer(), "font1", 16, "test" );
+	m_text.Create( LEngine::GetRenderer(), "font1", 72, "test" );
 	m_text.SetPos( 50, 50 );
 	
 	LEngine::GetRenderer().AddRenderable( &m_text );

@@ -17,7 +17,16 @@ LText::LText()
 //====================================================
 LText::~LText()
 {
+	for( auto font : m_fonts )
+	{
+		m_SDLTextLibrary.CloseFont( &std::get< 0 >( font ) );
+	}
+}
 
+//====================================================
+void LText::Destroy()
+{
+	m_SDLTextLibrary.Destroy();
 }
 
 //====================================================

@@ -23,6 +23,7 @@ public:
 	
 	void					LoadFont( const char* filename, const char* name, int size );
 	SDLInterface::Surface*	DrawText( const char* name, int size, const char* text );
+	void					Destroy( void );
 
 private:
 
