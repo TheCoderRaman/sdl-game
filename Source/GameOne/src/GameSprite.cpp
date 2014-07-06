@@ -80,6 +80,7 @@ LError GameSprite::Destroy( void )
 //====================================================
 void GameSprite::CreateBody(Ffiseg::FWorld& world, Ffiseg::FBodyDef &bdef, Ffiseg::FFixtureDef& fdef)
 {
+	bdef.userData = this;
 	m_rigidBody.Create(&world, bdef);
 	m_rigidBody.CreateFixture(fdef);
 }

@@ -15,12 +15,22 @@
 #include "LSprite.h"
 
 #include "FRigidBody.h"
+#include "FContacts.h"
 
 #include "LError.h"
 
-class GameSprite : public LUpdatable, public LRendereable2D
+class GameSprite 
+	: public LUpdatable
+	, public LRendereable2D
+	, public Ffiseg::FContactable
 {
 public:
+
+	GameSprite()
+		: Ffiseg::FContactable(0) // Type as 0 for now
+	{
+
+	}
 
 	virtual LError Create( void );
 	virtual LError Destroy( void );

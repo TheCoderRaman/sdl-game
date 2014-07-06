@@ -23,6 +23,7 @@ class b2Contact;
 struct b2ContactImpulse;
 struct b2Manifold;
 
+
 #define FfVecToB2Vec(vec) b2Vec2(vec.x, vec.y)
 #define B2VecToFfVec(vec) Vector2f(vec.x, vec.y)
 
@@ -37,6 +38,7 @@ struct b2Manifold;
 Ffiseg_namespace_start
 
 class FShape;
+class FContactable;
 
 //! \brief Immitation enum for b2BodyType
 enum FBodyType
@@ -115,7 +117,8 @@ struct FBodyDef
 	bool active;
 
 	//! - Use this to store application specific body data.
-	void* userData;
+	//! In the case of Ffiseg, this is a pointer to a contactable
+	FContactable* userData;
 
 	//! - Scale the gravity applied to this body.
 	float gravityScale;

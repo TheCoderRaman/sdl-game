@@ -12,6 +12,9 @@
 
 Ffiseg_namespace_start
 
+//! \brief Identifier for the type of the contactable
+typedef int FContactableType;
+
 class FContactable;
 
 //! \brief Interface wrapper class for the physics system contact listener
@@ -51,20 +54,15 @@ struct FContactInfo
 };
 
 //! \brief Contactable class
+//! Inherit from this class to handle collision callbacks for a body
 //! children of this class are the only type of class that should ever 
 //! be set as user data on any box2D body
 class FContactable
 {
 public:
 
-	//! brief internal type
-	enum Type
-	{
-		RigidBody
-	};
-
 	//! \brief constructor must pass down the type
-	FContactable(Type t) : m_type(t) {}
+	FContactable(FContactableType t) : m_type(t) {}
 
 	//! \brief methods for callbacks from different stages of collision 
 	virtual void BeginContact(const FContactInfo& info) {}
@@ -77,7 +75,7 @@ public:
 	inline TChildClass* TGetAsChildType();
 
 	//! \brief get the Contactable type
-	inline Type GetType() const
+	inline FContactableType GetType() const
 	{
 		return m_type;
 	}
@@ -88,7 +86,7 @@ private:
 	FContactable();
 
 	//! \brief internal type
-	Type m_type;
+	FContactableType m_type;
 };
 
 //========================================================
