@@ -86,13 +86,37 @@ int FRigidBody::Destroy()
 //========================================================
 void FRigidBody::SetPos(Vector2f vec)
 {
+	SetPosByRef(vec);
+}
+
+//========================================================
+void FRigidBody::SetPosByRef(const Vector2f& vec)
+{
 	m_myBody->SetTransform(FfVecToB2Vec(vec), 0.0f);
 }
 
 //========================================================
-Vector2f FRigidBody::GetPos()
+Vector2f FRigidBody::GetPos() const
 {
 	return B2VecToFfVec( m_myBody->GetPosition() );
+}
+
+//========================================================
+void FRigidBody::SetRot(float rotation)
+{
+	SetRotByRef(rotation);
+}
+
+//========================================================
+void FRigidBody::SetRotByRef(const float& rotation)
+{
+	m_myBody->SetTransform(m_myBody->GetPosition(), rotation);
+}
+
+//========================================================
+float FRigidBody::GetRot() const
+{
+	return m_myBody->GetAngle();
 }
 
 

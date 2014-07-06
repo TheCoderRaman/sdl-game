@@ -32,9 +32,15 @@ public:
 
 	//! \brief Set the position
 	void SetPos(Vector2f vec);
-
+	void SetPosByRef(const Vector2f& vec);
 	//! \brief Get the position
-	Vector2f GetPos();
+	Vector2f GetPos() const;
+
+	//! \brief Get the rotation
+	void SetRot(float rotation);
+	void SetRotByRef(const float& rotation);
+	//! \brief Get the rotation
+	float GetRot() const;
 
 	//! \brief Destroy the body
 	int Destroy();
