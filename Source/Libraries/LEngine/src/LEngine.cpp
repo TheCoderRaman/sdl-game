@@ -18,7 +18,7 @@
 #include "debug.h"
 #include "LError.h"
 
-#define DEBUG_RENDER_PHSYICS 0
+#define DEBUG_RENDER_PHSYICS 1
 
 #if DEBUG_RENDER_PHSYICS
 #include "FDebugDraw.h"

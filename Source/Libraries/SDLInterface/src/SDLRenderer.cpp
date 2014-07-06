@@ -215,7 +215,7 @@ SDLInterface::Error SDLInterface::Renderer::RenderLine(const SDLInterface::Point
 }
 
 //========================================================
-SDLInterface::Error SDLInterface::Renderer::RenderTexture(Texture* tex, const Rect& src, const Rect& dest, float rotation /*= 0.0f*/, const Point& centerRot /*= Rect()*/, int flipValue /*= SDL_FLIP_NONE*/)
+SDLInterface::Error SDLInterface::Renderer::RenderTexture(Texture* tex, const Rect& src, const Rect& dest, float rotation /*= 0.0f*/, int flipValue /*= SDL_FLIP_NONE*/)
 {
 	Error err = Error::None;
 
@@ -228,7 +228,6 @@ SDLInterface::Error SDLInterface::Renderer::RenderTexture(Texture* tex, const Re
 	// Create the two SDL_Rects
 	SDL_Rect source			= RECT_TO_SDL_RECT(src);
 	SDL_Rect destination	= convertToSDLRect(dest, m_renderScale);
-	SDL_Point rot			= convertToSDLPoint({ centerRot.x / 2, centerRot.y / 2 }, m_renderScale);
 	SDL_RendererFlip  flip	= SDL_FLIP_NONE;
 
 #ifndef WINDOWS_BUILD
@@ -245,7 +244,7 @@ SDLInterface::Error SDLInterface::Renderer::RenderTexture(Texture* tex, const Re
 						&source, 
 						&destination,
 						rotation,
-						&rot,
+						nullptr,
 						flip);
 
 #ifndef WINDOWS_BUILD

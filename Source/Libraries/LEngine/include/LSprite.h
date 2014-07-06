@@ -73,9 +73,6 @@ private:
 	//! \brief the destination rectangle on screen
 	SDLInterface::Rect m_destRect;
 
-	//! \brief the rotational centre
-	SDLInterface::Point m_rotCentre;
-
 	//! \brief the centre of the sprite
 	Vector2f	m_centre;
 
