@@ -9,6 +9,7 @@
 #define _FWORLD_H_
 
 #include "FCommon.h"
+#include "FContacts.h"
 
 Ffiseg_namespace_start
 
@@ -31,6 +32,9 @@ public:
 
 	//! \brief set the simulation
 	int Step(float timestep,int velocityIterations,int positionIterations);
+
+	//! \brief set the contact listener
+	void SetContactListener(FContactListener& listener);
 
 	//! \brief get the box2d world
 	inline b2World* GetBaseWorldPtr()

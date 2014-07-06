@@ -54,4 +54,11 @@ int FWorld::Destroy()
 	return 1;
 }
 
+//========================================================
+void FWorld::SetContactListener(FContactListener& listener)
+{
+	void* internalListener = listener.GetInternal();
+	m_myWorld->SetContactListener((b2ContactListener*)internalListener);
+}
+
 Ffiseg_namespace_end

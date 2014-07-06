@@ -20,6 +20,7 @@
 #include "LEvents.h"
 
 #include "FWorld.h"
+#include "FContacts.h"
 
 enum class eGameEventType
 {
@@ -70,7 +71,8 @@ private:
 	//! \brief the event handler for the main game class
 	TGameEventManager::THandler m_myEventHandler;
 
-	Ffiseg::FWorld m_myWorld;
+	Ffiseg::FWorld				m_myWorld;
+	Ffiseg::FContactListener	m_myContactListener;
 };
 
 

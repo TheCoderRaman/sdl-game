@@ -34,6 +34,7 @@ SET(PROJECT_HEADERS
 	${CMAKE_CURRENT_SOURCE_DIR}/include/FRigidBody.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/FShape.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/FDebugDraw.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/FContacts.h
 )
 
 set(PROJECT_SRCS 
@@ -41,6 +42,7 @@ set(PROJECT_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/src/FRigidBody.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/FInternal.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/FDebugDraw.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/FContacts.cpp
 )
 
 
