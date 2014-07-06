@@ -18,17 +18,12 @@ class FContactable;
 class FContactListener
 {
 public:
-	//! \brief  default ctor
-	FContactListener() {}
 
 	//! \brief Create the listener
 	void Create();
 
 	//! \brief Destroy the listener
 	void Destroy();
-
-	//! \brief default dtor
-	~FContactListener() {}
 
 	//! \brief Get the internal collision listener
 	inline void* GetInternal();
@@ -40,44 +35,62 @@ private:
 
 };
 
+//========================================================
+inline void* FContactListener::GetInternal()
+{
+	return m_internalListener;
+}
+
+//! \brief contact info for all contacts detected by this system
+//! When passed this type, do not expect any memory stored at the 
+//! pointer locations to be valid after the function call
 struct FContactInfo
 {
 	FContactable* conA;
 	FContactable* conB;
 };
 
+//! \brief Contactable class
+//! children of this class are the only type of class that should ever 
+//! be set as user data on any box2D body
 class FContactable
 {
 public:
+
+	//! brief internal type
 	enum Type
 	{
 		RigidBody
 	};
 
-	FContactable(Type t)
-		: m_type(t)
-	{
+	//! \brief constructor must pass down the type
+	FContactable(Type t) : m_type(t) {}
 
-	}
-
+	//! \brief methods for callbacks from different stages of collision 
 	virtual void BeginContact(const FContactInfo& info) {}
 	virtual void EndContact(const FContactInfo& info) {}
 	virtual void PreSolveContact(const FContactInfo& info) {}
 	virtual void PostSolveContact(const FContactInfo& info) {}
 
+	//! \brief Get the child type of this class
+	template< typename TChildClass >
+	inline TChildClass* TGetAsChildType();
+
 private:
 
+	//! \brief private base ctor to prevent usage
 	FContactable();
 
+	//! \brief internal type
 	Type m_type;
-
-
 };
 
 //========================================================
-inline void* FContactListener::GetInternal()
+template< typename TChildClass >
+TChildClass* FContactable::TGetAsChildType()
 {
-	return m_internalListener;
+	// Ugly cast, but needed
+	return dynamic_cast<TChildClass*>(this);
 }
 
 Ffiseg_namespace_end
