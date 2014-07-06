@@ -20,10 +20,10 @@ SDL_Rect convertToSDLRect(const SDLInterface::Rect& r, const SDLInterface::Rende
 {	
 	SDL_Rect out;
 
-	out.x = (s.offset.x + (s.factor.x*r.x));
-	out.y = (s.offset.y + (-s.factor.y*r.y));
-	out.w = r.w*s.factor.x;
-	out.h = r.h*s.factor.y;
+	out.x = (int)(s.offset.x + (s.factor.x*r.x));
+	out.y = (int)(s.offset.y + (-s.factor.y*r.y));
+	out.w = (int)(r.w*s.factor.x);
+	out.h = (int)(r.h*s.factor.y);
 
 	return out;
 }
@@ -32,8 +32,8 @@ SDL_Point convertToSDLPoint(const SDLInterface::Point& p, const SDLInterface::Re
 {
 	SDL_Point out;
 
-	out.x = (s.offset.x + (s.factor.x*p.x));
-	out.y = (s.offset.y + (-s.factor.y*p.y));
+	out.x = (int)(s.offset.x + (s.factor.x*p.x));
+	out.y = (int)(s.offset.y + (-s.factor.y*p.y));
 
 	return out;
 }

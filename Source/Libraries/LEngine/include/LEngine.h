@@ -120,7 +120,7 @@ public:
 
 	//! \brief get the renderer
 	static inline LRenderer2D&		GetRenderer();
-	static inline LUpdatingList&		GetEventLoop();
+	static inline LUpdatingList&	GetUpdatingList();
 	static inline LInput&			GetInputManager();
 	static inline LAudio&			GetAudioManager();
 
@@ -172,8 +172,6 @@ private:
 
 	//! \brief The UpdatingList
 	LUpdatingList			m_UpdatingList;
-
-	static inline LUpdatingList&	GetUpdatingList();
 
 	//! \brief The InputManager
 	LInput					m_InputManager;

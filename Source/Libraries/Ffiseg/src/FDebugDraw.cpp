@@ -94,8 +94,8 @@ void FDebugDraw_Internal::DrawPolygon(const b2Vec2* vertices, int32 vertexCount,
 		p1 = FFISEG_WORLD_TO_PIX(p1);
 		p2 = FFISEG_WORLD_TO_PIX(p2);
 
-		m_renderer->RenderLine(	SDLInterface::Point{ p1.x, p1.y },
-								SDLInterface::Point{ p2.x, p2.y },
+		m_renderer->RenderLine(	SDLInterface::Point{ (int)p1.x, (int)p1.y },
+								SDLInterface::Point{ (int)p2.x, (int)p2.y },
 								color.r,
 								color.g,
 								color.b,
