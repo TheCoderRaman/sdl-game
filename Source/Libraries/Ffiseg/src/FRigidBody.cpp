@@ -18,8 +18,7 @@ Ffiseg_namespace_start
 
 //========================================================
 FRigidBody::FRigidBody()
-: FContactable(RigidBody)
-, m_myWorld( nullptr )
+: m_myWorld( nullptr )
 , m_myBody( nullptr )
 {
 

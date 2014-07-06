@@ -55,8 +55,8 @@ void FContactListener_internal::BeginContact(b2Contact* contact)
 
 	if (fixtureAData && fixtureBData)
 	{
-		FContactable* conA = (FContactable*)fixtureAData;
-		FContactable* conB = (FContactable*)fixtureBData;
+		FIContactable* conA = (FIContactable*)fixtureAData;
+		FIContactable* conB = (FIContactable*)fixtureBData;
 
 		FContactInfo info;
 		info.conA = conA;
@@ -75,8 +75,8 @@ void FContactListener_internal::EndContact(b2Contact* contact)
 
 	if (fixtureAData && fixtureBData)
 	{
-		FContactable* conA = (FContactable*)fixtureAData;
-		FContactable* conB = (FContactable*)fixtureBData;
+		FIContactable* conA = (FIContactable*)fixtureAData;
+		FIContactable* conB = (FIContactable*)fixtureBData;
 
 		FContactInfo info;
 		info.conA = conA;
@@ -95,8 +95,8 @@ void FContactListener_internal::PreSolve(b2Contact* contact, const b2Manifold* o
 
 	if (fixtureAData && fixtureBData)
 	{
-		FContactable* conA = (FContactable*)fixtureAData;
-		FContactable* conB = (FContactable*)fixtureBData;
+		FIContactable* conA = (FIContactable*)fixtureAData;
+		FIContactable* conB = (FIContactable*)fixtureBData;
 
 		FContactInfo info;
 		info.conA = conA;
@@ -115,8 +115,8 @@ void FContactListener_internal::PostSolve(b2Contact* contact, const b2ContactImp
 
 	if (fixtureAData && fixtureBData)
 	{
-		FContactable* conA = (FContactable*)fixtureAData;
-		FContactable* conB = (FContactable*)fixtureBData;
+		FIContactable* conA = (FIContactable*)fixtureAData;
+		FIContactable* conB = (FIContactable*)fixtureBData;
 
 		FContactInfo info;
 		info.conA = conA;
