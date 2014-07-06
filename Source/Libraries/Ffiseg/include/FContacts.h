@@ -12,26 +12,33 @@
 
 Ffiseg_namespace_start
 
-class FContactListener_internal;
-
+//! \brief Interface wrapper class for the physics system contact listener
 class FContactListener
 {
 public:
-	FContactListener();
+	//! \brief  default ctor
+	FContactListener() {}
 
+	//! \brief Create the listener
 	void Create();
+
+	//! \brief Destroy the listener
 	void Destroy();
 
-	~FContactListener();
+	//! \brief default dtor
+	~FContactListener() {}
 
+	//! \brief Get the internal collision listener
 	inline void* GetInternal();
 
 private:
 
+	//! \brief internal listener pointer
 	void* m_internalListener;
 
 };
 
+//========================================================
 inline void* FContactListener::GetInternal()
 {
 	return m_internalListener;

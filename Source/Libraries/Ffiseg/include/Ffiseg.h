@@ -20,6 +20,7 @@
 #include "FRigidBody.h"
 #include "FShape.h"
 #include "FWorld.h"
+#include "FContacts.h"
 
 #include "FDebugDraw.h"
 
