@@ -3,7 +3,10 @@
 //! \author  Marc Di luzio
 //! \date    April 2014
 //!
-//! Header for LEngine.cpp
+//! LEngine
+//! A Simple SDL and Box2D based multithreaded game engine.
+//! Designed and made as an experiment in game engine design, and maybe
+//! To end up being used for some cool game in the future!
 //!
 #ifndef _LENGINE_H_
 #define _LENGINE_H_
