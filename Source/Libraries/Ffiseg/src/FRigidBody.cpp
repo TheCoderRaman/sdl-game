@@ -18,7 +18,8 @@ Ffiseg_namespace_start
 
 //========================================================
 FRigidBody::FRigidBody()
-: m_myWorld( nullptr )
+: FContactable(RigidBody)
+, m_myWorld( nullptr )
 , m_myBody( nullptr )
 {
 
@@ -37,6 +38,7 @@ int FRigidBody::Create(FWorld* world, const FBodyDef& def)
 
 	b2BodyDef b2def = getb2BodyDef(def);
 
+	// Add this as the userData. only EVER add FContactables as user data
 	b2def.userData = (void*)this;
 
 	m_myBody = m_myWorld->GetBaseWorldPtr()->CreateBody(&b2def);

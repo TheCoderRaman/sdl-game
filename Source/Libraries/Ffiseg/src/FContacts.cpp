@@ -50,25 +50,81 @@ void FContactListener::Destroy()
 //========================================================
 void FContactListener_internal::BeginContact(b2Contact* contact)
 {
+	void* fixtureAData = contact->GetFixtureA()->GetBody()->GetUserData();
+	void* fixtureBData = contact->GetFixtureB()->GetBody()->GetUserData();
 
+	if (fixtureAData && fixtureBData)
+	{
+		FContactable* conA = (FContactable*)fixtureAData;
+		FContactable* conB = (FContactable*)fixtureBData;
+
+		FContactInfo info;
+		info.conA = conA;
+		info.conB = conB;
+
+		conA->BeginContact(info);
+		conB->BeginContact(info);
+	}
 }
 
 //========================================================
 void FContactListener_internal::EndContact(b2Contact* contact)
 {
+	void* fixtureAData = contact->GetFixtureA()->GetBody()->GetUserData();
+	void* fixtureBData = contact->GetFixtureB()->GetBody()->GetUserData();
 
+	if (fixtureAData && fixtureBData)
+	{
+		FContactable* conA = (FContactable*)fixtureAData;
+		FContactable* conB = (FContactable*)fixtureBData;
+
+		FContactInfo info;
+		info.conA = conA;
+		info.conB = conB;
+
+		conA->EndContact(info);
+		conB->EndContact(info);
+	}
 }
 
 //========================================================
 void FContactListener_internal::PreSolve(b2Contact* contact, const b2Manifold* oldManifold)
 {
+	void* fixtureAData = contact->GetFixtureA()->GetBody()->GetUserData();
+	void* fixtureBData = contact->GetFixtureB()->GetBody()->GetUserData();
 
+	if (fixtureAData && fixtureBData)
+	{
+		FContactable* conA = (FContactable*)fixtureAData;
+		FContactable* conB = (FContactable*)fixtureBData;
+
+		FContactInfo info;
+		info.conA = conA;
+		info.conB = conB;
+
+		conA->PreSolveContact(info);
+		conB->PreSolveContact(info);
+	}
 }
 
 //========================================================
 void FContactListener_internal::PostSolve(b2Contact* contact, const b2ContactImpulse* impulse)
 {
+	void* fixtureAData = contact->GetFixtureA()->GetBody()->GetUserData();
+	void* fixtureBData = contact->GetFixtureB()->GetBody()->GetUserData();
 
+	if (fixtureAData && fixtureBData)
+	{
+		FContactable* conA = (FContactable*)fixtureAData;
+		FContactable* conB = (FContactable*)fixtureBData;
+
+		FContactInfo info;
+		info.conA = conA;
+		info.conB = conB;
+
+		conA->PostSolveContact(info);
+		conB->PostSolveContact(info);
+	}
 }
 
 

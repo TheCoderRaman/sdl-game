@@ -19,6 +19,9 @@ class b2Joint;
 class b2Fixture;
 class b2World;
 class b2Shape;
+class b2Contact;
+struct b2ContactImpulse;
+struct b2Manifold;
 
 #define FfVecToB2Vec(vec) b2Vec2(vec.x, vec.y)
 #define B2VecToFfVec(vec) Vector2f(vec.x, vec.y)

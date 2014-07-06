@@ -9,6 +9,7 @@
 #define _FRIGIDBODY_H_
 
 #include "FCommon.h"
+#include "FContacts.h"
 
 Ffiseg_namespace_start
 
@@ -17,6 +18,7 @@ class FWorld;
 
 //! \brief Ffiseg rigid body class
 class FRigidBody
+	: public FContactable
 {
 public:
 

@@ -12,6 +12,8 @@
 
 Ffiseg_namespace_start
 
+class FContactable;
+
 //! \brief Interface wrapper class for the physics system contact listener
 class FContactListener
 {
@@ -35,6 +37,40 @@ private:
 
 	//! \brief internal listener pointer
 	void* m_internalListener;
+
+};
+
+struct FContactInfo
+{
+	FContactable* conA;
+	FContactable* conB;
+};
+
+class FContactable
+{
+public:
+	enum Type
+	{
+		RigidBody
+	};
+
+	FContactable(Type t)
+		: m_type(t)
+	{
+
+	}
+
+	virtual void BeginContact(const FContactInfo& info) {}
+	virtual void EndContact(const FContactInfo& info) {}
+	virtual void PreSolveContact(const FContactInfo& info) {}
+	virtual void PostSolveContact(const FContactInfo& info) {}
+
+private:
+
+	FContactable();
+
+	Type m_type;
+
 
 };
 
