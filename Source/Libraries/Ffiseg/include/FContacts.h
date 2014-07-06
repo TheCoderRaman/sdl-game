@@ -76,6 +76,12 @@ public:
 	template< typename TChildClass >
 	inline TChildClass* TGetAsChildType();
 
+	//! \brief get the Contactable type
+	inline Type GetType() const
+	{
+		return m_type;
+	}
+
 private:
 
 	//! \brief private base ctor to prevent usage
