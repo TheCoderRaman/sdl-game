@@ -18,7 +18,7 @@ class FWorld;
 
 //! \brief Ffiseg rigid body class
 class FRigidBody
-	: public FIContactable
+	: public FContactable
 {
 public:
 

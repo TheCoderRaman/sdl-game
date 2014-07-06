@@ -12,7 +12,7 @@
 
 Ffiseg_namespace_start
 
-class FIContactable;
+class FContactable;
 
 //! \brief Interface wrapper class for the physics system contact listener
 class FContactListener
@@ -40,23 +40,38 @@ private:
 
 };
 
-//! \brief Contact info for any contact
 struct FContactInfo
 {
-	FIContactable* conA;
-	FIContactable* conB;
+	FContactable* conA;
+	FContactable* conB;
 };
 
-//! \brief sub class for any contactable
-//! Children of this class are the only classes that should be added as user data to box2d bodies
-class FIContactable
+class FContactable
 {
 public:
+	enum Type
+	{
+		RigidBody
+	};
+
+	FContactable(Type t)
+		: m_type(t)
+	{
+
+	}
 
 	virtual void BeginContact(const FContactInfo& info) {}
 	virtual void EndContact(const FContactInfo& info) {}
 	virtual void PreSolveContact(const FContactInfo& info) {}
 	virtual void PostSolveContact(const FContactInfo& info) {}
+
+private:
+
+	FContactable();
+
+	Type m_type;
+
+
 };
 
 //========================================================
