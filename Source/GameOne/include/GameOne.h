@@ -72,7 +72,6 @@ private:
 	TGameEventManager::THandler m_myEventHandler;
 
 	Ffiseg::FWorld				m_myWorld;
-	Ffiseg::FContactListener	m_myContactListener;
 };
 
 

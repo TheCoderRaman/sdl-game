@@ -31,8 +31,6 @@ LError GameOne::VOnCreate()
  	LError err = LError::NoErr;
 
 	m_myWorld.Create(Vector2f( 0.0f, -9.81f ));
-	m_myContactListener.Create();
-	m_myWorld.SetContactListener(m_myContactListener);
 
 	// Set up the event handler
 	if( !LERROR_HAS_FATAL( err ) )
@@ -138,7 +136,6 @@ LError GameOne::VOnDestroy()
 	if (!LERROR_HAS_FATAL(err))
 		err |= m_myEventManager.Destroy();
 
-	m_myContactListener.Destroy();
 	m_myWorld.Destroy();
 
  	return err;

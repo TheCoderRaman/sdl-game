@@ -32,6 +32,8 @@ int FWorld::Create(Vector2f grav)
 
 	FDebugDraw::Register(this);
 
+	m_myContactListener.Create();
+	SetContactListener(m_myContactListener);
 	return 1;
 }
 
@@ -46,6 +48,7 @@ int FWorld::Step(float timestep, int velocityIterations, int positionIterations)
 //========================================================
 int FWorld::Destroy()
 {
+	m_myContactListener.Destroy();
 	FDebugDraw::UnRegister();
 
 	delete m_myWorld;

@@ -33,8 +33,6 @@ public:
 	//! \brief set the simulation
 	int Step(float timestep,int velocityIterations,int positionIterations);
 
-	//! \brief set the contact listener
-	void SetContactListener(FContactListener& listener);
 
 	//! \brief get the box2d world
 	inline b2World* GetBaseWorldPtr()
@@ -46,6 +44,12 @@ private:
 
 	//! \brief Internal box2d world
 	b2World* m_myWorld;
+
+	//! \brief set the contact listener
+	void SetContactListener(FContactListener& listener);
+
+	//! \brief the contact listener
+	Ffiseg::FContactListener	m_myContactListener;
 
 };
 
