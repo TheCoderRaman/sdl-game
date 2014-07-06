@@ -37,6 +37,8 @@ int FRigidBody::Create(FWorld* world, const FBodyDef& def)
 
 	b2BodyDef b2def = getb2BodyDef(def);
 
+	b2def.userData = (void*)this;
+
 	m_myBody = m_myWorld->GetBaseWorldPtr()->CreateBody(&b2def);
 
 	return 1;

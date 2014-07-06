@@ -42,6 +42,11 @@ public:
 	//! \brief Get the rotation
 	float GetRot() const;
 
+	//! \brief Set the user data
+	inline void	SetUserData(void* data);
+	//! \brief Get the user data
+	inline void*	GetUserData();
+
 	//! \brief Destroy the body
 	int Destroy();
 
@@ -52,7 +57,22 @@ private:
 
 	//! \brief Physics world the body belongs too
 	FWorld* m_myWorld;
+
+	//! \brief user data pointer
+	void* m_pUserData;
 };
+
+//! \brief Set the user data
+void	FRigidBody::SetUserData(void* data)
+{
+	m_pUserData = data;
+}
+
+//! \brief Get the user data
+void*	FRigidBody::GetUserData()
+{
+	return m_pUserData;
+}
 
 
 Ffiseg_namespace_end
