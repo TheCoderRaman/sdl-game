@@ -27,6 +27,7 @@ set (PROJECT_SOURCE_DIR
 #-----------------------------------------------------------------
 # HEADER AND SOURCE FILES
 SET(PROJECT_HEADERS
+	${CMAKE_CURRENT_SOURCE_DIR}/include/Ffiseg.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/FCommon.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/FInternal.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/FWorld.h

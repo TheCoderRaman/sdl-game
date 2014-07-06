@@ -4,7 +4,8 @@
 //! \date    June 2014
 //!
 //! Common includes and declarations for the physics system
-//!
+//! Not to be included from outside of internal Ffiseg systems
+//! 
 #ifndef _FINTERNAL_H_
 #define _FINTERNAL_H_
 
