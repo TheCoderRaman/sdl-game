@@ -5,8 +5,8 @@
 //!
 //! Contains defines for simple global types
 //!	Possibly needs refactoring at some point
-#ifndef _MATH_H_
-#define _MATH_H_
+#ifndef _MATH_TYPES_H_
+#define _MATH_TYPES_H_
 
 //! \brief a generic 2D point
 template< typename T >
@@ -119,4 +119,4 @@ typedef VectorBase2D<int>	Vector2i;
 typedef RectBase2D<float>	Rect4f;
 typedef RectBase2D<int>		Rect4i;
 
-#endif //_MATH_H_
+#endif //_MATH_TYPES_H_
