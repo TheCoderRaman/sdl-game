@@ -18,7 +18,7 @@
 #include "debug.h"
 #include "LError.h"
 
-#define DEBUG_RENDER_PHSYICS 1
+#define DEBUG_RENDER_PHSYICS 0
 
 #if DEBUG_RENDER_PHSYICS
 #include "FDebugDraw.h"
@@ -360,6 +360,7 @@ LError LEngine::RenderThreadLoop()
 		// Delay until the end of the desired frame time
 		SDLInterface::Thread::DelayUntil(frameTime + DESIRED_FRAMETIME_MS);
 		
+		
 #if DEBUG_RENDER_PHSYICS // Render the physics world as it currently is
 		err |= m_Renderer.RenderWithCustomStep( [&]() -> int {
 			Ffiseg::FDebugDraw::DebugDraw(&m_Renderer.GetBaseRenderer());
@@ -369,6 +370,7 @@ LError LEngine::RenderThreadLoop()
 		// Update the engine window
 		err |= m_Renderer.Render();
 #endif
+		
 
 
 		// grab the current time

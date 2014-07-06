@@ -105,14 +105,21 @@ SDLInterface::Error SDLInterface::Renderer::RenderStart()
 	// Sanity check to see if renderer has been created
 	DEBUG_ASSERT(nullptr != m_SDL_Renderer);
 
+#ifndef WINDOWS_BUILD
+	// On Linux and OSX we have to render this on the main thread
+	// TODO: Work out how to ensure we don't need to do this
+	// I _think_ it would be a case of binding the context
 	EventLoop::RunOnMainThread_Sync(err,
 		[&]()->Error
 	{
+#endif
 		// Start by clearing the render buffer
 		SDL_RenderClear(m_SDL_Renderer);
 
+#ifndef WINDOWS_BUILD
 		return Error::None;
 	});
+#endif
 
 	// Set us to be rendering
 	m_bRendering = true;
@@ -260,14 +267,22 @@ SDLInterface::Error SDLInterface::Renderer::RenderEnd()
 	// Sanity check to see if renderer has been created
 	DEBUG_ASSERT(nullptr != m_SDL_Renderer);
 
-	EventLoop::RunOnMainThread_Sync( err,
-	[ & ]()->Error
+#ifndef WINDOWS_BUILD
+	// On Linux and OSX we have to render this on the main thread
+	// TODO: Work out how to ensure we don't need to do this
+	// I _think_ it would be a case of binding the context
+	EventLoop::RunOnMainThread_Sync(err,
+		[&]()->Error
 	{
+#endif
+
 		//Present the rendered image
 		SDL_RenderPresent( m_SDL_Renderer );
 
+#ifndef WINDOWS_BUILD
 		return Error::None;
-	} );
+	});
+#endif
 
 	// Set us to not be rendering
 	m_bRendering = false;
