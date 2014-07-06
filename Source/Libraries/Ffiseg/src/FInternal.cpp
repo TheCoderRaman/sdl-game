@@ -9,6 +9,7 @@
 
 Ffiseg_namespace_start
 
+//========================================================
 b2BodyDef getb2BodyDef(const Ffiseg::FBodyDef& def)
 {
 	b2BodyDef b2def = b2BodyDef();
@@ -30,7 +31,7 @@ b2BodyDef getb2BodyDef(const Ffiseg::FBodyDef& def)
 	return b2def;
 }
 
-
+//========================================================
 b2Filter getb2Filter(const Ffiseg::FFilter& def)
 {
 	b2Filter b2fix = b2Filter();
@@ -41,6 +42,7 @@ b2Filter getb2Filter(const Ffiseg::FFilter& def)
 	return b2fix;
 }
 
+//========================================================
 b2FixtureDef getb2FixtureDef(const Ffiseg::FFixtureDef& def)
 {
 	b2FixtureDef b2def = b2FixtureDef();
@@ -57,7 +59,7 @@ b2FixtureDef getb2FixtureDef(const Ffiseg::FFixtureDef& def)
 	return b2def;
 }
 
-
+//========================================================
 b2PolygonShape getb2PolygonShape(const Ffiseg::FPolygonShape& def)
 {
 	b2PolygonShape shape = b2PolygonShape();

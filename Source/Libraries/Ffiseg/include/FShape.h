@@ -12,11 +12,15 @@
 
 Ffiseg_namespace_start
 
+//! \brief Ffiseg shape descriptor
 class FShape
 {
 public:
+
+	//! \brief Virtual destructor
 	virtual ~FShape(){}
 
+	//! \brief Type of shape
 	enum Type
 	{
 		Circle = 0,
@@ -26,10 +30,12 @@ public:
 		TypeCount = 4
 	};
 
+	//! \brief internal type
 	Type m_type;
 
 protected:
 	
+	//! \brief Constructor with shape type
 	FShape(Type type)
 		: m_type(type)
 	{
@@ -38,14 +44,17 @@ protected:
 
 private:
 
+	//! \brief Cannot default construct
 	FShape();
 };
 
+//! \brief Polygon shape type
 class FPolygonShape
 	: public FShape
 {
 public:
 
+	//! \brief Default ctor
 	FPolygonShape()
 		: FShape(FShape::Polygon)
 		, m_size{ 0.0f,0.0f}
@@ -77,8 +86,13 @@ public:
 		m_angle = angle;
 	}
 
+	//! \brief Size
 	Vector2f m_size;
+
+	//! \brief Centre point
 	Vector2f m_centre;
+
+	//! \brief Angle of rotation
 	float m_angle;
 };
 

@@ -17,6 +17,7 @@ class FWorld
 {
 public:
 
+	//! \brief Default ctor
 	FWorld();
 	~FWorld();
 
@@ -39,6 +40,7 @@ public:
 
 private:
 
+	//! \brief Internal box2d world
 	b2World* m_myWorld;
 
 };

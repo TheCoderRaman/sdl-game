@@ -11,8 +11,7 @@
 
 #include "FDebugDraw.h"
 
-namespace Ffiseg
-{
+Ffiseg_namespace_start
 
 //========================================================
 FWorld::FWorld()
@@ -55,4 +54,4 @@ int FWorld::Destroy()
 	return 1;
 }
 
-}
+Ffiseg_namespace_end
