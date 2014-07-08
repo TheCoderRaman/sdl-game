@@ -18,7 +18,6 @@
 //   Text Interface
 //====================================================
 SDLInterface::SDLText::SDLText()
-: mySurface( nullptr )
 {
 	if( -1 == TTF_Init() )
 	{
@@ -28,23 +27,15 @@ SDLInterface::SDLText::SDLText()
 	{
 		DEBUG_LOG( "Initialised text correctly" );
 	}
-
-	mySurface = new Surface();
 }
 
 //====================================================
 SDLInterface::SDLText::~SDLText()
 {
-	delete mySurface;
-	mySurface = nullptr;
-
 	TTF_Quit();
 }
 
-void SDLInterface::SDLText::Destroy()
-{
-	mySurface->Destroy();
-}
+
 
 //====================================================
 SDLInterface::SDL_Font SDLInterface::SDLText::OpenFont( const char* filename, int size )
@@ -65,11 +56,9 @@ void SDLInterface::SDLText::CloseFont( SDLInterface::SDL_Font* font )
 }
 
 //====================================================
-SDLInterface::Surface* SDLInterface::SDLText::RenderTextSolid( SDL_Font* font, const char* text )
+void SDLInterface::SDLText::RenderTextSolid( SDLInterface::Surface* surfaceToReturn, SDL_Font* font, const char* text )
 {
 	SDL_Color colour = { 255, 255, 0, 255 };
 
-	mySurface->CreateFromSurface( TTF_RenderText_Solid( font->GetFont(), text, colour ) );
-
-	return mySurface;
+	surfaceToReturn->CreateFromSurface( TTF_RenderText_Solid( font->GetFont(), text, colour ) );
 }

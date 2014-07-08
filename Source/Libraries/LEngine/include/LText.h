@@ -21,9 +21,9 @@ public:
 	LText( void );
 	~LText( void );
 	
-	void					LoadFont( const char* filename, const char* name, int size );
-	SDLInterface::Surface*	DrawText( const char* name, int size, const char* text );
-	void					Destroy( void );
+	void	LoadFont( const char* filename, const char* name, int size );
+	void	DrawText( SDLInterface::Surface* toRenderTo, const char* name, int size, const char* text );
+	void	Destroy( void );
 
 private:
 

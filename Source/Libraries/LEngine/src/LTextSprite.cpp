@@ -14,20 +14,19 @@
 //===============================================================
 LTextSprite::LTextSprite()
 {
-
 }
 
 //===============================================================
 LTextSprite::~LTextSprite()
 {
-	
+
 }
 
 LError LTextSprite::Create( LRenderer2D& renderer, const char* fontName, int fontsize, const char* text )
 {
-	SDLInterface::Surface* tempSurf = LEngine::GetTextManager().DrawText( fontName, fontsize, text );
+	LEngine::GetTextManager().DrawText( &mySurface, fontName, fontsize, text );
 
-	LError err = LSprite::Create( renderer, tempSurf );
+	LError err = LSprite::Create( renderer, &mySurface );
 
 	SetSourceRect( { 0, 0, 100, 150 } );
 	SetSize( 100, 150 );
@@ -39,4 +38,13 @@ LError LTextSprite::Create( LRenderer2D& renderer, const char* fontName, int fon
 LError LTextSprite::Render( LRenderer2D* renderer )
 {
 	return LSprite::Render( renderer );
+}
+
+LError LTextSprite::Destroy()
+{
+	mySurface.Destroy();
+
+	return LSprite::Destroy();
+
+
 }

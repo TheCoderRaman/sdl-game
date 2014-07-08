@@ -26,7 +26,6 @@ LText::~LText()
 //====================================================
 void LText::Destroy()
 {
-	m_SDLTextLibrary.Destroy();
 }
 
 //====================================================
@@ -38,11 +37,11 @@ void LText::LoadFont( const char* filename, const char* name, int size )
 }
 
 //====================================================
-SDLInterface::Surface* LText::DrawText( const char* name, int size, const char* text )
+void LText::DrawText( SDLInterface::Surface* toRenderTo, const char* name, int size, const char* text )
 {
 	SDLInterface::SDL_Font* fontToUse = FindFont( name, size );
 
-	return m_SDLTextLibrary.RenderTextSolid( fontToUse, text );
+	m_SDLTextLibrary.RenderTextSolid( toRenderTo, fontToUse, text );
 }
 
 //====================================================

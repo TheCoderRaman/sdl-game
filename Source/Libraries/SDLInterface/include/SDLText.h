@@ -42,12 +42,8 @@ namespace SDLInterface
 		~SDLText( void );
 
 		SDL_Font		OpenFont( const char* filename, int size );
-		Surface*		RenderTextSolid( SDL_Font* font, const char* text );
+		void			RenderTextSolid( SDLInterface::Surface* surfaceToReturn, SDL_Font* font, const char* text );
 		void			CloseFont( SDL_Font* font );
-		void			Destroy( void );
-
-	private:
-		Surface*		mySurface;
 	};
 }
 

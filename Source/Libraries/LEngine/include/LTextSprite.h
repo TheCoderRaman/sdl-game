@@ -14,8 +14,10 @@
 #include "LSprite.h"
 #include "LText.h"
 
+
 #include "SDLRect.h"
 #include "SDLTexture.h"
+#include "SDLSurface.h"
 
 //! \brief the Sprite type
 //! represents a single sprite
@@ -35,8 +37,10 @@ public:
 	//! \brief Overload for the base type render function
 	virtual LError Render( LRenderer2D* renderer );
 
-private:
+	virtual LError Destroy();
 
+private:
+	SDLInterface::Surface mySurface;
 };
 
 #endif //_LTEXTSPRITE_H_
