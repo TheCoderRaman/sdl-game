@@ -58,6 +58,14 @@ LError GameOne::VOnCreate()
 
 	LEngine::GetAudioManager().LoadSound( "Media/hit.wav", "hit" );
 
+	LEngine::GetTextManager().LoadFont( "Media/font.ttf", "font1", 72 );
+
+	m_text.SetRenderer( &LEngine::GetRenderer() );
+	m_text.Create( LEngine::GetRenderer(), "font1", 72, "test" );
+	m_text.SetPos( 50, 50 );
+	
+	LEngine::GetRenderer().AddRenderable( &m_text );
+
  	return err;
 }
 
@@ -124,6 +132,7 @@ LError GameOne::VOnDestroy()
 
 	m_banana.Destroy();
 	m_paddle.Destroy();
+	m_text.Destroy();
 
 	// Remove the event handler
 	if (!LERROR_HAS_FATAL(err))
@@ -132,6 +141,12 @@ LError GameOne::VOnDestroy()
 	// Remove the banana from the renderer
 	if (!LERROR_HAS_FATAL(err))
 		err |= LEngine::GetRenderer().RemoveRenderable(&m_banana);
+
+	if( !LERROR_HAS_FATAL( err ) )
+		err |= LEngine::GetRenderer().RemoveRenderable( &m_paddle );
+
+	if( !LERROR_HAS_FATAL( err ) )
+		err |= LEngine::GetRenderer().RemoveRenderable( &m_text );
 
 	if (!LERROR_HAS_FATAL(err))
 		err |= m_myEventManager.Destroy();

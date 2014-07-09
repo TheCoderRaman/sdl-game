@@ -30,7 +30,7 @@ LError Paddle::Create(Ffiseg::FWorld* world /*= nullptr*/)
 	// Set up the paddle
 	GetSprite()->SetSourceRect( { 0, 0, 255, 42 } );
 	GetSprite()->SetSize(200, 30);
-
+	GetSprite()->SetPos( 100, 100 );
 	Vector2f centre = GetSprite()->GetCentre();
 
 	GameSprite::Create(); // Adds it to the renderer
