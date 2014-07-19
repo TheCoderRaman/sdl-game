@@ -58,7 +58,88 @@ void SDLInterface::SDLText::CloseFont( SDLInterface::SDL_Font* font )
 //====================================================
 void SDLInterface::SDLText::RenderTextSolid( SDLInterface::Surface* surfaceToReturn, SDL_Font* font, const char* text )
 {
-	SDL_Color colour = { 255, 255, 0, 255 };
+	SDL_Color colour = { 0, 0, 0, 255 };
 
 	surfaceToReturn->CreateFromSurface( TTF_RenderText_Solid( font->GetFont(), text, colour ) );
+}
+
+
+//====================================================
+//					      Font
+//====================================================
+SDLInterface::SDL_Font::SDL_Font( TTF_Font* font )
+: myFont( nullptr )
+, iHeight( 0 )
+, iTotalCurrentGlyphs( 0 )
+
+{
+	myFont = font;
+
+	DEBUG_ASSERT( myFont );
+
+	// If we have a valid font, fill this class with attributes
+	GetAllAttributes();
+}
+
+//====================================================
+int SDLInterface::SDL_Font::GetWidth( const char* text )
+{
+	int iWidth = -1;
+
+	unsigned iStringLength = SDL_strlen( text );
+
+	// Iterate through every char
+	for( unsigned uLoop = 0; uLoop < iStringLength; ++uLoop )
+	{
+		iWidth += GetAttributeForChar( text[ uLoop ] ).iAdvance;
+	}
+	
+	return iWidth;
+}
+
+//====================================================
+void SDLInterface::SDL_Font::GetAllAttributes( void )
+{
+	iHeight = TTF_FontHeight( myFont );
+
+	char glyph = 'a';
+
+	for( unsigned uLoop = 0; uLoop < s_kiMaxGlyphs; ++uLoop )
+	{
+		FillGlyphAttributes( glyph );
+		++glyph; // move along the alphabet
+	}
+}
+
+//====================================================
+SDLInterface::SDL_Font::sdlFontCharAttributes SDLInterface::SDL_Font::GetAttributeForChar( char toGet )
+{
+	char glyph = 'a';
+
+	int iDifference = toGet - glyph; // work out which char we have
+
+	if( iDifference < 0 )
+	{
+		iDifference = 0;
+	}
+
+	DEBUG_ASSERT( charAttributes[ iDifference ].thisChar == toGet );
+
+	return charAttributes[ iDifference ];
+}
+
+//====================================================
+void SDLInterface::SDL_Font::FillGlyphAttributes( char character )
+{
+	TTF_GlyphMetrics( myFont,
+					  character,
+					  &charAttributes[ iTotalCurrentGlyphs ].iMinX,
+					  &charAttributes[ iTotalCurrentGlyphs ].iMaxX,
+					  &charAttributes[ iTotalCurrentGlyphs ].iMinY,
+					  &charAttributes[ iTotalCurrentGlyphs ].iMaxY,
+					  &charAttributes[ iTotalCurrentGlyphs ].iAdvance );
+
+	charAttributes[ iTotalCurrentGlyphs ].thisChar = character;
+
+	++iTotalCurrentGlyphs;
 }

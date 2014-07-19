@@ -15,6 +15,11 @@
 #include <vector>
 #include <tuple>
 
+namespace SDLInterface
+{
+	struct Rect;
+}
+
 class LText
 {
 public:
@@ -22,7 +27,7 @@ public:
 	~LText( void );
 	
 	void	LoadFont( const char* filename, const char* name, int size );
-	void	DrawText( SDLInterface::Surface* toRenderTo, const char* name, int size, const char* text );
+	void	DrawText( SDLInterface::Surface* toRenderTo, const char* name, int size, const char* text, SDLInterface::Rect* textureSize );
 	void	Destroy( void );
 
 private:

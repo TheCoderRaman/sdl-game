@@ -20,15 +20,53 @@ struct SDL_Surface;
 namespace SDLInterface
 {
 	//=====================================
-	//! \brief a Text class
+	//! \brief a Font class
 	class SDL_Font
 	{
 	public:
-		SDL_Font( TTF_Font* font ) : myFont ( nullptr ) { myFont = font; }
+		SDL_Font( TTF_Font* font );
 
-		void SetFont( TTF_Font* font ) { myFont = font; }
-		TTF_Font* GetFont( void ) { return myFont; }
+		void		SetFont		( TTF_Font* font )		{ myFont = font;	}
+
+		TTF_Font*	GetFont		( void )				{ return myFont;	}
+		int			GetHeight	( void )				{ return iHeight;	}
+		int			GetWidth	( const char* text );
+
 	private:
+
+		struct sdlFontCharAttributes
+		{
+			sdlFontCharAttributes( void )
+				: thisChar( 'a' )
+				, iAdvance( 0 )
+				, iMaxX( 0 )
+				, iMinX( 0 )
+				, iMaxY( 0 )
+				, iMinY( 0 )
+			{}
+
+			char thisChar;
+			int iAdvance;			// width
+
+			int iMaxX;
+			int iMinX;
+			int iMaxY;
+			int iMinY;
+		};
+
+		int iHeight;
+		int iTotalCurrentGlyphs;
+		static const unsigned s_kiMaxGlyphs = 26;
+
+		sdlFontCharAttributes charAttributes[ s_kiMaxGlyphs ];
+
+
+		void	GetAllAttributes	( void );
+		void	FillGlyphAttributes	( char character );
+
+		sdlFontCharAttributes	GetAttributeForChar( char toGet );
+
+
 		TTF_Font* myFont;
 	};
 
