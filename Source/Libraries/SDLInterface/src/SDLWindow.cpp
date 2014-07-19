@@ -18,6 +18,8 @@
 //========================================================
 SDLInterface::Window::Window()
 : m_SDL_Window(nullptr)
+, m_width( 0 )
+, m_height( 0 )
 {
 
 }
@@ -52,6 +54,9 @@ SDLInterface::Error SDLInterface::Window::Create(int w, int h)
         DEBUG_LOG( "Window could not be created! SDL_Error: %s", SDL_GetError() );
         err |= Error::Window_create_fail;
     }
+
+	m_width = w;
+	m_height = h;
 
 	return err;
 }

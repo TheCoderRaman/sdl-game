@@ -126,6 +126,9 @@ public:
 	static inline LAudio&			GetAudioManager();
 	static inline LText&			GetTextManager();
 
+	static inline int				GetWindowWidth( void );
+	static inline int				GetWindowHeight( void );
+
 private:
 
 	// Cannot call the normal constructor
@@ -241,6 +244,18 @@ inline void LEngine::PauseSubSystem(LEnginePauseSystem::TFlags system, bool paus
 inline bool LEngine::GetIsPaused(LEnginePauseSystem::TFlags system)
 {
 	return GetCurrentEngine().m_pauseFlags.GetCurrentFlag(system);
+}
+
+//===============================================================
+inline int LEngine::GetWindowWidth( void )
+{
+	return GetCurrentEngine().m_MainWindow.GetWindowWidth();
+}
+
+//===============================================================
+inline int LEngine::GetWindowHeight( void )
+{
+	return GetCurrentEngine().m_MainWindow.GetWindowHeight();
 }
 
 #endif //_LENGINE_H_

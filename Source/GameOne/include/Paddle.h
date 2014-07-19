@@ -24,8 +24,13 @@ public:
 
 	void MoveLeft();
 	void MoveRight();
+	bool CanMoveLeft();
+	bool CanMoveRight();
 
 private:
+
+	int iDistToMove;
+	int iBorderAtEdgeOfScreen;
 
 	virtual LError VOnUpdate(ms elapsed);
 	virtual LError VOnReset(void);

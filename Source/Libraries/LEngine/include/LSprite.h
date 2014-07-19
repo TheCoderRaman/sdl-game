@@ -48,6 +48,10 @@ public:
 
 	int GetYPos();
 
+	int GetWidth();
+
+	int GetHeight();
+
 	//! \brief set the sprite size
 	LError SetSize(int w, int h);
 

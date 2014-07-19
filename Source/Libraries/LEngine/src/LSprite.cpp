@@ -112,6 +112,18 @@ int LSprite::GetYPos()
 }
 
 //===============================================================
+int LSprite::GetWidth()
+{
+	return m_destRect.w;
+}
+
+//===============================================================
+int LSprite::GetHeight()
+{
+	return m_destRect.h;
+}
+
+//===============================================================
 LError LSprite::SetSize(int w, int h)
 {
 	LError err = LError::NoErr;

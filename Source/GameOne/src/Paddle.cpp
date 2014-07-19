@@ -7,6 +7,7 @@
 //!
 #include "Paddle.h"
 
+#include "LEngine.h"
 #include "LError.h"
 #include "debug.h"
 
@@ -30,10 +31,13 @@ LError Paddle::Create(Ffiseg::FWorld* world /*= nullptr*/)
 	// Set up the paddle
 	GetSprite()->SetSourceRect( { 0, 0, 255, 42 } );
 	GetSprite()->SetSize(200, 30);
-	GetSprite()->SetPos( 100, 100 );
+	GetSprite()->SetPos( ( LEngine::GetWindowWidth() / 2 ) - ( GetSprite()->GetWidth() / 2 ), 400 );
 	Vector2f centre = GetSprite()->GetCentre();
 
 	GameSprite::Create(); // Adds it to the renderer
+
+	iBorderAtEdgeOfScreen = 50;
+	iDistToMove = 1;
 
 	if (world)
 	{
@@ -47,7 +51,8 @@ LError Paddle::Create(Ffiseg::FWorld* world /*= nullptr*/)
 		fdef.density = 1000.0f;
 
 		FPolygonShape shape;
-		Vector2f box = Vector2f(200.0f*0.5f / FFISEG_WORLD_TO_PIX_FACTOR, 30.0f*0.5f / FFISEG_WORLD_TO_PIX_FACTOR);
+		Vector2f box = Vector2f( 200.0f*0.5f / FFISEG_WORLD_TO_PIX_FACTOR, 
+								 30.0f*0.5f / FFISEG_WORLD_TO_PIX_FACTOR );
 		shape.SetAsBox(box.x, box.y);
 
 		fdef.shape = &shape;
@@ -61,17 +66,55 @@ LError Paddle::Create(Ffiseg::FWorld* world /*= nullptr*/)
 //====================================================
 void Paddle::MoveLeft( void )
 {
-	Vector2f p = GetBody()->GetPos();
-	p.x -= 1;
-	GetBody()->SetPos(p);
+	if( CanMoveLeft() )
+	{
+		Vector2f p = GetBody()->GetPos();
+		p.x -= iDistToMove;
+		GetBody()->SetPos( p );
+	}
 }
 
 //====================================================
 void Paddle::MoveRight( void )
 {
-	Vector2f p = GetBody()->GetPos();
-	p.x += 1;
-	GetBody()->SetPos(p);
+	if( CanMoveRight() )
+	{
+		Vector2f p = GetBody()->GetPos();
+		p.x += iDistToMove;
+		GetBody()->SetPos( p );
+	}
+}
+
+//====================================================
+bool Paddle::CanMoveLeft( void )
+{
+	bool bReturn = false;
+
+	int x		= GetSprite()->GetXPos();
+	int minXVal = iBorderAtEdgeOfScreen;
+
+	if( x > minXVal )
+	{
+		bReturn = true;
+	}
+
+	return bReturn;
+}
+
+//====================================================
+bool Paddle::CanMoveRight( void )
+{
+	bool bReturn = false;
+
+	int x		= GetSprite()->GetXPos() + GetSprite()->GetWidth();
+	int maxXVal = LEngine::GetWindowWidth() - iBorderAtEdgeOfScreen;
+
+	if( x < maxXVal )
+	{
+		bReturn = true;
+	}
+
+	return bReturn;
 }
 
 //====================================================
