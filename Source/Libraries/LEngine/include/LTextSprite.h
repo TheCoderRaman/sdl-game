@@ -33,6 +33,7 @@ public:
 	~LTextSprite();
 
 	LError Create( LRenderer2D& renderer, const char* fontName, int fontsize, const char* text );
+	void SetText( const char* newText );
 
 	//! \brief Overload for the base type render function
 	virtual LError Render( LRenderer2D* renderer );
@@ -40,7 +41,14 @@ public:
 	virtual LError Destroy();
 
 private:
-	SDLInterface::Surface mySurface;
+	void ChangeText( const char* text );
+
+	const char*				strMyText;
+	SDLInterface::Surface	mySurface;
+	LRenderer2D*			pMyRenderer;
+	const char*				strMyFontName;
+	int						iMyFontSize;
+	bool					bCreated;
 };
 
 #endif //_LTEXTSPRITE_H_

@@ -65,6 +65,8 @@ LError GameOne::VOnCreate()
 
 	m_text.SetRenderer( &LEngine::GetRenderer() );
 	m_text.Create( LEngine::GetRenderer(), "font1", 72, "testing" );
+
+	m_text.SetPos( 100, 100 );
 	
 	LEngine::GetRenderer().AddRenderable( &m_text );
 
@@ -98,6 +100,7 @@ LError GameOne::VOnUpdate(ms elapsed)
 	if( LEngine::GetInputManager().GetButtonJustPressed( LInput::eInputType::jump ) )
 	{
  		LEngine::GetAudioManager().PlaySound( "hit" );
+		m_text.SetText( "butts" );
 	}
 
 	// Send a pause event FOR SOME REASON I DON'T KNOW MAN

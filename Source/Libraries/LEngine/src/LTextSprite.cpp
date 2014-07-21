@@ -14,6 +14,8 @@
 
 //===============================================================
 LTextSprite::LTextSprite()
+: strMyText( "" )
+, bCreated( false )
 {
 }
 
@@ -23,19 +25,46 @@ LTextSprite::~LTextSprite()
 
 }
 
-LError LTextSprite::Create( LRenderer2D& renderer, const char* fontName, int fontsize, const char* text )
+//===============================================================
+LError LTextSprite::Create( LRenderer2D& renderer, const char* fontName, int fontSize, const char* text )
 {
+	pMyRenderer = &renderer;
+	strMyFontName = fontName;
+	iMyFontSize = fontSize;
+
+	strMyText = text;
+
+	ChangeText( strMyText );
+
+	bCreated = true;
+
+	return LError::NoErr;
+}
+
+//===============================================================
+void LTextSprite::SetText( const char* text )
+{
+	ChangeText( text );
+}
+
+//===============================================================
+void LTextSprite::ChangeText( const char* text )
+{
+	strMyText = text;
+
+	if( bCreated )
+	{
+		Destroy();
+	}
+
 	SDLInterface::Rect textureSize;
 
-	LEngine::GetTextManager().DrawText( &mySurface, fontName, fontsize, text, &textureSize );
+	LEngine::GetTextManager().DrawText( &mySurface, strMyFontName, iMyFontSize, strMyText, &textureSize );
 
-	LError err = LSprite::Create( renderer, &mySurface );
+	LError err = LSprite::Create( *pMyRenderer, &mySurface );
 
 	SetSourceRect( { 0, 0, textureSize.w, textureSize.h } );
 	SetSize( textureSize.w, textureSize.h );
-	SetPos( 100, 100 );
-
-	return err;
 }
 
 //===============================================================
@@ -44,6 +73,7 @@ LError LTextSprite::Render( LRenderer2D* renderer )
 	return LSprite::Render( renderer );
 }
 
+//===============================================================
 LError LTextSprite::Destroy()
 {
 	mySurface.Destroy();
