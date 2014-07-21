@@ -36,12 +36,16 @@ namespace SDLInterface
 		//! \brief destroy the window
 		Error Destroy();
 
+		int GetWindowWidth( void )	{ return m_width; }
+		int GetWindowHeight( void ) { return m_height; }
+
 	private:
 
 		//! \brief the internal SDL window
 		SDL_Window* 		m_SDL_Window;
 
-
+		int m_width;
+		int m_height;
 	};
 }
 

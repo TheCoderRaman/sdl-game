@@ -23,6 +23,7 @@
 #include "LGameBase.h"
 #include "LEvents.h"
 #include "LAudio.h"
+#include "LText.h"
 #include "LPauseSystem.h"
 
 #include <atomic>
@@ -120,9 +121,13 @@ public:
 
 	//! \brief get the renderer
 	static inline LRenderer2D&		GetRenderer();
-	static inline LUpdatingList&	GetUpdatingList();
+	static inline LUpdatingList&	GetEventLoop();
 	static inline LInput&			GetInputManager();
 	static inline LAudio&			GetAudioManager();
+	static inline LText&			GetTextManager();
+
+	static inline int				GetWindowWidth( void );
+	static inline int				GetWindowHeight( void );
 
 private:
 
@@ -173,8 +178,12 @@ private:
 	//! \brief The UpdatingList
 	LUpdatingList			m_UpdatingList;
 
+	static inline LUpdatingList&	GetUpdatingList();
+
 	//! \brief The InputManager
 	LInput					m_InputManager;
+
+	LText					m_TextManager;
 
 	//! \brief The engine event manager
 	LEventManager<EEngineEventType, UEngineEventData> m_engineEventManager;
@@ -217,6 +226,12 @@ inline LAudio& LEngine::GetAudioManager()
 }
 
 //===============================================================
+inline LText& LEngine::GetTextManager()
+{
+	return GetCurrentEngine().m_TextManager;
+}
+
+//===============================================================
 inline void LEngine::PauseSubSystem(LEnginePauseSystem::TFlags system, bool pause)
 {
 	if (pause)
@@ -229,6 +244,18 @@ inline void LEngine::PauseSubSystem(LEnginePauseSystem::TFlags system, bool paus
 inline bool LEngine::GetIsPaused(LEnginePauseSystem::TFlags system)
 {
 	return GetCurrentEngine().m_pauseFlags.GetCurrentFlag(system);
+}
+
+//===============================================================
+inline int LEngine::GetWindowWidth( void )
+{
+	return GetCurrentEngine().m_MainWindow.GetWindowWidth();
+}
+
+//===============================================================
+inline int LEngine::GetWindowHeight( void )
+{
+	return GetCurrentEngine().m_MainWindow.GetWindowHeight();
 }
 
 #endif //_LENGINE_H_

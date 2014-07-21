@@ -29,7 +29,7 @@ LError Banana::Create(Ffiseg::FWorld* world /* = nullptr */)
 
 	// Set up the banana
 	GetSprite()->SetSourceRect( { 0, 0, 400, 300 } );
-	GetSprite()->SetSize( 400, 300 );
+	GetSprite()->SetSize( 200, 150 );
 	GetSprite()->SetPos( 200, 200 );
 
 	GameSprite::Create(); // Adds it to the renderer

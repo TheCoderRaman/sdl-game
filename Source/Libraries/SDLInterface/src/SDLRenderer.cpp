@@ -220,7 +220,7 @@ SDLInterface::Error SDLInterface::Renderer::RenderTexture(Texture* tex, const Re
 	Error err = Error::None;
 
 	// Sanity check
-	DEBUG_ASSERT(m_bRendering);
+//	DEBUG_ASSERT(m_bRendering);
 
 	// Sanity check to see if renderer has been created
 	DEBUG_ASSERT(nullptr != m_SDL_Renderer);

@@ -187,6 +187,8 @@ LError LEngine::Quit()
 
 	LError err = LError::NoErr;
 
+	m_TextManager.Destroy();
+
 	// create the event manager for the engine events
 	err |= m_engineEventManager.Destroy();
 
