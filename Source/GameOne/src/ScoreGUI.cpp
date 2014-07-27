@@ -1,0 +1,46 @@
+//! \file ScoreGUI.cpp
+//!
+//! \author  Owain Davies
+//! \date    July 2014
+//!
+//! Score GUI class
+//!
+#include "ScoreGUI.h"
+
+#include "LEngine.h"
+#include "LError.h"
+#include "debug.h"
+
+
+//====================================================
+LError ScoreGUI::Create( void )
+{
+	RUNTIME_LOG( "Creating ScoreGUI..." );
+
+	LError err = LError::NoErr;
+
+
+	m_text.Create( LEngine::GetRenderer(), "font1", 50, "I like tamale" );
+	m_number.Create( LEngine::GetRenderer(), "font1", 50, "123" );
+
+	m_text.SetPos( 20, 75 ); 
+	m_number.SetPos( 600, 75 );
+
+	LEngine::GetRenderer().AddRenderable( &m_text );
+	LEngine::GetRenderer().AddRenderable( &m_number );
+
+	return err;
+}
+
+
+//====================================================
+LError ScoreGUI::Destroy( void )
+{
+	LEngine::GetRenderer().RemoveRenderable( &m_text );
+	LEngine::GetRenderer().RemoveRenderable( &m_number );
+
+	m_text.Destroy();
+	m_number.Destroy();
+
+	return LError::NoErr;
+}

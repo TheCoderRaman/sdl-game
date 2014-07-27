@@ -101,7 +101,7 @@ SDLInterface::Error SDLInterface::EventHandling::HandleKeyboardEvent( SDL_Event 
 	eSDLKeyInterface eKeyPressed = eSDLKeyInterface::key_invalid;
 
 	bool keyDown = (event->key.state == SDL_PRESSED);
-	bool held = event->key.repeat;
+	bool held = ( event->key.repeat != 0 );
 
 	// Converts input from SDL-data to engine-data
 	switch( event->key.keysym.sym )

@@ -3,7 +3,10 @@
 //! \author  Marc Di luzio
 //! \date    April 2014
 //!
-//! Header for LEngine.cpp
+//! LEngine
+//! A Simple SDL and Box2D based multithreaded game engine.
+//! Designed and made as an experiment in game engine design, and maybe
+//! To end up being used for some cool game in the future!
 //!
 #ifndef _LENGINE_H_
 #define _LENGINE_H_
@@ -20,6 +23,7 @@
 #include "LGameBase.h"
 #include "LEvents.h"
 #include "LAudio.h"
+#include "LText.h"
 #include "LPauseSystem.h"
 
 #include <atomic>
@@ -120,6 +124,7 @@ public:
 	static inline LUpdatingList&	GetEventLoop();
 	static inline LInput&			GetInputManager();
 	static inline LAudio&			GetAudioManager();
+	static inline LText&			GetTextManager();
 
 	static inline int				GetWindowWidth( void );
 	static inline int				GetWindowHeight( void );
@@ -178,6 +183,8 @@ private:
 	//! \brief The InputManager
 	LInput					m_InputManager;
 
+	LText					m_TextManager;
+
 	//! \brief The engine event manager
 	LEventManager<EEngineEventType, UEngineEventData> m_engineEventManager;
 
@@ -216,6 +223,12 @@ inline LInput& LEngine::GetInputManager()
 inline LAudio& LEngine::GetAudioManager()
 {
 	return GetCurrentEngine().m_AudioManager;
+}
+
+//===============================================================
+inline LText& LEngine::GetTextManager()
+{
+	return GetCurrentEngine().m_TextManager;
 }
 
 //===============================================================

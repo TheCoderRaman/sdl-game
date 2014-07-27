@@ -50,6 +50,7 @@ void LAudio::PlayMusic( const char* name, bool bShouldLoop )
 		if( 0 == strcmp( std::get< 1 >( track ), name ) )
 		{
 			m_AudioClass.PlayMusic( std::get< 0 >( track ), bShouldLoop );
+			break;
 		}
 	}
 }
@@ -72,6 +73,7 @@ void LAudio::PlaySound( const char* name )
 		if( 0 == strcmp( std::get< 1 >( sound ), name ) )
 		{
 			m_AudioClass.PlaySound( std::get< 0 >( sound ) );
+			break;
 		}
 	}
 }

@@ -12,6 +12,7 @@ set (PROJECT_INCLUDE_DIR
 	${CMAKE_CURRENT_SOURCE_DIR}/include
 	${CMAKE_CURRENT_SOURCE_DIR}/../Util/include
 	${CMAKE_CURRENT_SOURCE_DIR}/../SDLInterface/include
+	${CMAKE_CURRENT_SOURCE_DIR}/../Ffiseg/include
 )	
 
 set (PROJECT_SOURCE_DIR
@@ -31,6 +32,8 @@ SET(PROJECT_HEADERS
 	${CMAKE_CURRENT_SOURCE_DIR}/include/LInput.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/LError.h
 	${CMAKE_CURRENT_SOURCE_DIR}/include/LAudio.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/LText.h
+	${CMAKE_CURRENT_SOURCE_DIR}/include/LTextSprite.h
 )
 
 SET(PROJECT_SRCS
@@ -41,49 +44,18 @@ SET(PROJECT_SRCS
 	${CMAKE_CURRENT_SOURCE_DIR}/src/LSprite.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/LInput.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/LAudio.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/LText.cpp
 	${CMAKE_CURRENT_SOURCE_DIR}/src/LUpdatable.cpp
+	${CMAKE_CURRENT_SOURCE_DIR}/src/LTextSprite.cpp
 )
 
 #-----------------------------------------------------------------
-# COMPILER FLAGS 
-if ( NOT MSVC ) # Not needed with vc++
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-endif()
-
-# flags for release and debug builds
-set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -DDEBUG_BUILD")
-set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DRELEASE_BUILD")
-
-# flags for windows builds
-if ( MSVC )
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DWINDOWS_BUILD")
-else ()
-	set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DUNIX_BUILD")
-endif()
-
-#-----------------------------------------------------------------
-# PULL IN DEPENDENCIES
-if (NOT TARGET SDLInterface)
-	add_subdirectory(../SDLInterface "SDLInterface")
-endif()
-
-if (NOT TARGET Util)
-	add_subdirectory(../Util)
-endif()
-
-#-----------------------------------------------------------------
-# INCLUDES AND COMPILE
-include_directories( ${PROJECT_INCLUDE_DIR} )
-
-# ADD THE LIBRARY 
-add_library( ${PROJECT_NAME} ${PROJECT_SRCS} ${PROJECT_HEADERS} )
-
-#-----------------------------------------------------------------
-# SET THE PROPERTIES
-set_target_properties(${PROJECT_NAME} PROPERTIES LINKER_LANGUAGE CXX)
+include(../../cmake/config.cmake)
+include(../../cmake/library.cmake)
 
 #-----------------------------------------------------------------
 # LINKING
 target_link_libraries( ${PROJECT_NAME} 
 	SDLInterface
-	Util )
+	Util
+	Ffiseg )

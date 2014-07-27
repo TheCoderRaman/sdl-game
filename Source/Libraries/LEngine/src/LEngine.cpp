@@ -18,6 +18,12 @@
 #include "debug.h"
 #include "LError.h"
 
+#define DEBUG_RENDER_PHSYICS 1
+
+#if DEBUG_RENDER_PHSYICS
+#include "FDebugDraw.h"
+#endif
+
 #define DebugTimerUpdateRate_Sec 5.0f
 
 #define ms_30FPS 33
@@ -162,6 +168,11 @@ LError LEngine::Init()
 	if (!LERROR_HAS_FATAL(err))
 		err |= m_Renderer.Create(m_MainWindow);
 
+	SDLInterface::RenderScale scaling = SDLInterface::RenderScale();
+	scaling.offset.y = WINDOW_HEIGHT;
+	scaling.factor.y = 1.0f;
+	m_Renderer.GetBaseRenderer().SetRenderFactors(scaling);
+
 	// create the event manager for the engine events
 	if (!LERROR_HAS_FATAL(err))
 		err |= m_engineEventManager.Create();
@@ -175,6 +186,8 @@ LError LEngine::Quit()
 	RUNTIME_LOG("Quiting...")
 
 	LError err = LError::NoErr;
+
+	m_TextManager.Destroy();
 
 	// create the event manager for the engine events
 	err |= m_engineEventManager.Destroy();
@@ -303,7 +316,7 @@ LError LEngine::Update(ms elapsed)
 		bool paused = !LEngine::GetIsPaused(EEnginePauseFlag::Game);
 		LEngine::PauseSubSystem(EEnginePauseFlag::Game, paused);
 
-
+		LEngine::GetAudioManager().TogglePauseMusic();
 	}
 
 	return err;
@@ -349,8 +362,18 @@ LError LEngine::RenderThreadLoop()
 		// Delay until the end of the desired frame time
 		SDLInterface::Thread::DelayUntil(frameTime + DESIRED_FRAMETIME_MS);
 		
+		
+#if DEBUG_RENDER_PHSYICS // Render the physics world as it currently is
+		err |= m_Renderer.RenderWithCustomStep( [&]() -> int {
+			Ffiseg::FDebugDraw::DebugDraw(&m_Renderer.GetBaseRenderer());
+			return 1;
+		});
+#else
 		// Update the engine window
 		err |= m_Renderer.Render();
+#endif
+		
+
 
 		// grab the current time
 		frameTime = SDLInterface::Timer::GetGlobalLifetime();

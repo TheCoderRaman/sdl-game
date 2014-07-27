@@ -1,0 +1,18 @@
+install Cygwin - http://www.cygwin.com/install.html
+	make sure inthe Devel catagory you add 
+	git 
+	gcc-g++
+	gdb
+	make
+	cmake
+	cmake-gui
+	autoconf
+	automake
+	libtool
+	pkg-config
+	anything else that looks useful
+	These could take a while to install
+
+Use the cmake GUI to configure and generate a visual studio project from the root CMakeLists.txt file
+
+Game should now compile

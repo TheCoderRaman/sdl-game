@@ -31,6 +31,28 @@ namespace SDLInterface
 	// Forward declare the Texture
 	class Texture;
 
+	//! \brief Render scale struct to describe engine -> SDL position translations
+	struct RenderScale
+	{
+		//! \brief default constuctor
+		RenderScale()
+		{
+			factor.x = 1.0f;
+			factor.y = 1.0f;
+			offset.x = 0.0f;
+			offset.y = 0.0f;
+		}
+
+		struct
+		{	
+			float x, y;
+		} factor;
+
+		struct
+		{
+			float x, y;
+		} offset;
+	};
 
 	//! \brief the Renderer class
 	//! functions as a wrapper for SDL_Renderer
@@ -52,16 +74,25 @@ namespace SDLInterface
 		Error RenderStart();
 
 		//! \brief render a texture
-		Error RenderTexture(Texture* tex, const Rect& src, const Rect& dest, float rotation = 0.0f, const Point& centerRot = Point(), int flipValue = 0);
+		Error RenderTexture(Texture* tex, const Rect& src, const Rect& dest, float rotation = 0.0f, int flipValue = 0);
 
-		//! \brief render a texture
+		//! \brief render a Rectangle
 		Error RenderRectangle(const Rect& src, int r, int g, int b, int a, bool fill = true);
+
+		//! \brief render a line
+		Error RenderLine(const Point& start, const Point& end, int r, int g, int b, int a);
 
 		//! \brief render using the renderer
 		Error RenderEnd();
 
 		//! \brief destroy the renderer
 		Error Destroy();
+		
+		//! \brief Set the render factor 
+		inline void SetRenderFactors(RenderScale factors)
+		{
+			m_renderScale = factors;
+		}
 
 	private:
 
@@ -70,6 +101,9 @@ namespace SDLInterface
 
 		//! \brief boolean to check if we're rendering
 		bool m_bRendering;
+
+		//! \brief the renderer scale and offset 
+		RenderScale m_renderScale;
 	};
 
 }
