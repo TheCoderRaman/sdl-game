@@ -68,6 +68,8 @@ private:
 	Banana m_banana;
 	Paddle m_paddle;
 	ScoreGUI m_score;
+
+	int iCurrentScore;
 	
 	int iBananaDirection;
 

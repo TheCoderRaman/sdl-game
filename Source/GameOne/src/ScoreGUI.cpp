@@ -44,3 +44,15 @@ LError ScoreGUI::Destroy( void )
 
 	return LError::NoErr;
 }
+
+//====================================================
+void ScoreGUI::SetScore( int iNewScore )
+{
+	m_number.SetText( iNewScore );
+}
+
+//====================================================
+void ScoreGUI::SetText( const char* strText )
+{
+	m_text.SetText( strText );
+}

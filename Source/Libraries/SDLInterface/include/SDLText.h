@@ -37,7 +37,7 @@ namespace SDLInterface
 		struct sdlFontCharAttributes
 		{
 			sdlFontCharAttributes( void )
-				: thisChar( 'a' )
+				: thisChar( ' ' )
 				, iAdvance( 0 )
 				, iMaxX( 0 )
 				, iMinX( 0 )
@@ -46,7 +46,7 @@ namespace SDLInterface
 			{}
 
 			char thisChar;
-			int iAdvance;			// width
+			int iAdvance;		// width
 
 			int iMaxX;
 			int iMinX;
@@ -60,12 +60,10 @@ namespace SDLInterface
 
 		sdlFontCharAttributes charAttributes[ s_kiMaxGlyphs ];
 
-
 		void	GetAllAttributes	( void );
 		void	FillGlyphAttributes	( char character );
 
 		sdlFontCharAttributes	GetAttributeForChar( char toGet );
-
 
 		TTF_Font* myFont;
 	};

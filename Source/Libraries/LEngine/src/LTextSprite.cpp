@@ -48,6 +48,18 @@ void LTextSprite::SetText( const char* text )
 }
 
 //===============================================================
+void LTextSprite::SetText( int iNum )
+{
+	char buf[ 16 ];
+
+	sprintf_s( buf, "%i", iNum );
+
+	const char* temp = buf;
+
+	ChangeText( temp );
+}
+
+//===============================================================
 void LTextSprite::ChangeText( const char* text )
 {
 	strMyText = text;

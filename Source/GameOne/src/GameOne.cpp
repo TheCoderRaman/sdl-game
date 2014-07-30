@@ -67,6 +67,9 @@ LError GameOne::VOnCreate()
 
 	m_banana.SetPos( 200, 300 );
 
+	iCurrentScore = 0;
+	m_score.SetScore( iCurrentScore );
+
  	return err;
 }
 
@@ -127,6 +130,12 @@ LError GameOne::VOnUpdate(ms elapsed)
 	if( LEngine::GetInputManager().GetButtonHeldDown( LInput::eInputType::right ) )
 	{
 		m_paddle.MoveRight();
+	}
+
+	if( LEngine::GetInputManager().GetButtonJustPressed( LInput::eInputType::jump ) )
+	{
+		iCurrentScore++;
+		m_score.SetScore( iCurrentScore );
 	}
 
 	if( ShouldBananaSwitchDirections() )

@@ -19,6 +19,9 @@ public:
 	LError Create( void );
 	LError Destroy( void );
 
+	void SetScore( int iNewScore );
+	void SetText( const char* strText );
+
 private:
 
 	LTextSprite m_text;

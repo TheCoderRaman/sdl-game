@@ -34,6 +34,7 @@ public:
 
 	LError Create( LRenderer2D& renderer, const char* fontName, int fontsize, const char* text );
 	void SetText( const char* newText );
+	void SetText( int iNum );
 
 	//! \brief Overload for the base type render function
 	virtual LError Render( LRenderer2D* renderer );
