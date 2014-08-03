@@ -19,10 +19,11 @@ LError ScoreGUI::Create( void )
 
 	LError err = LError::NoErr;
 
-
+	// A method of picking a default font size, based on some variables
 	m_text.Create( LEngine::GetRenderer(), "font1", 50, "I like tamale" );
 	m_number.Create( LEngine::GetRenderer(), "font1", 50, "123" );
 
+	// A method of sticking text labels to a corner of the screen
 	m_text.SetPos( 20, 75 ); 
 	m_number.SetPos( 600, 75 );
 

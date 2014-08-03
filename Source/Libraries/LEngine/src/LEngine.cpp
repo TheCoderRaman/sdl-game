@@ -319,6 +319,11 @@ LError LEngine::Update(ms elapsed)
 		LEngine::GetAudioManager().TogglePauseMusic();
 	}
 
+	if( LEngine::GetInputManager().GetButtonJustPressed( LInput::eInputType::quit ) )
+	{
+		LEngine::RequestQuit();
+	}
+
 	return err;
 }
 

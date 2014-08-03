@@ -51,13 +51,17 @@ void LInput::StartKeyboardUpdate( void )
 	{
 		m_abButtonsPressedThisFrame[ ( int ) eInputType::right ] = true;
 	}
-	if (SDLInterface::EventHandling::GetKeyPressed(SDLInterface::eSDLKeyInterface::key_p))
+	if (SDLInterface::EventHandling::GetKeyPressed( SDLInterface::eSDLKeyInterface::key_p ) )
 	{
-		m_abButtonsPressedThisFrame[ (int)eInputType::pause ] = true;
+		m_abButtonsPressedThisFrame[ ( int ) eInputType::pause ] = true;
 	}
 	if( SDLInterface::EventHandling::GetKeyPressed( SDLInterface::eSDLKeyInterface::key_space ) )
 	{
 		m_abButtonsPressedThisFrame[ ( int ) eInputType::jump ] = true;
+	}
+	if( SDLInterface::EventHandling::GetKeyPressed( SDLInterface::eSDLKeyInterface::key_escape ) )
+	{
+		m_abButtonsPressedThisFrame[ ( int ) eInputType::quit ] = true;
 	}
 }
 

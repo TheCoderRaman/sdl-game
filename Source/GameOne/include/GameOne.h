@@ -66,7 +66,8 @@ private:
 
 	//! \brief the Banana
 	Banana m_banana;
-	Paddle m_paddle;
+	Paddle m_paddleOne;
+	Paddle m_paddleTwo;
 	ScoreGUI m_score;
 
 	int iCurrentScore;

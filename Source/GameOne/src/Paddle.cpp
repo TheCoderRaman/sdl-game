@@ -16,7 +16,7 @@
 using namespace Ffiseg;
 
 //====================================================
-LError Paddle::Create(Ffiseg::FWorld* world /*= nullptr*/)
+LError Paddle::Create( int iXPos, int iYPos, Ffiseg::FWorld* world /*= nullptr*/ )
 {
 	RUNTIME_LOG( "Creating Paddle..." );
 
@@ -31,7 +31,7 @@ LError Paddle::Create(Ffiseg::FWorld* world /*= nullptr*/)
 	// Set up the paddle
 	GetSprite()->SetSourceRect( { 0, 0, 255, 42 } );
 	GetSprite()->SetSize(200, 30);
-	GetSprite()->SetPos( ( LEngine::GetWindowWidth() / 2 ) - ( GetWidth() / 2 ), 400 );
+	GetSprite()->SetPos( iXPos, iYPos );
 	Vector2f centre = GetSprite()->GetCentre();
 
 	GameSprite::Create(); // Adds it to the renderer
@@ -43,7 +43,7 @@ LError Paddle::Create(Ffiseg::FWorld* world /*= nullptr*/)
 	{
 		FBodyDef bdef = FBodyDef();
 		bdef.type = FBodyType::Static;
-		Point2f pos = FFISEG_PIX_TO_WORLD(Point2f(300, 100));
+		Point2f pos = FFISEG_PIX_TO_WORLD( Point2f( iXPos, iYPos ) );
 		bdef.position = pos;
 		bdef.gravityScale = 0.0f;
 

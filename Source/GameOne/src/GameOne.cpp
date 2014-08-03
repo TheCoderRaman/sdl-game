@@ -49,16 +49,23 @@ LError GameOne::VOnCreate()
 	m_banana.SetRenderer(&LEngine::GetRenderer());
 	m_banana.Create(&m_myWorld);
 	GetUpdatingList().Register(&m_banana);
-	// Set up the paddle
-	m_paddle.SetRenderer( &LEngine::GetRenderer() );
-	m_paddle.Create(&m_myWorld);
-	GetUpdatingList().Register( &m_paddle );
+
+	// Set up the first player's paddle
+	m_paddleOne.SetRenderer( &LEngine::GetRenderer() );
+	m_paddleOne.Create( 100, 200, &m_myWorld );
+	GetUpdatingList().Register( &m_paddleOne );
+
+	// Set up the first player's paddle
+	m_paddleTwo.SetRenderer( &LEngine::GetRenderer() );
+	m_paddleTwo.Create( 100, 400, &m_myWorld);
+	GetUpdatingList().Register( &m_paddleTwo );
 
 	LEngine::GetAudioManager().LoadMusic( "Media/music.mp3", "song1" );
 	//LEngine::GetAudioManager().PlayMusic( "song1", true );
 
 	LEngine::GetAudioManager().LoadSound( "Media/hit.wav", "hit" );
 
+	// A method of loading a suite of fonts and sizes based on the game
 	LEngine::GetTextManager().LoadFont( "Media/font.ttf", "font1", 10 );
 	LEngine::GetTextManager().LoadFont( "Media/font.ttf", "font1", 50 );
 	LEngine::GetTextManager().LoadFont( "Media/font.ttf", "font1", 72 );
@@ -93,10 +100,10 @@ bool GameOne::ShouldBananaSwitchDirections( void )
 
 	int iWindowHeight = LEngine::GetWindowHeight(); // bottom of the screen
 
-	int iPaddleY = m_paddle.GetYPos();
-	int iPaddleX = m_paddle.GetXPos();
+	int iPaddleY = m_paddleOne.GetYPos();
+	int iPaddleX = m_paddleOne.GetXPos();
 
-	int iPaddleWidth = m_paddle.GetWidth();
+	int iPaddleWidth = m_paddleOne.GetWidth();
 
 	if( ( iBananaY + iBananaHeight > iPaddleY )
 		&& ( iBananaX + iBananaWidth > iPaddleX ) )
@@ -125,11 +132,11 @@ LError GameOne::VOnUpdate(ms elapsed)
 
 	if( LEngine::GetInputManager().GetButtonHeldDown( LInput::eInputType::left ) )
 	{
-		m_paddle.MoveLeft();
+		m_paddleOne.MoveLeft();
 	}
 	if( LEngine::GetInputManager().GetButtonHeldDown( LInput::eInputType::right ) )
 	{
-		m_paddle.MoveRight();
+		m_paddleOne.MoveRight();
 	}
 
 	if( LEngine::GetInputManager().GetButtonJustPressed( LInput::eInputType::jump ) )
@@ -184,7 +191,8 @@ LError GameOne::VOnDestroy()
  	LError err = LError::NoErr;
 
 	m_banana.Destroy();
-	m_paddle.Destroy();
+	m_paddleOne.Destroy();
+	m_paddleTwo.Destroy();
 
 	m_score.Destroy();
 
@@ -197,7 +205,10 @@ LError GameOne::VOnDestroy()
 		err |= LEngine::GetRenderer().RemoveRenderable(&m_banana);
 
 	if( !LERROR_HAS_FATAL( err ) )
-		err |= LEngine::GetRenderer().RemoveRenderable( &m_paddle );
+		err |= LEngine::GetRenderer().RemoveRenderable( &m_paddleTwo );
+
+	if( !LERROR_HAS_FATAL( err ) )
+		err |= LEngine::GetRenderer().RemoveRenderable( &m_paddleOne );
 
 	if (!LERROR_HAS_FATAL(err))
 		err |= m_myEventManager.Destroy();
