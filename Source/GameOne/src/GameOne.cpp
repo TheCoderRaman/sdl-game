@@ -130,16 +130,16 @@ LError GameOne::VOnUpdate(ms elapsed)
 
 	m_myWorld.Step( elapsed / 1000.0f, 8, 3);
 
-	if( LEngine::GetInputManager().GetButtonHeldDown( LInput::eInputType::left ) )
+	if( LEngine::GetInputManager().GetButtonHeldDown( LInput::eInputType::left, LInput::ePlayer_One ) )
 	{
 		m_paddleOne.MoveLeft();
 	}
-	if( LEngine::GetInputManager().GetButtonHeldDown( LInput::eInputType::right ) )
+	if( LEngine::GetInputManager().GetButtonHeldDown( LInput::eInputType::right, LInput::ePlayer_One ) )
 	{
 		m_paddleOne.MoveRight();
 	}
 
-	if( LEngine::GetInputManager().GetButtonJustPressed( LInput::eInputType::jump ) )
+	if( LEngine::GetInputManager().GetButtonJustPressed( LInput::eInputType::jump, LInput::ePlayer_One ) )
 	{
 		iCurrentScore++;
 		m_score.SetScore( iCurrentScore );

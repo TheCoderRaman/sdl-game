@@ -311,7 +311,7 @@ LError LEngine::Update(ms elapsed)
 	err |= m_myGame.Update(elapsed);
 
 	// Pause or unpause the game
-	if (LEngine::GetInputManager().GetButtonJustPressed(LInput::eInputType::pause))
+	if( LEngine::GetInputManager().GetButtonJustPressed( LInput::eInputType::pause, LInput::ePlayer_One ) )
 	{
 		bool paused = !LEngine::GetIsPaused(EEnginePauseFlag::Game);
 		LEngine::PauseSubSystem(EEnginePauseFlag::Game, paused);
@@ -319,7 +319,7 @@ LError LEngine::Update(ms elapsed)
 		LEngine::GetAudioManager().TogglePauseMusic();
 	}
 
-	if( LEngine::GetInputManager().GetButtonJustPressed( LInput::eInputType::quit ) )
+	if( LEngine::GetInputManager().GetButtonJustPressed( LInput::eInputType::quit, LInput::ePlayer_One ) )
 	{
 		LEngine::RequestQuit();
 	}

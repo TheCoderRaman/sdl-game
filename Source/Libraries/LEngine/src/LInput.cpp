@@ -9,12 +9,12 @@
 #include "LError.h"
 #include "debug.h"
 
-#include "SDLEventHandling.h"
-
 //===============================================================
 LInput::LInput()
 : k_iTotalPlayers( 1 )
 {
+	SetPlayerMappings();
+
 	ClearThisFrameButtonPresses();
 	ClearLastFrameButtonPresses();	
 }
@@ -26,6 +26,48 @@ LInput::~LInput()
 	ClearLastFrameButtonPresses();
 }
 
+//===============================================================
+void LInput::SetPlayerMappings( void )
+{
+	// Eventually will allow for custom mappings to come from somewhere (file presumably!)
+	ClearMappings();
+	SetDefaultPlayerMappings();
+}
+
+//===============================================================
+void LInput::SetDefaultPlayerMappings( void )
+{
+	SetPlayerInputMap( ePlayer_One, SDLInterface::eSDLKeyInterface::key_up, eInputType::up );
+	SetPlayerInputMap( ePlayer_One, SDLInterface::eSDLKeyInterface::key_down, eInputType::down );
+	SetPlayerInputMap( ePlayer_One, SDLInterface::eSDLKeyInterface::key_left, eInputType::left );
+	SetPlayerInputMap( ePlayer_One, SDLInterface::eSDLKeyInterface::key_right, eInputType::right );
+	SetPlayerInputMap( ePlayer_One, SDLInterface::eSDLKeyInterface::key_space, eInputType::jump );
+
+	SetPlayerInputMap( ePlayer_One, SDLInterface::eSDLKeyInterface::key_w, eInputType::up );
+	SetPlayerInputMap( ePlayer_One, SDLInterface::eSDLKeyInterface::key_s, eInputType::down );
+	SetPlayerInputMap( ePlayer_One, SDLInterface::eSDLKeyInterface::key_a, eInputType::left );
+	SetPlayerInputMap( ePlayer_One, SDLInterface::eSDLKeyInterface::key_d, eInputType::right );
+
+	SetCommonMapping( SDLInterface::eSDLKeyInterface::key_escape, eInputType::quit );
+	SetCommonMapping( SDLInterface::eSDLKeyInterface::key_p, eInputType::pause );
+}
+
+//===============================================================
+void LInput::SetPlayerInputMap( ePlayers ePlayer, SDLInterface::eSDLKeyInterface eInput, eInputType eToMapTo )
+{
+	m_aSPlayerInputMappings[ ( int ) ePlayer ].m_aEMappedKeys[ ( int ) eInput ] = eToMapTo;
+}
+
+//===============================================================
+void LInput::SetCommonMapping( SDLInterface::eSDLKeyInterface eInput, eInputType eToMapTo )
+{
+	for( sPlayerInputs& thisPlayer : m_aSPlayerInputMappings )
+	{
+		thisPlayer.m_aEMappedKeys[ ( int ) eInput ] = eToMapTo;
+	}
+}
+
+//===============================================================
 void LInput::StartKeyboardUpdate( void )
 {
 	//RUNTIME_LOG( "Starting keyboard update in LInput" );
@@ -34,34 +76,23 @@ void LInput::StartKeyboardUpdate( void )
 	SDLInterface::EventHandling::FlushKeys();
 
 	CopyOverAndResetThisFramesValues();
-	
-	if( SDLInterface::EventHandling::GetKeyPressed( SDLInterface::eSDLKeyInterface::key_up ) )
+
+	// For every player
+	for( auto& thisPlayer : m_aSPlayerInputMappings )
 	{
-		m_abButtonsPressedThisFrame[ ( int ) eInputType::up ] = true;
-	}
-	if( SDLInterface::EventHandling::GetKeyPressed( SDLInterface::eSDLKeyInterface::key_down ) )
-	{
-		m_abButtonsPressedThisFrame[ ( int ) eInputType::down ] = true;
-	}
-	if( SDLInterface::EventHandling::GetKeyPressed( SDLInterface::eSDLKeyInterface::key_left ) )
-	{
-		m_abButtonsPressedThisFrame[ ( int ) eInputType::left ] = true;
-	}
-	if( SDLInterface::EventHandling::GetKeyPressed( SDLInterface::eSDLKeyInterface::key_right ) )
-	{
-		m_abButtonsPressedThisFrame[ ( int ) eInputType::right ] = true;
-	}
-	if (SDLInterface::EventHandling::GetKeyPressed( SDLInterface::eSDLKeyInterface::key_p ) )
-	{
-		m_abButtonsPressedThisFrame[ ( int ) eInputType::pause ] = true;
-	}
-	if( SDLInterface::EventHandling::GetKeyPressed( SDLInterface::eSDLKeyInterface::key_space ) )
-	{
-		m_abButtonsPressedThisFrame[ ( int ) eInputType::jump ] = true;
-	}
-	if( SDLInterface::EventHandling::GetKeyPressed( SDLInterface::eSDLKeyInterface::key_escape ) )
-	{
-		m_abButtonsPressedThisFrame[ ( int ) eInputType::quit ] = true;
+		// for all their possible raw key inputs
+		for( int iKey = 0; iKey < ( int ) SDLInterface::eSDLKeyInterface::key_invalid; ++iKey )
+		{
+			// if this raw input is pressed
+			if( SDLInterface::EventHandling::GetKeyPressed( ( SDLInterface::eSDLKeyInterface ) iKey ) )
+			{
+				// Get the mapped key
+				int iIndex = ( int ) thisPlayer.m_aEMappedKeys[ iKey ];
+
+				// set the mapped key to be true
+				thisPlayer.m_abButtonsPressedThisFrame[ iIndex ] = true;
+			}
+		}
 	}
 }
 
@@ -71,73 +102,103 @@ void LInput::EndKeyboardUpdate( void )
 }
 
 //================================================================
-bool LInput::GetButtonJustPressed( eInputType eButton )
+bool LInput::GetButtonJustPressed( eInputType eButton, ePlayers eWhichPlayer )
 {
 	bool bReturn = false;
 
 	int iIndex = ( int ) eButton;
 
-	bReturn = m_abButtonsPressedThisFrame[ iIndex ] && !m_abButtonsPressedLastFrame[ iIndex ];
+	bReturn = m_aSPlayerInputMappings[ ( int ) eWhichPlayer ].m_abButtonsPressedThisFrame[ iIndex ]
+		&& !m_aSPlayerInputMappings[ ( int ) eWhichPlayer ].m_abButtonsPressedLastFrame[ iIndex ];
 
-	//RUNTIME_LOG( "Button just pressed returning %i for input %i", ( int ) bReturn, iIndex );
+	
+	return bReturn;
+}
+
+//================================================================
+bool LInput::GetButtonHeldDown( eInputType eButton, ePlayers eWhichPlayer )
+{
+	bool bReturn = false;
+
+	int iIndex = ( int ) eButton;
+
+	ePlayers eThisPlayer = ePlayer_One;
+
+	bReturn = m_aSPlayerInputMappings[ ( int ) eThisPlayer ].m_abButtonsPressedThisFrame[ iIndex ]
+		&& m_aSPlayerInputMappings[ ( int ) eThisPlayer ].m_abButtonsPressedLastFrame[ iIndex ];
 
 	return bReturn;
 }
 
 //================================================================
-bool LInput::GetButtonHeldDown( eInputType eButton )
+bool LInput::GetButtonJustReleased( eInputType eButton, ePlayers eWhichPlayer )
 {
 	bool bReturn = false;
 
 	int iIndex = ( int ) eButton;
 
-	bReturn = m_abButtonsPressedThisFrame[ iIndex ] && m_abButtonsPressedLastFrame[ iIndex ];
+	ePlayers eThisPlayer = ePlayer_One;
 
-	//RUNTIME_LOG( "Button held down returning %i for input %i", ( int ) bReturn, iIndex );
+	bReturn = !m_aSPlayerInputMappings[ ( int ) eThisPlayer ].m_abButtonsPressedThisFrame[ iIndex ]
+		&& m_aSPlayerInputMappings[ ( int ) eThisPlayer ].m_abButtonsPressedLastFrame[ iIndex ];
 
-	return bReturn;
-}
-
-//================================================================
-bool LInput::GetButtonJustReleased( eInputType eButton )
-{
-	bool bReturn = false;
-
-	int iIndex = ( int ) eButton;
-
-	bReturn = !m_abButtonsPressedThisFrame[ iIndex ] && m_abButtonsPressedLastFrame[ iIndex ];
-
+	
 	return bReturn;
 }
 
 //================================================================
 void LInput::CopyOverAndResetThisFramesValues( void )
 {
-	for( int iLoop = 0; iLoop < sk_iTotalInputs; ++iLoop )
+	// For every player
+	for( sPlayerInputs& thisPlayer : m_aSPlayerInputMappings )
 	{
-		// Copy the value over
-		m_abButtonsPressedLastFrame[ iLoop ] = m_abButtonsPressedThisFrame[ iLoop ];
+		for( int iLoop = 0; iLoop < sk_iTotalInputs; ++iLoop )
+		{
+			// Copy the value over
+			thisPlayer.m_abButtonsPressedLastFrame[ iLoop ] = thisPlayer.m_abButtonsPressedThisFrame[ iLoop ];
 
-		// Reset the value for this frame
-		m_abButtonsPressedThisFrame[ iLoop ] = false;
-	} 
+			// Reset the value for this frame
+			thisPlayer.m_abButtonsPressedThisFrame[ iLoop ] = false;
+		}
+	}
 }
 
 //================================================================
 void LInput::ClearThisFrameButtonPresses( void )
 {
-	for( auto& bVal : m_abButtonsPressedThisFrame )
+	// For every player
+	for( sPlayerInputs& thisPlayer : m_aSPlayerInputMappings )
 	{
-		bVal = false;
+		for( auto& bVal : thisPlayer.m_abButtonsPressedThisFrame )
+		{
+			bVal = false;
+		}
 	}
 }
 
 //================================================================
 void LInput::ClearLastFrameButtonPresses( void )
 {
-	for( auto& bVal : m_abButtonsPressedLastFrame )
+	// For every player
+	for( sPlayerInputs& thisPlayer : m_aSPlayerInputMappings )
 	{
-		bVal = false;
+		for( auto& bVal : thisPlayer.m_abButtonsPressedLastFrame )
+		{
+			bVal = false;
+		}
+	}
+}
+
+//================================================================
+void LInput::ClearMappings( void )
+{
+	// For every player
+	for( sPlayerInputs& thisPlayer : m_aSPlayerInputMappings )
+	{
+		for( auto& bVal : thisPlayer.m_aEMappedKeys )
+		{
+			bVal = eInputType::null;
+		}
 	}
 }
 
