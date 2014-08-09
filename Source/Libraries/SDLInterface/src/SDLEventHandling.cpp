@@ -101,7 +101,7 @@ SDLInterface::Error SDLInterface::EventHandling::HandleKeyboardEvent( SDL_Event 
 	eSDLKeyInterface eKeyPressed = eSDLKeyInterface::key_invalid;
 
 	bool keyDown = (event->key.state == SDL_PRESSED);
-	bool held = event->key.repeat;
+	bool held = ( event->key.repeat != 0 );
 
 	// Converts input from SDL-data to engine-data
 	switch( event->key.keysym.sym )
@@ -163,12 +163,88 @@ SDLInterface::Error SDLInterface::EventHandling::HandleKeyboardEvent( SDL_Event 
 			eKeyPressed = eSDLKeyInterface::key_right;
 			break;
 
+		// Letters
+		case SDLK_a:
+			eKeyPressed = eSDLKeyInterface::key_a;
+			break;
+		case SDLK_b:
+			eKeyPressed = eSDLKeyInterface::key_b;
+			break;
+		case SDLK_c:
+			eKeyPressed = eSDLKeyInterface::key_c;
+			break;
+		case SDLK_d:
+			eKeyPressed = eSDLKeyInterface::key_d;
+			break;
+		case SDLK_e:
+			eKeyPressed = eSDLKeyInterface::key_e;
+			break;
+		case SDLK_f:
+			eKeyPressed = eSDLKeyInterface::key_f;
+			break;
+		case SDLK_g:
+			eKeyPressed = eSDLKeyInterface::key_g;
+			break;
+		case SDLK_h:
+			eKeyPressed = eSDLKeyInterface::key_h;
+			break;
+		case SDLK_i:
+			eKeyPressed = eSDLKeyInterface::key_i;
+			break;
+		case SDLK_j:
+			eKeyPressed = eSDLKeyInterface::key_j;
+			break;
+		case SDLK_k:
+			eKeyPressed = eSDLKeyInterface::key_k;
+			break;
+		case SDLK_l:
+			eKeyPressed = eSDLKeyInterface::key_l;
+			break;
+		case SDLK_m:
+			eKeyPressed = eSDLKeyInterface::key_m;
+			break;
+		case SDLK_n:
+			eKeyPressed = eSDLKeyInterface::key_n;
+			break;
+		case SDLK_o:
+			eKeyPressed = eSDLKeyInterface::key_o;
+			break;
 		case SDLK_p:
 			eKeyPressed = eSDLKeyInterface::key_p;
 			break;
+		case SDLK_q:
+			eKeyPressed = eSDLKeyInterface::key_q;
+			break;
+		case SDLK_r:
+			eKeyPressed = eSDLKeyInterface::key_r;
+			break;
+		case SDLK_s:
+			eKeyPressed = eSDLKeyInterface::key_s;
+			break;
+		case SDLK_t:
+			eKeyPressed = eSDLKeyInterface::key_t;
+			break;
+		case SDLK_u:
+			eKeyPressed = eSDLKeyInterface::key_u;
+			break;
+		case SDLK_v:
+			eKeyPressed = eSDLKeyInterface::key_v;
+			break;
+		case SDLK_w:
+			eKeyPressed = eSDLKeyInterface::key_w;
+			break;
+		case SDLK_x:
+			eKeyPressed = eSDLKeyInterface::key_x;
+			break;
+		case SDLK_y:
+			eKeyPressed = eSDLKeyInterface::key_y;
+			break;
+		case SDLK_z:
+			eKeyPressed = eSDLKeyInterface::key_z;
+			break;
 	}
 
-	eKeyState& state = sm_KeyboardStruct.m_abKeyboardEvents[(unsigned)eKeyPressed];
+	eKeyState& state = sm_KeyboardStruct.m_abKeyboardEvents[ (unsigned)eKeyPressed];
 
 	// For key down events
 	if (keyDown)
@@ -275,6 +351,11 @@ SDLInterface::Error SDLInterface::EventHandling::HandleWindowEvent(SDL_Event *ev
 bool SDLInterface::EventHandling::GetKeyPressed( eSDLKeyInterface eKey )
 {
 	eKeyState state = sm_KeyboardStruct.m_abKeyboardEvents[(unsigned)eKey];
+
+	if( eKey == eSDLKeyInterface::key_z )
+	{
+		INPUT_DEBUG( "pressed z" );
+	}
 
 	// Return true as long as we're not currently released
 	return (state != eKeyState::released);

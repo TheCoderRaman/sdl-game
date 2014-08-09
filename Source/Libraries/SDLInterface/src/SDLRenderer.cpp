@@ -15,6 +15,32 @@
 #include "SDLEventLoop.h"
 #include "SDLTexture.h"
 
+//! \brief convert to an SDL_Rect
+SDL_Rect convertToSDLRect(const SDLInterface::Rect& r, const SDLInterface::RenderScale& s)
+{	
+	SDL_Rect out;
+
+	out.x = (int)(s.offset.x + (s.factor.x*r.x));
+	out.y = (int)(s.offset.y + (-s.factor.y*r.y));
+	out.w = (int)(r.w*s.factor.x);
+	out.h = (int)(r.h*s.factor.y);
+
+	return out;
+}
+
+SDL_Point convertToSDLPoint(const SDLInterface::Point& p, const SDLInterface::RenderScale& s)
+{
+	SDL_Point out;
+
+	out.x = (int)(s.offset.x + (s.factor.x*p.x));
+	out.y = (int)(s.offset.y + (-s.factor.y*p.y));
+
+	return out;
+}
+
+#define toSDLX ( x ) ( m_renderScale.offset.x + (-m_renderScale.factor.x*x) )
+#define toSDLY ( y ) ( m_renderScale.offset.y + (-m_renderScale.factor.y*y) )
+
 //========================================================
 SDLInterface::Renderer::Renderer()
 : m_SDL_Renderer(nullptr)
@@ -79,14 +105,21 @@ SDLInterface::Error SDLInterface::Renderer::RenderStart()
 	// Sanity check to see if renderer has been created
 	DEBUG_ASSERT(nullptr != m_SDL_Renderer);
 
+#ifndef WINDOWS_BUILD
+	// On Linux and OSX we have to render this on the main thread
+	// TODO: Work out how to ensure we don't need to do this
+	// I _think_ it would be a case of binding the context
 	EventLoop::RunOnMainThread_Sync(err,
 		[&]()->Error
 	{
+#endif
 		// Start by clearing the render buffer
 		SDL_RenderClear(m_SDL_Renderer);
 
+#ifndef WINDOWS_BUILD
 		return Error::None;
 	});
+#endif
 
 	// Set us to be rendering
 	m_bRendering = true;
@@ -105,8 +138,7 @@ SDLInterface::Error SDLInterface::Renderer::RenderRectangle(const Rect& src, int
 	// Sanity check to see if renderer has been created
 	DEBUG_ASSERT(nullptr != m_SDL_Renderer);
 
-	SDL_Rect myRect = RECT_TO_SDL_RECT(src);
-	
+	SDL_Rect myRect = convertToSDLRect(src, m_renderScale);
 	
 #ifndef WINDOWS_BUILD
 	// On Linux and OSX we have to render this on the main thread
@@ -141,20 +173,61 @@ SDLInterface::Error SDLInterface::Renderer::RenderRectangle(const Rect& src, int
 }
 
 //========================================================
-SDLInterface::Error SDLInterface::Renderer::RenderTexture(Texture* tex, const Rect& src, const Rect& dest, float rotation /*= 0.0f*/, const Point& centerRot /*= Rect()*/, int flipValue /*= SDL_FLIP_NONE*/)
+SDLInterface::Error SDLInterface::Renderer::RenderLine(const SDLInterface::Point& start, const SDLInterface::Point& end, int r, int g, int b, int a)
 {
 	Error err = Error::None;
 
 	// Sanity check
 	DEBUG_ASSERT(m_bRendering);
 
+	SDL_Point p1 = convertToSDLPoint(start, m_renderScale);
+	SDL_Point p2 = convertToSDLPoint(end, m_renderScale);
+
+	// Sanity check to see if renderer has been created
+	DEBUG_ASSERT(nullptr != m_SDL_Renderer);
+
+#ifndef WINDOWS_BUILD
+	// On Linux and OSX we have to render this on the main thread
+	// TODO: Work out how to ensure we don't need to do this
+	// I _think_ it would be a case of binding the context
+	EventLoop::RunOnMainThread_Sync(err,
+		[&]()->Error
+	{
+#endif
+
+		// Set the draw colour
+		SDL_SetRenderDrawColor(m_SDL_Renderer, r, g, b, a);
+
+
+		// Draw the rectangle
+		SDL_RenderDrawLine(m_SDL_Renderer, p1.x, p1.y, p2.x, p2.y);
+
+
+		// Reset the draw colour
+		SDL_SetRenderDrawColor(m_SDL_Renderer, 255, 255, 255, 255);
+
+#ifndef WINDOWS_BUILD
+		return Error::None;
+	});
+#endif
+
+	return err;
+}
+
+//========================================================
+SDLInterface::Error SDLInterface::Renderer::RenderTexture(Texture* tex, const Rect& src, const Rect& dest, float rotation /*= 0.0f*/, int flipValue /*= SDL_FLIP_NONE*/)
+{
+	Error err = Error::None;
+
+	// Sanity check
+//	DEBUG_ASSERT(m_bRendering);
+
 	// Sanity check to see if renderer has been created
 	DEBUG_ASSERT(nullptr != m_SDL_Renderer);
 
 	// Create the two SDL_Rects
 	SDL_Rect source			= RECT_TO_SDL_RECT(src);
-	SDL_Rect destination	= RECT_TO_SDL_RECT(dest);
-	SDL_Point rot			= { centerRot.x / 2, centerRot.y / 2 };
+	SDL_Rect destination	= convertToSDLRect(dest, m_renderScale);
 	SDL_RendererFlip  flip	= SDL_FLIP_NONE;
 
 #ifndef WINDOWS_BUILD
@@ -171,7 +244,7 @@ SDLInterface::Error SDLInterface::Renderer::RenderTexture(Texture* tex, const Re
 						&source, 
 						&destination,
 						rotation,
-						&rot,
+						nullptr,
 						flip);
 
 #ifndef WINDOWS_BUILD
@@ -193,14 +266,22 @@ SDLInterface::Error SDLInterface::Renderer::RenderEnd()
 	// Sanity check to see if renderer has been created
 	DEBUG_ASSERT(nullptr != m_SDL_Renderer);
 
-	EventLoop::RunOnMainThread_Sync( err,
-	[ & ]()->Error
+#ifndef WINDOWS_BUILD
+	// On Linux and OSX we have to render this on the main thread
+	// TODO: Work out how to ensure we don't need to do this
+	// I _think_ it would be a case of binding the context
+	EventLoop::RunOnMainThread_Sync(err,
+		[&]()->Error
 	{
+#endif
+
 		//Present the rendered image
 		SDL_RenderPresent( m_SDL_Renderer );
 
+#ifndef WINDOWS_BUILD
 		return Error::None;
-	} );
+	});
+#endif
 
 	// Set us to not be rendering
 	m_bRendering = false;

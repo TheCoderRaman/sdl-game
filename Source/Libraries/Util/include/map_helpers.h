@@ -5,6 +5,8 @@
 //!
 //! various helpers for stl map and multimap containers
 //!
+#ifndef _MAP_HELPERS_H
+#define _MAP_HELPERS_H
 
 #include "types.h" // For LError
 
@@ -116,3 +118,5 @@ void multimap_visit_all_slow(std::multimap<TKey, TKeyVal>& tMap, int val, std::f
 		}
 	}
 }
+
+#endif //_MAP_HELPERS_H

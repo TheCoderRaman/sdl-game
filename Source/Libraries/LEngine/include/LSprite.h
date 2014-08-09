@@ -9,6 +9,7 @@
 #define _LSPRITE_H_
 
 #include "types.h"
+#include "math_types.h"
 
 #include "LRenderer.h"
 
@@ -30,6 +31,9 @@ public:
 
 	//! \brief create the sprite from the file
 	LError Create(LRenderer2D& renderer, const char* file);
+
+	//! \brief create the sprite from a surface
+	LError Create( LRenderer2D& renderer, SDLInterface::Surface* surface );
 
 	//! \brief set the source rectangle from the texture
 	LError SetSourceRect(const SDLInterface::Rect& rect);
@@ -60,6 +64,11 @@ public:
 	//! \brief create the sprite from the file
 	LError Destroy();
 
+	inline Vector2f GetCentre() const 
+	{
+		return m_centre;
+	}
+
 private:
 
 	//! \brief the underlying texture 
@@ -71,8 +80,8 @@ private:
 	//! \brief the destination rectangle on screen
 	SDLInterface::Rect m_destRect;
 
-	//! \brief the rotational centre
-	SDLInterface::Point m_rotCentre;
+	//! \brief the centre of the sprite
+	Vector2f	m_centre;
 
 	//! \brief the sprite rotation
 	float m_rotation;

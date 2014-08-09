@@ -14,6 +14,7 @@
 #include "SDLWindow.h"
 
 #include <list>
+#include <functional>
 
 class LRenderer2D;
 
@@ -47,8 +48,6 @@ public:
 	//! \brief set the internal renderer parent
 	//! useful for debugging and sanity checks
 	LError SetRenderer(LRenderer2D* parent);
-
-protected:
 
 	inline LRenderer2D* GetRenderer( void ) const { return m_pRenderer; }
 
@@ -90,6 +89,9 @@ public:
 
 	//! \brief perform the render
 	LError Render();
+
+	//! \brief perform the render
+	LError RenderWithCustomStep( std::function<int()> func);
 
 	//! \brief destroy the renderer
 	LError Destroy();

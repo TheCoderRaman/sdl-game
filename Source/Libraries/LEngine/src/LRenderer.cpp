@@ -68,7 +68,7 @@ LError LRenderer2D::Create(SDLInterface::Window &window)
 	// Create the renderer
 	err |= m_BaseSDLRenderer.Create(&window);
 
-	return SDL_ERROR_HAS_FATAL(err) ? LError::Fatal : LError::NoErr;;
+	return SDL_ERROR_HAS_FATAL(err) ? LError::Fatal : LError::NoErr;
 }
 
 //===============================================================
@@ -101,7 +101,7 @@ LError LRenderer2D::RemoveRenderable(LRendereable2D* toRemove)
 }
 
 //===============================================================
-LError LRenderer2D::Render()
+LError LRenderer2D::RenderWithCustomStep(std::function<int()> func)
 {
 	LError err = LError::NoErr;
 	SDLInterface::Error sdlerr = SDLInterface::Error::None;
@@ -119,6 +119,10 @@ LError LRenderer2D::Render()
 	if (!SDL_ERROR_HAS_FATAL(sdlerr))
 		err |= RenderRenderables();
 
+	// Call the custom render step
+	if (!func())
+		err |= LError::Warning;
+
 	// End the render
 	if (!LERROR_HAS_FATAL(err))
 		sdlerr |= m_BaseSDLRenderer.RenderEnd();
@@ -133,6 +137,14 @@ LError LRenderer2D::Render()
 
 	return err;
 }
+
+//===============================================================
+LError LRenderer2D::Render()
+{
+	std::function<int()> func = []() -> int { return 1; };
+	return RenderWithCustomStep(func);
+}
+
 
 
 //===============================================================

@@ -36,7 +36,15 @@ LError LSprite::Create(LRenderer2D& renderer, const char* file)
 	// Create the texture
 	SDLInterface::Error sdlerr = m_Texture.Create(&renderer.GetBaseRenderer(), file);
 
-	return SDL_ERROR_HAS_FATAL(sdlerr) ? LError::Fatal : LError::NoErr;;
+	return SDL_ERROR_HAS_FATAL(sdlerr) ? LError::Fatal : LError::NoErr;
+}
+
+//===============================================================
+LError LSprite::Create( LRenderer2D& renderer, SDLInterface::Surface* surface )
+{
+	SDLInterface::Error sdlerr = m_Texture.Create( &renderer.GetBaseRenderer(), surface );
+
+	return SDL_ERROR_HAS_FATAL( sdlerr ) ? LError::Fatal : LError::NoErr;
 }
 
 //===============================================================
@@ -47,8 +55,6 @@ LError LSprite::SetSourceRect(const SDLInterface::Rect& rect)
 	// Set the internal rectangle
 	m_srcRect = rect;
 
-	// Set the internal rotational centre
-	m_rotCentre = { rect.w, rect.h };
 
 	return err;
 }
@@ -126,7 +132,8 @@ LError LSprite::SetSize(int w, int h)
 	m_destRect.w = w;
 	m_destRect.h = h;
 
-	m_rotCentre = { w, h };
+	// Set the centre
+	m_centre = { m_destRect.w / 2.0f, m_destRect.h / 2.0f };
 
 	return err;
 }
@@ -135,7 +142,7 @@ LError LSprite::SetSize(int w, int h)
 LError LSprite::Render(LRenderer2D* renderer)
 {
 	// Render the texture
-	SDLInterface::Error err = renderer->GetBaseRenderer().RenderTexture(&m_Texture, m_srcRect, m_destRect, m_rotation, m_rotCentre, 0);
+	SDLInterface::Error err = renderer->GetBaseRenderer().RenderTexture(&m_Texture, m_srcRect, m_destRect, m_rotation, 0);
 
 	return SDL_ERROR_HAS_FATAL(err) ? LError::Fatal : LError::NoErr;
 }
