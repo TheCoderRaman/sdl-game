@@ -39,6 +39,7 @@ LError Banana::Create(Ffiseg::FWorld* world /* = nullptr */)
 		FBodyDef bdef = FBodyDef();
 		bdef.type = FBodyType::Dynamic;
 		bdef.position = FFISEG_PIX_TO_WORLD(Point2f(200, 300));
+		bdef.allowSleep = false;
 	//	bdef.gravityScale = 0.0f;
 
 		FFixtureDef fdef = FFixtureDef();

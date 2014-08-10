@@ -43,10 +43,10 @@ void LInput::SetDefaultPlayerMappings( void )
 	SetPlayerInputMap( ePlayer_One, SDLInterface::eSDLKeyInterface::key_right, eInputType::right );
 	SetPlayerInputMap( ePlayer_One, SDLInterface::eSDLKeyInterface::key_space, eInputType::jump );
 
-	SetPlayerInputMap( ePlayer_One, SDLInterface::eSDLKeyInterface::key_w, eInputType::up );
-	SetPlayerInputMap( ePlayer_One, SDLInterface::eSDLKeyInterface::key_s, eInputType::down );
-	SetPlayerInputMap( ePlayer_One, SDLInterface::eSDLKeyInterface::key_a, eInputType::left );
-	SetPlayerInputMap( ePlayer_One, SDLInterface::eSDLKeyInterface::key_d, eInputType::right );
+	SetPlayerInputMap( ePlayer_Two, SDLInterface::eSDLKeyInterface::key_w, eInputType::up );
+	SetPlayerInputMap( ePlayer_Two, SDLInterface::eSDLKeyInterface::key_s, eInputType::down );
+	SetPlayerInputMap( ePlayer_Two, SDLInterface::eSDLKeyInterface::key_a, eInputType::left );
+	SetPlayerInputMap( ePlayer_Two, SDLInterface::eSDLKeyInterface::key_d, eInputType::right );
 
 	SetCommonMapping( SDLInterface::eSDLKeyInterface::key_escape, eInputType::quit );
 	SetCommonMapping( SDLInterface::eSDLKeyInterface::key_p, eInputType::pause );
@@ -122,10 +122,8 @@ bool LInput::GetButtonHeldDown( eInputType eButton, ePlayers eWhichPlayer )
 
 	int iIndex = ( int ) eButton;
 
-	ePlayers eThisPlayer = ePlayer_One;
-
-	bReturn = m_aSPlayerInputMappings[ ( int ) eThisPlayer ].m_abButtonsPressedThisFrame[ iIndex ]
-		&& m_aSPlayerInputMappings[ ( int ) eThisPlayer ].m_abButtonsPressedLastFrame[ iIndex ];
+	bReturn = m_aSPlayerInputMappings[ ( int ) eWhichPlayer ].m_abButtonsPressedThisFrame[ iIndex ]
+		&& m_aSPlayerInputMappings[ ( int ) eWhichPlayer ].m_abButtonsPressedLastFrame[ iIndex ];
 
 	return bReturn;
 }
@@ -137,10 +135,8 @@ bool LInput::GetButtonJustReleased( eInputType eButton, ePlayers eWhichPlayer )
 
 	int iIndex = ( int ) eButton;
 
-	ePlayers eThisPlayer = ePlayer_One;
-
-	bReturn = !m_aSPlayerInputMappings[ ( int ) eThisPlayer ].m_abButtonsPressedThisFrame[ iIndex ]
-		&& m_aSPlayerInputMappings[ ( int ) eThisPlayer ].m_abButtonsPressedLastFrame[ iIndex ];
+	bReturn = !m_aSPlayerInputMappings[ ( int ) eWhichPlayer ].m_abButtonsPressedThisFrame[ iIndex ]
+		&& m_aSPlayerInputMappings[ ( int ) eWhichPlayer ].m_abButtonsPressedLastFrame[ iIndex ];
 
 	
 	return bReturn;

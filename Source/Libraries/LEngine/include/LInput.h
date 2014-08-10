@@ -49,6 +49,8 @@ public:
 		totalInputTypes
 	};
 
+	// This enum will be moved elsewhere soon, but is used
+	// to identify which player owns which control mappings
 	enum ePlayers
 	{
 		ePlayer_One = 0,
@@ -63,13 +65,10 @@ public:
 
 	const int			k_iTotalPlayers;
 	
-	static const int	sk_iMAX_PLAYERS = 1;
+	static const int	sk_iMAX_PLAYERS = 2;
 	static const int	sk_iTotalInputs = ( int ) eInputType::totalInputTypes;
 
 private:
-
-
-
 
 	struct sPlayerInputs
 	{
@@ -88,11 +87,16 @@ public:
 
 	void SetPlayerMappings( void );
 
+	//! Sets up some default system stuff that isn't already overridden
 	void SetDefaultPlayerMappings( void );
 
+	//! This function is used to set what button maps to what input for a player
 	void SetPlayerInputMap( ePlayers ePlayer, SDLInterface::eSDLKeyInterface eInput, eInputType eToMapTo );
+	
+	//! This function is used to set what button maps to what input for all players
 	void SetCommonMapping( SDLInterface::eSDLKeyInterface eInput, eInputType eToMapTo );
 
+	//! Clears/Resets all mappings
 	void ClearMappings( void );
 
 	// Called at the start of the frame

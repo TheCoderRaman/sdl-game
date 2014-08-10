@@ -16,7 +16,7 @@
 using namespace Ffiseg;
 
 //====================================================
-LError Paddle::Create( int iXPos, int iYPos, Ffiseg::FWorld* world /*= nullptr*/ )
+LError Paddle::Create( int iXPos, int iYPos, LInput::ePlayers ePlayerInControl, Ffiseg::FWorld* world /*= nullptr*/ )
 {
 	RUNTIME_LOG( "Creating Paddle..." );
 
@@ -45,7 +45,7 @@ LError Paddle::Create( int iXPos, int iYPos, Ffiseg::FWorld* world /*= nullptr*/
 		bdef.type = FBodyType::Static;
 		Point2f pos = FFISEG_PIX_TO_WORLD( Point2f( iXPos, iYPos ) );
 		bdef.position = pos;
-		bdef.gravityScale = 0.0f;
+	//	bdef.gravityScale = 0.0f;
 
 		FFixtureDef fdef = FFixtureDef();
 		fdef.restitution = 0.1f;
@@ -60,6 +60,8 @@ LError Paddle::Create( int iXPos, int iYPos, Ffiseg::FWorld* world /*= nullptr*/
 
 		CreateBody(*world, bdef, fdef);
 	}
+
+	m_myPlayer = ePlayerInControl;
 
 	return err;
 }
@@ -121,6 +123,15 @@ bool Paddle::CanMoveRight( void )
 //====================================================
 LError Paddle::VOnUpdate( ms elapsed )
 {
+	if( LEngine::GetInputManager().GetButtonHeldDown( LInput::eInputType::left, m_myPlayer ) )
+	{
+		MoveLeft();
+	}
+	if( LEngine::GetInputManager().GetButtonHeldDown( LInput::eInputType::right, m_myPlayer ) )
+	{
+		MoveRight();
+	}
+
 	return GameSprite::VOnUpdate(elapsed);
 }
 

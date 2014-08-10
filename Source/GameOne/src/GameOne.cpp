@@ -52,12 +52,12 @@ LError GameOne::VOnCreate()
 
 	// Set up the first player's paddle
 	m_paddleOne.SetRenderer( &LEngine::GetRenderer() );
-	m_paddleOne.Create( 100, 200, &m_myWorld );
+	m_paddleOne.Create( 100, 200, LInput::ePlayer_One, &m_myWorld );
 	GetUpdatingList().Register( &m_paddleOne );
 
-	// Set up the first player's paddle
+	// Set up the second player's paddle
 	m_paddleTwo.SetRenderer( &LEngine::GetRenderer() );
-	m_paddleTwo.Create( 100, 400, &m_myWorld);
+	m_paddleTwo.Create( 100, 400, LInput::ePlayer_Two, &m_myWorld );
 	GetUpdatingList().Register( &m_paddleTwo );
 
 	LEngine::GetAudioManager().LoadMusic( "Media/music.mp3", "song1" );
@@ -119,7 +119,6 @@ bool GameOne::ShouldBananaSwitchDirections( void )
 		bReturn = true;
 	}
 
-
 	return bReturn;
 }
 
@@ -129,15 +128,6 @@ LError GameOne::VOnUpdate(ms elapsed)
  	LError err = LError::NoErr;
 
 	m_myWorld.Step( elapsed / 1000.0f, 8, 3);
-
-	if( LEngine::GetInputManager().GetButtonHeldDown( LInput::eInputType::left, LInput::ePlayer_One ) )
-	{
-		m_paddleOne.MoveLeft();
-	}
-	if( LEngine::GetInputManager().GetButtonHeldDown( LInput::eInputType::right, LInput::ePlayer_One ) )
-	{
-		m_paddleOne.MoveRight();
-	}
 
 	if( LEngine::GetInputManager().GetButtonJustPressed( LInput::eInputType::jump, LInput::ePlayer_One ) )
 	{
@@ -149,7 +139,6 @@ LError GameOne::VOnUpdate(ms elapsed)
 	{
 		iBananaDirection *= -1; // Reverse the banana
 	//	LEngine::GetAudioManager().PlaySound( "hit" );
-	//	m_text.SetText( "butts" );
 	}
 
 	int iDistToMoveBanana = 5 * iBananaDirection;
