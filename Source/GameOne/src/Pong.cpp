@@ -52,12 +52,12 @@ LError Pong::VOnCreate()
 
 	// Set up the first player's paddle
 	m_paddleOne.SetRenderer( &LEngine::GetRenderer() );
-	m_paddleOne.Create( 100, 200, LInput::ePlayer_One, &m_myWorld );
+	m_paddleOne.Create( 200, 100, LInput::ePlayer_One, &m_myWorld );
 	GetUpdatingList().Register( &m_paddleOne );
 
 	// Set up the second player's paddle
 	m_paddleTwo.SetRenderer( &LEngine::GetRenderer() );
-	m_paddleTwo.Create( 100, 400, LInput::ePlayer_Two, &m_myWorld );
+	m_paddleTwo.Create( 200, 400, LInput::ePlayer_Two, &m_myWorld );
 	GetUpdatingList().Register( &m_paddleTwo );
 
 	LEngine::GetAudioManager().LoadMusic( "Media/music.mp3", "song1" );
@@ -72,7 +72,7 @@ LError Pong::VOnCreate()
 
 	m_score.Create();
 
-	m_banana.SetPos( 200, 300 );
+	m_banana.SetPos( 200, 350 );
 
 	iCurrentScore = 0;
 	m_score.SetScore( iCurrentScore );
