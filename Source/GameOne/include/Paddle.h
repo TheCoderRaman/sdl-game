@@ -11,13 +11,14 @@
 
 #include "GameSprite.h"
 
+#include "LInput.h"
 #include "LError.h"
 
 class Paddle : public GameSprite
 {
 public:
 
-	LError Create( int iXPos, int iYPos, Ffiseg::FWorld* world = nullptr );
+	LError Create( int iXPos, int iYPos, LInput::ePlayers ePlayerInControl, Ffiseg::FWorld* world = nullptr );
 	LError Destroy( void );
 
 	virtual LError Render( LRenderer2D* renderer );
@@ -28,6 +29,8 @@ public:
 	bool CanMoveRight();
 
 private:
+
+	LInput::ePlayers m_myPlayer;
 
 	int iDistToMove;
 	int iBorderAtEdgeOfScreen;
