@@ -12,7 +12,7 @@
 
 #include "LEngine.h"	//! for the engine itself
 
-#include "GameOne.h"	//! for GameOne
+#include "Pong.h"	//! for Pong
 
 #ifdef WINDOWS_BUILD
 	#include <Windows.h>
@@ -33,7 +33,7 @@ int main( int argc, char* args[] )
 #endif
 
 	// Create the game
-	GameOne myGame;
+	Pong myGame;
 
     // Create and run the engine
 	LEngine myEngine( myGame );

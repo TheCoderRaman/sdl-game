@@ -29,7 +29,7 @@ LError Banana::Create(Ffiseg::FWorld* world /* = nullptr */)
 
 	// Set up the banana
 	GetSprite()->SetSourceRect( { 0, 0, 400, 300 } );
-	GetSprite()->SetSize( 100, 75 );
+	GetSprite()->SetSize( 50, 38 );
 	GetSprite()->SetPos( 200, 300 );
 
 	GameSprite::Create(); // Adds it to the renderer
@@ -47,7 +47,7 @@ LError Banana::Create(Ffiseg::FWorld* world /* = nullptr */)
 		fdef.density = 1000.0f;
 
 		FPolygonShape shape;
-		shape.SetAsBox(100.0f / FFISEG_WORLD_TO_PIX_FACTOR, 75.0f / FFISEG_WORLD_TO_PIX_FACTOR);
+		shape.SetAsBox( 50.0f / FFISEG_WORLD_TO_PIX_FACTOR, 38.0f / FFISEG_WORLD_TO_PIX_FACTOR );
 
 		fdef.shape = &shape;
 
