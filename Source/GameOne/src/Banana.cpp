@@ -10,10 +10,6 @@
 #include "LError.h"
 #include "debug.h"
 
-#include "FShape.h"
-
-using namespace Ffiseg;
-
 //====================================================
 LError Banana::Create(Ffiseg::FWorld* world /* = nullptr */)
 {
@@ -27,31 +23,21 @@ LError Banana::Create(Ffiseg::FWorld* world /* = nullptr */)
 	// Create the banana
 	err |= GetSprite()->Create( *GetRenderer(), "Media/banana.png" );
 
+	int x = 200;
+	int y = 300;
+	int w = 50;
+	int h = 38;
+
 	// Set up the banana
 	GetSprite()->SetSourceRect( { 0, 0, 400, 300 } );
-	GetSprite()->SetSize( 50, 38 );
-	GetSprite()->SetPos( 200, 300 );
+	GetSprite()->SetSize( w, h );
+	GetSprite()->SetPos( x, y );
 
 	GameSprite::Create(); // Adds it to the renderer
 
-	if (world)
+	if ( world )
 	{
-		FBodyDef bdef = FBodyDef();
-		bdef.type = FBodyType::Dynamic;
-		bdef.position = FFISEG_PIX_TO_WORLD(Point2f(200, 300));
-		bdef.allowSleep = false;
-	//	bdef.gravityScale = 0.0f;
-
-		FFixtureDef fdef = FFixtureDef();
-		fdef.restitution = 0.1f;
-		fdef.density = 1000.0f;
-
-		FPolygonShape shape;
-		shape.SetAsBox( 50.0f / FFISEG_WORLD_TO_PIX_FACTOR, 38.0f / FFISEG_WORLD_TO_PIX_FACTOR );
-
-		fdef.shape = &shape;
-
-		CreateBody(*world, bdef, fdef);
+		GameSprite::CreatePhysicsBody( world, x, y, w, h );
 	}
 
 	return err;

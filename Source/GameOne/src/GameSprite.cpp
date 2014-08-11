@@ -10,6 +10,10 @@
 #include "LError.h"
 #include "debug.h"
 
+#include "FShape.h"
+
+using namespace Ffiseg;
+
 //====================================================
 LError GameSprite::Create( void )
 {
@@ -22,6 +26,27 @@ LError GameSprite::Create( void )
 		err |= GetRenderer()->AddRenderable( GetSprite() );
 
 	return err;
+}
+
+//====================================================
+void GameSprite::CreatePhysicsBody( Ffiseg::FWorld* world, int x, int y, float w, float h )
+{
+	FBodyDef bdef = FBodyDef();
+	bdef.type = FBodyType::Dynamic;
+	bdef.position = FFISEG_PIX_TO_WORLD( Point2f( x, y ) );
+	bdef.allowSleep = false;
+	bdef.gravityScale = 0.0f;
+
+	FFixtureDef fdef = FFixtureDef();
+	fdef.restitution = 0.1f;
+	fdef.density = 1000.0f;
+
+	FPolygonShape shape;
+	shape.SetAsBox( w / FFISEG_WORLD_TO_PIX_FACTOR, h / FFISEG_WORLD_TO_PIX_FACTOR );
+
+	fdef.shape = &shape;
+
+	CreateBody( *world, bdef, fdef );
 }
 
 //====================================================

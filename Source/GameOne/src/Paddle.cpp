@@ -28,37 +28,22 @@ LError Paddle::Create( int iXPos, int iYPos, LInput::ePlayers ePlayerInControl, 
 	// Create the paddle
 	err |= GetSprite()->Create( *GetRenderer(), "Media/paddle.png" );
 
+	int w = 200;
+	int h = 30;
+
 	// Set up the paddle
 	GetSprite()->SetSourceRect( { 0, 0, 255, 42 } );
-	GetSprite()->SetSize(200, 30);
+	GetSprite()->SetSize( w, h );
 	GetSprite()->SetPos( iXPos, iYPos );
-	Vector2f centre = GetSprite()->GetCentre();
 
 	GameSprite::Create(); // Adds it to the renderer
 
 	iBorderAtEdgeOfScreen = 50;
 	iDistToMove = 1;
 
-	if (world)
+	if( world )
 	{
-		FBodyDef bdef = FBodyDef();
-		bdef.type = FBodyType::Static;
-		Point2f pos = FFISEG_PIX_TO_WORLD( Point2f( iXPos, iYPos ) );
-		bdef.position = pos;
-	//	bdef.gravityScale = 0.0f;
-
-		FFixtureDef fdef = FFixtureDef();
-		fdef.restitution = 0.1f;
-		fdef.density = 1000.0f;
-
-		FPolygonShape shape;
-		Vector2f box = Vector2f( 200.0f*0.5f / FFISEG_WORLD_TO_PIX_FACTOR, 
-								 30.0f*0.5f / FFISEG_WORLD_TO_PIX_FACTOR );
-		shape.SetAsBox( box.x, box.y );
-
-		fdef.shape = &shape;
-
-		CreateBody(*world, bdef, fdef);
+		GameSprite::CreatePhysicsBody( world, iXPos, iYPos, w * 0.5, h * 0.5 );
 	}
 
 	m_myPlayer = ePlayerInControl;

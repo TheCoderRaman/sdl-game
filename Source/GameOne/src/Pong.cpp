@@ -72,11 +72,6 @@ LError Pong::VOnCreate()
 
 	m_score.Create();
 
-	m_banana.SetPos( 200, 350 );
-
-	iCurrentScore = 0;
-	m_score.SetScore( iCurrentScore );
-
  	return err;
 }
 
@@ -171,6 +166,11 @@ LError Pong::VOnReset()
 {
  	LError err = LError::NoErr;
 
+	m_banana.SetPos( 200, 350 );
+
+	iCurrentScore = 0;
+	m_score.SetScore( iCurrentScore );
+
  	return err;
 }
 
@@ -189,15 +189,6 @@ LError Pong::VOnDestroy()
 	if (!LERROR_HAS_FATAL(err))
 		err |= m_myEventManager.RemoveHandler(eGameEventType::GameEvent_pause, &m_myEventHandler);
 
-	// Remove the banana from the renderer
-	if (!LERROR_HAS_FATAL(err))
-		err |= LEngine::GetRenderer().RemoveRenderable(&m_banana);
-
-	if( !LERROR_HAS_FATAL( err ) )
-		err |= LEngine::GetRenderer().RemoveRenderable( &m_paddleTwo );
-
-	if( !LERROR_HAS_FATAL( err ) )
-		err |= LEngine::GetRenderer().RemoveRenderable( &m_paddleOne );
 
 	if (!LERROR_HAS_FATAL(err))
 		err |= m_myEventManager.Destroy();
