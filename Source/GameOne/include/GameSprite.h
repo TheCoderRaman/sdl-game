@@ -44,13 +44,13 @@ public:
 	int GetHeight( void ) { return m_sprite.GetHeight(); }
 	int GetWidth( void ) { return m_sprite.GetWidth(); }
 
-	void CreateBody(Ffiseg::FWorld& world, Ffiseg::FBodyDef &bdef, Ffiseg::FFixtureDef& fdef);
+	void CreateBody( Ffiseg::FWorld& world, Ffiseg::FBodyDef &bdef, Ffiseg::FFixtureDef& fdef );
 
 protected:
 
 	LSprite*	GetSprite( void ) { return &m_sprite; }
 
-	Ffiseg::FRigidBody*	GetBody(void) { return &m_rigidBody; }
+	Ffiseg::FRigidBody*	GetBody( void ) { return &m_rigidBody; }
 
 	virtual LError VOnUpdate(ms elapsed);
 

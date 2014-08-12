@@ -10,6 +10,10 @@
 #include "LError.h"
 #include "debug.h"
 
+#include "FShape.h"
+
+using namespace Ffiseg;
+
 //====================================================
 LError GameSprite::Create( void )
 {
@@ -41,7 +45,6 @@ LError GameSprite::VOnUpdate( ms elapsed )
 	Vector2f centre = GetSprite()->GetCentre();
 	GetSprite()->SetPos( (float)(pos.x - centre.x), (float)(pos.y + centre.y));
 	GetSprite()->SetRotation(-rot*(360/(2*3.14159f)));
-
 
 	return LError::NoErr;
 }

@@ -45,6 +45,8 @@ private:
 	//! \brief Override for when the EventLoop is updated
 	virtual LError VOnPostUpdate() override;
 
+	virtual LError VOnReset() override;
+
 
 	//! \brief the list of updatables
 	std::list< LUpdatable* > m_vecObjects;

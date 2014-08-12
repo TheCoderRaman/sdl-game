@@ -47,6 +47,8 @@ public:
 	//! \brief Get the user data
 	inline void*	GetUserData();
 
+	void ApplyImpulse( const Vector2f& force );
+
 	//! \brief Destroy the body
 	int Destroy();
 

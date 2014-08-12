@@ -16,11 +16,13 @@
 using namespace Ffiseg;
 
 //====================================================
-LError Paddle::Create( int iXPos, int iYPos, LInput::ePlayers ePlayerInControl, Ffiseg::FWorld* world /*= nullptr*/ )
+LError Paddle::Create( LRenderer2D* renderer, int iXPos, int iYPos, LInput::ePlayers ePlayerInControl, Ffiseg::FWorld* world /*= nullptr*/ )
 {
 	RUNTIME_LOG( "Creating Paddle..." );
 
 	LError err = LError::NoErr;
+
+	SetRenderer( renderer );
 
 	// Must have renderer before creating the sprite
 	DEBUG_ASSERT( GetRenderer() );
@@ -28,37 +30,38 @@ LError Paddle::Create( int iXPos, int iYPos, LInput::ePlayers ePlayerInControl, 
 	// Create the paddle
 	err |= GetSprite()->Create( *GetRenderer(), "Media/paddle.png" );
 
+	int w = 200;
+	int h = 30;
+
 	// Set up the paddle
 	GetSprite()->SetSourceRect( { 0, 0, 255, 42 } );
-	GetSprite()->SetSize(200, 30);
+	GetSprite()->SetSize( w, h );
 	GetSprite()->SetPos( iXPos, iYPos );
-	Vector2f centre = GetSprite()->GetCentre();
 
 	GameSprite::Create(); // Adds it to the renderer
 
 	iBorderAtEdgeOfScreen = 50;
 	iDistToMove = 1;
 
-	if (world)
+	if( world )
 	{
 		FBodyDef bdef = FBodyDef();
 		bdef.type = FBodyType::Static;
-		Point2f pos = FFISEG_PIX_TO_WORLD( Point2f( iXPos, iYPos ) );
-		bdef.position = pos;
-	//	bdef.gravityScale = 0.0f;
+		bdef.position = FFISEG_PIX_TO_WORLD( Point2f( iXPos, iYPos ) );
+		bdef.fixedRotation = true;
+		bdef.linearDamping = 0.0f;
 
 		FFixtureDef fdef = FFixtureDef();
-		fdef.restitution = 0.1f;
-		fdef.density = 1000.0f;
+		fdef.density = 1.0f;
+		fdef.restitution = 1.0f;
+		fdef.friction = 0.5f;
 
 		FPolygonShape shape;
-		Vector2f box = Vector2f( 200.0f*0.5f / FFISEG_WORLD_TO_PIX_FACTOR, 
-								 30.0f*0.5f / FFISEG_WORLD_TO_PIX_FACTOR );
-		shape.SetAsBox( box.x, box.y );
+		shape.SetAsBox( w * 0.5f / FFISEG_WORLD_TO_PIX_FACTOR, h * 0.5f / FFISEG_WORLD_TO_PIX_FACTOR );
 
 		fdef.shape = &shape;
 
-		CreateBody(*world, bdef, fdef);
+		CreateBody( *world, bdef, fdef );
 	}
 
 	m_myPlayer = ePlayerInControl;

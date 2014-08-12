@@ -18,10 +18,12 @@ class Banana : public GameSprite
 
 public:
 
-	LError Create( Ffiseg::FWorld* world = nullptr );
+	LError Create( LRenderer2D* renderer, Ffiseg::FWorld* world = nullptr );
 	LError Destroy( void );
 
 	virtual LError Render( LRenderer2D* renderer );
+
+	void GiveShove( Vector2f direction );
 
 private:
 

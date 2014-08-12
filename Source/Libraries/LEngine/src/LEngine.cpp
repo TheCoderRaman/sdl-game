@@ -222,6 +222,11 @@ LError LEngine::Load()
 	// Create the game
 	err |= m_myGame.Create();
 
+	// Reset the game
+	err |= m_myGame.Reset();
+
+	m_UpdatingList.Reset();
+
     return err;
 }
 
@@ -291,7 +296,7 @@ LError LEngine::PreUpdate( void )
 
 	// Push the current frame's inputs to last frame's and clear this frame's key buffer
 	// Poll the keyboard now for the current frame's inputs
-	m_InputManager.StartKeyboardUpdate();
+	m_InputManager.UpdateKeyboardBuffers();
 
 	err |= m_UpdatingList.PreUpdate();
 
@@ -335,9 +340,6 @@ LError LEngine::PostUpdate( void )
 	err |= m_UpdatingList.PostUpdate();
 
 	err |= m_myGame.PostUpdate();
-
-	// Reset the Engine level keyboard polling
-	m_InputManager.EndKeyboardUpdate();
 
 	return err;
 }

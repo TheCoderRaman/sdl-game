@@ -62,8 +62,6 @@ private:
 	//! \brief internal event handler
 	LError HandleEvent(const TGameEventManager::TEvent* event);
 
-	bool ShouldBananaSwitchDirections( void );
-
 	//! \brief the Banana
 	Banana m_banana;
 	Paddle m_paddleOne;
@@ -71,8 +69,6 @@ private:
 	ScoreGUI m_score;
 
 	int iCurrentScore;
-	
-	int iBananaDirection;
 
 	//! \brief The Game Event Manager
 	TGameEventManager m_myEventManager;

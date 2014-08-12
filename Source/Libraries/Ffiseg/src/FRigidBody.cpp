@@ -119,5 +119,11 @@ float FRigidBody::GetRot() const
 	return m_myBody->GetAngle();
 }
 
+//========================================================
+void FRigidBody::ApplyImpulse( const Vector2f& force )
+{
+	m_myBody->ApplyLinearImpulse( FfVecToB2Vec( force ), m_myBody->GetWorldCenter(), true );
+}
+
 
 Ffiseg_namespace_end
