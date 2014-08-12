@@ -9,6 +9,9 @@
 
 #include "LError.h"
 #include "debug.h"
+#include "FShape.h"
+
+using namespace Ffiseg;
 
 //====================================================
 LError Banana::Create( LRenderer2D* renderer, Ffiseg::FWorld* world /* = nullptr */ )
@@ -39,7 +42,26 @@ LError Banana::Create( LRenderer2D* renderer, Ffiseg::FWorld* world /* = nullptr
 
 	if ( world )
 	{
-		GameSprite::CreatePhysicsBody( world, x, y, w, h );
+		FBodyDef bdef = FBodyDef();
+		bdef.type = FBodyType::Dynamic;
+		bdef.position = FFISEG_PIX_TO_WORLD( Point2f( x, y ) );
+		bdef.allowSleep = false;
+		bdef.gravityScale = 0.0f;
+		bdef.awake = true;
+		bdef.fixedRotation = true;
+		bdef.linearDamping = 0.0f;
+
+		FFixtureDef fdef = FFixtureDef();
+		fdef.restitution = 0.1f;
+		fdef.density = 1.0f;
+		fdef.restitution = 1.0f;
+
+		FPolygonShape shape;
+		shape.SetAsBox( w / FFISEG_WORLD_TO_PIX_FACTOR, h / FFISEG_WORLD_TO_PIX_FACTOR );
+
+		fdef.shape = &shape;
+
+		CreateBody( *world, bdef, fdef );
 	}
 
 	return err;
@@ -62,6 +84,8 @@ LError Banana::VOnReset(void)
 { 
 	RUNTIME_LOG( "Resetting Banana..." );
 
+	
+
 	return GameSprite::VOnReset();
 }
 
@@ -73,4 +97,10 @@ LError Banana::Destroy( void )
 	GameSprite::Destroy();
 
 	return LError::NoErr;
+}
+
+//====================================================
+void Banana::GiveShove( Vector2f direction )
+{
+	GetBody()->ApplyImpulse( direction );
 }

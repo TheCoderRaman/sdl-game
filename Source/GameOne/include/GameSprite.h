@@ -48,8 +48,6 @@ public:
 
 protected:
 
-	void CreatePhysicsBody( Ffiseg::FWorld* world, int x, int y, float w, float h );
-
 	LSprite*	GetSprite( void ) { return &m_sprite; }
 
 	Ffiseg::FRigidBody*	GetBody( void ) { return &m_rigidBody; }

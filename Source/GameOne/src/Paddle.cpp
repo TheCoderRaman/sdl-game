@@ -45,7 +45,23 @@ LError Paddle::Create( LRenderer2D* renderer, int iXPos, int iYPos, LInput::ePla
 
 	if( world )
 	{
-		GameSprite::CreatePhysicsBody( world, iXPos, iYPos, w * 0.5, h * 0.5 );
+		FBodyDef bdef = FBodyDef();
+		bdef.type = FBodyType::Static;
+		bdef.position = FFISEG_PIX_TO_WORLD( Point2f( iXPos, iYPos ) );
+		bdef.fixedRotation = true;
+		bdef.linearDamping = 0.0f;
+
+		FFixtureDef fdef = FFixtureDef();
+		fdef.restitution = 0.1f;
+		fdef.density = 1.0f;
+		fdef.restitution = 1.0f;
+
+		FPolygonShape shape;
+		shape.SetAsBox( w * 0.5f / FFISEG_WORLD_TO_PIX_FACTOR, h * 0.5f / FFISEG_WORLD_TO_PIX_FACTOR );
+
+		fdef.shape = &shape;
+
+		CreateBody( *world, bdef, fdef );
 	}
 
 	m_myPlayer = ePlayerInControl;

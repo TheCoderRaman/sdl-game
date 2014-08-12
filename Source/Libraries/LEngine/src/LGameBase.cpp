@@ -75,6 +75,8 @@ LError LGameBase::PostUpdate()
 //===============================================================
 LError LGameBase::Reset()
 {
+	m_UpdatingList.Reset();
+
 	return VOnReset();
 }
 

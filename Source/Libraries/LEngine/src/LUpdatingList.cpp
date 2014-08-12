@@ -82,3 +82,17 @@ LError LUpdatingList::VOnPostUpdate()
 
 	return LError::NoErr;
 }
+
+
+//===============================================================
+LError LUpdatingList::VOnReset()
+{
+	for( LUpdatable* pObj : m_vecObjects )
+	{
+		// Ensure we're not updating a null object
+		DEBUG_ASSERT( pObj != nullptr );
+		pObj->Reset();
+	}
+
+	return LError::NoErr;
+}

@@ -120,6 +120,8 @@ LError Pong::VOnReset()
 
 	m_banana.SetPos( 200, 350 );
 
+	m_banana.GiveShove( Vector2f( 0.0, 1000.0f ) );
+
 	iCurrentScore = 0;
 	m_score.SetScore( iCurrentScore );
 

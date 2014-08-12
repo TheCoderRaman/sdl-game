@@ -225,6 +225,8 @@ LError LEngine::Load()
 	// Reset the game
 	err |= m_myGame.Reset();
 
+	m_UpdatingList.Reset();
+
     return err;
 }
 

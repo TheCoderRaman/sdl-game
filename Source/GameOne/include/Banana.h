@@ -23,6 +23,8 @@ public:
 
 	virtual LError Render( LRenderer2D* renderer );
 
+	void GiveShove( Vector2f direction );
+
 private:
 
 	virtual LError VOnUpdate(ms elapsed);
