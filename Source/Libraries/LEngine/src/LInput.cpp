@@ -68,7 +68,7 @@ void LInput::SetCommonMapping( SDLInterface::eSDLKeyInterface eInput, eInputType
 }
 
 //===============================================================
-void LInput::StartKeyboardUpdate( void )
+void LInput::UpdateKeyboardBuffers( void )
 {
 	//RUNTIME_LOG( "Starting keyboard update in LInput" );
 
@@ -94,11 +94,6 @@ void LInput::StartKeyboardUpdate( void )
 			}
 		}
 	}
-}
-
-void LInput::EndKeyboardUpdate( void )
-{
-	//RUNTIME_LOG( "Ending update in LInput" );
 }
 
 //================================================================

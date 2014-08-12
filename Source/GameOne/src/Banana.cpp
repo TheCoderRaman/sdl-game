@@ -11,11 +11,13 @@
 #include "debug.h"
 
 //====================================================
-LError Banana::Create(Ffiseg::FWorld* world /* = nullptr */)
+LError Banana::Create( LRenderer2D* renderer, Ffiseg::FWorld* world /* = nullptr */ )
 {
 	RUNTIME_LOG( "Creating Banana..." );
 
 	LError err = LError::NoErr;
+
+	SetRenderer( renderer );
 
 	// Must have renderer before creating the sprite
 	DEBUG_ASSERT(GetRenderer());
@@ -47,7 +49,6 @@ LError Banana::Create(Ffiseg::FWorld* world /* = nullptr */)
 LError Banana::VOnUpdate( ms elapsed )
 {
 	return GameSprite::VOnUpdate(elapsed);
-;
 }
 
 //====================================================

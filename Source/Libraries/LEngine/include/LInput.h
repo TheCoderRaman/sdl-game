@@ -100,10 +100,7 @@ public:
 	void ClearMappings( void );
 
 	// Called at the start of the frame
-	void StartKeyboardUpdate( void );
-
-	// Called at the end of the frame to refresh the inputs stored here
-	void EndKeyboardUpdate( void );
+	void UpdateKeyboardBuffers( void );
 
 	// Gets if a button has been pressed this frame but not the last
 	bool GetButtonJustPressed( eInputType eButton, ePlayers eWhichPlayer );

@@ -15,7 +15,6 @@
 
 //========================================================
 Pong::Pong()
-: iBananaDirection( 1 )
 {
 
 }
@@ -46,18 +45,16 @@ LError Pong::VOnCreate()
 	m_myEventManager.AddHandler( eGameEventType::GameEvent_pause, &m_myEventHandler );
 
 	// Set up the banana
-	m_banana.SetRenderer(&LEngine::GetRenderer());
-	m_banana.Create(&m_myWorld);
+	m_banana.Create( &LEngine::GetRenderer(), &m_myWorld );
 	GetUpdatingList().Register(&m_banana);
 
 	// Set up the first player's paddle
-	m_paddleOne.SetRenderer( &LEngine::GetRenderer() );
-	m_paddleOne.Create( 200, 100, LInput::ePlayer_One, &m_myWorld );
+
+	m_paddleOne.Create( &LEngine::GetRenderer(), 200, 100, LInput::ePlayer_One, &m_myWorld );
 	GetUpdatingList().Register( &m_paddleOne );
 
 	// Set up the second player's paddle
-	m_paddleTwo.SetRenderer( &LEngine::GetRenderer() );
-	m_paddleTwo.Create( 200, 400, LInput::ePlayer_Two, &m_myWorld );
+	m_paddleTwo.Create( &LEngine::GetRenderer(), 200, 400, LInput::ePlayer_Two, &m_myWorld );
 	GetUpdatingList().Register( &m_paddleTwo );
 
 	LEngine::GetAudioManager().LoadMusic( "Media/music.mp3", "song1" );
@@ -83,39 +80,6 @@ LError Pong::VOnPreUpdate()
 	return err;
 }
 
-bool Pong::ShouldBananaSwitchDirections( void )
-{
-	bool bReturn = false;
-
-	int iBananaY		= m_banana.GetYPos();
-	int iBananaHeight	= m_banana.GetHeight();
-
-	int iBananaX		= m_banana.GetXPos();
-	int iBananaWidth	= m_banana.GetWidth();
-
-	int iWindowHeight = LEngine::GetWindowHeight(); // bottom of the screen
-
-	int iPaddleY = m_paddleOne.GetYPos();
-	int iPaddleX = m_paddleOne.GetXPos();
-
-	int iPaddleWidth = m_paddleOne.GetWidth();
-
-	if( ( iBananaY + iBananaHeight > iPaddleY )
-		&& ( iBananaX + iBananaWidth > iPaddleX ) )
-	{
-		bReturn = true;
-	}
-	else if( iBananaY + iBananaHeight > iWindowHeight )
-	{
-		bReturn = true;
-	}
-	else if( iBananaY < 0 )
-	{
-		bReturn = true;
-	}
-
-	return bReturn;
-}
 
 //========================================================
 LError Pong::VOnUpdate( ms elapsed )
@@ -129,18 +93,6 @@ LError Pong::VOnUpdate( ms elapsed )
 		iCurrentScore++;
 		m_score.SetScore( iCurrentScore );
 	}
-
-	if( ShouldBananaSwitchDirections() )
-	{
-		iBananaDirection *= -1; // Reverse the banana
-	//	LEngine::GetAudioManager().PlaySound( "hit" );
-	}
-
-	int iDistToMoveBanana = 5 * iBananaDirection;
-
-	int iBananaY		= m_banana.GetYPos();
-
-//	m_banana.SetPos( m_banana.GetXPos(), iBananaY + iDistToMoveBanana );
 
 	// Send a pause event FOR SOME REASON I DON'T KNOW MAN
 	uGameEventData data;

@@ -16,11 +16,13 @@
 using namespace Ffiseg;
 
 //====================================================
-LError Paddle::Create( int iXPos, int iYPos, LInput::ePlayers ePlayerInControl, Ffiseg::FWorld* world /*= nullptr*/ )
+LError Paddle::Create( LRenderer2D* renderer, int iXPos, int iYPos, LInput::ePlayers ePlayerInControl, Ffiseg::FWorld* world /*= nullptr*/ )
 {
 	RUNTIME_LOG( "Creating Paddle..." );
 
 	LError err = LError::NoErr;
+
+	SetRenderer( renderer );
 
 	// Must have renderer before creating the sprite
 	DEBUG_ASSERT( GetRenderer() );
