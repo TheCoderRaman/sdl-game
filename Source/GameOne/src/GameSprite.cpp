@@ -46,7 +46,6 @@ LError GameSprite::VOnUpdate( ms elapsed )
 	GetSprite()->SetPos( (float)(pos.x - centre.x), (float)(pos.y + centre.y));
 	GetSprite()->SetRotation(-rot*(360/(2*3.14159f)));
 
-
 	return LError::NoErr;
 }
 

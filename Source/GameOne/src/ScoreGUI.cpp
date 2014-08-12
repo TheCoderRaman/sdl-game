@@ -20,40 +20,57 @@ LError ScoreGUI::Create( void )
 	LError err = LError::NoErr;
 
 	// A method of picking a default font size, based on some variables
-	m_text.Create( LEngine::GetRenderer(), "font1", 50, "I like tamale" );
-	m_number.Create( LEngine::GetRenderer(), "font1", 50, "123" );
+	m_playerOne.Create( LEngine::GetRenderer(), "font1", 50, "123" );
+	m_playerTwo.Create( LEngine::GetRenderer(), "font1", 50, "123" );
 
 	// A method of sticking text labels to a corner of the screen
-	m_text.SetPos( 20, 75 ); 
-	m_number.SetPos( 600, 75 );
+	m_playerOne.SetPos( 660, 475 );
+	m_playerTwo.SetPos( 660, 75 );
 
-	LEngine::GetRenderer().AddRenderable( &m_text );
-	LEngine::GetRenderer().AddRenderable( &m_number );
+	LEngine::GetRenderer().AddRenderable( &m_playerOne );
+	LEngine::GetRenderer().AddRenderable( &m_playerTwo );
 
 	return err;
 }
 
+void ScoreGUI::Reset()
+{
+	iPlayerOneScore = 0;
+	iPlayerTwoScore = 0;
+
+	UpdateText();
+}
 
 //====================================================
 LError ScoreGUI::Destroy( void )
 {
-	LEngine::GetRenderer().RemoveRenderable( &m_text );
-	LEngine::GetRenderer().RemoveRenderable( &m_number );
+	LEngine::GetRenderer().RemoveRenderable( &m_playerOne );
+	LEngine::GetRenderer().RemoveRenderable( &m_playerTwo );
 
-	m_text.Destroy();
-	m_number.Destroy();
+	m_playerOne.Destroy();
+	m_playerTwo.Destroy();
 
 	return LError::NoErr;
 }
 
 //====================================================
-void ScoreGUI::SetScore( int iNewScore )
+void ScoreGUI::AddPoint( LInput::ePlayers player )
 {
-	m_number.SetText( iNewScore );
+	if( player = LInput::ePlayer_One )
+	{
+		++iPlayerOneScore;
+	}
+	else if( player = LInput::ePlayer_Two )
+	{
+		++iPlayerTwoScore;
+	}	
+
+	UpdateText();
 }
 
 //====================================================
-void ScoreGUI::SetText( const char* strText )
+void ScoreGUI::UpdateText( void )
 {
-	m_text.SetText( strText );
+	m_playerOne.SetText( iPlayerOneScore );
+	m_playerTwo.SetText( iPlayerTwoScore );
 }

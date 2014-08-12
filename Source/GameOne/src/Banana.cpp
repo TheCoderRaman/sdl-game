@@ -49,12 +49,11 @@ LError Banana::Create( LRenderer2D* renderer, Ffiseg::FWorld* world /* = nullptr
 		bdef.gravityScale = 0.0f;
 		bdef.awake = true;
 		bdef.fixedRotation = true;
-		bdef.linearDamping = 0.0f;
 
 		FFixtureDef fdef = FFixtureDef();
-		fdef.restitution = 0.1f;
 		fdef.density = 1.0f;
 		fdef.restitution = 1.0f;
+		fdef.friction = 0.1;
 
 		FPolygonShape shape;
 		shape.SetAsBox( w / FFISEG_WORLD_TO_PIX_FACTOR, h / FFISEG_WORLD_TO_PIX_FACTOR );
@@ -83,8 +82,6 @@ LError Banana::Render( LRenderer2D* renderer )
 LError Banana::VOnReset(void)
 { 
 	RUNTIME_LOG( "Resetting Banana..." );
-
-	
 
 	return GameSprite::VOnReset();
 }

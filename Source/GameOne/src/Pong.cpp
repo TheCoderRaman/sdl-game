@@ -90,8 +90,7 @@ LError Pong::VOnUpdate( ms elapsed )
 
 	if( LEngine::GetInputManager().GetButtonJustPressed( LInput::eInputType::jump, LInput::ePlayer_One ) )
 	{
-		iCurrentScore++;
-		m_score.SetScore( iCurrentScore );
+		m_score.AddPoint( LInput::ePlayer_One );
 	}
 
 	// Send a pause event FOR SOME REASON I DON'T KNOW MAN
@@ -120,10 +119,9 @@ LError Pong::VOnReset()
 
 	m_banana.SetPos( 200, 350 );
 
-	m_banana.GiveShove( Vector2f( 0.0, 1000.0f ) );
+	m_banana.GiveShove( Vector2f( 0.0, 1500.0f ) );
 
-	iCurrentScore = 0;
-	m_score.SetScore( iCurrentScore );
+	m_score.Reset();
 
  	return err;
 }

@@ -52,9 +52,9 @@ LError Paddle::Create( LRenderer2D* renderer, int iXPos, int iYPos, LInput::ePla
 		bdef.linearDamping = 0.0f;
 
 		FFixtureDef fdef = FFixtureDef();
-		fdef.restitution = 0.1f;
 		fdef.density = 1.0f;
 		fdef.restitution = 1.0f;
+		fdef.friction = 0.5f;
 
 		FPolygonShape shape;
 		shape.SetAsBox( w * 0.5f / FFISEG_WORLD_TO_PIX_FACTOR, h * 0.5f / FFISEG_WORLD_TO_PIX_FACTOR );

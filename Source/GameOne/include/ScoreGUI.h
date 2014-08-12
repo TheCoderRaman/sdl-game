@@ -11,6 +11,7 @@
 
 #include "LError.h"
 #include "LTextSprite.h"
+#include "LInput.h"
 
 class ScoreGUI
 {
@@ -19,13 +20,20 @@ public:
 	LError Create( void );
 	LError Destroy( void );
 
-	void SetScore( int iNewScore );
+	void Reset( void );
+
+	void AddPoint( LInput::ePlayers player );
 	void SetText( const char* strText );
+	
+	void UpdateText();
 
 private:
 
-	LTextSprite m_text;
-	LTextSprite m_number;
+	LTextSprite m_playerOne;
+	LTextSprite m_playerTwo;
+
+	int iPlayerOneScore;
+	int iPlayerTwoScore;
 
 };
 
