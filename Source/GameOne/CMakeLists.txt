@@ -43,13 +43,8 @@ set(PROJECT_SRCS
 # PULL IN DEPENDENCIES
 
 #-----------------------------------------------------------------
-set(CMAKE_BINARY_DIR ${CMAKE_SOURCE_DIR}/build/)
-set(EXECUTABLE_OUTPUT_PATH ${CMAKE_BINARY_DIR})
-set(LIBRARY_OUTPUT_PATH ${CMAKE_BINARY_DIR})
-
-#-----------------------------------------------------------------
-include(../cmake/config.cmake)
-include(../cmake/game.cmake)
+include(${CMAKE_HOME_DIRECTORY}/cmake/config.cmake)
+include(${CMAKE_HOME_DIRECTORY}/cmake/game.cmake)
 
 #-----------------------------------------------------------------
 # LINKING
