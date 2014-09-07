@@ -1,2 +1,4 @@
 Source/build/*
 Docs/*
+Box2D/*
+SDL2/*
