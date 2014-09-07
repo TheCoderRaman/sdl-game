@@ -6,7 +6,7 @@
 //! This holds the interface between SDL Audio and LEngine audio systems
 //!	
 
-#include "SDL_TTF.h"
+#include "SDL_ttf.h"
 #include <stdint.h>
 
 #include "SDLTexture.h"

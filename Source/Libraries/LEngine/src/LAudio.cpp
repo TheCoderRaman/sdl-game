@@ -8,6 +8,7 @@
 //!
 
 #include "LAudio.h"
+#include <string.h>
 
 //====================================================
 LAudio::LAudio()

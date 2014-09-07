@@ -57,7 +57,7 @@ private:
 
 //===============================================================
 template < typename T >
-LPauseSystem< typename T >::LPauseSystem()
+LPauseSystem< T >::LPauseSystem()
 	: m_currentFlags(0)
 	, m_nextFlags(0)
 {
@@ -66,56 +66,56 @@ LPauseSystem< typename T >::LPauseSystem()
 
 //===============================================================
 template < typename T >
-LPauseSystem< typename T >::~LPauseSystem()
+LPauseSystem< T >::~LPauseSystem()
 {
 
 }
 
 //===============================================================
 template < typename T >
-int LPauseSystem< typename T >::GetCurrentFlags() const
+int LPauseSystem< T >::GetCurrentFlags() const
 {
 	return m_currentFlags;
 }
 
 //===============================================================
 template < typename T >
-void LPauseSystem< typename T >::AddNextFlag(int flag)
+void LPauseSystem< T >::AddNextFlag(int flag)
 {
 	m_nextFlags |= flag;
 }
 
 //===============================================================
 template < typename T >
-void LPauseSystem< typename T >::AddNextFlags(int flags)
+void LPauseSystem< T >::AddNextFlags(int flags)
 {
 	m_nextFlags |= flags;
 }
 
 //===============================================================
 template < typename T >
-void LPauseSystem< typename T >::RemoveNextFlags(int flags)
+void LPauseSystem< T >::RemoveNextFlags(int flags)
 {
 	m_nextFlags &= ~flags;
 }
 
 //===============================================================
 template < typename T >
-bool LPauseSystem< typename T >::GetCurrentFlag(int flag) const
+bool LPauseSystem< T >::GetCurrentFlag(int flag) const
 {
 	return (m_currentFlags & flag) != 0;
 }
 
 //===============================================================
 template < typename T >
-void LPauseSystem< typename T >::SetNextFlags(int flags)
+void LPauseSystem< T >::SetNextFlags(int flags)
 {
 	m_nextFlags = flags;
 }
 
 //===============================================================
 template < typename T >
-void LPauseSystem< typename T >::FlushNextFlags()
+void LPauseSystem< T >::FlushNextFlags()
 {
 	int flags = m_nextFlags;
 	m_currentFlags = flags;

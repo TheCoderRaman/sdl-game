@@ -9,6 +9,7 @@
 
 #include "LText.h"
 #include "debug.h"
+#include <string.h>
 
 //====================================================
 LText::LText()
